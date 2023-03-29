@@ -1,8 +1,11 @@
+using E_Commerce.API.ServiceExtensions;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+                .AddApplicationPart(typeof(E_Commerce.Presentation.AssemblyReferance).Assembly);
+builder.Services.ConfigureController();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
