@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace E_Commerce.DataAccess.Contexts
+namespace E_Commerce.DataAccess.Interfaces
 {
-    public class E_CommerceDbContext
+    public interface IUow
     {
     }
 }
