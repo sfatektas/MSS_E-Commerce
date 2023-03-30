@@ -9,5 +9,7 @@ namespace E_Commerce.Entities.EFCore
     public class Slider : BaseEntity
     {
         public string Name { get; set; }
+
+        public List<SliderItem> SliderItems { get; set; }
     }
 }

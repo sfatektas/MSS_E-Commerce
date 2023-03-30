@@ -10,5 +10,6 @@ namespace E_Commerce.Entities.EFCore
     {
         public string Defination { get; set; }
         public string ImageUrl { get; set; }
+        public List<Product> Products { get; set; }
     }
 }

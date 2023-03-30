@@ -9,5 +9,7 @@ namespace E_Commerce.Entities.EFCore
     public class Gender : BaseEntity
     {
         public string Defination { get; set; }
+
+        public List<Customer> Customers { get; set; }
     }
 }

@@ -9,7 +9,7 @@ namespace E_Commerce.Entities.EFCore
     public class SupplierProduct : BaseEntity
     {
         public int ProductId { get; set; }
-        public Products Products { get; set; }
+        public Product Products { get; set; }
         public int SizeId { get; set; }
         public Size Size { get; set; }
         public int SupplierId { get; set; }
@@ -22,5 +22,15 @@ namespace E_Commerce.Entities.EFCore
         public int VisitCounter { get; set; }
         public DateTime CreatedDate { get; set; }
 
+        //Navigate Prop
+
+        public ProductsInStock ProductsInStock { get; set; }
+        public List<PriceHistory> PriceHistories { get; set; }
+        public List<SupplierAddingProduct> SupplierAddingProducts { get; set; }
+        public List<OrderDetail> OrderDetails { get; set; }
+        public List<ProductComment> ProductComments { get; set; }
+        public List<ProductsVisitor> ProductsVisitors { get; set; }
+        public List<ProductImage> ProductImages { get; set; }
+        public List<FavoriteProduct> FavoriteProducts { get; set; }
     }
 }

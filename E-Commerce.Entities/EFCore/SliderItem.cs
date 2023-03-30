@@ -10,9 +10,8 @@ namespace E_Commerce.Entities.EFCore
     {
         public int SliderId { get; set; }
         public Slider Slider { get; set; }
-        public string ImageUrl{ get; set; }
-        public string Title{ get; set; }
-        public string SubTitle{ get; set; }
-
+        public string ImageUrl { get; set; }
+        public string Title { get; set; }
+        public string SubTitle { get; set; }
     }
 }

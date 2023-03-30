@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.Entities.EFCore
 {
-    public class Products : BaseEntity
+    public class Product : BaseEntity
     {
         public int BrantId { get; set; }
         public Brand Brand { get; set; }
@@ -18,5 +18,6 @@ namespace E_Commerce.Entities.EFCore
         public Category Category { get; set; }
         public string ImageUrl { get; set; }
 
+        public List<SupplierProduct> SupplierProducts { get; set; }
     }
 }

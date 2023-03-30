@@ -4,13 +4,16 @@
     <TargetFramework>net6.0</TargetFramework>
     <RootNamespace>E_Commerce.Entities</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="EFCore\Identities\" />
     <Folder Include="Exceptions\" />
     <Folder Include="RequestParameters\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.15" />
   </ItemGroup>
 
 </Project>

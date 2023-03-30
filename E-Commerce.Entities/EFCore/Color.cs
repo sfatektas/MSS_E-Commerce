@@ -9,5 +9,7 @@ namespace E_Commerce.Entities.EFCore
     public class Color : BaseEntity
     {
         public string Defination { get; set; }
+
+        public List<SupplierProduct> SupplierProducts { get; set; }
     }
 }

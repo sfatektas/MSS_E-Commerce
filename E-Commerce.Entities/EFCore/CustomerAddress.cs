@@ -14,6 +14,5 @@ namespace E_Commerce.Entities.EFCore
         public string Town{ get; set; }
         public string AddressDefination { get; set; }
         public bool SelectedAddress{ get; set; }
-
     }
 }

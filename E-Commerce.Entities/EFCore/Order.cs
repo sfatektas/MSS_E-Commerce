@@ -17,5 +17,7 @@ namespace E_Commerce.Entities.EFCore
         public string Town { get; set; }
         public string AddressDetail { get; set; }
         public DateTime CreatedDate { get; set; }
+
+        public List<OrderDetail> OrderDetails { get; set; }
     }
 }

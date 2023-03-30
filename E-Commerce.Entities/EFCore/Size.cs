@@ -11,6 +11,6 @@ namespace E_Commerce.Entities.EFCore
         public string Value { get; set; }
         public string SizeTypeId { get; set; }
         public SizeType SizeType { get; set; }
-
+        public List<SupplierProduct> SupplierProducts { get; set; }
     }
 }
