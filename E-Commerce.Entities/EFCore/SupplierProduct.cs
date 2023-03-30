@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,8 +13,10 @@ namespace E_Commerce.Entities.EFCore
         public Product Products { get; set; }
         public int SizeId { get; set; }
         public Size Size { get; set; }
+
+        [ForeignKey("Supplier")]
         public int SupplierId { get; set; }
-        public Supplier Supplier { get; set; }
+        public Entities.EFCore.Identities.Supplier Supplier { get; set; }
         public double UnitPrice { get; set; }
         public int ColorId { get; set; }
         public Color Color { get; set; }

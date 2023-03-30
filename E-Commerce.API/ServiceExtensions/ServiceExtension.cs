@@ -14,7 +14,7 @@ namespace E_Commerce.API.ServiceExtensions
             {
                 x.UseSqlServer(configuration.GetConnectionString("LocalDb"));
             });
-            services.AddIdentity<AppUser,AppRole>()
+            services.AddIdentity<AppUser, AppRole>()
                 .AddEntityFrameworkStores<E_CommerceDbContext>()
                 .AddDefaultTokenProviders(); // TODO kullanıcıların emailine doğrulama e-postası gönderilecek
         }

@@ -22,21 +22,6 @@ namespace E_Commerce.DataAccess.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("CustomerGender", b =>
-                {
-                    b.Property<int>("CustomersId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("GendersId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CustomersId", "GendersId");
-
-                    b.HasIndex("GendersId");
-
-                    b.ToTable("CustomerGender");
-                });
-
             modelBuilder.Entity("E_Commerce.Entities.EFCore.Brand", b =>
                 {
                     b.Property<int>("Id")
@@ -95,37 +80,6 @@ namespace E_Commerce.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Colors");
-                });
-
-            modelBuilder.Entity("E_Commerce.Entities.EFCore.Customer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<double>("CurrentPoint")
-                        .HasColumnType("float");
-
-                    b.Property<double>("EarnedPoint")
-                        .HasColumnType("float");
-
-                    b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("GenderId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Customers");
                 });
 
             modelBuilder.Entity("E_Commerce.Entities.EFCore.CustomerAddress", b =>
@@ -254,7 +208,7 @@ namespace E_Commerce.DataAccess.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CustomerId")
+                    b.Property<int>("DiscriminatorUserType")
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
@@ -293,9 +247,6 @@ namespace E_Commerce.DataAccess.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SupplierId")
-                        .HasColumnType("int");
-
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
@@ -303,13 +254,10 @@ namespace E_Commerce.DataAccess.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<int>("UserTypeId")
+                    b.Property<int?>("UserTypeId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CustomerId")
-                        .IsUnique();
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -319,12 +267,11 @@ namespace E_Commerce.DataAccess.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.HasIndex("SupplierId")
-                        .IsUnique();
-
                     b.HasIndex("UserTypeId");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasDiscriminator<int>("DiscriminatorUserType").HasValue(0);
                 });
 
             modelBuilder.Entity("E_Commerce.Entities.EFCore.Order", b =>
@@ -711,34 +658,6 @@ namespace E_Commerce.DataAccess.Migrations
                     b.ToTable("SliderItem");
                 });
 
-            modelBuilder.Entity("E_Commerce.Entities.EFCore.Supplier", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("CompanyDetail")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CompanyName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CompanyUserName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ImageUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Suppliers");
-                });
-
             modelBuilder.Entity("E_Commerce.Entities.EFCore.SupplierAddingProduct", b =>
                 {
                     b.Property<int>("Id")
@@ -817,7 +736,7 @@ namespace E_Commerce.DataAccess.Migrations
 
                     b.HasIndex("SupplierId");
 
-                    b.ToTable("SuppliersProductsProducts");
+                    b.ToTable("SuppliersProducts");
                 });
 
             modelBuilder.Entity("E_Commerce.Entities.EFCore.UserType", b =>
@@ -942,24 +861,63 @@ namespace E_Commerce.DataAccess.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("CustomerGender", b =>
+            modelBuilder.Entity("E_Commerce.Entities.EFCore.Identities.Admin", b =>
                 {
-                    b.HasOne("E_Commerce.Entities.EFCore.Customer", null)
-                        .WithMany()
-                        .HasForeignKey("CustomersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasBaseType("E_Commerce.Entities.EFCore.Identities.AppUser");
 
-                    b.HasOne("E_Commerce.Entities.EFCore.Gender", null)
-                        .WithMany()
-                        .HasForeignKey("GendersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasDiscriminator().HasValue(1);
+                });
+
+            modelBuilder.Entity("E_Commerce.Entities.EFCore.Identities.Customer", b =>
+                {
+                    b.HasBaseType("E_Commerce.Entities.EFCore.Identities.AppUser");
+
+                    b.Property<double>("CurrentPoint")
+                        .HasColumnType("float");
+
+                    b.Property<double>("EarnedPoint")
+                        .HasColumnType("float");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Customer_FirstName");
+
+                    b.Property<int>("GenderId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasIndex("GenderId");
+
+                    b.HasDiscriminator().HasValue(2);
+                });
+
+            modelBuilder.Entity("E_Commerce.Entities.EFCore.Identities.Supplier", b =>
+                {
+                    b.HasBaseType("E_Commerce.Entities.EFCore.Identities.AppUser");
+
+                    b.Property<string>("CompanyDetail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CompanyName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CompanyUserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasDiscriminator().HasValue(3);
                 });
 
             modelBuilder.Entity("E_Commerce.Entities.EFCore.CustomerAddress", b =>
                 {
-                    b.HasOne("E_Commerce.Entities.EFCore.Customer", "Customer")
+                    b.HasOne("E_Commerce.Entities.EFCore.Identities.Customer", "Customer")
                         .WithMany("CustomerAddresses")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -970,7 +928,7 @@ namespace E_Commerce.DataAccess.Migrations
 
             modelBuilder.Entity("E_Commerce.Entities.EFCore.FavoriteProduct", b =>
                 {
-                    b.HasOne("E_Commerce.Entities.EFCore.Customer", "Customer")
+                    b.HasOne("E_Commerce.Entities.EFCore.Identities.Customer", "Customer")
                         .WithMany("FavoriteProducts")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -987,34 +945,14 @@ namespace E_Commerce.DataAccess.Migrations
 
             modelBuilder.Entity("E_Commerce.Entities.EFCore.Identities.AppUser", b =>
                 {
-                    b.HasOne("E_Commerce.Entities.EFCore.Customer", "Customer")
-                        .WithOne("AppUser")
-                        .HasForeignKey("E_Commerce.Entities.EFCore.Identities.AppUser", "CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("E_Commerce.Entities.EFCore.Supplier", "Supplier")
-                        .WithOne("AppUser")
-                        .HasForeignKey("E_Commerce.Entities.EFCore.Identities.AppUser", "SupplierId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("E_Commerce.Entities.EFCore.UserType", "UserType")
+                    b.HasOne("E_Commerce.Entities.EFCore.UserType", null)
                         .WithMany("AppUsers")
-                        .HasForeignKey("UserTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Customer");
-
-                    b.Navigation("Supplier");
-
-                    b.Navigation("UserType");
+                        .HasForeignKey("UserTypeId");
                 });
 
             modelBuilder.Entity("E_Commerce.Entities.EFCore.Order", b =>
                 {
-                    b.HasOne("E_Commerce.Entities.EFCore.Customer", "Customer")
+                    b.HasOne("E_Commerce.Entities.EFCore.Identities.Customer", "Customer")
                         .WithMany("Orders")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1088,13 +1026,13 @@ namespace E_Commerce.DataAccess.Migrations
 
             modelBuilder.Entity("E_Commerce.Entities.EFCore.ProductComment", b =>
                 {
-                    b.HasOne("E_Commerce.Entities.EFCore.Customer", "Customer")
+                    b.HasOne("E_Commerce.Entities.EFCore.Identities.Customer", "Customer")
                         .WithMany("ProductComments")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("E_Commerce.Entities.EFCore.Supplier", "Supplier")
+                    b.HasOne("E_Commerce.Entities.EFCore.Identities.Supplier", "Supplier")
                         .WithMany()
                         .HasForeignKey("SupplierId");
 
@@ -1133,7 +1071,7 @@ namespace E_Commerce.DataAccess.Migrations
 
             modelBuilder.Entity("E_Commerce.Entities.EFCore.ProductsVisitor", b =>
                 {
-                    b.HasOne("E_Commerce.Entities.EFCore.Customer", "Customer")
+                    b.HasOne("E_Commerce.Entities.EFCore.Identities.Customer", "Customer")
                         .WithMany("ProductsVisitors")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1201,7 +1139,7 @@ namespace E_Commerce.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("E_Commerce.Entities.EFCore.Supplier", "Supplier")
+                    b.HasOne("E_Commerce.Entities.EFCore.Identities.Supplier", "Supplier")
                         .WithMany("SupplierProducts")
                         .HasForeignKey("SupplierId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1267,6 +1205,17 @@ namespace E_Commerce.DataAccess.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("E_Commerce.Entities.EFCore.Identities.Customer", b =>
+                {
+                    b.HasOne("E_Commerce.Entities.EFCore.Gender", "Gender")
+                        .WithMany("Customers")
+                        .HasForeignKey("GenderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Gender");
+                });
+
             modelBuilder.Entity("E_Commerce.Entities.EFCore.Brand", b =>
                 {
                     b.Navigation("Products");
@@ -1282,19 +1231,9 @@ namespace E_Commerce.DataAccess.Migrations
                     b.Navigation("SupplierProducts");
                 });
 
-            modelBuilder.Entity("E_Commerce.Entities.EFCore.Customer", b =>
+            modelBuilder.Entity("E_Commerce.Entities.EFCore.Gender", b =>
                 {
-                    b.Navigation("AppUser");
-
-                    b.Navigation("CustomerAddresses");
-
-                    b.Navigation("FavoriteProducts");
-
-                    b.Navigation("Orders");
-
-                    b.Navigation("ProductComments");
-
-                    b.Navigation("ProductsVisitors");
+                    b.Navigation("Customers");
                 });
 
             modelBuilder.Entity("E_Commerce.Entities.EFCore.Order", b =>
@@ -1327,13 +1266,6 @@ namespace E_Commerce.DataAccess.Migrations
                     b.Navigation("SliderItems");
                 });
 
-            modelBuilder.Entity("E_Commerce.Entities.EFCore.Supplier", b =>
-                {
-                    b.Navigation("AppUser");
-
-                    b.Navigation("SupplierProducts");
-                });
-
             modelBuilder.Entity("E_Commerce.Entities.EFCore.SupplierProduct", b =>
                 {
                     b.Navigation("FavoriteProducts");
@@ -1356,6 +1288,24 @@ namespace E_Commerce.DataAccess.Migrations
             modelBuilder.Entity("E_Commerce.Entities.EFCore.UserType", b =>
                 {
                     b.Navigation("AppUsers");
+                });
+
+            modelBuilder.Entity("E_Commerce.Entities.EFCore.Identities.Customer", b =>
+                {
+                    b.Navigation("CustomerAddresses");
+
+                    b.Navigation("FavoriteProducts");
+
+                    b.Navigation("Orders");
+
+                    b.Navigation("ProductComments");
+
+                    b.Navigation("ProductsVisitors");
+                });
+
+            modelBuilder.Entity("E_Commerce.Entities.EFCore.Identities.Supplier", b =>
+                {
+                    b.Navigation("SupplierProducts");
                 });
 #pragma warning restore 612, 618
         }
