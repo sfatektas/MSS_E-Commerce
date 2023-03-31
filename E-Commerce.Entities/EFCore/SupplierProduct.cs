@@ -1,4 +1,5 @@
-﻿using System;
+﻿using E_Commerce.Common;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -23,7 +24,7 @@ namespace E_Commerce.Entities.EFCore
         public string CustomProductTitle { get; set; }
         public string CustomProductDefination { get; set; }
         public int VisitCounter { get; set; }
-        public DateTime CreatedDate { get; set; }
+        public DateTime CreatedDate { get; set; } = DateTime.UtcNow.AddHours(UtcTimeConstant.TurkeyUTC);
 
         //Navigate Prop
 

@@ -4,6 +4,7 @@ using E_Commerce.DataAccess.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_Commerce.DataAccess.Migrations
 {
     [DbContext(typeof(E_CommerceDbContext))]
-    partial class E_CommerceDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230331211554_ısActiveDefaultValueAdded")]
+    partial class ısActiveDefaultValueAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -443,18 +445,18 @@ namespace E_Commerce.DataAccess.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("SizeTypeId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("BrandId");
+
                     b.HasIndex("CategoryId");
 
                     b.HasIndex("SizeTypeId");
-
-                    b.HasIndex("BrandId", "Name");
 
                     b.ToTable("Products");
                 });
@@ -482,12 +484,17 @@ namespace E_Commerce.DataAccess.Migrations
                     b.Property<int>("Point")
                         .HasColumnType("int");
 
+                    b.Property<int?>("SupplierId")
+                        .HasColumnType("int");
+
                     b.Property<int>("SupplierProductId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CustomerId");
+
+                    b.HasIndex("SupplierId");
 
                     b.HasIndex("SupplierProductId");
 
@@ -530,9 +537,7 @@ namespace E_Commerce.DataAccess.Migrations
                         .HasColumnType("float");
 
                     b.Property<bool>("IsActive")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
+                        .HasColumnType("bit");
 
                     b.Property<int>("SupplierProductsId")
                         .HasColumnType("int");
@@ -783,7 +788,6 @@ namespace E_Commerce.DataAccess.Migrations
                         .HasColumnType("int");
 
                     b.Property<double>("UnitPrice")
-                        .HasMaxLength(10000000)
                         .HasColumnType("float");
 
                     b.Property<int>("VisitCounter")
@@ -797,7 +801,7 @@ namespace E_Commerce.DataAccess.Migrations
 
                     b.HasIndex("SizeId");
 
-                    b.HasIndex("SupplierId", "ProductId", "SizeId", "ColorId");
+                    b.HasIndex("SupplierId");
 
                     b.ToTable("SuppliersProducts");
                 });
@@ -1121,7 +1125,11 @@ namespace E_Commerce.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("E_Commerce.Entities.EFCore.SupplierProduct", "SupplierProduct")
+                    b.HasOne("E_Commerce.Entities.EFCore.Identities.Supplier", "Supplier")
+                        .WithMany()
+                        .HasForeignKey("SupplierId");
+
+                    b.HasOne("E_Commerce.Entities.EFCore.SupplierProduct", null)
                         .WithMany("ProductComments")
                         .HasForeignKey("SupplierProductId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1129,7 +1137,7 @@ namespace E_Commerce.DataAccess.Migrations
 
                     b.Navigation("Customer");
 
-                    b.Navigation("SupplierProduct");
+                    b.Navigation("Supplier");
                 });
 
             modelBuilder.Entity("E_Commerce.Entities.EFCore.ProductImage", b =>

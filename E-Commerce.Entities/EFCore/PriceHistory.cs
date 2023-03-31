@@ -1,4 +1,5 @@
-﻿using System;
+﻿using E_Commerce.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,6 @@ namespace E_Commerce.Entities.EFCore
         public SupplierProduct SupplierProducts { get; set; }
         public double OldPrice { get; set; }
         public double NewPrice { get; set; }
-        public DateTime ModifiedDate { get; set; }
+        public DateTime ModifiedDate { get; set; } = DateTime.UtcNow.AddHours(UtcTimeConstant.TurkeyUTC);
     }
 }

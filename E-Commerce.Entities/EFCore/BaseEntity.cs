@@ -1,6 +1,7 @@
 ﻿using E_Commerce.Entities.EFCore.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ namespace E_Commerce.Entities.EFCore
     {
         public int Id { get; set; }
 
-        public bool IsActive { get; set; }
+        [DefaultValue(true)]
+        public bool IsActive { get; set; } = true;
     }
 }
