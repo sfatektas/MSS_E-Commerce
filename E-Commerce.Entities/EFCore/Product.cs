@@ -13,7 +13,7 @@ namespace E_Commerce.Entities.EFCore
         public string Name { get; set; }
         public string Detail { get; set; }
         public int SizeTypeId { get; set; }
-        public SizeType SizeType { get; set; } 
+        public SizeType SizeType { get; set;} 
         public int CategoryId { get; set; }
         public Category Category { get; set; }
         public string ImageUrl { get; set; }

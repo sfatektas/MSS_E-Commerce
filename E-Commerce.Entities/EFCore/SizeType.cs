@@ -8,6 +8,7 @@ namespace E_Commerce.Entities.EFCore
 {
     public class SizeType : BaseEntity
     {
+        //Todo SeedData eklenecek
         public string Defination { get; set; }
         public List<Size> Sizes { get; set; }
     }
