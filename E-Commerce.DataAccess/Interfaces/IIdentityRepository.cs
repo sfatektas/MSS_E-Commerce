@@ -1,16 +1,10 @@
 ﻿using E_Commerce.Common.Enums;
-using E_Commerce.Entities.EFCore;
-using E_Commerce.Entities.EFCore.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using E_Commerce.Entities.EFCore.Identities;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace E_Commerce.DataAccess.Interfaces
 {
-    public interface IRepository<T> where T : BaseEntity , IBaseEntity, new()
+    public interface IIdentityRepository<T> where T : AppUser, new()
     {
         Task<List<T>> GetAllAsync();
 

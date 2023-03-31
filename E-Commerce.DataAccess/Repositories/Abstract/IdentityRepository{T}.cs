@@ -1,8 +1,7 @@
 ﻿using E_Commerce.Common.Enums;
 using E_Commerce.DataAccess.Contexts;
 using E_Commerce.DataAccess.Interfaces;
-using E_Commerce.Entities.EFCore;
-using E_Commerce.Entities.EFCore.Interfaces;
+using E_Commerce.Entities.EFCore.Identities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -13,15 +12,14 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.DataAccess.Repositories.Abstract
 {
-    public class Repository<T> : IRepository<T> where T : BaseEntity ,IBaseEntity, new()
+    public abstract class IdentityRepository<T> : IIdentityRepository<T> where T : AppUser, new()
     {
         readonly E_CommerceDbContext _context;
 
-        public Repository(E_CommerceDbContext context)
+        public IdentityRepository(E_CommerceDbContext context)
         {
             _context = context;
         }
-
         public async Task CreateAsync(T entity)
         {
             await _context.Set<T>().AddAsync(entity);
@@ -73,6 +71,5 @@ namespace E_Commerce.DataAccess.Repositories.Abstract
         {
             return _context.Set<T>().AsQueryable().Where(x => x.Id == id);
         }
-
     }
 }

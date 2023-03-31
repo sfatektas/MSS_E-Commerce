@@ -1,6 +1,8 @@
 ﻿using E_Commerce.DataAccess.Contexts;
 using E_Commerce.DataAccess.Interfaces;
+using E_Commerce.DataAccess.Repositories;
 using E_Commerce.DataAccess.Repositories.Abstract;
+using E_Commerce.DataAccess.Repositories.IdentitiyRepositories;
 using E_Commerce.Entities.EFCore;
 using E_Commerce.Entities.EFCore.Interfaces;
 using System;
@@ -19,11 +21,14 @@ namespace E_Commerce.DataAccess.UnitOfWorks
         {
             _context = context;
         }
+        //Identities Repositories
+        public AdminRepository GetAdminRepository() => new AdminRepository(_context);
+        public CustomerRepository GetCustomerRepository() => new CustomerRepository(_context);
+        public SupplierRepository GetSupplierRepository() => new SupplierRepository(_context);
 
-        public Repository<T> GetRepository<T>() where T : BaseEntity, IBaseEntity, new()
-        {
-            return new Repository<T>(_context);
-        }
+        public ProductRepository GetProductRepository() => new ProductRepository(_context);
+        public OrderRepository GetOrderRepository() => new OrderRepository(_context);
+        public Repository<T> GetRepository<T>() where T : BaseEntity, IBaseEntity, new() => new Repository<T>(_context);
 
         public async Task SaveChangesAsync()
         {
