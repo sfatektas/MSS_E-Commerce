@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using E_Commerce.Business.Interfaces;
+using E_Commerce.Common;
 using E_Commerce.DataAccess.Interfaces;
 using E_Commerce.Dtos.SiteOptionDtos;
 using E_Commerce.Entities.EFCore;
@@ -22,10 +23,12 @@ namespace E_Commerce.Business.Services
             _mapper = mapper;
         }
 
-        public async Task<SiteOptionListDto> GetOptionAsync()
+        public async Task<Response<SiteOptionListDto>> GetOptionAsync()
         {
             var data = await _uow.GetRepository<SiteOption>().GetAllAsync();
-            return _mapper.Map<SiteOptionListDto>(data.FirstOrDefault());
+            if(data != null)
+                return new Response<SiteOptionListDto>(Common.Enums.ResponseType.Success, _mapper.Map<SiteOptionListDto>(data.FirstOrDefault()));
+            return new Response<SiteOptionListDto>(Common.Enums.ResponseType.NotFound, null);
         }
     }
 }

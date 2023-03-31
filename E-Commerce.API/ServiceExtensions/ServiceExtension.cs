@@ -21,15 +21,31 @@ namespace E_Commerce.API.ServiceExtensions
 {
     public static class ServiceExtension
     {
-        public static void ConfigureDbContext(this IServiceCollection services,IConfiguration configuration) 
+        public static void ConfigureDbContext(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<E_CommerceDbContext>(x =>
             {
-                x.UseSqlServer(configuration.GetConnectionString("RemoteDb"));
+                x.UseSqlServer(configuration.GetConnectionString("LocalDb"));
             });
-            services.AddIdentity<AppUser, AppRole>()
+            //services.AddIdentity<AppUser, AppRole>()
+            //    .AddEntityFrameworkStores<E_CommerceDbContext>()
+            //    .AddDefaultTokenProviders(); // TODO kullanıcıların emailine doğrulama e-postası gönderilecek
+
+            services.AddIdentity<Admin, AppRole>(opt =>
+            {
+                opt.Password.RequireNonAlphanumeric = false;
+                opt.Password.RequireDigit = false;
+            })
+                 .AddEntityFrameworkStores<E_CommerceDbContext>()
+                 .AddDefaultTokenProviders(); // TODO kullanıcıların emailine doğrulama e-postası gönderilecek
+            
+            services.AddIdentity<Supplier, AppRole>()
                 .AddEntityFrameworkStores<E_CommerceDbContext>()
                 .AddDefaultTokenProviders(); // TODO kullanıcıların emailine doğrulama e-postası gönderilecek
+           
+            services.AddIdentity<Customer, AppRole>()
+                .AddEntityFrameworkStores<E_CommerceDbContext>()
+                .AddDefaultTokenProviders();
         }
         public static void ConfigureController(this IServiceCollection services)
         {
@@ -68,7 +84,7 @@ namespace E_Commerce.API.ServiceExtensions
                 opt.AddPolicy("DefaultPolicy",
                       policy =>
                       {
-                          policy.AllowAnyOrigin()
+                                policy.AllowAnyOrigin()
                                 .AllowAnyHeader()
                                 .AllowAnyMethod();
                       });

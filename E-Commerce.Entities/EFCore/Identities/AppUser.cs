@@ -10,6 +10,8 @@ namespace E_Commerce.Entities.EFCore.Identities
 {
     public class AppUser : IdentityUser<int> , IBaseEntity
     {
+        public UserType UserType { get; set; }
+        public int UserTypeId { get; set; }
         public bool IsActive { get; set; }
     }
     public class Supplier : AppUser

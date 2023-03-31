@@ -37,6 +37,7 @@ namespace E_Commerce.DataAccess.Contexts
         public DbSet<SizeType> SizeTypes { get; set; }
         public DbSet<Slider> Sliders { get; set; }
         public DbSet<Entities.EFCore.Identities.Supplier> Suppliers { get; set; }
+        public DbSet<Entities.EFCore.Identities.Admin> Admins { get; set; }
         public DbSet<SupplierAddingProduct> SuppliersAddingProducts { get; set; }
         public DbSet<SupplierProduct> SuppliersProducts { get; set; }
         public DbSet<UserType> UserTypes { get; set; }
@@ -45,13 +46,14 @@ namespace E_Commerce.DataAccess.Contexts
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //SiteOption Configuration
-            //modelBuilder.Entity<SiteOption>().Property(x => x.Logo).IsRequired();
-            //modelBuilder.Entity<SiteOption>().Property(x => x.Adress).IsRequired();
-            //modelBuilder.Entity<SiteOption>().Property(x => x.PhoneNumber).IsRequired();
+            modelBuilder.Entity<SiteOption>().Property(x => x.Logo).IsRequired();
+            modelBuilder.Entity<SiteOption>().Property(x => x.Adress).IsRequired();
+            modelBuilder.Entity<SiteOption>().Property(x => x.PhoneNumber).IsRequired();
 
-            //modelBuilder.Entity<SiteOption>().Property(x=>x.IsActive).HasDefaultValue(true);
+            modelBuilder.Entity<SiteOption>().Property(x => x.IsActive).HasDefaultValue(true);
 
-            modelBuilder.ApplyConfiguration(new AppUserConfiguration());
+            //modelBuilder.ApplyConfiguration(new AppUserConfiguration());
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             base.OnModelCreating(modelBuilder);
         }
     }

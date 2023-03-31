@@ -1,4 +1,5 @@
-﻿using E_Commerce.Dtos.SiteOptionDtos;
+﻿using E_Commerce.Common;
+using E_Commerce.Dtos.SiteOptionDtos;
 using E_Commerce.Entities.EFCore;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,6 @@ namespace E_Commerce.Business.Interfaces
 {
     public interface ISiteOptionService
     {
-        Task<SiteOptionListDto> GetOptionAsync();
+        Task<Response<SiteOptionListDto>> GetOptionAsync();
     }
 }

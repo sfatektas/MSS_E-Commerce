@@ -61,7 +61,9 @@ namespace E_Commerce.Business.Services
         public async Task<IResponse<List<ListDto>>> GetAllAsync(Expression<Func<T, bool>> filter)
         {
             var result = await _uow.GetRepository<T>().GetAllAsync(filter);
-            return new Response<List<ListDto>>(ResponseType.Success, _mapper.Map<List<ListDto>>(result));
+            if (result.Count > 0)
+                return new Response<List<ListDto>>(ResponseType.Success, _mapper.Map<List<ListDto>>(result));
+            return new Response<List<ListDto>>(ResponseType.NotFound, _mapper.Map<List<ListDto>>(result));
         }
 
         public async Task<IResponse<ListDto>> GetByIdAsync(int id)

@@ -4,6 +4,7 @@ using E_Commerce.DataAccess.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_Commerce.DataAccess.Migrations
 {
     [DbContext(typeof(E_CommerceDbContext))]
-    partial class E_CommerceDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230331133349_adminDbAdded")]
+    partial class adminDbAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -161,26 +163,6 @@ namespace E_Commerce.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Genders");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Defination = "Erkek",
-                            IsActive = true
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Defination = "Kadın",
-                            IsActive = true
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Defination = "Belirtmek İstemiyorum",
-                            IsActive = true
-                        });
                 });
 
             modelBuilder.Entity("E_Commerce.Entities.EFCore.Identities.AppRole", b =>
@@ -274,7 +256,7 @@ namespace E_Commerce.DataAccess.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<int>("UserTypeId")
+                    b.Property<int?>("UserTypeId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -821,26 +803,6 @@ namespace E_Commerce.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("UserTypes");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Defination = "Admin",
-                            IsActive = true
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Defination = "Customer",
-                            IsActive = true
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Defination = "Supplier",
-                            IsActive = true
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -1030,13 +992,9 @@ namespace E_Commerce.DataAccess.Migrations
 
             modelBuilder.Entity("E_Commerce.Entities.EFCore.Identities.AppUser", b =>
                 {
-                    b.HasOne("E_Commerce.Entities.EFCore.UserType", "UserType")
+                    b.HasOne("E_Commerce.Entities.EFCore.UserType", null)
                         .WithMany("AppUsers")
-                        .HasForeignKey("UserTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("UserType");
+                        .HasForeignKey("UserTypeId");
                 });
 
             modelBuilder.Entity("E_Commerce.Entities.EFCore.Order", b =>

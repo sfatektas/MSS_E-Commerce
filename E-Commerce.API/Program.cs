@@ -1,4 +1,5 @@
 using E_Commerce.API.ServiceExtensions;
+using E_Commerce.Business.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +25,7 @@ app.UseCors();
 app.UseAuthorization();
 
 app.MapControllers();
+await app.SeedData();
 
 app.Run();
 //mrt feature added
