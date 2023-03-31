@@ -40,9 +40,17 @@ namespace E_Commerce.DataAccess.Contexts
         public DbSet<SupplierAddingProduct> SuppliersAddingProducts { get; set; }
         public DbSet<SupplierProduct> SuppliersProducts { get; set; }
         public DbSet<UserType> UserTypes { get; set; }
+        public DbSet<SiteOption> SiteOptions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //SiteOption Configuration
+            //modelBuilder.Entity<SiteOption>().Property(x => x.Logo).IsRequired();
+            //modelBuilder.Entity<SiteOption>().Property(x => x.Adress).IsRequired();
+            //modelBuilder.Entity<SiteOption>().Property(x => x.PhoneNumber).IsRequired();
+
+            //modelBuilder.Entity<SiteOption>().Property(x=>x.IsActive).HasDefaultValue(true);
+
             modelBuilder.ApplyConfiguration(new AppUserConfiguration());
             base.OnModelCreating(modelBuilder);
         }

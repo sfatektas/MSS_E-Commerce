@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace E_Commerce.DataAccess.Migrations
 {
-    public partial class appUserDiscriminentConfigurationAdded : Migration
+    public partial class siteOptionsTableAdded : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -96,6 +96,28 @@ namespace E_Commerce.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "SiteOptions",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Logo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Slogan = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FacebookLink = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TwitterLink = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LinkedInLink = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PinterestLink = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Adress = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SiteOptions", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "SizeTypes",
                 columns: table => new
                 {
@@ -164,8 +186,7 @@ namespace E_Commerce.DataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    BrantId = table.Column<int>(type: "int", nullable: false),
-                    BrandId = table.Column<int>(type: "int", nullable: true),
+                    BrandId = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Detail = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SizeTypeId = table.Column<int>(type: "int", nullable: false),
@@ -180,7 +201,8 @@ namespace E_Commerce.DataAccess.Migrations
                         name: "FK_Products_Brands_BrandId",
                         column: x => x.BrandId,
                         principalTable: "Brands",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Products_Categories_CategoryId",
                         column: x => x.CategoryId,
@@ -902,6 +924,9 @@ namespace E_Commerce.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "ProductsVisitors");
+
+            migrationBuilder.DropTable(
+                name: "SiteOptions");
 
             migrationBuilder.DropTable(
                 name: "SliderItem");

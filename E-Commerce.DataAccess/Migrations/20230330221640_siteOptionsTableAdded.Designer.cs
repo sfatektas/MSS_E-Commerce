@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_Commerce.DataAccess.Migrations
 {
     [DbContext(typeof(E_CommerceDbContext))]
-    [Migration("20230330194836_appUserDiscriminentConfigurationAdded")]
-    partial class appUserDiscriminentConfigurationAdded
+    [Migration("20230330221640_siteOptionsTableAdded")]
+    partial class siteOptionsTableAdded
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -409,10 +409,7 @@ namespace E_Commerce.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("BrandId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("BrantId")
+                    b.Property<int>("BrandId")
                         .HasColumnType("int");
 
                     b.Property<int>("CategoryId")
@@ -563,6 +560,49 @@ namespace E_Commerce.DataAccess.Migrations
                     b.HasIndex("SupplierProductId");
 
                     b.ToTable("ProductsVisitors");
+                });
+
+            modelBuilder.Entity("E_Commerce.Entities.EFCore.SiteOption", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Adress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FacebookLink")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LinkedInLink")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Logo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PinterestLink")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Slogan")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TwitterLink")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SiteOptions");
                 });
 
             modelBuilder.Entity("E_Commerce.Entities.EFCore.Size", b =>
@@ -1005,7 +1045,9 @@ namespace E_Commerce.DataAccess.Migrations
                 {
                     b.HasOne("E_Commerce.Entities.EFCore.Brand", "Brand")
                         .WithMany("Products")
-                        .HasForeignKey("BrandId");
+                        .HasForeignKey("BrandId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("E_Commerce.Entities.EFCore.Category", "Category")
                         .WithMany("Products")

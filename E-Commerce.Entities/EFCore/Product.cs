@@ -8,7 +8,7 @@ namespace E_Commerce.Entities.EFCore
 {
     public class Product : BaseEntity
     {
-        public int BrantId { get; set; }
+        public int BrandId { get; set; }
         public Brand Brand { get; set; }
         public string Name { get; set; }
         public string Detail { get; set; }
