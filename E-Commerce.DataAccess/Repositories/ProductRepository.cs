@@ -1,6 +1,7 @@
 ﻿using E_Commerce.DataAccess.Contexts;
 using E_Commerce.DataAccess.Repositories.Abstract;
 using E_Commerce.Entities.EFCore;
+using E_Commerce.Entities.RequestFeatures;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,5 +17,10 @@ namespace E_Commerce.DataAccess.Repositories
         }
         public async Task AddProductAsync(Product product) => await CreateAsync(product);
         public void DeleteProductAsycn(Product product) => Remove(product);
+
+        //public Task<PagedList<Product>> GetAllProduct()
+        //{
+
+        //}
     }
 }

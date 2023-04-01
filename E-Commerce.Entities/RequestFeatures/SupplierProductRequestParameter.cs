@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace E_Commerce.Entities.RequestParameters
+namespace E_Commerce.Entities.RequestFeatures
 {
     public class SupplierProductRequestParameter : RequestParameter
     {
+        
     }
 }

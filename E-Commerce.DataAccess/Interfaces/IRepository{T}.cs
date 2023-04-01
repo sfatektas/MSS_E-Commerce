@@ -1,6 +1,7 @@
 ﻿using E_Commerce.Common.Enums;
 using E_Commerce.Entities.EFCore;
 using E_Commerce.Entities.EFCore.Interfaces;
+using E_Commerce.Entities.RequestParameters;
 using System;
 using System.Collections.Generic;
 using System.Linq;

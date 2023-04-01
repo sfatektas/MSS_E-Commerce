@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace E_Commerce.Entities.RequestParameters
+namespace E_Commerce.Entities.RequestFeatures
 {
     public class RequestParameter 
     {
-        public const int MaxPageSize = 50; 
+        public const int MaxPageSize = 20; 
+        public int PageNumber { get; set; }
 
         private int _pageSize;
 
@@ -19,7 +20,6 @@ namespace E_Commerce.Entities.RequestParameters
                 _pageSize = value < MaxPageSize ? value : MaxPageSize;
             }
         }
-        public int PageNumber { get; set; }
-
+        public string OrderBy { get; set; } // nullable
     }
 }
