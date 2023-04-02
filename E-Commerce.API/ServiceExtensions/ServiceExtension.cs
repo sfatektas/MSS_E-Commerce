@@ -25,7 +25,8 @@ namespace E_Commerce.API.ServiceExtensions
         {
             services.AddDbContext<E_CommerceDbContext>(x =>
             {
-                x.UseSqlServer(configuration.GetConnectionString("LocalDb"));
+                //"RemoteDb"
+                x.UseSqlServer(configuration.GetConnectionString("LocalDB"));
             });
             //services.AddIdentity<AppUser, AppRole>()
             //    .AddEntityFrameworkStores<E_CommerceDbContext>()
@@ -38,11 +39,11 @@ namespace E_Commerce.API.ServiceExtensions
             })
                  .AddEntityFrameworkStores<E_CommerceDbContext>()
                  .AddDefaultTokenProviders(); // TODO kullanıcıların emailine doğrulama e-postası gönderilecek
-            
+
             services.AddIdentity<Supplier, AppRole>()
                 .AddEntityFrameworkStores<E_CommerceDbContext>()
                 .AddDefaultTokenProviders(); // TODO kullanıcıların emailine doğrulama e-postası gönderilecek
-           
+
             services.AddIdentity<Customer, AppRole>()
                 .AddEntityFrameworkStores<E_CommerceDbContext>()
                 .AddDefaultTokenProviders();
@@ -89,6 +90,10 @@ namespace E_Commerce.API.ServiceExtensions
                                 .AllowAnyMethod();
                       });
             });
+        }
+        public static void ConfigureLogger(this IServiceCollection services)
+        {
+            services.AddSingleton<ILoggerService, LoggerService>();
         }
     }
 }

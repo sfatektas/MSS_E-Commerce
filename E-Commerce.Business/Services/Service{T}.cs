@@ -8,6 +8,7 @@ using E_Commerce.DataAccess.Interfaces;
 using E_Commerce.Dtos.Interfaces;
 using E_Commerce.Entities.EFCore;
 using FluentValidation;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,7 +39,7 @@ namespace E_Commerce.Business.Services
         }
         public async Task<IResponse<List<ListDto>>> GetAllAsync()
         {
-            var data = await _uow.GetRepository<T>().GetAllAsync();
+            var data = await _uow.GetRepository<T>().GetAllAsync().ToListAsync();
             if (data != null)
                 return new Response<List<ListDto>>(ResponseType.Success, _mapper.Map<List<ListDto>>(data));
             else
@@ -60,7 +61,7 @@ namespace E_Commerce.Business.Services
 
         public async Task<IResponse<List<ListDto>>> GetAllAsync(Expression<Func<T, bool>> filter)
         {
-            var result = await _uow.GetRepository<T>().GetAllAsync(filter);
+            var result = await _uow.GetRepository<T>().GetAllAsync(filter).ToListAsync();
             if (result.Count > 0)
                 return new Response<List<ListDto>>(ResponseType.Success, _mapper.Map<List<ListDto>>(result));
             return new Response<List<ListDto>>(ResponseType.NotFound, _mapper.Map<List<ListDto>>(result));

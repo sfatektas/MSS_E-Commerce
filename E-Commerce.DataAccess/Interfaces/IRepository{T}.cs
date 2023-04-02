@@ -1,7 +1,7 @@
 ﻿using E_Commerce.Common.Enums;
 using E_Commerce.Entities.EFCore;
 using E_Commerce.Entities.EFCore.Interfaces;
-using E_Commerce.Entities.RequestParameters;
+using E_Commerce.Entities.RequestFeatures;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,11 +13,11 @@ namespace E_Commerce.DataAccess.Interfaces
 {
     public interface IRepository<T> where T : BaseEntity , IBaseEntity, new()
     {
-        Task<List<T>> GetAllAsync();
+        IQueryable<T> GetAllAsync(bool trackChanges = false);
 
-        Task<List<T>> GetAllAsync(Expression<Func<T, bool>> filter);
+        IQueryable<T> GetAllAsync(Expression<Func<T, bool>> filter , bool trackChanges = false);
 
-        Task<List<T>> GetAllAsync<TKey>(Expression<Func<T, bool>> filter, Expression<Func<T, TKey>> keySelector, OrderByType OrderByType = OrderByType.DESC);
+        IQueryable<T> GetAllAsync<TKey>(Expression<Func<T, bool>> filter, Expression<Func<T, TKey>> keySelector, OrderByType OrderByType = OrderByType.DESC , bool trackChanges =false);
         Task CreateAsync(T entity);
 
         Task<T> FindAsync(object id);

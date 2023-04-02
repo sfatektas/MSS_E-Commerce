@@ -34,33 +34,33 @@ namespace E_Commerce.DataAccess.Repositories.Abstract
             return data;
         }
 
-        public async Task<List<T>> GetAllAsync()
+        public  IQueryable<T> GetAllAsync(bool trackChanges = false)
         {
-            var list = await _context.Set<T>()
-                .AsNoTracking()
-                .ToListAsync();
+            var list = _context.Set<T>()
+                .AsNoTracking();
             return list;
         }
-        public async Task<List<T>> GetAllAsync( Expression<Func<T, bool>> filter)
+        public IQueryable<T> GetAllAsync( Expression<Func<T, bool>> filter , bool trackChanges = false)
         {
-            var list = await _context.Set<T>()
+            var list  = (!trackChanges) ? _context.Set<T>()
                 .AsNoTracking()
-                .Where(filter)
-                .ToListAsync();
+                .Where(filter) :
+                _context.Set<T>()
+                .AsNoTracking()
+                .Where(filter);
             return list;
         }
-        public async Task<List<T>> GetAllAsync<TKey>(Expression<Func<T, bool>> filter, Expression<Func<T, TKey>> keySelector, OrderByType OrderByType = OrderByType.DESC)
+        public IQueryable<T> GetAllAsync<TKey>(Expression<Func<T, bool>> filter, Expression<Func<T, TKey>> keySelector, OrderByType OrderByType = OrderByType.DESC , bool trackChanges = false)
         {
-            var list = (OrderByType == OrderByType.DESC) ? await _context.Set<T>()
+            var list = (OrderByType == OrderByType.DESC) ?  _context.Set<T>()
                 .AsNoTracking()
                 .OrderByDescending(keySelector)
                 .Where(filter)
-                .ToListAsync() :
-                await _context.Set<T>()
+                 :
+                 _context.Set<T>()
                 .AsNoTracking()
                 .OrderBy(keySelector)
-                .Where(filter)
-                .ToListAsync();
+                .Where(filter);
             return list;
         }
 

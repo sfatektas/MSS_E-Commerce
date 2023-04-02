@@ -18,9 +18,10 @@ namespace E_Commerce.DataAccess.Repositories
         public async Task AddProductAsync(Product product) => await CreateAsync(product);
         public void DeleteProductAsycn(Product product) => Remove(product);
 
-        //public Task<PagedList<Product>> GetAllProduct()
-        //{
-
-        //}
+        public async Task<PagedList<Product>> GetAllProduct(ProductRequestParameter requestParameter)
+        {
+            var data = base.GetAllAsync();
+            return PagedList<Product>.ToPagedList(data, requestParameter.PageSize, requestParameter.PageNumber);
+        }
     }
 }

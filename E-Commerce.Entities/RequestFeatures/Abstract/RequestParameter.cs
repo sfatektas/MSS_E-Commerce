@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace E_Commerce.Entities.RequestFeatures
+namespace E_Commerce.Entities.RequestFeatures.Abstract
 {
-    public class RequestParameter 
+    public class RequestParameter
     {
-        public const int MaxPageSize = 20; 
+        public const int MaxPageSize = 20;
         public int PageNumber { get; set; }
 
         private int _pageSize;
@@ -16,7 +16,8 @@ namespace E_Commerce.Entities.RequestFeatures
         public int PageSize
         {
             get { return _pageSize; }
-            set { 
+            set
+            {
                 _pageSize = value < MaxPageSize ? value : MaxPageSize;
             }
         }
