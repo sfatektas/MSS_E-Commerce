@@ -1,0 +1,221 @@
+/* @Active Variants */
+/* Lütfen aşağıdaki değişkenlerin sadece değerlerini düzenleyiniz. Ekstra bir değişken tanımlaması yapmayınız */
+
+/* Fonts İmport */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+/* Font Family */
+$font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+"Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+"Helvetica Neue", sans-serif;
+$font-family-sub: "Libre Baskerville", serif;
+//$font-family-sub-alt: ;
+
+/* Color Template */
+$color-primary: #111;
+$color-secondary: #A2D45E;
+$color-third: #fafafa;
+$color-fourth: #eb6b6b;
+$color-fifth: #EDEDED;
+
+/* Color Text */
+$color-text: #363232;
+$color-sub-text: #7A7474;
+
+/* Color Base */
+$color-border: #EDEDED;
+$color-background: #F3F3F3;
+
+/* Color Social */
+$color-whatsapp: #25D366;
+$color-facebook: #485A96;
+$color-google: #4285F4;
+$color-instagram: #C13584;
+$color-youtube: #FF0000;
+$color-twitter: #1DA1F2;
+$color-pinterest: #E60023;
+$color-linkedin: #0077B5;
+$color-discord: #7289DA;
+
+/* Global Variables */
+$image-ratio: 100%;
+$percentage-ratio: 10%;
+$border-radius: 0;
+$gutter: var(--spacer-4);
+
+/* Still Variants */
+/* Lütfen aşağıdaki değişkenlerin hem isimlerini hemde değerlerini değiştirmeyiniz */
+$xxxs : 374;
+$xxs : 424;
+$xs : 575;
+$sm : 767;
+$md : 991;
+$lg : 1199;
+$xlg : 1441;
+$xxlg : 1681;
+$transition: all .2s linear;
+$color-white: #FFFFFF;
+$color-primary-lighten: lighten($color-primary, $percentage-ratio);
+$color-primary-darken: darken($color-primary, $percentage-ratio);
+$color-secondary-lighten: lighten($color-secondary, $percentage-ratio);
+$color-secondary-darken: darken($color-secondary, $percentage-ratio);
+$color-third-lighten: lighten($color-third, $percentage-ratio);
+$color-third-darken: darken($color-third, $percentage-ratio);
+$color-fourth-lighten: lighten($color-fourth, $percentage-ratio);
+$color-fourth-darken: darken($color-fourth, $percentage-ratio);
+$color-fifth-lighten: lighten($color-fifth, $percentage-ratio);
+$color-fifth-darken: darken($color-fifth, $percentage-ratio);
+/* Line Rule */
+@mixin line-rule($value) {
+    font-size: #{$value}px;
+}
+
+/* Text Type */
+@mixin text-type-1 {
+    @include line-rule(14);
+    font-weight: 300;
+}
+
+@mixin text-type-2 {
+    @include line-rule(20);
+    font-weight: 500;
+}
+
+@mixin text-type-3 {
+    @include line-rule(40);
+    font-weight: 500;
+}
+
+@mixin text-type-4 {
+    @include line-rule(60);
+    font-weight: 500;
+}
+
+@mixin text-type-5 {
+    @include line-rule(80);
+    font-weight: 500;
+}
+
+@mixin text-type-6 {
+    @include line-rule(120);
+    font-weight: 500;
+}
+
+/* Heading Type */
+@mixin heading-type-1 {
+    @include line-rule(16);
+    font-weight: 500;
+}
+
+@mixin heading-type-2 {
+    @include line-rule(24);
+    font-weight: 500;
+}
+
+@mixin heading-type-3 {
+    @include line-rule(40);
+    font-weight: 600;
+}
+
+@mixin heading-type-4 {
+    @include line-rule(60);
+    font-weight: 700;
+}
+
+@mixin heading-type-5 {
+    @include line-rule(80);
+    font-weight: 700;
+}
+
+@mixin heading-type-6 {
+    @include line-rule(120);
+    font-weight: 700;
+}
+
+/* Max Media Query */
+@mixin max($breakpoint) {
+	@media (max-width: $breakpoint + px) {
+		@content;
+	}
+}
+
+/* Min Media Query */
+@mixin min($breakpoint) {
+	@media (min-width: ($breakpoint + 1) + px) {
+		@content;
+	}
+}
+
+/* Border Radius */
+@mixin border-radius($radius) {
+	border-radius: $radius;
+	-moz-border-radius: $radius;
+	-webkit-border-radius: $radius;
+}
+
+/* Box Shadow */
+@mixin box-shadow($top, $left, $blur, $deep, $color, $inset: false) {
+    @if $inset {
+        box-shadow: inset $top $left $blur $deep $color;
+        -moz-box-shadow: inset $top $left $blur $deep $color;
+        -webkit-box-shadow: inset $top $left $blur $deep $color;
+    } @else {
+        box-shadow: $top $left $blur $deep $color;
+        -moz-box-shadow: $top $left $blur $deep $color;
+        -webkit-box-shadow: $top $left $blur $deep $color;
+    }
+}
+
+/* İmage Center */
+@mixin imgcenter {
+	img {
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		margin: auto;
+		display: block;
+		max-width: 100%;
+		max-height: 100%;
+	}
+}
+
+/* İmage Fit */
+@mixin fit {
+	img {
+		position:absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+}
+
+/* Element Center */
+@mixin center {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+/* İnput Placeholder */
+@mixin placeholder {
+    &::-webkit-input-placeholder {@content}
+    &:-moz-placeholder           {@content}
+    &::-moz-placeholder          {@content}
+    &:-ms-input-placeholder      {@content}
+}
+
+a {color: $color-text;}
+
+a {
+    color: $color-text;
+    &:active,
+    &:hover {
+        color: $color-primary;
+    }
+}
+
+/* Lütfen bu açıklama satırından sonra kod eklemeyiniz. */
