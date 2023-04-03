@@ -15,7 +15,6 @@ namespace E_Commerce.Business.Services
         readonly IHttpContextAccessor _httpContextAccessor;
         public Task DeactivateAsync(string token)
         {
-            //_cache.
             throw new NotImplementedException();
         }
 
