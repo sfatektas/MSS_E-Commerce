@@ -12,7 +12,7 @@ namespace E_Commerce.Entities.EFCore.Identities
     {
         public UserType UserType { get; set; }
         public int UserTypeId { get; set; }
-        public bool IsActive { get; set; }
+        public bool IsActive { get; set; } = true;
     }
     public class Supplier : AppUser
     {

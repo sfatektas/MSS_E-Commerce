@@ -17,5 +17,6 @@ namespace E_Commerce.Common
             ErrorCode = errorCode;
             ErrorMessage = errorMessage;
         }
+
     }
 }
