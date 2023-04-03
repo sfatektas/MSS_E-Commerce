@@ -9,6 +9,7 @@ namespace E_Commerce.Entities.EFCore
 {
     public class UserType : BaseEntity
     {
+        //Todo SeedData eklenecek
         public string Defination { get; set; }
         public List<AppUser> AppUsers { get; set; }
     }

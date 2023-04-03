@@ -8,6 +8,7 @@ namespace E_Commerce.Entities.EFCore
 {
     public class Category : BaseEntity
     {
+        //Todo SeedData eklenecek
         public string Defination { get; set; }
 
         public List<Product> Products { get; set; }
