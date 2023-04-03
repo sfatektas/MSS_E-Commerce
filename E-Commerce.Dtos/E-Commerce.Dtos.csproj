@@ -1,14 +1,27 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <RootNamespace>E_Commerce.Dtos</RootNamespace>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>disable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<RootNamespace>E_Commerce.Dtos</RootNamespace>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>disable</Nullable>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\E-Commerce.Common\E-Commerce.Common.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		>>>>>> HEAD
+		<Folder Include="CategoryDtos\" />
+		<Folder Include="ColorDtos\" />
+		<Folder Include="GenderDtos\" />
+		<Folder Include="OrderStatusTypeDtos\" />
+		<Folder Include="OrderValidationDtos\" />
+		<Folder Include="SizeTypeValidation\" />
+		<Folder Include="UserTypeValidation\" />
+	</ItemGroup>
+
+	<ItemGroup>
+		=======
+		>>>>>>> f1bd06a239ccbecc81ccbee49cdd1980aa06d660
+		<ProjectReference Include="..\E-Commerce.Common\E-Commerce.Common.csproj" />
+	</ItemGroup>
 
 </Project>
