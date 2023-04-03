@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+<<<<<<< HEAD
     <Folder Include="CategoryDtos\" />
     <Folder Include="ColorDtos\" />
     <Folder Include="GenderDtos\" />
@@ -18,6 +19,8 @@
   </ItemGroup>
 
   <ItemGroup>
+=======
+>>>>>>> f1bd06a239ccbecc81ccbee49cdd1980aa06d660
     <ProjectReference Include="..\E-Commerce.Common\E-Commerce.Common.csproj" />
   </ItemGroup>
 

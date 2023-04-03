@@ -4,6 +4,7 @@ using E_Commerce.Common;
 using E_Commerce.DataAccess.Interfaces;
 using E_Commerce.Dtos.SiteOptionDtos;
 using E_Commerce.Entities.EFCore;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +26,7 @@ namespace E_Commerce.Business.Services
 
         public async Task<Response<SiteOptionListDto>> GetOptionAsync()
         {
-            var data = await _uow.GetRepository<SiteOption>().GetAllAsync();
+            var data = await _uow.GetRepository<SiteOption>().GetAllAsync().ToListAsync();
             if(data != null)
                 return new Response<SiteOptionListDto>(Common.Enums.ResponseType.Success, _mapper.Map<SiteOptionListDto>(data.FirstOrDefault()));
             return new Response<SiteOptionListDto>(Common.Enums.ResponseType.NotFound, null);

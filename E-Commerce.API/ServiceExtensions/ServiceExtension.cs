@@ -1,21 +1,29 @@
 ﻿using AutoMapper;
+using E_Commerce.Business.Consts;
 using E_Commerce.Business.Interfaces;
 using E_Commerce.Business.Mapper.AutoMapper;
 using E_Commerce.Business.Services;
+using E_Commerce.Business.Validations.FluentValidations;
 using E_Commerce.Business.Validations.FluentValidations.SiteOptionValidation;
 using E_Commerce.Common;
 using E_Commerce.Common.Interfaces;
 using E_Commerce.DataAccess.Contexts;
 using E_Commerce.DataAccess.Interfaces;
 using E_Commerce.DataAccess.UnitOfWorks;
+using E_Commerce.Dtos;
 using E_Commerce.Dtos.SiteOptionDtos;
 using E_Commerce.Entities.EFCore.Identities;
 using E_Commerce.Presentation;
+using E_Commerce.Presentation.ActionFilters;
 using FluentValidation;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Cors.Infrastructure;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace E_Commerce.API.ServiceExtensions
 {
@@ -25,27 +33,23 @@ namespace E_Commerce.API.ServiceExtensions
         {
             services.AddDbContext<E_CommerceDbContext>(x =>
             {
-                x.UseSqlServer(configuration.GetConnectionString("LocalDb"));
+                //"RemoteDb"
+                x.UseSqlServer(configuration.GetConnectionString("RemoteDb"));
             });
-            //services.AddIdentity<AppUser, AppRole>()
-            //    .AddEntityFrameworkStores<E_CommerceDbContext>()
-            //    .AddDefaultTokenProviders(); // TODO kullanıcıların emailine doğrulama e-postası gönderilecek
-
-            services.AddIdentity<Admin, AppRole>(opt =>
+            services.AddIdentity<AppUser, AppRole>(opt =>
             {
+                opt.Password.RequiredLength = IdentityDbOptions.RequiredLength;
                 opt.Password.RequireNonAlphanumeric = false;
-                opt.Password.RequireDigit = false;
+                opt.Password.RequireDigit = true;
+                opt.Lockout.AllowedForNewUsers = true;
+                opt.Lockout.MaxFailedAccessAttempts = IdentityDbOptions.MaxFailedAccessAttempts;
+
+                //Sıgin Options
+                opt.SignIn.RequireConfirmedPhoneNumber = false;
             })
-                 .AddEntityFrameworkStores<E_CommerceDbContext>()
-                 .AddDefaultTokenProviders(); // TODO kullanıcıların emailine doğrulama e-postası gönderilecek
-            
-            services.AddIdentity<Supplier, AppRole>()
                 .AddEntityFrameworkStores<E_CommerceDbContext>()
                 .AddDefaultTokenProviders(); // TODO kullanıcıların emailine doğrulama e-postası gönderilecek
-           
-            services.AddIdentity<Customer, AppRole>()
-                .AddEntityFrameworkStores<E_CommerceDbContext>()
-                .AddDefaultTokenProviders();
+            // !!!!!!!!NOT: BİRDEN FAZA IDENTITY SCHEMA KULLANIMI AZURE TARAFINDA 500.30 HATASI DÖNDÜRÜYOR.
         }
         public static void ConfigureController(this IServiceCollection services)
         {
@@ -72,10 +76,12 @@ namespace E_Commerce.API.ServiceExtensions
         {
             services.AddScoped<IUow, Uow>();
             services.AddScoped<ISiteOptionService, SiteOptionService>();
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
         }
         public static void ConfigureValidations(this IServiceCollection services)
         {
             services.AddTransient<IValidator<SiteOptionCreateDto>, SiteOptionCreateValidatior>();
+            services.AddTransient<IValidator<UserLoginModel>, UserLoginModelValidator>();
         }
         public static void ConfigureCors(this IServiceCollection services)
         {
@@ -90,5 +96,37 @@ namespace E_Commerce.API.ServiceExtensions
                       });
             });
         }
+        public static void ConfigureLogger(this IServiceCollection services)
+        {
+            services.AddSingleton<ILoggerService, LoggerService>();
+        }
+        public static void ConfigureJWTBearer(this IServiceCollection services , IConfiguration configuration)
+        {
+            var jwtoptions = configuration.GetSection("JWTTokenOptions");
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+
+            }).AddJwtBearer(opt =>
+            {
+                opt.Audience = jwtoptions["Audience"];
+                opt.SaveToken = true;
+                opt.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtoptions["SecretKey"])),
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidateIssuer = false, //üreteni doğrulama
+                    ValidateAudience = true,
+                    ClockSkew = TimeSpan.Zero, // sunucu taraflı saniye gecikmesi durumu ??
+                };
+            });
+        }
+        public static void ConfigureActionFilters(this IServiceCollection services)
+        {
+            services.AddScoped<ValidateFilterAttiribute<UserLoginModel>>();
+        } 
     }
 }

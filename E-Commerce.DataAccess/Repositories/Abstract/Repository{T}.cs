@@ -3,6 +3,7 @@ using E_Commerce.DataAccess.Contexts;
 using E_Commerce.DataAccess.Interfaces;
 using E_Commerce.Entities.EFCore;
 using E_Commerce.Entities.EFCore.Interfaces;
+using E_Commerce.Entities.RequestFeatures;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.DataAccess.Repositories.Abstract
 {
-    public class Repository<T> :IRepository<T> where T : BaseEntity,IBaseEntity, new()
+    public class Repository<T> : IRepository<T> where T : BaseEntity, IBaseEntity, new()
     {
         readonly E_CommerceDbContext _context;
 
@@ -33,27 +34,43 @@ namespace E_Commerce.DataAccess.Repositories.Abstract
             return data;
         }
 
-        public async Task<List<T>> GetAllAsync()
+        public  IQueryable<T> GetAllAsync(bool trackChanges = false)
         {
-            var list = await _context.Set<T>().AsNoTracking().ToListAsync();
+            var list = _context.Set<T>()
+                .AsNoTracking();
             return list;
         }
-        public async Task<List<T>> GetAllAsync(Expression<Func<T, bool>> filter)
+        public IQueryable<T> GetAllAsync( Expression<Func<T, bool>> filter , bool trackChanges = false)
         {
-            var list = await _context.Set<T>().AsNoTracking().Where(filter).ToListAsync();
+            var list  = (!trackChanges) ? _context.Set<T>()
+                .AsNoTracking()
+                .Where(filter) :
+                _context.Set<T>()
+                .AsNoTracking()
+                .Where(filter);
             return list;
         }
-        public async Task<List<T>> GetAllAsync<TKey>(Expression<Func<T, bool>> filter, Expression<Func<T, TKey>> keySelector, OrderByType OrderByType = OrderByType.DESC)
+        public IQueryable<T> GetAllAsync<TKey>(Expression<Func<T, bool>> filter, Expression<Func<T, TKey>> keySelector, OrderByType OrderByType = OrderByType.DESC , bool trackChanges = false)
         {
-            var list = (OrderByType == OrderByType.DESC) ? await _context.Set<T>().AsNoTracking().OrderByDescending(keySelector).Where(filter).ToListAsync() :
-                await _context.Set<T>().AsNoTracking().OrderBy(keySelector).Where(filter).ToListAsync();
+            var list = (OrderByType == OrderByType.DESC) ?  _context.Set<T>()
+                .AsNoTracking()
+                .OrderByDescending(keySelector)
+                .Where(filter)
+                 :
+                 _context.Set<T>()
+                .AsNoTracking()
+                .OrderBy(keySelector)
+                .Where(filter);
             return list;
         }
 
         public async Task<T> GetByFilterAsync(Expression<Func<T, bool>> filter, bool asNoTracking = false)
         {
-            return !asNoTracking ? await _context.Set<T>().AsNoTracking().SingleOrDefaultAsync(filter) :
-                await _context.Set<T>().SingleOrDefaultAsync(filter);
+            return !asNoTracking ? 
+                await _context.Set<T>().AsNoTracking()
+                .SingleOrDefaultAsync(filter) :
+                await _context.Set<T>()
+                .SingleOrDefaultAsync(filter);
         }
 
         public void Remove(T entity)
@@ -64,7 +81,6 @@ namespace E_Commerce.DataAccess.Repositories.Abstract
         public void Update(T unchanged, T updated)
         {
             _context.Update(updated);
-            //_context.Entry(unchanged).CurrentValues.SetValues(updated);
         }
         public IQueryable<T> GetQueryable()
         {

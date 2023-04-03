@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using E_Commerce.Dtos;
+using E_Commerce.Presentation.ActionFilters;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +17,18 @@ namespace E_Commerce.Presentation.Controllers
 
         public IActionResult Get()
         {
+            return Ok("It's working");
+        }
+        [ServiceFilter(typeof(ValidateFilterAttiribute<UserLoginModel>))]
+        [HttpPost("[action]")]
+        public IActionResult Post([FromBody]UserLoginModel model)
+        {
+            return Ok();
+        }
+        [HttpGet("GetError")]
+        public IActionResult Error()
+        {
+            throw new ArgumentNullException();
             return Ok("It's working");
         }
         // var response = _service.GetAllBook();
