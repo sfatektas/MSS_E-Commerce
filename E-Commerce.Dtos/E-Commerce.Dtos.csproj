@@ -7,4 +7,18 @@
     <Nullable>disable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="CategoryDtos\" />
+    <Folder Include="ColorDtos\" />
+    <Folder Include="GenderDtos\" />
+    <Folder Include="OrderStatusTypeDtos\" />
+    <Folder Include="OrderValidationDtos\" />
+    <Folder Include="SizeTypeValidation\" />
+    <Folder Include="UserTypeValidation\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\E-Commerce.Common\E-Commerce.Common.csproj" />
+  </ItemGroup>
+
 </Project>
