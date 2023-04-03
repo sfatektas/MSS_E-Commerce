@@ -1,5 +1,6 @@
 ﻿using E_Commerce.Dtos;
 using E_Commerce.Presentation.ActionFilters;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -32,6 +33,11 @@ namespace E_Commerce.Presentation.Controllers
             return Ok("It's working");
         }
         // var response = _service.GetAllBook();
-
+        [HttpGet("auth")]
+        [Authorize]
+        public IActionResult IsAuthenticate()
+        {
+            return Ok("you are already authorize");
+        }
     }
 }

@@ -128,5 +128,13 @@ namespace E_Commerce.API.ServiceExtensions
         {
             services.AddScoped<ValidateFilterAttiribute<UserLoginModel>>();
         } 
+        public static void ConfigureRedis(this IServiceCollection services,IConfiguration configuration)
+        {
+            services.AddDistributedRedisCache(opt =>
+            {
+                opt.Configuration = configuration["RedisConnection"];
+            });
+        }
+
     }
 }

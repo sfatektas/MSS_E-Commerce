@@ -11,5 +11,6 @@ namespace E_Commerce.Business.Interfaces
     public interface IAuthenticationService
     {
         Task<TokenModel> CheckLogin(UserLoginModel model);
+        Task Logout();
     }
 }

@@ -25,6 +25,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.ConfigureLogger();
 builder.Services.ConfigureActionFilters();
+builder.Services.ConfigureJWTBearer(builder.Configuration);
+builder.Services.ConfigureRedis(builder.Configuration);
 
 
 var app = builder.Build();
@@ -42,6 +44,7 @@ app.UseStaticFiles();
 
 
 app.UseCors();
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
