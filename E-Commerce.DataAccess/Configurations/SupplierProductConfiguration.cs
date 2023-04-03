@@ -22,6 +22,9 @@ namespace E_Commerce.DataAccess.Configurations
                 x.ColorId
             }); //bir satıcı aynı ürünün , aynı renkteki , aynı bedendeki halini sadece 1 kere kayıt olarak geçebilir.
             builder.Property(x => x.UnitPrice).HasMaxLength(10000000);
+            builder.Property(x => x.CustomProductTitle).HasMaxLength(500);
+            builder.Property(x => x.CustomProductDefination).HasMaxLength(500);
+
         }
     }
 }
