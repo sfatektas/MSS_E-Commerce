@@ -69,5 +69,9 @@ namespace E_Commerce.Business.Services
             await _signInManager.SignOutAsync();
         }
 
+        public async Task Logout()
+        {
+            await _signInManager.SignOutAsync();
+        }
     }
 }

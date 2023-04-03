@@ -30,5 +30,11 @@ namespace E_Commerce.Presentation.Controllers
             var tokenModel = await _authenticationService.CheckLogin(model);
             return Ok(tokenModel);
         }
+        [HttpGet("[action]")]
+        public async Task<IActionResult> LogOut()
+        {
+            await _authenticationService.Logout();
+            return Ok();
+        }
     }
 }

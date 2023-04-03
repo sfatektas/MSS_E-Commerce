@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.Business.Helpers
 {
-    public static class JwtTokenService
+    public class JwtTokenService
     {
         public static TokenModel GenerateToken(List<Claim> claims , string key , string audience , string issuer , int expiresMinute)
         {
@@ -26,6 +26,7 @@ namespace E_Commerce.Business.Helpers
                 Subject = new ClaimsIdentity(claims),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(secretKey), SecurityAlgorithms.HmacSha256Signature)
             };
+
             var token = tokenHandler.CreateToken(tokenDescriptor);
             string tokenString = tokenHandler.WriteToken(token);
             return new() { 
