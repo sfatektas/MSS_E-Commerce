@@ -1,6 +1,7 @@
 ﻿using E_Commerce.Dtos;
 using E_Commerce.Presentation.ActionFilters;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.Presentation.Controllers
 {
+    [EnableCors("DefaultPolicy")]
     [ApiController]
     [Route("api/[controller]")]
     public class TestController : ControllerBase

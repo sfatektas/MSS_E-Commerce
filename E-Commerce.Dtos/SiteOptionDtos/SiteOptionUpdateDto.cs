@@ -9,7 +9,7 @@ namespace E_Commerce.Dtos.SiteOptionDtos
 {
     public class SiteOptionUpdateDto : IUpdateDto
     {
-        public int Id { get; set; }
+        public int Id { get; init; }
         public string Logo { get; set; }
         public string Slogan { get; set; }
         public string FacebookLink { get; set; }

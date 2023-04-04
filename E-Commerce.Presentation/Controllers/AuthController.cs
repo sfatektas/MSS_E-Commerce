@@ -3,6 +3,7 @@ using E_Commerce.Business.Services;
 using E_Commerce.Dtos;
 using E_Commerce.Presentation.ActionFilters;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -14,6 +15,7 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.Presentation.Controllers
 {
+    [EnableCors("DefaultPolicy")]
     [AllowAnonymous] // herhangi bir yetkilendirme işlemi olmayacak
     [ApiController]
     [Route("api/[controller]")]
