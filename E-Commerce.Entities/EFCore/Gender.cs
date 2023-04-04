@@ -1,5 +1,4 @@
-﻿using E_Commerce.Dtos.CustomerDtos;
-using E_Commerce.Entities.EFCore.Identities;
+﻿using E_Commerce.Entities.EFCore.Identities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +12,6 @@ namespace E_Commerce.Entities.EFCore
         //Todo SeedData eklenecek
         public string Defination { get; set; }
 
-        public List<CustomerListDto> Customers { get; set; }
+        public List<Customer> Customers { get; set; }
     }
 }

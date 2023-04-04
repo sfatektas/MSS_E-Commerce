@@ -1,4 +1,5 @@
-﻿using E_Commerce.Dtos.Interfaces;
+﻿using E_Commerce.Dtos.AppUserDtos;
+using E_Commerce.Dtos.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,6 @@ namespace E_Commerce.Dtos.UserTypeDtos
     {
         public int Id { get; init; }
         public string Defination { get; init; }
-        public List<AppUser> AppUsers { get; init; }
+        public List<AppUserListDto> AppUsers { get; init; }
     }
 }
