@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.Dtos.CategoryDtos
 {
-    public class CategoryListDto : IListDto
+    public record CategoryListDto : IListDto
     {
         public int Id { get; init; }
-        public string Defination { get; set; }
-        public List<ProductListDto> Products { get; set; }
+        public string Defination { get; init; }
+        public List<ProductListDto> Products { get; init; }
     }
 }

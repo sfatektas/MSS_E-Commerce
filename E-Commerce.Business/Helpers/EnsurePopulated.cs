@@ -91,10 +91,18 @@ namespace E_Commerce.Business.Helpers
                         PinterestLink = "aaa.pinterest.com"
                     });
             }
-            if (context.Admins.Any())
+            if (!context.Admins.Any())
             {
                 var adminList = new List<Admin>()
                 {
+                    new Admin
+                    {
+                        FirstName = "Selim",
+                        UserName = "selimgunaydin",
+                        Email = "selim61@gmail.com",
+                        UserTypeId = (int)AppUserType.Admin,
+
+                    },
                     new Admin
                     {
                         FirstName = "Selim2",

@@ -14,6 +14,7 @@ namespace E_Commerce.DataAccess.Configurations
         public void Configure(EntityTypeBuilder<Color> builder)
         {
             builder.Property(x => x.Defination).IsRequired().HasMaxLength(255);
+
         }
     }
 }

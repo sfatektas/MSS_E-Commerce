@@ -10,7 +10,8 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.Business.Interfaces
 {
-    public interface IService<CreateDto, ListDto, UpdateDto, T> where CreateDto : class, ICreateDto
+    public interface IService<CreateDto, ListDto, UpdateDto, T> 
+          where CreateDto : class, ICreateDto
           where ListDto : class, IListDto
           where UpdateDto : class, IUpdateDto
           where T : BaseEntity

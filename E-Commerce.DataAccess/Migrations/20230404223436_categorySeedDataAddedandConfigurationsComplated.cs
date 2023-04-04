@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace E_Commerce.DataAccess.Migrations
 {
-    public partial class siteOptionsTableAdded : Migration
+    public partial class categorySeedDataAddedandConfigurationsComplated : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -30,8 +30,8 @@ namespace E_Commerce.DataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Defination = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Defination = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -45,7 +45,7 @@ namespace E_Commerce.DataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Defination = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Defination = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -59,7 +59,7 @@ namespace E_Commerce.DataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Defination = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Defination = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -73,7 +73,7 @@ namespace E_Commerce.DataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Defination = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Defination = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -87,7 +87,7 @@ namespace E_Commerce.DataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Defination = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Defination = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -101,16 +101,16 @@ namespace E_Commerce.DataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Logo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Slogan = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FacebookLink = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TwitterLink = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Logo = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
+                    Slogan = table.Column<string>(type: "nvarchar(350)", maxLength: 350, nullable: false),
+                    FacebookLink = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    TwitterLink = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     LinkedInLink = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PinterestLink = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Adress = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false)
+                    PinterestLink = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Adress = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false, defaultValue: true)
                 },
                 constraints: table =>
                 {
@@ -123,7 +123,7 @@ namespace E_Commerce.DataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Defination = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Defination = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -137,7 +137,7 @@ namespace E_Commerce.DataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -151,7 +151,7 @@ namespace E_Commerce.DataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Defination = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Defination = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -187,11 +187,11 @@ namespace E_Commerce.DataAccess.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     BrandId = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Detail = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Detail = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
                     SizeTypeId = table.Column<int>(type: "int", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false),
-                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImageUrl = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -223,7 +223,7 @@ namespace E_Commerce.DataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Value = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Value = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     SizeTypeId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SizeTypeId1 = table.Column<int>(type: "int", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
@@ -245,9 +245,9 @@ namespace E_Commerce.DataAccess.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     SliderId = table.Column<int>(type: "int", nullable: false),
-                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SubTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImageUrl = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
+                    SubTitle = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -267,9 +267,9 @@ namespace E_Commerce.DataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    UserTypeId = table.Column<int>(type: "int", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     DiscriminatorUserType = table.Column<int>(type: "int", nullable: false),
-                    UserTypeId = table.Column<int>(type: "int", nullable: true),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Customer_FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -308,7 +308,8 @@ namespace E_Commerce.DataAccess.Migrations
                         name: "FK_AspNetUsers_UserTypes_UserTypeId",
                         column: x => x.UserTypeId,
                         principalTable: "UserTypes",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -403,9 +404,9 @@ namespace E_Commerce.DataAccess.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CustomerId = table.Column<int>(type: "int", nullable: false),
-                    City = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Town = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AddressDefination = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    City = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Town = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    AddressDefination = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     SelectedAddress = table.Column<bool>(type: "bit", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -429,9 +430,9 @@ namespace E_Commerce.DataAccess.Migrations
                     CustomerId = table.Column<int>(type: "int", nullable: false),
                     OrderStatusTypeId = table.Column<int>(type: "int", nullable: false),
                     TotalPrice = table.Column<double>(type: "float", nullable: false),
-                    City = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Town = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AddressDetail = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    City = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Town = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    AddressDetail = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -463,8 +464,8 @@ namespace E_Commerce.DataAccess.Migrations
                     SupplierId = table.Column<int>(type: "int", nullable: false),
                     UnitPrice = table.Column<double>(type: "float", nullable: false),
                     ColorId = table.Column<int>(type: "int", nullable: false),
-                    CustomProductTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CustomProductDefination = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CustomProductTitle = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                    CustomProductDefination = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
                     VisitCounter = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
@@ -585,9 +586,8 @@ namespace E_Commerce.DataAccess.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CustomerId = table.Column<int>(type: "int", nullable: false),
-                    SupplierId = table.Column<int>(type: "int", nullable: true),
                     SupplierProductId = table.Column<int>(type: "int", nullable: false),
-                    Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Content = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: false),
                     Point = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
@@ -601,11 +601,6 @@ namespace E_Commerce.DataAccess.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ProductComment_AspNetUsers_SupplierId",
-                        column: x => x.SupplierId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_ProductComment_SuppliersProducts_SupplierProductId",
                         column: x => x.SupplierProductId,
@@ -621,7 +616,7 @@ namespace E_Commerce.DataAccess.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     SupplierProductId = table.Column<int>(type: "int", nullable: false),
-                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImageUrl = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -644,7 +639,7 @@ namespace E_Commerce.DataAccess.Migrations
                     SupplierProductsId = table.Column<int>(type: "int", nullable: false),
                     UnitPrice = table.Column<double>(type: "float", nullable: false),
                     Amount = table.Column<double>(type: "float", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false)
+                    IsActive = table.Column<bool>(type: "bit", nullable: false, defaultValue: true)
                 },
                 constraints: table =>
                 {
@@ -654,7 +649,7 @@ namespace E_Commerce.DataAccess.Migrations
                         column: x => x.SupplierProductsId,
                         principalTable: "SuppliersProducts",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -706,6 +701,38 @@ namespace E_Commerce.DataAccess.Migrations
                         principalTable: "SuppliersProducts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Categories",
+                columns: new[] { "Id", "Defination", "IsActive" },
+                values: new object[,]
+                {
+                    { 1, "TShirt", true },
+                    { 2, "Pantalon", true },
+                    { 3, "Ayakkabı", true },
+                    { 4, "Gömlek", true },
+                    { 5, "Bluz", true }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Genders",
+                columns: new[] { "Id", "Defination", "IsActive" },
+                values: new object[,]
+                {
+                    { 1, "Erkek", true },
+                    { 2, "Kadın", true },
+                    { 3, "Belirtmek İstemiyorum", true }
+                });
+
+            migrationBuilder.InsertData(
+                table: "UserTypes",
+                columns: new[] { "Id", "Defination", "IsActive" },
+                values: new object[,]
+                {
+                    { 1, "Admin", true },
+                    { 2, "Customer", true },
+                    { 3, "Supplier", true }
                 });
 
             migrationBuilder.CreateIndex(
@@ -773,9 +800,9 @@ namespace E_Commerce.DataAccess.Migrations
                 column: "SupplierProductsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderDetails_OrderId",
+                name: "IX_OrderDetails_OrderId_SupplierProductId",
                 table: "OrderDetails",
-                column: "OrderId");
+                columns: new[] { "OrderId", "SupplierProductId" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderDetails_SupplierProductId",
@@ -803,11 +830,6 @@ namespace E_Commerce.DataAccess.Migrations
                 column: "CustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductComment_SupplierId",
-                table: "ProductComment",
-                column: "SupplierId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_ProductComment_SupplierProductId",
                 table: "ProductComment",
                 column: "SupplierProductId");
@@ -818,9 +840,9 @@ namespace E_Commerce.DataAccess.Migrations
                 column: "SupplierProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Products_BrandId",
+                name: "IX_Products_BrandId_Name",
                 table: "Products",
-                column: "BrandId");
+                columns: new[] { "BrandId", "Name" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_CategoryId",
@@ -879,9 +901,9 @@ namespace E_Commerce.DataAccess.Migrations
                 column: "SizeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SuppliersProducts_SupplierId",
+                name: "IX_SuppliersProducts_SupplierId_ProductId_SizeId_ColorId",
                 table: "SuppliersProducts",
-                column: "SupplierId");
+                columns: new[] { "SupplierId", "ProductId", "SizeId", "ColorId" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

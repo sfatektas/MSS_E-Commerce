@@ -35,7 +35,7 @@ namespace E_Commerce.DataAccess.Configurations
                 },
             });
 
-            builder.Property(x=>x.Defination).IsRequired().HasMaxLength(20);
+            builder.Property(x=>x.Defination).IsRequired().HasMaxLength(100);
         }
     }
 }

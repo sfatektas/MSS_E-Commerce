@@ -66,6 +66,7 @@ namespace E_Commerce.API.ServiceExtensions
             var profileList = new List<Profile>
             {
                     new SiteOptionProfile(),
+                    new CategoryProfile(),
             };
 
             services.AddAutoMapper(opt =>
@@ -79,6 +80,7 @@ namespace E_Commerce.API.ServiceExtensions
             services.AddScoped<ISiteOptionService, SiteOptionService>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<ITokenManager,TokenManager>();
+            services.AddScoped<ICategoryService, CategoryService>();
         }
         public static void ConfigureValidations(this IServiceCollection services)
         {

@@ -8,7 +8,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<Folder Include="CategoryDtos\" />
 		<Folder Include="ColorDtos\" />
 		<Folder Include="GenderDtos\" />
 		<Folder Include="OrderStatusTypeDtos\" />
