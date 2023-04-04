@@ -1,0 +1,224 @@
+@import 'mixin';
+
+// Bootstrap Customizations
+
+$primary: #EF3636;
+$primary_hover: #D93131;
+
+@import "~bootstrap/scss/bootstrap";
+// Bootstrap Customizations
+
+// HEADER
+
+
+#collasible-nav-dropdown {
+    color: black;
+}
+
+.favorites {
+    position: relative;
+
+    .favorites-amount {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        width: 15px;
+        height: 15px;
+        font-size: 12px;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 100%;
+        background-color: #EF3636;
+    }
+}
+
+.cart {
+    position: relative;
+
+    .cart-amount {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        width: 15px;
+        height: 15px;
+        font-size: 12px;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 100%;
+        background-color: #EF3636;
+    }
+}
+
+a {
+    &:hover {
+        svg {
+            fill: #EF3636;
+        }
+    }
+}
+
+// HEADER
+
+// CAROUSEL
+.carousel {
+    .carousel-indicators {
+        button {
+            width: 15px;
+            height: 15px;
+            border-radius: 100%;
+        }
+    }
+
+    .carousel-item {
+
+        img {
+            height: 800px;
+            object-fit: cover;
+        }
+    }
+
+    .carousel-caption {
+        position: absolute;
+        margin: 0;
+        color: white;
+        left: 50%;
+        bottom: 10px;
+        transform: translate(-50%, -50%);
+
+        @media screen and (max-width:1199px) {
+            left: 50%;
+        }
+
+        h3 {
+            @include heading-type-5;
+
+            @media screen and (max-width:1199px) {
+                @include heading-type-3;
+            }
+        }
+
+        p {
+            @include text-type-2;
+        }
+    }
+
+}
+
+// CAROUSEL
+
+//BANNER
+
+.banner-row {
+    height: 300px;
+    .banner {
+        position: absolute;
+        margin-top: -100px;
+        z-index: 101;
+        .banner-item {
+            overflow: hidden;
+            position: relative;
+            img{
+                transition: all .5s ease-out;
+            }
+            &:hover{
+                img{
+                    transform: scale(1.1);
+                }
+                .title{
+                    background-color: #000;
+                }
+            }
+            .banner-content{
+                position: absolute;
+                top: 50px;
+                left: 50px;
+                button{
+                    border-radius: 5px;
+                }
+                .discount{
+                    font-size: 13px;
+                    border-radius: 5px;
+                }
+                .title{
+                    transition: all 1s ease-out;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1199px) {
+    .banner-row{
+        height: 200px;
+        .banner {
+            margin-top: 0px;
+            .banner-item{
+                .banner-content{
+                    top: 10px;
+                    left: 10px;
+                }
+            }
+        }
+    }
+    
+  }
+
+//BANNER
+
+.showcase{
+    .showcase-image{
+        overflow: hidden;
+        img{
+            transition: all .2s ease-out;
+        }
+    }
+    &:hover{
+        .showcase-image{
+            img{
+                transform: scale(1.05);
+            }
+        }
+    }
+    .showcase-content{
+        button{
+            background-color: #000;
+            border-radius: 5px;
+            &:hover{
+                background-color: $primary;
+            }
+        }
+    }
+    
+}
+
+//LOGIN
+
+.page-title {
+
+    height: 125px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 35px;
+    font-weight: 300;
+}
+
+.login-page {
+    input {
+        padding: 10px;
+    }
+
+    .login-form {
+        width: 400px;
+    }
+
+    .register-form {
+        width: 400px;
+    }
+}
+
+//LOGIN

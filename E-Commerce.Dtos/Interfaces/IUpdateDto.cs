@@ -8,6 +8,6 @@ namespace E_Commerce.Dtos.Interfaces
 {
     public interface IUpdateDto
     {
-        public int Id { get; set; }
+        public int Id { get; init; }
     }
 }

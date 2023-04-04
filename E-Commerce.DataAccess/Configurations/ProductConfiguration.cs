@@ -20,6 +20,9 @@ namespace E_Commerce.DataAccess.Configurations
                 x.BrandId,
                 x.Name
             });
+            builder.Property(x => x.Name).IsRequired().HasMaxLength(200);
+            builder.Property(x=>x.Detail).IsRequired().HasMaxLength(300);
+            builder.Property(x => x.ImageUrl).IsRequired().HasMaxLength(200);
         }
     }
 }

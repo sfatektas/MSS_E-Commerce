@@ -1,0 +1,22 @@
+﻿using E_Commerce.Entities.EFCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace E_Commerce.DataAccess.Configurations
+{
+    public class ProductCommentConfiguration : IEntityTypeConfiguration<ProductComment>
+    {
+        public void Configure(EntityTypeBuilder<ProductComment> builder)
+        {
+            builder.Property(x=>x.Content).IsRequired().HasMaxLength(400);
+            builder.Property(x => x.Point).IsRequired();
+        }
+    }
+}

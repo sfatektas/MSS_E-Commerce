@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -34,6 +35,7 @@ namespace E_Commerce.DataAccess.Configurations
                     IsActive = true
                 },
             });
+            builder.Property(x => x.Defination).IsRequired().HasMaxLength(400);
         }
     }
 }

@@ -34,6 +34,8 @@ namespace E_Commerce.DataAccess.Configurations
                     IsActive = true
                 },
             });
+
+            builder.Property(x=>x.Defination).IsRequired().HasMaxLength(20);
         }
     }
 }
