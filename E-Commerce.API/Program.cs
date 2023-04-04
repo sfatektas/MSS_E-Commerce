@@ -29,11 +29,13 @@ builder.Services.ConfigureJWTBearer(builder.Configuration);
 builder.Services.ConfigureRedis(builder.Configuration);
 
 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 app.UseMiddleware<CustomExceptionHandlerMiddleware>();
 app.UseMiddleware<RequestResponseMiddleware>(); 
+app.UseMiddleware<TokenMiddleware>();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -42,6 +44,7 @@ if (app.Environment.IsDevelopment())
 app.UseForwardedHeaders();
 app.UseStaticFiles();
 
+//app.UseSession(); //
 
 app.UseCors();
 app.UseAuthentication();

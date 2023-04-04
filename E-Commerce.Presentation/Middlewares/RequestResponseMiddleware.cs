@@ -37,5 +37,8 @@ namespace E_Commerce.Presentation.Middlewares
             }
             return ip;
         }
+        //Authorize middleware yaz login olduğunda kullanıcı token değerini cache belleğe aktar . 
+        //Logout olduğunda cache bellekten sil ve her gelen istek token ile geliyorsa gelen tokenı ilgili kullanıcıya ait
+        //cache bellekte bulunan token ile karşılaştır. Eşit değil ise unauthorize dön 
     }
 }

@@ -23,6 +23,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using StackExchange.Redis;
 using System.Text;
 
 namespace E_Commerce.API.ServiceExtensions
@@ -77,6 +78,7 @@ namespace E_Commerce.API.ServiceExtensions
             services.AddScoped<IUow, Uow>();
             services.AddScoped<ISiteOptionService, SiteOptionService>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
+            services.AddScoped<ITokenManager,TokenManager>();
         }
         public static void ConfigureValidations(this IServiceCollection services)
         {
@@ -130,9 +132,18 @@ namespace E_Commerce.API.ServiceExtensions
         } 
         public static void ConfigureRedis(this IServiceCollection services,IConfiguration configuration)
         {
-            services.AddDistributedRedisCache(opt =>
+            services.AddStackExchangeRedisCache(opt =>
             {
-                opt.Configuration = configuration["RedisConnection"];
+                opt.Configuration = configuration.GetConnectionString("RedisConnection");
+            });
+            services.AddScoped<RedisService>();
+        }
+        public static void ConfigureSessions(this IServiceCollection services, IConfiguration configuration)
+        {
+            var jwtOptions = configuration.GetSection("JWTTokenOptions");
+            services.AddSession(opt =>
+            {
+                opt.IdleTimeout = TimeSpan.FromMinutes(int.Parse(jwtOptions["ExpireMinitue"]));
             });
         }
 
