@@ -2,6 +2,8 @@ import { useState, useRef, useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import { authStore } from "../store/authStore";
 import { useNavigate } from "react-router-dom";
+import Loader from "../components/Loader";
+import { loaderStore } from "../store/loaderStore";
 
 export default function Login() {
   const [uname, setUname] = useState("");
@@ -10,6 +12,14 @@ export default function Login() {
   const [unameError, setUnameError] = useState("");
   const [buttonStatus, setButtonStatus] = useState(true);
   const { loginFetch, loginStatus } = authStore();
+
+  useEffect(() => {
+    if (loginStatus == 204) {
+      setTimeout(() => {
+        navigate("/");
+      }, 2000);
+    }
+  }, [loginStatus]);
 
   let navigate = useNavigate();
 
@@ -88,14 +98,11 @@ export default function Login() {
                     name="pass"
                     value={password}
                     onChange={handlePassword}
-                    className="mb-4"
                     required
                   />
                   <p className="text-primary">{passwordError}</p>
                 </div>
-                <p className="text-black fw-light">
-                  {loginStatus ? `${loginStatus}` : null}
-                </p>
+                <p className="text-black fw-light mb-4">** Login Status **</p>
                 <div className="button-container d-flex flex-column mb-4">
                   <button
                     onClick={handleSubmit}

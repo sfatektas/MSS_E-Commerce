@@ -6,17 +6,17 @@ import Brands from "../components/Brands";
 import ImageGallery from "../components/ImageGallery";
 import HomeFeatures from "../components/HomeFeatures";
 import Loader from "../components/Loader";
-import { useState } from "react";
+import { loaderStore } from "../store/loaderStore";
 
 export default function Home() {
-  const [isLoading, setIsLoading] = useState(true);
-  setTimeout(() => {
-    setIsLoading(false)
-  }, 2000);
+  const { isLoading } = loaderStore();
+
   return (
     <>
       {isLoading ? (
-        <Loader />
+        <>
+          <Loader />
+        </>
       ) : (
         <>
           {" "}

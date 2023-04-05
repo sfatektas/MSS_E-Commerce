@@ -9,6 +9,7 @@ import Register from "./pages/Register";
 import NotFound from "./pages/NotFound";
 import Account from "./pages/Account";
 import Footer from "./components/Footer";
+import Category from "./pages/Category";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/account" element={<Account />} />
+        <Route path="/category/:defination" element={<Category />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />

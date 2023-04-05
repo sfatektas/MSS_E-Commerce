@@ -2,9 +2,8 @@ import { create } from "zustand";
 import axios from "axios";
 
 export const authStore = create((set) => ({
-  user: null,
   loginStatus: null,
-
+  logoutStatus: null,
   loginFetch: async (uname, password) => {
     const response = await axios
       .post("https://e-commercemss.azurewebsites.net/api/Auth/Login", {
@@ -12,16 +11,23 @@ export const authStore = create((set) => ({
         password: password,
       })
       .then((response) => {
-        // console.log(response.data.token);
-        set({ loginStatus: "Giriş Başarılı, yönlendiriliyorsunuz" });
-        localStorage.setItem("TOKEN", response.data.token);
+        console.log("Giriş Başarılı");
+        if (response.status == 200) {
+          set({ loginStatus: response.status });
+          setTimeout(() => {
+            set({ loginStatus: response.status });
+            localStorage.setItem("TOKEN", response.data.token);
+          }, 2000);
+        } else {
+          set({ loginStatus: "null" });
+        }
       })
       .catch((error) => {
-        set({ loginStatus: error.response.data.Error });
+        console.log(error.response.data.Error);
+        set({ loginStatus: error.response.status });
       });
   },
-  logout: () => {
-    set({ user: null });
+  logout: async () => {
     axios
       .get(
         `https://e-commercemss.azurewebsites.net/api/Auth/Logout/${localStorage.getItem(
@@ -33,10 +39,17 @@ export const authStore = create((set) => ({
           },
         }
       )
-      // .then((response) => {
-      //   console.log("Çıkış Başarılı");
-      //   console.log(response);
-      // });
-    localStorage.removeItem("TOKEN");
+      .then((response) => {
+        if (response.status == 204) {
+          console.log("Çıkış Başarılı : " + response.status);
+          set({ logoutStatus: response.status });
+          localStorage.removeItem("TOKEN");
+        }
+      })
+      .catch((error) => {
+        console.log("Çıkış hatalı");
+        console.log(error);
+        set({ logoutStatus: error.response });
+      });
   },
 }));

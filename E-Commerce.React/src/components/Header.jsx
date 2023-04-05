@@ -6,37 +6,40 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import { authStore } from "../store/authStore";
+import { loaderStore } from "../store/loaderStore";
 import { useState, useEffect } from "react";
-import LogoutModal from "./LogoutModal";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function Header() {
-  const { logout } = authStore();
-  const [modalShow, setModalShow] = useState(false);
+  const { logout, logoutStatus } = authStore();
+  const { setIsLoading } = loaderStore();
   const [categories, setCategories] = useState([]);
 
   let navigate = useNavigate();
 
-  function handleModel() {
-    setModalShow(true);
+  useEffect(() => {
+    if (logoutStatus == 204) {
+      setTimeout(() => {
+        navigate("/");
+      }, 2000);
+    }
+  }, [logoutStatus]);
+
+  function handleLogout() {
     logout();
-    setTimeout(() => {
-      setModalShow(false);
-      navigate("/");
-    }, 2000);
   }
   useEffect(() => {
     axios
       .get("https://e-commercemss.azurewebsites.net/api/Categories")
       .then((response) => {
         setCategories(response.data);
+        setIsLoading(false);
       });
   }, []);
 
   return (
     <Navbar className="navbar sticky-top" key="lg" bg="light" expand="lg">
-      <LogoutModal show={modalShow} onHide={() => setModalShow(false)} />
       <Container>
         <Navbar.Brand className="logo order-1 order-lg-0 col-lg-3 d-flex align-items-center justify-content-center justify-content-lg-start">
           {/* <img height="40px" alt="logo" src={logo}></img> */}
@@ -74,7 +77,10 @@ function Header() {
               <Nav.Link href="/contact">Contact</Nav.Link>
               <NavDropdown title="Categories" id="collasible-nav-dropdown">
                 {categories.map((item, index) => (
-                  <NavDropdown.Item key={index} href={item.defination}>
+                  <NavDropdown.Item
+                    key={index}
+                    href={`/category/${item.defination}`}
+                  >
                     {item.defination}
                   </NavDropdown.Item>
                 ))}
@@ -102,7 +108,7 @@ function Header() {
         </Navbar.Offcanvas>
         <Nav className="d-flex flex-row col-lg-3 justify-content-end order-3">
           {localStorage.getItem("TOKEN") ? (
-            <Nav.Link onClick={handleModel}>
+            <Nav.Link onClick={handleLogout}>
               <div className="logout mx-3">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
