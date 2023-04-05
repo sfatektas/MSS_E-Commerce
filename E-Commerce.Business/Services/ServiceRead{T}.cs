@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.Business.Services
 {
-    internal class ServiceRead<ListDto, T> : IServiceRead<ListDto, T>
+    public class ServiceRead<ListDto, T> : IServiceRead<ListDto, T>
         where ListDto : Dtos.Interfaces.IListDto, new()
         where T : BaseEntity, new()
     {

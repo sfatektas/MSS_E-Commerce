@@ -10,11 +10,11 @@ namespace E_Commerce.Presentation.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class SizeTypeController : ControllerBase
+    public class SizeTypesController : ControllerBase
     {
         private readonly ISizeTypeService _sizeTypeService;
 
-        public SizeTypeController(ISizeTypeService sizeTypeService)
+        public SizeTypesController(ISizeTypeService sizeTypeService)
         {
             _sizeTypeService = sizeTypeService;
         }

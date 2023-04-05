@@ -27,6 +27,7 @@ builder.Services.ConfigureLogger();
 builder.Services.ConfigureActionFilters();
 builder.Services.ConfigureJWTBearer(builder.Configuration);
 builder.Services.ConfigureRedis(builder.Configuration);
+builder.Services.ConfigureStorage();
 
 
 

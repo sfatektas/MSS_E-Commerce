@@ -11,5 +11,8 @@ namespace E_Commerce.Business.Interfaces
 {
     public interface IBrandService : IServiceRead<BrandListDto, Brand>
     {
+        Task AddBrand(BrandCreateDto dto);
+        Task<IEnumerable<BrandListDto>> GetAllBrand();
+
     }
 }

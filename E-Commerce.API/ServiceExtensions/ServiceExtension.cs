@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using E_Commerce.Business.Consts;
 using E_Commerce.Business.Interfaces;
+using E_Commerce.Business.Interfaces.Storage;
 using E_Commerce.Business.Mapper.AutoMapper;
 using E_Commerce.Business.Services;
+using E_Commerce.Business.Services.Storage;
 using E_Commerce.Business.Validations.FluentValidations;
 using E_Commerce.Business.Validations.FluentValidations.SiteOptionValidation;
 using E_Commerce.Common;
@@ -11,10 +13,12 @@ using E_Commerce.DataAccess.Contexts;
 using E_Commerce.DataAccess.Interfaces;
 using E_Commerce.DataAccess.UnitOfWorks;
 using E_Commerce.Dtos;
+using E_Commerce.Dtos.BrandDtos;
 using E_Commerce.Dtos.SiteOptionDtos;
 using E_Commerce.Entities.EFCore.Identities;
 using E_Commerce.Presentation;
 using E_Commerce.Presentation.ActionFilters;
+using E_Commerce.Presentation.Models;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Cors.Infrastructure;
@@ -69,6 +73,7 @@ namespace E_Commerce.API.ServiceExtensions
                     new CategoryProfile(),
                     new ColorProfile(),
                     new SizeTypeProfile(),
+                    new BrandProfile<BrandCreateModel>()
             };
 
             services.AddAutoMapper(opt =>
@@ -85,6 +90,7 @@ namespace E_Commerce.API.ServiceExtensions
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IColorService, ColorService>();
             services.AddScoped<ISizeTypeService, SizeTypeService>();
+            services.AddScoped<IBrandService, BrandService>();
         }
         public static void ConfigureValidations(this IServiceCollection services)
         {
@@ -151,6 +157,11 @@ namespace E_Commerce.API.ServiceExtensions
             {
                 opt.IdleTimeout = TimeSpan.FromMinutes(int.Parse(jwtOptions["ExpireMinitue"]));
             });
+        }
+        public static void ConfigureStorage(this IServiceCollection services)
+        {
+            //services.AddScoped<IStorage , AzureStorage>();
+            services.AddScoped<IStorage, LocalStorage>();
         }
 
     }

@@ -1,4 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using E_Commerce.Business.Interfaces;
+using E_Commerce.Business.Interfaces.Storage;
+using E_Commerce.Dtos.BrandDtos;
+using E_Commerce.Presentation.Models;
+using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,20 +13,39 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.Presentation.Controllers
 {
+    [EnableCors("DefaultPolicy")]
     [ApiController]
     [Route("api/[controller]")]
     public class BrandsController : ControllerBase
     {
-        //readonly IBrandService _service;
+        readonly IBrandService _Brandservice;
+        readonly IMapper _mapper;
+        readonly IStorage _storage;
 
-        //public BrandsController(IBrandService service)
-        //{
-        //    _service = service;
-        //}
-        //[HttpGet]
-        //public Task<IActionResult> GetAllBrand()
-        //{
-        //    return Ok();
-        //}
+        public BrandsController(IBrandService service, IMapper mapper, IStorage storage)
+        {
+            _Brandservice = service;
+            _mapper = mapper;
+            _storage = storage;
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetAllBrand()
+        {
+            var data = await _Brandservice.GetAll();
+            return Ok(data);
+        }
+        [HttpPost]
+        public async Task<IActionResult> CreateBrand([FromForm] BrandCreateModel model)
+        {
+            var dto = _mapper.Map<BrandCreateDto>(model);
+            var imageUrlGuid = Guid.NewGuid().ToString();
+
+            dto.ImageUrl = imageUrlGuid + Path.GetExtension(model.File.FileName);
+
+            await _storage.UploadFile(imageUrlGuid, model.File);
+            await _Brandservice.AddBrand(dto);
+            
+            return StatusCode(201);
+        }
     }
 }
