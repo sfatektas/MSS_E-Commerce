@@ -1,5 +1,6 @@
 ﻿using E_Commerce.Business.Interfaces;
 using E_Commerce.Business.Models;
+using E_Commerce.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.IdentityModel.Tokens;
@@ -36,7 +37,7 @@ namespace E_Commerce.Business.Services
         }
         public async Task<TokenModel> GenerateToken(List<Claim> claims, string key, string audience, string issuer, int expiresMinute)
         {
-            var expire = DateTime.UtcNow.AddMinutes(expiresMinute);
+            var expire = DateTime.UtcNow.AddHours(UtcTimeConstant.TurkeyUTC).AddMinutes(expiresMinute);
             var tokenHandler = new JwtSecurityTokenHandler();
             byte[] secretKey = Encoding.UTF8.GetBytes(key);
 
@@ -53,7 +54,7 @@ namespace E_Commerce.Business.Services
             string tokenString = tokenHandler.WriteToken(token);
             return new()
             {
-                ExpireToken = expire,
+                ExpireToken = expire.ToString("MM/dd/yyyy HH:mm:ss"),
                 Token = tokenString
             };
         }

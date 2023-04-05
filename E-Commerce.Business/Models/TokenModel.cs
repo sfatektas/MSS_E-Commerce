@@ -11,7 +11,7 @@ namespace E_Commerce.Business.Models
     {
         public string Token { get; set; }
 
-        public DateTime ExpireToken { get; set; }
+        public string ExpireToken { get; set; }
 
         public override string ToString()
         {
