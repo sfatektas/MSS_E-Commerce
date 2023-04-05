@@ -67,6 +67,7 @@ namespace E_Commerce.API.ServiceExtensions
             {
                     new SiteOptionProfile(),
                     new CategoryProfile(),
+                    new ColorProfile(),
             };
 
             services.AddAutoMapper(opt =>
@@ -81,6 +82,7 @@ namespace E_Commerce.API.ServiceExtensions
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<ITokenManager,TokenManager>();
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IColorService, ColorService>();
         }
         public static void ConfigureValidations(this IServiceCollection services)
         {
