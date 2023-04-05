@@ -5,24 +5,12 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
-
+import Register from "./pages/Register";
+import NotFound from "./pages/NotFound";
+import Account from "./pages/Account";
+import Footer from "./components/Footer";
 
 function App() {
-  
-  // const [siteOptions, setSiteOptions] = useState([]);
-
-  // useEffect(() => {
-  //   axios
-  //     .get("https://msse-commerce.azurewebsites.net/api/SiteOption")
-  //     .then((response) => {
-  //       console.log(response.data);
-  //       setSiteOptions(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // }, []);
-
   return (
     <>
       <Header />
@@ -31,7 +19,11 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/about" element={<About />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/account" element={<Account />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
+      <Footer />
     </>
   );
 }

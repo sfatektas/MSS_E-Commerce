@@ -1,18 +1,37 @@
 @import 'mixin';
-
 // Bootstrap Customizations
 
 $primary: #EF3636;
 $primary_hover: #D93131;
+$secondary: #252525;
 
 @import "~bootstrap/scss/bootstrap";
 // Bootstrap Customizations
 
+body {
+    p {
+        margin: 0;
+    }
+}
+
 // HEADER
 
+.navbar-nav {
+    .nav-link {
+        color: #000;
 
-#collasible-nav-dropdown {
-    color: black;
+        &:hover {
+            color: #EF3636;
+        }
+    }
+
+    .dropdown-item {
+        color: #000;
+
+        &:hover {
+            color: #EF3636;
+        }
+    }
 }
 
 .favorites {
@@ -112,38 +131,54 @@ a {
 
 //BANNER
 
+
+
 .banner-row {
-    height: 300px;
     .banner {
-        position: absolute;
-        margin-top: -100px;
-        z-index: 101;
+        z-index: 2;
+
         .banner-item {
             overflow: hidden;
             position: relative;
-            img{
+
+            img {
                 transition: all .5s ease-out;
             }
-            &:hover{
-                img{
+
+            &:hover {
+                img {
                     transform: scale(1.1);
                 }
-                .title{
+
+                .title {
                     background-color: #000;
                 }
             }
-            .banner-content{
+
+            .banner-content {
                 position: absolute;
-                top: 50px;
-                left: 50px;
-                button{
+                top: 0;
+                left: 0;
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                height: 100%;
+                align-items: center;
+                justify-content: center;
+
+                button {
+                    font-size: 14px;
+                    font-weight: 700;
                     border-radius: 5px;
                 }
-                .discount{
+
+                .campaign {
                     font-size: 13px;
                     border-radius: 5px;
+                    color: #f9b74a;
                 }
-                .title{
+
+                .title {
                     transition: all 1s ease-out;
                 }
             }
@@ -151,48 +186,119 @@ a {
     }
 }
 
+.margin-top-100 {
+    margin-top: -100px;
+}
+
+
 @media screen and (max-width: 1199px) {
-    .banner-row{
-        height: 200px;
+    .banner-row {
+
         .banner {
-            margin-top: 0px;
-            .banner-item{
-                .banner-content{
-                    top: 10px;
-                    left: 10px;
-                }
-            }
+            margin-top: -100px;
         }
     }
-    
-  }
+
+    .margin-top-100 {
+        margin-top: -200px;
+    }
+}
 
 //BANNER
 
-.showcase{
-    .showcase-image{
+//BRANDS
+
+.brands {
+    .brand-image {
+        img {
+            transition: all .2s linear;
+        }
+
+        &:hover {
+            img {
+                filter: opacity(50%);
+            }
+        }
+    }
+}
+
+//BRANDS
+
+//GALLERY
+
+.gallery {
+    .gallery-image {
+        height: 320px;
+        object-fit: contain;
         overflow: hidden;
-        img{
+
+        img {
+            transition: all .2s linear;
+        }
+
+        &:hover {
+            img {
+                filter: brightness(50%)
+            }
+        }
+    }
+}
+
+//GALLERY
+
+//FEATURES
+
+.features {
+    background-color: $secondary;
+
+    p {
+        font-size: 20px;
+        font-weight: 700;
+    }
+
+    .icon {
+        svg {
+            path {
+                fill: $primary;
+            }
+        }
+
+        padding: 10px;
+        border-radius: 100%;
+        border: $primary 3px solid;
+    }
+}
+
+//FEATURES
+
+.showcase {
+    .showcase-image {
+        overflow: hidden;
+
+        img {
             transition: all .2s ease-out;
         }
     }
-    &:hover{
-        .showcase-image{
-            img{
+
+    &:hover {
+        .showcase-image {
+            img {
                 transform: scale(1.05);
             }
         }
     }
-    .showcase-content{
-        button{
+
+    .showcase-content {
+        button {
             background-color: #000;
             border-radius: 5px;
-            &:hover{
+
+            &:hover {
                 background-color: $primary;
             }
         }
     }
-    
+
 }
 
 //LOGIN
@@ -222,3 +328,58 @@ a {
 }
 
 //LOGIN
+
+//MODAL
+.modal-button {
+    border-radius: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+
+}
+
+//MODAL
+
+//FOOTER
+
+.footer {
+    .footer-top {
+        background-color: $secondary;
+    }
+
+    .footer-bottom {
+        background-color: $secondary;
+    }
+}
+
+//FOOTER
+
+//LODAER
+.loader-main {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10000;
+    background: #2B3134;
+    color: #777;
+
+    .loader {
+        margin: 0 0 2em;
+        text-align: center;
+        padding: 1em;
+        margin: 0 auto 1em;
+        display: inline-block;
+        vertical-align: top;
+    }
+
+    /*
+        Set the color of the icon
+      */
+    svg path,
+    svg rect {
+        fill: $primary;
+    }
+}
+
+//LODAER

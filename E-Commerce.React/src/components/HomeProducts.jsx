@@ -109,7 +109,7 @@ export default function HomeProducts() {
   }, [setJsonState]);
 
   return (
-    <div className="products-main">
+    <div className="products-main container mb-5">
       <div className="products-header d-flex flex-column align-items-center mb-4">
         <span className="title display-6 fw-bold mb-3">FEATURE PRODUCTS</span>
         <p className="text-muted">Visit our shop to see amazing products (1:1 Photo)</p>
