@@ -29,6 +29,11 @@ namespace E_Commerce.Business.Services.Storage
             throw new NotImplementedException();
         }
 
+        public bool RemoveFile(string fileorContainername)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<bool> UploadFile(string containername, IFormFile file)
         {
             try

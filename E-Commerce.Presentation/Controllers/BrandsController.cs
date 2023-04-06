@@ -49,5 +49,12 @@ namespace E_Commerce.Presentation.Controllers
             
             return StatusCode(201);
         }
+        [HttpDelete("{defination}")]
+        public async Task<IActionResult> RemoveBrand([FromRoute] string defination)
+        {
+            await _Brandservice.RemoveBrand(defination);
+            return NoContent();
+        }
+
     }
 }

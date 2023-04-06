@@ -44,5 +44,11 @@ namespace E_Commerce.Business.Services
             return _mapper.Map<ListDto>(await _uow.GetRepository<T>()
                 .GetByFilterAsync(x => x.Id == id));
         }
+
+        public async Task<ListDto> GetOne(Expression<Func<T,bool>> filter)
+        {
+            return _mapper.Map<ListDto>(await _uow.GetRepository<T>()
+                .GetByFilterAsync(filter));
+        }
     }
 }

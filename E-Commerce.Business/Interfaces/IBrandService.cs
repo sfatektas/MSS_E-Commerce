@@ -14,5 +14,9 @@ namespace E_Commerce.Business.Interfaces
         Task AddBrand(BrandCreateDto dto);
         Task<IEnumerable<BrandListDto>> GetAllBrand();
 
+        Task<BrandListDto> GetOneBrand(string defination);
+        Task<BrandListDto> GetOneBrand(int id);
+        Task RemoveBrand(string defination);
+
     }
 }

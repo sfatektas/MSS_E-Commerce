@@ -16,5 +16,6 @@ namespace E_Commerce.Business.Interfaces
         public Task<IEnumerable<IListDto>> GetAll();
         public Task<IEnumerable<IListDto>> GetAll(Expression<Func<T,bool>> filter);
         public Task<IListDto> GetOne(int id);
+        Task<IListDto> GetOne(Expression<Func<T, bool>> filter);
     }
 }

@@ -13,5 +13,6 @@ namespace E_Commerce.Business.Interfaces.Storage
         (FileStream data, string imagetype) GetFile(string filepath);
         public Task<bool> UploadFiles(string containername, List<IFormFile> files);
         public Task<bool> UploadFile(string containername, IFormFile file);
+        public bool RemoveFile(string fileorContainername);
     }
 }

@@ -59,5 +59,15 @@ namespace E_Commerce.Business.Services.Storage
             //    throw new Exception($"Sunucuya dosya yüklerken bir hata oluştu Hata : {e.Message}");
             //}
         }
+
+        public bool RemoveFile(string fileorContainername)
+        {
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "files", fileorContainername);
+            var isexist = File.Exists(path);
+            if (!isexist)
+                throw new FileNotFoundException("Silinecek dosya sunucuda bulunamdı");
+            File.Delete(path);
+            return true;
+        }
     }
 }
