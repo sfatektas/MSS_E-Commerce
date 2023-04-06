@@ -6,6 +6,7 @@ using E_Commerce.Business.Mapper.AutoMapper;
 using E_Commerce.Business.Services;
 using E_Commerce.Business.Services.Storage;
 using E_Commerce.Business.Validations.FluentValidations;
+using E_Commerce.Business.Validations.FluentValidations.ProductValidation;
 using E_Commerce.Business.Validations.FluentValidations.SiteOptionValidation;
 using E_Commerce.Common;
 using E_Commerce.Common.Interfaces;
@@ -14,6 +15,7 @@ using E_Commerce.DataAccess.Interfaces;
 using E_Commerce.DataAccess.UnitOfWorks;
 using E_Commerce.Dtos;
 using E_Commerce.Dtos.BrandDtos;
+using E_Commerce.Dtos.ProductDtos;
 using E_Commerce.Dtos.SiteOptionDtos;
 using E_Commerce.Entities.EFCore.Identities;
 using E_Commerce.Presentation;
@@ -92,12 +94,15 @@ namespace E_Commerce.API.ServiceExtensions
             services.AddScoped<IColorService, ColorService>();
             services.AddScoped<ISizeTypeService, SizeTypeService>();
             services.AddScoped<IBrandService, BrandService>();
+            services.AddScoped<IProductService, ProductService>();
         }
         public static void ConfigureValidations(this IServiceCollection services)
         {
             services.AddTransient<IValidator<SiteOptionCreateDto>, SiteOptionCreateValidatior>();
             services.AddTransient<IValidator<UserLoginModel>, UserLoginModelValidator>();
             services.AddTransient<IValidator<BrandCreateModel>, BrandCreateModelValidator>();
+            services.AddTransient<IValidator<ProductCreateModel>, ProductCreateModelValidator>();
+            services.AddTransient<IValidator<ProductCreateDto>, ProductCreateDtoValidator>();
         }
         public static void ConfigureCors(this IServiceCollection services)
         {
@@ -144,6 +149,7 @@ namespace E_Commerce.API.ServiceExtensions
         {
             services.AddScoped<ValidateFilterAttiribute<UserLoginModel>>();
             services.AddScoped<ValidateFilterAttiribute<BrandCreateModel>>();
+            services.AddScoped<ValidateFilterAttiribute<ProductCreateModel>>();
         } 
         public static void ConfigureRedis(this IServiceCollection services,IConfiguration configuration)
         {

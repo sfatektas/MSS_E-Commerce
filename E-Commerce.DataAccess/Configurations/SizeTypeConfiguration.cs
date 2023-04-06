@@ -15,39 +15,28 @@ namespace E_Commerce.DataAccess.Configurations
         public void Configure(EntityTypeBuilder<SizeType> builder)
         {
             builder.Property(x => x.Defination).IsRequired().HasMaxLength(400);
+            //builder.HasMany(x => x.Sizes).WithOne(x => x.SizeType).HasForeignKey(x => x.SizeTypeId);
 
             builder.HasData(new SizeType[]
             {
                 new()
                 {
                     Id = 1,
-                    Defination = "Small",
+                    Defination = "Üst Giyim",
                     IsActive = true,
                 },
                 new()
                 {
                     Id = 2,
-                    Defination = "Medium",
+                    Defination = "Alt Giyim",
                     IsActive = true,
                 },
                 new()
                 {
                     Id = 3,
-                    Defination = "Large",
+                    Defination = "Ayak Numarası",
                     IsActive = true,
-                },
-                new()
-                {
-                    Id = 4,
-                    Defination = "XLarge",
-                    IsActive = true,
-                },
-                new()
-                {
-                    Id = 5,
-                    Defination = "XXLARGE",
-                    IsActive = true,
-                },
+                }
             });
         }
     }

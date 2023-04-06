@@ -47,7 +47,7 @@ namespace E_Commerce.Presentation.ActionFilters
                 context.ModelState.Clear();
                 foreach (var error in result.GetValidationErrors())
                 {
-                    context.ModelState.AddModelError("errors", error.ErrorMessage);
+                    context.ModelState.AddModelError("Error", error.ErrorMessage);
                 }
                 context.Result = new UnprocessableEntityObjectResult(context.ModelState);
             }

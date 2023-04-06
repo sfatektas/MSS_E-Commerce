@@ -31,6 +31,112 @@ namespace E_Commerce.Business.Helpers
             {
                 context.Database.Migrate();
             }
+            if(!context.Sizes.Any())
+            {
+                await context.Sizes.AddRangeAsync(new List<Size>(){
+                    new Size()
+                    {
+                        SizeTypeId = 1,
+                        Value = "Small"
+                    },
+                    new Size()
+                    {
+                        SizeTypeId = 1,
+                        Value = "Medium"
+                    },
+                    new Size()
+                    {
+                        SizeTypeId = 1,
+                        Value = "Large"
+                    },
+                    new Size()
+                    {
+                        SizeTypeId = 1,
+                        Value = "XXL"
+                    },
+                    new Size()
+                    {
+                        SizeTypeId = 1,
+                        Value = "XXXL"
+                    },  
+                    new Size()
+                    {
+                        SizeTypeId = 2,
+                        Value = "29 30"
+                    },
+                    new Size()
+                    {
+                        SizeTypeId = 2,
+                        Value = "29 31"
+                    },
+                    new Size()
+                    {
+                        SizeTypeId = 2,
+                        Value = "29 32"
+                    },
+                    new Size()
+                    {
+                        SizeTypeId = 2,
+                        Value = "30 31"
+                    },
+                    new Size()
+                    {
+                        SizeTypeId = 2,
+                        Value = "30 32"
+                    },                   
+                    new Size()
+                    {
+                        SizeTypeId = 3,
+                        Value = "36"
+                    },
+                    new Size()
+                    {
+                        SizeTypeId = 3,
+                        Value = "37"
+                    },
+                    new Size()
+                    {
+                        SizeTypeId = 3,
+                        Value = "38"
+                    },
+                    new Size()
+                    {
+                        SizeTypeId = 3,
+                        Value = "39"
+                    },
+                    new Size()
+                    {
+                        SizeTypeId = 3,
+                        Value = "40"
+                    },      
+                    new Size()
+                    {
+                        SizeTypeId = 3,
+                        Value = "41"
+                    },
+                    new Size()
+                    {
+                        SizeTypeId = 3,
+                        Value = "41.5"
+                    },
+                    new Size()
+                    {
+                        SizeTypeId = 3,
+                        Value = "42"
+                    },            
+                    new Size()
+                    {
+                        SizeTypeId = 3,
+                        Value = "42.5"
+                    },
+                    new Size()
+                    {
+                        SizeTypeId = 3,
+                        Value = "43"
+                    },
+
+                });
+            }
             if (!context.UserTypes.Any())
             {
                 await context.AddRangeAsync(new List<UserType>

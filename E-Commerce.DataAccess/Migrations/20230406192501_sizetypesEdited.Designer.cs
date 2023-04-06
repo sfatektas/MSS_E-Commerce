@@ -4,6 +4,7 @@ using E_Commerce.DataAccess.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_Commerce.DataAccess.Migrations
 {
     [DbContext(typeof(E_CommerceDbContext))]
-    partial class E_CommerceDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230406192501_sizetypesEdited")]
+    partial class sizetypesEdited
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -804,148 +806,6 @@ namespace E_Commerce.DataAccess.Migrations
                     b.HasIndex("SizeTypeId");
 
                     b.ToTable("Sizes");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            IsActive = true,
-                            SizeTypeId = 1,
-                            Value = "Small"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            IsActive = true,
-                            SizeTypeId = 1,
-                            Value = "Medium"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            IsActive = true,
-                            SizeTypeId = 1,
-                            Value = "Large"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            IsActive = true,
-                            SizeTypeId = 1,
-                            Value = "XXL"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            IsActive = true,
-                            SizeTypeId = 1,
-                            Value = "XXXL"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            IsActive = true,
-                            SizeTypeId = 2,
-                            Value = "29 30"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            IsActive = true,
-                            SizeTypeId = 2,
-                            Value = "29 31"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            IsActive = true,
-                            SizeTypeId = 2,
-                            Value = "29 32"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            IsActive = true,
-                            SizeTypeId = 2,
-                            Value = "30 31"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            IsActive = true,
-                            SizeTypeId = 2,
-                            Value = "30 32"
-                        },
-                        new
-                        {
-                            Id = 11,
-                            IsActive = true,
-                            SizeTypeId = 3,
-                            Value = "36"
-                        },
-                        new
-                        {
-                            Id = 12,
-                            IsActive = true,
-                            SizeTypeId = 3,
-                            Value = "37"
-                        },
-                        new
-                        {
-                            Id = 13,
-                            IsActive = true,
-                            SizeTypeId = 3,
-                            Value = "38"
-                        },
-                        new
-                        {
-                            Id = 14,
-                            IsActive = true,
-                            SizeTypeId = 3,
-                            Value = "39"
-                        },
-                        new
-                        {
-                            Id = 15,
-                            IsActive = true,
-                            SizeTypeId = 3,
-                            Value = "40"
-                        },
-                        new
-                        {
-                            Id = 16,
-                            IsActive = true,
-                            SizeTypeId = 3,
-                            Value = "41"
-                        },
-                        new
-                        {
-                            Id = 17,
-                            IsActive = true,
-                            SizeTypeId = 3,
-                            Value = "41.5"
-                        },
-                        new
-                        {
-                            Id = 18,
-                            IsActive = true,
-                            SizeTypeId = 3,
-                            Value = "42"
-                        },
-                        new
-                        {
-                            Id = 19,
-                            IsActive = true,
-                            SizeTypeId = 3,
-                            Value = "42.5"
-                        },
-                        new
-                        {
-                            Id = 20,
-                            IsActive = true,
-                            SizeTypeId = 3,
-                            Value = "43"
-                        });
                 });
 
             modelBuilder.Entity("E_Commerce.Entities.EFCore.SizeType", b =>
