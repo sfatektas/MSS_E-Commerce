@@ -1,5 +1,5 @@
 import Container from "react-bootstrap/Container";
-import Brands from "../components/Brands"
+import ShowBrands from "../components/ShowBrands"
 import Navigation from "../components/Navigation";
 
 export default function About() {
@@ -137,7 +137,7 @@ export default function About() {
           </div>
         </div>
       </div>
-      <Brands/>
+      <ShowBrands/>
     </>
   );
 }

@@ -2,7 +2,7 @@ import CarouselFade from "../components/CarouselFade";
 import BannerTwoImg from "../components/BannerTwoImg";
 import BannerThreeImg from "../components/BannerThreeImg";
 import HomeProducts from "../components/HomeProducts";
-import Brands from "../components/Brands";
+import ShowBrands from "../components/ShowBrands";
 import ImageGallery from "../components/ImageGallery";
 import HomeFeatures from "../components/HomeFeatures";
 import Loader from "../components/Loader";
@@ -24,7 +24,7 @@ export default function Home() {
           <BannerTwoImg />
           <HomeProducts />
           <BannerThreeImg />
-          <Brands />
+          <ShowBrands />
           <ImageGallery />
           <HomeFeatures />
         </>

@@ -15,20 +15,17 @@ export const authStore = create((set) => ({
       .then((response) => {
         if (response.status == 200) {
           console.log("Giriş Başarılı");
+          set({ authText: "Giriş başarılı, yönlendiriliyorsunuz.." });
           set({ loginStatus: response.status });
-          set({authText:"Giriş başarılı, yönlendiriliyorsunuz.."})
-          setTimeout(() => {
-            set({ loginStatus: response.status });
-            localStorage.setItem("TOKEN", response.data.token);
-            localStorage.setItem("EXPIRE DATE", response.data.expireToken);
-          }, 2000);
+          localStorage.setItem("TOKEN", response.data.token);
+          localStorage.setItem("EXPIRE DATE", response.data.expireToken);
         } else {
           console.log("Sistem Arızası");
           set({ loginStatus: "null" });
         }
       })
       .catch((error) => {
-        set({authText:error.response.data.Error})
+        set({ authText: error.response.data.Error });
         console.log(error.response.data.Error);
         set({ loginStatus: error.response.status });
       });

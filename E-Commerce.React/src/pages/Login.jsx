@@ -6,6 +6,7 @@ import Navigation from "../components/Navigation";
 
 
 export default function Login() {
+  let navigate = useNavigate();
   const [uname, setUname] = useState("");
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
@@ -20,8 +21,6 @@ export default function Login() {
       }, 2000);
     }
   }, [loginStatus]);
-
-  let navigate = useNavigate();
 
   function handleSubmit(e) {
     e.preventDefault();
