@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.Entities.Exceptions.Abstract
 {
-    public class UnAuthorizedException : BaseException
+    public abstract class UnAuthorizedException : BaseException
     {
         public UnAuthorizedException(string message) : base(message)
         {

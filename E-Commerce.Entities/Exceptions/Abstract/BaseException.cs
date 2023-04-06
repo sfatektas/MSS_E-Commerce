@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.Entities.Exceptions.Abstract
 {
-    public class BaseException : Exception
+    public abstract class BaseException : Exception
     {
         public int StatusCode { get; set; }
 

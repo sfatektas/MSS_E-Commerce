@@ -9,7 +9,7 @@ namespace E_Commerce.Presentation.Models
 {
     public class BrandCreateModel
     {
-        public string Defination { get; init; }
+        public string Defination { get; set; }
         public IFormFile File { get; set; }
     }
 }

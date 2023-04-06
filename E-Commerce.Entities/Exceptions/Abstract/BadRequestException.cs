@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.Entities.Exceptions.Abstract
 {
-    public class BadRequestException : BaseException
+    public abstract class BadRequestException : BaseException
     {
         public BadRequestException(string message) : base(message)
         {

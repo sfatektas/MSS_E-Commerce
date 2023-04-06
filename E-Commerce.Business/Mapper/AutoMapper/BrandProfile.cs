@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.Business.Mapper.AutoMapper
 {
-    public class BrandProfile<T> : Profile
+    public class BrandProfile<T> : Profile 
     {
         public BrandProfile()
         {

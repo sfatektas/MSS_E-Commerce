@@ -14,6 +14,7 @@ namespace E_Commerce.DataAccess.Configurations
     {
         public void Configure(EntityTypeBuilder<Brand> builder)
         {
+            builder.HasIndex(x => x.Defination);// aynı marka adı ile bir kayıt daha açılmamalı.
             builder.Property(x=>x.Defination).HasMaxLength(400);
             builder.Property(x=>x.Defination).IsRequired();
             builder.Property(x=>x.ImageUrl).IsRequired();
