@@ -1,7 +1,9 @@
 import { create } from "zustand";
 import axios from "axios";
+import Moment from "moment";
 
 export const authStore = create((set) => ({
+  authText: null,
   loginStatus: null,
   logoutStatus: null,
   loginFetch: async (uname, password) => {
@@ -11,18 +13,22 @@ export const authStore = create((set) => ({
         password: password,
       })
       .then((response) => {
-        console.log("Giriş Başarılı");
         if (response.status == 200) {
+          console.log("Giriş Başarılı");
           set({ loginStatus: response.status });
+          set({authText:"Giriş başarılı, yönlendiriliyorsunuz.."})
           setTimeout(() => {
             set({ loginStatus: response.status });
             localStorage.setItem("TOKEN", response.data.token);
+            localStorage.setItem("EXPIRE DATE", response.data.expireToken);
           }, 2000);
         } else {
+          console.log("Sistem Arızası");
           set({ loginStatus: "null" });
         }
       })
       .catch((error) => {
+        set({authText:error.response.data.Error})
         console.log(error.response.data.Error);
         set({ loginStatus: error.response.status });
       });
@@ -44,9 +50,12 @@ export const authStore = create((set) => ({
           console.log("Çıkış Başarılı : " + response.status);
           set({ logoutStatus: response.status });
           localStorage.removeItem("TOKEN");
+          localStorage.removeItem("EXPIRE DATE");
         }
       })
       .catch((error) => {
+        localStorage.removeItem("TOKEN");
+        localStorage.removeItem("EXPIRE DATE");
         console.log("Çıkış hatalı");
         console.log(error);
         set({ logoutStatus: error.response });

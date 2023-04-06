@@ -17,7 +17,7 @@ export default function Brands() {
         <div className="container">
           <div className="brands row d-flex justify-content-center p-4">
             {brandLogos.map((logo, index) => (
-              <div className="brand-image text-center col-6 col-lg-3 col-xl-2 p-5" key={index}>
+              <div className="brand-image text-center col-6 col-lg-3 col-xl-2 py-5" key={index}>
                 <a href="#!">
                   <img src={logo} />
                 </a>

@@ -1,7 +1,11 @@
 import React from 'react'
+import Navigation from "../components/Navigation";
 
 export default function Account() {
   return (
-    <div className='text-center display-4 vh-100'>Account Page</div>
+    <>
+    <Navigation link="Hesabım" />
+    <div className='vh-100'><p className='text-center display-5 mb-5'>Hazırlanıyor...</p></div>
+    </>
   )
 }

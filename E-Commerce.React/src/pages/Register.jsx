@@ -1,6 +1,7 @@
 import React from "react";
 import { Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import Navigation from "../components/Navigation";
 
 export default function Register() {
   let navigate = useNavigate();
@@ -13,9 +14,8 @@ export default function Register() {
     } else {
       return (
         <>
-          {" "}
-          <div className="page-title">Giriş Yap</div>
-          <Container className="login-page align-items-center align-items-lg-start d-flex flex-column flex-lg-row justify-content-around">
+          <Navigation link="Kayıt Ol" />
+          <Container className="login-page align-items-center align-items-lg-start d-flex flex-column flex-lg-row justify-content-around mb-5">
             <div className="register-form p-5 bg-light shadow">
               <form className="d-flex flex-column">
                 <label className="fw-bold h4">Kayıt Ol</label>

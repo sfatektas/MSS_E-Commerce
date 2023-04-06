@@ -1,11 +1,23 @@
+import axios from "axios";
+import { useState,useEffect} from "react";
+
+
 export default function Footer() {
+  const [categories, setCategories] = useState([]);
+  useEffect(() => {
+    axios
+      .get("https://e-commercemss.azurewebsites.net/api/Categories")
+      .then((response) => {
+        setCategories(response.data);
+      });
+  }, []);
   return (
     <>
       <div className="footer">
         <div className="footer-top p-5 border-bottom border-muted">
           <div className="container">
             <div className="row py-5">
-              <div className="contact col-3">
+              <div className="contact col-6 col-lg-3 mb-5 mb-lg-0">
                 <p className="title text-white fw-bold mb-4">CONTACT US</p>
                 <p className="subtitle text-muted mb-4">
                   If you have any question, please contact us at
@@ -67,7 +79,7 @@ export default function Footer() {
                   </p>
                 </div>
               </div>
-              <div className="location col-3">
+              <div className="location col-6 col-lg-3">
                 <p className="title text-white fw-bold mb-4">STORE LOCATION</p>
                 <p className="subtitle text-muted mb-4">
                   Box 565, Charlestown, Nevis, West Indies,Caribbean
@@ -79,17 +91,20 @@ export default function Footer() {
                   Saturday: <span className="text-white">9am – 5pm</span>
                 </p>
               </div>
-              <div className="categories col-3">
+              <div className="categories col-6 col-lg-2">
                 <p className="title text-white fw-bold mb-4">CATEGORİES</p>
                 <ul className="text-muted list-unstyled">
-                  <li className="mb-2">For men</li>
-                  <li className="mb-2">For Woman</li>
-                  <li className="mb-2">Accesories</li>
-                  <li className="mb-2">Collections</li>
-                  <li className="mb-2">Other</li>
+                {categories.map((item, index) => (
+                    <li
+                      key={index}
+                      className="mb-2"
+                    >
+                      <a href={`/category/${item.defination}`}>{item.defination}</a>
+                    </li>
+                  ))}
                 </ul>
               </div>
-              <div className="newsletter col-3">
+              <div className="newsletter col-6 col-lg-4">
                 <p className="title text-white mb-4">NEWSLETTER</p>
                 <p className="subtitle text-muted mb-4">
                   Subscribe to the weekly newsletter for all the latest updates
@@ -110,15 +125,15 @@ export default function Footer() {
         </div>
         <div className="footer-bottom">
           <div className="container">
-            <div className="row d-flex justify-content-between py-5">
-              <div className="copyright col-4 d-flex align-items-center">
+            <div className="row d-flex justify-content-between py-5 pb-0 pb-lg-5">
+              <div className="copyright col-12 col-lg-4 order-3 order-lg-1 d-flex align-items-center justify-content-center justify-content-lg-start">
                 <p className="text-muted m-0">
                   Copyright © 2022{" "}
                   <span className="text-primary fw-bold">MSS</span>. All Rights
                   Reserved.
                 </p>
               </div>
-              <div className="social-links col-4 d-flex justify-content-center align-items-center">
+              <div className="social-links col-12 col-lg-4 order-2 d-flex justify-content-center align-items-center mb-4 mb-lg-0">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="30"
@@ -134,7 +149,13 @@ export default function Footer() {
                     fill="#fff"
                   />
                 </svg>
-                <svg width="30" height="30" className="mx-3" viewBox="0 -2 20 20" version="1.1">
+                <svg
+                  width="30"
+                  height="30"
+                  className="mx-3"
+                  viewBox="0 -2 20 20"
+                  version="1.1"
+                >
                   <title>twitter [#154]</title>
                   <desc>Created with Sketch.</desc>
                   <defs></defs>
@@ -174,7 +195,13 @@ export default function Footer() {
                   <title>linkedin</title>
                   <path d="M28.778 1.004h-25.56c-0.008-0-0.017-0-0.027-0-1.199 0-2.172 0.964-2.186 2.159v25.672c0.014 1.196 0.987 2.161 2.186 2.161 0.010 0 0.019-0 0.029-0h25.555c0.008 0 0.018 0 0.028 0 1.2 0 2.175-0.963 2.194-2.159l0-0.002v-25.67c-0.019-1.197-0.994-2.161-2.195-2.161-0.010 0-0.019 0-0.029 0h0.001zM9.9 26.562h-4.454v-14.311h4.454zM7.674 10.293c-1.425 0-2.579-1.155-2.579-2.579s1.155-2.579 2.579-2.579c1.424 0 2.579 1.154 2.579 2.578v0c0 0.001 0 0.002 0 0.004 0 1.423-1.154 2.577-2.577 2.577-0.001 0-0.002 0-0.003 0h0zM26.556 26.562h-4.441v-6.959c0-1.66-0.034-3.795-2.314-3.795-2.316 0-2.669 1.806-2.669 3.673v7.082h-4.441v-14.311h4.266v1.951h0.058c0.828-1.395 2.326-2.315 4.039-2.315 0.061 0 0.121 0.001 0.181 0.003l-0.009-0c4.5 0 5.332 2.962 5.332 6.817v7.855z" />
                 </svg>
-                <svg width="30" height="30" className="mx-3" viewBox="0 0 20 20" version="1.1">
+                <svg
+                  width="30"
+                  height="30"
+                  className="mx-3"
+                  viewBox="0 0 20 20"
+                  version="1.1"
+                >
                   <title>instagram [#167]</title>
                   <desc>Created with Sketch.</desc>
                   <defs></defs>
@@ -203,7 +230,7 @@ export default function Footer() {
                   </g>
                 </svg>
               </div>
-              <div className="col-4 d-flex pb-2 justify-content-end">
+              <div className="col-lg-4 order-2 order-lg-3 col-12 d-flex pb-2 justify-content-center justify-content-lg-end mb-3 mb-lg-0">
                 <img
                   src="https://demo2.wpopal.com/ekommart/wp-content/uploads/2020/02/payment.png"
                   alt=""
