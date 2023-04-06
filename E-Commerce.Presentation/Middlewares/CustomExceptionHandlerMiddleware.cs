@@ -45,6 +45,7 @@ namespace E_Commerce.Presentation.Middlewares
                 _loggerService.Error($"Hata mesajı : {e.Message} ,\n Hata Detayı : {e.InnerException}");
                 //Will Create custom response model
                 context.Response.ContentType = "application/json";
+                context.Response.StatusCode = (int)StatusCodes.Status400BadRequest;
                 await context.Response.WriteAsync(new ErrorModel()
                 {
                     Error = $"Hata mesajı : {e.Message} ,\n Hata Detayı : {e.InnerException}",
