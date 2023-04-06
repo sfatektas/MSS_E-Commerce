@@ -44,9 +44,9 @@ namespace E_Commerce.Presentation.Controllers
 
             dto.ImageUrl = imageUrlGuid + Path.GetExtension(model.File.FileName);
 
+            await _Brandservice.AddBrand(dto); // önce ekleme yapsın hata dönmezse sunucuya fotoğrafı kaydetsin.
             await _storage.UploadFile(imageUrlGuid, model.File);
-            await _Brandservice.AddBrand(dto);
-            
+
             return StatusCode(201);
         }
         [HttpDelete("{defination}")]

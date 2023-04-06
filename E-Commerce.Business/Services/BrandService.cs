@@ -35,6 +35,9 @@ namespace E_Commerce.Business.Services
 
         public async Task AddBrand(BrandCreateDto dto)
         {
+            var data = await base.GetOne(x => x.Defination == dto.Defination);
+            if (data != null)
+                throw new BrandBadRequestException("Bu isime sahip bir marka var");
             await _uow.GetRepository<Brand>()
                 .CreateAsync(_mapper.Map<Brand>(dto));
             await _uow.SaveChangesAsync();
