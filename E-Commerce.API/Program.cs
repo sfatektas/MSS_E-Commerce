@@ -3,6 +3,7 @@ using E_Commerce.Business.Helpers;
 using E_Commerce.Presentation.Middlewares;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.FileProviders;
 using NLog;
 
@@ -10,6 +11,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 LogManager.LoadConfiguration(Path.Combine(Directory.GetCurrentDirectory(), "nlog.config"));
 // Add services to the container.
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.SuppressModelStateInvalidFilter = true;
+});
 builder.Services.ConfigureController();
 builder.Services.Configure<ForwardedHeadersOptions>(options => // Kullanýcý ip bilgisini almak için gerekli configuraiton
 {

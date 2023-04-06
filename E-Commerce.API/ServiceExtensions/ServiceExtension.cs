@@ -19,6 +19,7 @@ using E_Commerce.Entities.EFCore.Identities;
 using E_Commerce.Presentation;
 using E_Commerce.Presentation.ActionFilters;
 using E_Commerce.Presentation.Models;
+using E_Commerce.Presentation.Validators;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Cors.Infrastructure;
@@ -96,6 +97,7 @@ namespace E_Commerce.API.ServiceExtensions
         {
             services.AddTransient<IValidator<SiteOptionCreateDto>, SiteOptionCreateValidatior>();
             services.AddTransient<IValidator<UserLoginModel>, UserLoginModelValidator>();
+            services.AddTransient<IValidator<BrandCreateModel>, BrandCreateModelValidator>();
         }
         public static void ConfigureCors(this IServiceCollection services)
         {
@@ -141,6 +143,7 @@ namespace E_Commerce.API.ServiceExtensions
         public static void ConfigureActionFilters(this IServiceCollection services)
         {
             services.AddScoped<ValidateFilterAttiribute<UserLoginModel>>();
+            services.AddScoped<ValidateFilterAttiribute<BrandCreateModel>>();
         } 
         public static void ConfigureRedis(this IServiceCollection services,IConfiguration configuration)
         {

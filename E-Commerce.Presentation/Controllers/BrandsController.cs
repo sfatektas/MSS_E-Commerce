@@ -2,6 +2,7 @@
 using E_Commerce.Business.Interfaces;
 using E_Commerce.Business.Interfaces.Storage;
 using E_Commerce.Dtos.BrandDtos;
+using E_Commerce.Presentation.ActionFilters;
 using E_Commerce.Presentation.Models;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -35,6 +36,7 @@ namespace E_Commerce.Presentation.Controllers
             return Ok(data);
         }
         [HttpPost]
+        [ServiceFilter(typeof(ValidateFilterAttiribute<BrandCreateModel>))]
         public async Task<IActionResult> CreateBrand([FromForm] BrandCreateModel model)
         {
             var dto = _mapper.Map<BrandCreateDto>(model);
