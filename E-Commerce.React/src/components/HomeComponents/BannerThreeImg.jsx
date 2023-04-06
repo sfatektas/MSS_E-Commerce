@@ -1,6 +1,6 @@
-import bannerImage from "../assets/img/banner3-h1-1.jpg";
-import bannerImage2 from "../assets/img/banner4-h1.jpg";
-import bannerImage3 from "../assets/img/banner5-h1.jpg";
+import bannerImage from "../../assets/img/banner3-h1-1.jpg"
+import bannerImage2 from "../../assets/img/banner4-h1.jpg";
+import bannerImage3 from "../../assets/img/banner5-h1.jpg";
 
 export default function BannerThreeImg() {
   return (

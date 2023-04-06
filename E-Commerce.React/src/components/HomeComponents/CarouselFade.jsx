@@ -1,7 +1,7 @@
 import Carousel from 'react-bootstrap/Carousel';
 import Button from 'react-bootstrap/Button';
-import sliderImage2 from '../assets/img/slider2.png'
-import sliderImage3 from '../assets/img/slider3.png'
+import sliderImage2 from '../../assets/img/slider2.png'
+import sliderImage3 from '../../assets/img/slider3.png'
 
 function CarouselFade() {
   return (

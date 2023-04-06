@@ -9,7 +9,6 @@ export default function ShowBrands() {
     axios
       .get("https://e-commercemss.azurewebsites.net/api/Brands")
       .then((response) => {
-        console.log(response);
         setBrands(response.data);
       })
       .catch((error) => {

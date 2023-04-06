@@ -1,5 +1,5 @@
-import bannerImage from "../assets/img/banner1-h1.jpg";
-import bannerImage2 from "../assets/img/banner2-h1.jpg";
+import bannerImage from "../../assets/img/banner1-h1.jpg";
+import bannerImage2 from "../../assets/img/banner2-h1.jpg";
 
 export default function BannerTwoImg() {
   return (

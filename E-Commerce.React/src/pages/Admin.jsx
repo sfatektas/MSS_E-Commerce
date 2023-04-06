@@ -1,22 +1,50 @@
-import Brands from "../components/Brands";
+import { useState } from "react";
+import Brands from "../components/AdminComponents/Brands";
+import Product from "../components/AdminComponents/Product";
+import AdminHome from "../components/AdminComponents/AdminHome";
 
 export default function Admin() {
+  const [adminPanel, setAdminPanel] = useState("adminHome");
   return (
     <>
-      <div className="container">
-        <div className="admin row my-5">
+      <div className="">
+        <div className="admin row m-5">
           <div className="admin-header col-2 d-flex flex-column p-0">
-            <div className="p-4">
-              <p className="fs-4 text-muted">Yönetim Paneli</p>
+            <div className="d-flex flex-column p-4 ">
+              <button
+                className={`btn fs-5 fw-semibold mb-3 py-3 ${
+                  adminPanel == "adminHome" && "active"
+                }`}
+                onClick={() => setAdminPanel("adminHome")}
+              >
+                Yönetim Paneli
+              </button>
             </div>
-            <button className="btn fs-5 fw-light text-start mx-4 active">
-              Marka
-            </button>
+            <div className="buttons d-flex flex-column">
+              <button
+                className={`btn fs-5 fw-light mx-4 mb-3 ${
+                  adminPanel == "brands" && "active"
+                }`}
+                onClick={() => setAdminPanel("brands")}
+              >
+                Markalar
+              </button>
+              <button
+                className={`btn fs-5 fw-light mx-4 mb-3 ${
+                  adminPanel == "product" && "active"
+                }`}
+                onClick={() => setAdminPanel("product")}
+              >
+                Ürünler
+              </button>
+            </div>
           </div>
           <div className="admin-content col-10 px-5 py-4">
-            <div className="row">
-              <div className="col-12">
-                <Brands />
+            <div className="content-right">
+              <div>
+                {adminPanel === "adminHome" && <AdminHome />}
+                {adminPanel === "brands" && <Brands />}
+                {adminPanel === "product" && <Product />}
               </div>
             </div>
           </div>

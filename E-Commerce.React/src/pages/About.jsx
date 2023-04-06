@@ -1,5 +1,5 @@
 import Container from "react-bootstrap/Container";
-import ShowBrands from "../components/ShowBrands"
+import ShowBrands from "../components/HomeComponents/ShowBrands"
 import Navigation from "../components/Navigation";
 
 export default function About() {

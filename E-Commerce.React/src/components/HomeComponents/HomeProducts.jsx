@@ -1,6 +1,6 @@
 import { useEffect, useState, useMemo } from "react";
 import Showcase from "./Showcase";
-import { useJsonState } from "../store/productStore";
+import { useJsonState } from "../../store/productStore";
 
 const data = [
   {

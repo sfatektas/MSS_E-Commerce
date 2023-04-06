@@ -1,13 +1,16 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import Table from "react-bootstrap/Table";
+import Alert from "react-bootstrap/Alert";
+import Button from "react-bootstrap/Button";
 
 export default function Brands() {
   const [brandName, setBrandName] = useState("");
   const [file, setFile] = useState();
   const [brands, setBrands] = useState([]);
-  const [info, setInfo] = useState("")
-  
+  const [info, setInfo] = useState("");
+  const [show, setModalShow] = useState(false)
+  const [variant, setVariant] = useState("")
 
   useEffect(() => {
     axios
@@ -25,6 +28,10 @@ export default function Brands() {
       .delete(`https://e-commercemss.azurewebsites.net/api/brands/${brand}`)
       .then((response) => {
         console.log(response);
+        setInfo("Marka başarıyla silindi")
+        setVariant("success")
+        setModalShow(true)
+
       })
       .catch((error) => {
         console.log(error);
@@ -53,21 +60,34 @@ export default function Brands() {
         }
       )
       .then((response) => {
-        console.log("Marka Başarıyla Eklendi");
+        setInfo("Marka Başarıyla Eklendi")
+        setVariant("success")
+        setModalShow(true)
         setTimeout(() => {
           window.location.reload(false);
-        }, 1000);
+        }, 2000);
       })
       .catch((error) => {
-        setInfo(error.response.data.Error)
+        setInfo(error.response.data.Error);
+        setVariant("danger")
+        setModalShow(true)
         console.log(error);
       });
   }
   return (
     <>
+      <p className="display-5 fw-light text-muted mb-4">Markalar</p>
       <div className="row">
+      <Alert show={show} variant={variant}>
+        <Alert.Heading>{info}</Alert.Heading>
+        <div className="d-flex justify-content-end">
+          <Button onClick={() => setModalShow(false)} variant={variant}>
+            Kapat
+          </Button>
+        </div>
+      </Alert>
         <div className="list-brands col-8">
-          <p className="mb-4 fs-4 fw-semibold text-muted">Markalar</p>
+          <p className="mb-4 fs-4 fw-semibold text-muted">Marka Listesi</p>
           <Table hover responsive variant="light table">
             <thead>
               <tr>
@@ -127,7 +147,6 @@ export default function Brands() {
             >
               Marka Ekle
             </button>
-            <p className="text-primary">{info}</p>
           </form>
         </div>
       </div>
