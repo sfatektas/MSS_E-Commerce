@@ -13,9 +13,9 @@ namespace E_Commerce.Business.Interfaces
         where IListDto : Dtos.Interfaces.IListDto , new()
         where T : BaseEntity, new()
     {
-        public Task<IEnumerable<IListDto>> GetAll();
-        public Task<IEnumerable<IListDto>> GetAll(Expression<Func<T,bool>> filter);
-        public Task<IListDto> GetOne(int id);
-        Task<IListDto> GetOne(Expression<Func<T, bool>> filter);
+        public Task<IEnumerable<IListDto>> GetAllAsync();
+        public Task<IEnumerable<IListDto>> GetAllAsync(Expression<Func<T,bool>> filter);
+        public Task<IListDto> GetOneAsync(int id);
+        Task<IListDto> GetOneAsync(Expression<Func<T, bool>> filter);
     }
 }

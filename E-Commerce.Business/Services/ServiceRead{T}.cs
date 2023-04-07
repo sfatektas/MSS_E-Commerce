@@ -25,27 +25,27 @@ namespace E_Commerce.Business.Services
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<ListDto>> GetAll()
+        public async Task<IEnumerable<ListDto>> GetAllAsync()
         {
             return _mapper.Map<IEnumerable<ListDto>>(await _uow.GetRepository<T>()
                 .GetAllAsync()
                 .ToListAsync());
         }
 
-        public async Task<IEnumerable<ListDto>> GetAll(Expression<Func<T, bool>> filter)
+        public async Task<IEnumerable<ListDto>> GetAllAsync(Expression<Func<T, bool>> filter)
         {
             return _mapper.Map<IEnumerable<ListDto>>(await _uow.GetRepository<T>()
                 .GetAllAsync(filter)
                 .ToListAsync());
         }
 
-        public async Task<ListDto> GetOne(int id)
+        public async Task<ListDto> GetOneAsync(int id)
         {
             return _mapper.Map<ListDto>(await _uow.GetRepository<T>()
                 .GetByFilterAsync(x => x.Id == id));
         }
 
-        public async Task<ListDto> GetOne(Expression<Func<T,bool>> filter)
+        public async Task<ListDto> GetOneAsync(Expression<Func<T,bool>> filter)
         {
             return _mapper.Map<ListDto>(await _uow.GetRepository<T>()
                 .GetByFilterAsync(filter));

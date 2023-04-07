@@ -32,7 +32,7 @@ namespace E_Commerce.Presentation.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllBrand()
         {
-            var data = await _Brandservice.GetAll();
+            var data = await _Brandservice.GetAllAsync();
             return Ok(data);
         }
         [HttpPost]

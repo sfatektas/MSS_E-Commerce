@@ -76,7 +76,8 @@ namespace E_Commerce.API.ServiceExtensions
                     new CategoryProfile(),
                     new ColorProfile(),
                     new SizeTypeProfile(),
-                    new BrandProfile<BrandCreateModel>()
+                    new BrandProfile<BrandCreateModel>(),
+                    new SizeProfile()
             };
 
             services.AddAutoMapper(opt =>
@@ -95,6 +96,7 @@ namespace E_Commerce.API.ServiceExtensions
             services.AddScoped<ISizeTypeService, SizeTypeService>();
             services.AddScoped<IBrandService, BrandService>();
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<ISizeService, SizeService>();
         }
         public static void ConfigureValidations(this IServiceCollection services)
         {

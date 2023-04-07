@@ -27,7 +27,7 @@ namespace E_Commerce.Business.Services
         }
         public async Task<IEnumerable<BrandListDto>> GetAllBrand()
         {
-            var data = await base.GetAll();
+            var data = await base.GetAllAsync();
             if (data != null)
                 return data;
             throw new BrandNotFoundException();
@@ -35,7 +35,7 @@ namespace E_Commerce.Business.Services
 
         public async Task AddBrand(BrandCreateDto dto)
         {
-            var data = await base.GetOne(x => x.Defination == dto.Defination);
+            var data = await base.GetOneAsync(x => x.Defination == dto.Defination);
             if (data != null)
                 throw new BrandBadRequestException("Bu isime sahip bir marka var");
             await _uow.GetRepository<Brand>()
@@ -56,12 +56,12 @@ namespace E_Commerce.Business.Services
         }
         public async Task<BrandListDto> GetOneBrand(string defination)
         {
-            return await base.GetOne(x => x.Defination == defination);
+            return await base.GetOneAsync(x => x.Defination == defination);
         }
 
         public async Task<BrandListDto> GetOneBrand(int id)
         {
-            return await base.GetOne(id);
+            return await base.GetOneAsync(id);
 
         }
     }

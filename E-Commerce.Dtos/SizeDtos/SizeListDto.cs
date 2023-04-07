@@ -12,7 +12,7 @@ namespace E_Commerce.Dtos.SizeDtos
     {
         public int Id { get; init; }
         public string Value { get; init; }
-        public string SizeTypeId { get; init; }
+        public int SizeTypeId { get; init; }
         public List<SupplierProductListDto> SupplierProducts { get; init; }
 
     }

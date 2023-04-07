@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using E_Commerce.Business.Interfaces;
 using E_Commerce.Business.Interfaces.Storage;
+using E_Commerce.Common.Enums;
 using E_Commerce.Dtos.ProductDtos;
 using E_Commerce.Entities.RequestFeatures;
 using E_Commerce.Presentation.ActionFilters;
@@ -50,7 +51,8 @@ namespace E_Commerce.Presentation.Controllers
             dto.ImageUrl = Guid.NewGuid().ToString();
             
             var response = await _productService.CreateAsync(dto);
-            await _storage.UploadFile(dto.ImageUrl, model.File);
+            if(response.ResponseType == ResponseType.Success)
+                await _storage.UploadFile(dto.ImageUrl, model.File);
 
             return StatusCode(201);
         }
