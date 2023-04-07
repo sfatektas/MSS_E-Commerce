@@ -78,12 +78,12 @@ namespace E_Commerce.API.ServiceExtensions
                     new SizeTypeProfile(),
                     new BrandProfile(),
                     new SizeProfile(),
-                    new ProductProfile()
             };
 
             services.AddAutoMapper(opt =>
             {
                 opt.AddProfiles(profileList);
+                opt.AddProfile(new ProductProfile());
                 opt.CreateMap<BrandCreateModel, BrandCreateDto>(); // UI mapping
                 opt.CreateMap<ProductCreateModel , ProductCreateDto>(); 
             });

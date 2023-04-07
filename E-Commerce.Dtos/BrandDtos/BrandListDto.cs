@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.Dtos.BrandDtos
 {
-    public record BrandListDto : IListDto
+    public class BrandListDto : IListDto
     {
         public int Id { get; init; }
         public string Defination { get; init; }
         public string ImageUrl { get; init; }
-        public List<ProductListDto> Products { get; set; }
+        public List<ProductListDto> Products { get; init; }
 
     }
 }

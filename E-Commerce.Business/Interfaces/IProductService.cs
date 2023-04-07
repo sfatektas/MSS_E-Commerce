@@ -11,8 +11,10 @@ namespace E_Commerce.Business.Interfaces
 {
     public interface IProductService : IService<ProductCreateDto ,ProductListDto , ProductUpdateDto , Product>
     {
-        Task<List<ProductListDto>> GetAllProductsAsync();
+        Task<List<ProductListDto>> GetAllProductsAsync(bool include = false);
         Task<List<ProductListDto>> GetAllProductsAsync(Expression<Func<Product, bool>> filter);
+        
+        //Task Remo
 
     }
 }

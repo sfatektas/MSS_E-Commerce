@@ -15,6 +15,7 @@ namespace E_Commerce.Business.Mapper.AutoMapper
         {
             CreateMap<BrandCreateDto, Brand>();
             CreateMap<Brand,BrandListDto>().ReverseMap();
+            CreateMap<Brand,AdminBrandListModel>().ReverseMap();
         }
     }
 }

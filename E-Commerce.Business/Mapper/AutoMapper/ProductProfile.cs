@@ -1,5 +1,8 @@
 ﻿using AutoMapper;
+using E_Commerce.Dtos.BrandDtos;
+using E_Commerce.Dtos.CategoryDtos;
 using E_Commerce.Dtos.ProductDtos;
+using E_Commerce.Dtos.SizeDtos;
 using E_Commerce.Entities.EFCore;
 using System;
 using System.Collections.Generic;
@@ -14,7 +17,8 @@ namespace E_Commerce.Business.Mapper.AutoMapper
         public ProductProfile()
         {
             CreateMap<ProductCreateDto, Product>();
-            CreateMap<Product, ProductListDto>().ReverseMap();
+            CreateMap<Product, ProductListDto>();
+            CreateMap<Product, AdminProductViewModel>();
         }
     }
 }

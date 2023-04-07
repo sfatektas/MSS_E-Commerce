@@ -13,7 +13,7 @@ namespace E_Commerce.Business.Mapper.AutoMapper
     {
         public CategoryProfile()
         {
-            CreateMap<Category,CategoryListDto>();
+            CreateMap<Category,CategoryListDto>().ReverseMap();
         }
     }
 }

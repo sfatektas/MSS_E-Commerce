@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.Dtos.SizeDtos
 {
-    public record SizeListDto : IListDto
+    public class SizeListDto : IListDto
     {
         public int Id { get; init; }
         public string Value { get; init; }

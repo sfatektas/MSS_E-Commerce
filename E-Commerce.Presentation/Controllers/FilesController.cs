@@ -1,4 +1,5 @@
 ﻿using E_Commerce.Business.Interfaces.Storage;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.Presentation.Controllers
 {
+    [EnableCors("DefaultPolicy")]
     [ApiController]
     [Route("api/[controller]")]
     public class FilesController : ControllerBase
