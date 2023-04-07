@@ -90,7 +90,7 @@ export default function Login() {
               />
               <p className="text-primary">{passwordError}</p>
             </div>
-            <p className="text-black fw-light mb-4">{authText}</p>
+            <p className="text-black text-center mb-4 mt-2">{authText}</p>
             <div className="button-container d-flex flex-column mb-4">
               <button
                 onClick={handleSubmit}

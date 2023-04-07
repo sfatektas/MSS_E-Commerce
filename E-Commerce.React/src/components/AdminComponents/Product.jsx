@@ -3,7 +3,7 @@ import React from "react";
 export default function Product() {
   return (
     <>
-        <p className="display-5 fw-light text-muted mb-4">Ürünler</p>
+        <p className="display-6 text-center mb-4 border-bottom border-bottom pb-4">Ürünler</p>
 
       <div className="row">
         <div className="product-left col-6">

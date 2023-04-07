@@ -99,7 +99,7 @@ export default function Footer() {
                       key={index}
                       className="mb-2"
                     >
-                      <a href={`/category/${item.defination}`}>{item.defination}</a>
+                      <a className="text-decoration-none text-muted" href={`/category/${item.defination}`}>{item.defination}</a>
                     </li>
                   ))}
                 </ul>

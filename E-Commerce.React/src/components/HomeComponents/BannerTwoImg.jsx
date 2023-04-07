@@ -18,7 +18,7 @@ export default function BannerTwoImg() {
               <p className="subtitle text-white fw-light mb-4 fs-6">
                 Breathable perforated toe stiched stealth
               </p>
-              <button className="btn btn-light">View Campaign</button>
+              <a href="/campaign" className="btn btn-light">View Campaign</a>
             </div>
           </div>
           <div className="banner-item">
@@ -33,7 +33,7 @@ export default function BannerTwoImg() {
               <p className="subtitle text-white fw-light mb-4 fs-6">
                 Breathable perforated toe stiched stealth
               </p>
-              <button className="btn btn-light">View Campaign</button>
+              <a href="/campaign" className="btn btn-light">View Campaign</a>
             </div>
           </div>
         </div>

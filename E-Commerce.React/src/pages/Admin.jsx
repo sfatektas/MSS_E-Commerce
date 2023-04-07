@@ -8,7 +8,7 @@ export default function Admin() {
   return (
     <>
       <div className="">
-        <div className="admin row m-5">
+        <div className="admin row">
           <div className="admin-header col-2 d-flex flex-column p-0">
             <div className="d-flex flex-column p-4 ">
               <button

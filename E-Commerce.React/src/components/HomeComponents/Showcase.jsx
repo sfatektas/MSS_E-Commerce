@@ -5,11 +5,13 @@ export default function Showcase(props) {
     <div className="col-12 col-lg-3 col-md-6 d-flex flex-row">
       <div className="showcase d-flex flex-column align-items-center shadow-sm p-0 my-3">
         <div className="showcase-image mb-3 h-100 d-flex align-items-center p-2 position-relative">
-          <img
-            className="w-100"
-            src={props.image}
-            alt={props.title + " Image"}
-          />
+          <a href={`/product/${props.title}`}>
+            <img
+              className="w-100"
+              src={props.image}
+              alt={props.title + " Image"}
+            />
+          </a>
           <div className="showcase-buttons d-flex flex-column">
             <a className="btn text- mb-2">
               <svg
@@ -75,7 +77,9 @@ export default function Showcase(props) {
           <p className="showcase-price text-primary fw-bold mb-3">
             ${props.price}
           </p>
-          <button className="btn w-100">Satın Al</button>
+          <a className="btn w-100" href={`/product/${props.title}`}>
+            Satın Al
+          </a>
         </div>
       </div>
     </div>

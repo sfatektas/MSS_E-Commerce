@@ -12,6 +12,9 @@ import Account from "./pages/Account";
 import Footer from "./components/Footer";
 import Category from "./pages/Category";
 import Favorites from "./pages/Favorites";
+import Product from "./pages/Product";
+import Cart from "./pages/Cart";
+import Campaign from "./pages/Campaign";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 
 function App() {
@@ -42,8 +45,11 @@ function App() {
           }
         />
         <Route path="/category/:defination" element={<Category />} />
+        <Route path="/campaign" element={<Campaign />} />
         <Route path="*" element={<NotFound />} />
+        <Route path="cart" element={<Cart />} />
         <Route path="/favorites" element={<Favorites />} />
+        <Route path="/product/:name" element={<Product />} />
       </Routes>
       <Footer />
     </>

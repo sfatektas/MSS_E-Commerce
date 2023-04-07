@@ -17,7 +17,7 @@ function Header() {
   let navigate = useNavigate();
   const { logout, logoutStatus } = authStore();
   const { setIsLoading } = loaderStore();
-  const {sideBarActive,setSidebarActive}=CartSidebarStore();
+  const { sideBarActive, setSidebarActive } = CartSidebarStore();
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
@@ -33,6 +33,7 @@ function Header() {
 
   useEffect(() => {
     if (logoutStatus == 204) {
+      alert("Başarıyla Çıkış Yapıldı");
       setTimeout(() => {
         navigate("/");
       }, 2000);
@@ -95,7 +96,6 @@ function Header() {
               <Nav className="d-flex justify-content-between fw-semibold">
                 <Nav.Link href="/">Ana Sayfa</Nav.Link>
                 <Nav.Link href="/admin">Admin</Nav.Link>
-                <Nav.Link href="/contact">İletişim</Nav.Link>
                 <NavDropdown title="Kategoriler" id="collasible-nav-dropdown">
                   {categories.map((item, index) => (
                     <NavDropdown.Item
@@ -107,6 +107,8 @@ function Header() {
                   ))}
                   {/* <NavDropdown.Divider /> */}
                 </NavDropdown>
+                <Nav.Link href="/contact">İletişim</Nav.Link>
+
                 <Nav.Link href="/about">Hakkımızda</Nav.Link>
                 {/* {localStorage.getItem("TOKEN") ? null : (
                 <Nav.Link className="text-black" href="/login">
@@ -195,7 +197,12 @@ function Header() {
                 </div>
               </div>
             </Nav.Link>
-            <Nav.Link href="" onClick={()=>{setSidebarActive(true)}}>
+            <Nav.Link
+              href=""
+              onClick={() => {
+                setSidebarActive(true);
+              }}
+            >
               {" "}
               <div className="cart mx-3">
                 <svg

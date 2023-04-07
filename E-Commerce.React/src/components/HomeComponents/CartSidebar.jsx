@@ -93,7 +93,7 @@ export default function CartSidebar() {
               </div>
             </div>
             <div className="cart-buttons d-flex flex-column">
-              <button className="btn btn-dark mb-3 p-3">Ödeme Yap</button>
+              <a href="/cart" className="btn btn-dark mb-3 p-3">Sepete Git</a>
               <button
                 className="btn btn-outline-dark p-3"
                 onClick={() => {

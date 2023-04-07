@@ -171,9 +171,9 @@ a {
                 align-items: center;
                 justify-content: center;
 
-                button {
+                a {
                     font-size: 14px;
-                    font-weight: 700;
+                    font-weight: 600;
                     border-radius: 5px;
                 }
 
@@ -301,7 +301,7 @@ a {
     }
 
     .showcase-content {
-        button {
+        a {
             border-radius: 5px;
             border: #000 1px solid;
             background-color: transparent;

@@ -4,6 +4,7 @@ import Table from "react-bootstrap/Table";
 import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
 
+
 export default function Brands() {
   const [brandName, setBrandName] = useState("");
   const [file, setFile] = useState();
@@ -11,6 +12,7 @@ export default function Brands() {
   const [info, setInfo] = useState("");
   const [show, setModalShow] = useState(false)
   const [variant, setVariant] = useState("")
+
 
   useEffect(() => {
     axios
@@ -24,7 +26,8 @@ export default function Brands() {
   }, []);
 
   function deleteBrand(brand) {
-    axios
+    if(window.confirm("Bu markayı silmek istediğinize emin misiniz?")){
+      axios
       .delete(`https://e-commercemss.azurewebsites.net/api/brands/${brand}`)
       .then((response) => {
         console.log(response);
@@ -36,6 +39,7 @@ export default function Brands() {
       .catch((error) => {
         console.log(error);
       });
+    }
   }
 
   function handleFile(event) {
@@ -76,7 +80,8 @@ export default function Brands() {
   }
   return (
     <>
-      <p className="display-5 fw-light text-muted mb-4">Markalar</p>
+
+      <p className="display-6 text-center mb-4 border-bottom pb-4">Markalar</p>
       <div className="row">
       <Alert show={show} variant={variant}>
         <Alert.Heading>{info}</Alert.Heading>
