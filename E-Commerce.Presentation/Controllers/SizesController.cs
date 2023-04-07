@@ -1,4 +1,5 @@
 ﻿using E_Commerce.Business.Interfaces;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.Presentation.Controllers
 {
+    [EnableCors("DefaultPolicy")]
     [ApiController]
     [Route("api/[controller]")]
     public class SizesController : ControllerBase
@@ -25,6 +27,11 @@ namespace E_Commerce.Presentation.Controllers
             return Ok(await _sizeService.GetAllSize());
         }
 
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetAllFromSizeTypes(int id)
+        {
+            return Ok(await _sizeService.GetAllAsync(x=>x.SizeTypeId == id));
+        }
 
     }
     

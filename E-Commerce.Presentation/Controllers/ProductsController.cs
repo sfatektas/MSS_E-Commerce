@@ -36,16 +36,10 @@ namespace E_Commerce.Presentation.Controllers
             var data = await _productService.GetAllProductsAsync();
             return Ok(data);
         }
-        [HttpGet]
-        public async Task<IActionResult> GetProducts([FromQuery]ProductRequestParameter parameter)
-        {
-            var data = await _productService.GetAllProductsAsync();
-            return Ok(data);
-        }
 
         [HttpPost]
         [ServiceFilter(typeof(ValidateFilterAttiribute<ProductCreateModel>))] // validator olarak kullanılıyor.
-        public async Task<IActionResult> AddProduct(ProductCreateModel model)
+        public async Task<IActionResult> AddProduct([FromForm]ProductCreateModel model)
         {
             var dto = _mapper.Map<ProductCreateDto>(model);
             dto.ImageUrl = Guid.NewGuid().ToString();

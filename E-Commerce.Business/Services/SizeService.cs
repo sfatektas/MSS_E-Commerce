@@ -5,6 +5,7 @@ using E_Commerce.Dtos.SizeDtos;
 using E_Commerce.Entities.EFCore;
 using E_Commerce.Entities.Exceptions;
 using Microsoft.EntityFrameworkCore;
+using NLog.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,9 +40,12 @@ namespace E_Commerce.Business.Services
             return data;
         }
 
-        public Task<SizeListDto> GetOneSizeAsync(int id)
+        public async Task<SizeListDto> GetOneSizeAsync(int id)
         {
-            throw new NotImplementedException();
+            var data = await base.GetOneAsync(x=>x.Id == id);
+            if (data == null)
+                throw new SizeNotFoundException();
+            return _mapper.Map<SizeListDto>(data);
         }
 
         public async Task<SizeListDto> GetOneSizeAsync(Expression<Func<Size, bool>> filter)

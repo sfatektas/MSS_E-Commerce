@@ -58,7 +58,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-await app.SeedData(); //Seed Data added.
+//await app.SeedData(); //Seed Data added.
 
 app.Run();
 //mrt feature added

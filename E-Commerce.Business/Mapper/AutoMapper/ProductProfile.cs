@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using E_Commerce.Dtos.BrandDtos;
+using E_Commerce.Dtos.ProductDtos;
 using E_Commerce.Entities.EFCore;
 using System;
 using System.Collections.Generic;
@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.Business.Mapper.AutoMapper
 {
-    public class BrandProfile : Profile 
+    public class ProductProfile : Profile
     {
-        public BrandProfile()
+        public ProductProfile()
         {
-            CreateMap<BrandCreateDto, Brand>();
-            CreateMap<Brand,BrandListDto>().ReverseMap();
+            CreateMap<ProductCreateDto, Product>();
+            CreateMap<Product, ProductListDto>().ReverseMap();
         }
     }
 }

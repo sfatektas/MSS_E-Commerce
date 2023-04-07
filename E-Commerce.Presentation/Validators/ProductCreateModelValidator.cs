@@ -13,6 +13,11 @@ namespace E_Commerce.Presentation.Validators
         public ProductCreateModelValidator()
         {
             RuleFor(x => x.Name).NotEmpty();
+            RuleFor(x=>x.Detail).NotEmpty().WithMessage("Ürün detayı boş olamaz.");
+            RuleFor(x=>x.BrandId).NotEqual(0).WithMessage("Ürünün markası doldurulması zorunludur.");
+            RuleFor(x=>x.CategoryId).NotEqual(0).WithMessage("Ürünün kategorisi doldurulması zorunludur.");
+            RuleFor(x=>x.SizeTypeId).NotEqual(0).WithMessage("Ürünün bedeni doldurulması zorunludur.");
+            RuleFor(x=>x.File).SetValidator(new FileValidator());   
         }
     }
 }
