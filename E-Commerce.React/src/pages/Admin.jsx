@@ -12,7 +12,7 @@ export default function Admin() {
           <div className="admin-header col-2 d-flex flex-column p-0">
             <div className="d-flex flex-column p-4 ">
               <button
-                className={`btn fs-5 fw-semibold mb-3 py-3 ${
+                className={`btn fs-5 py-3 ${
                   adminPanel == "adminHome" && "active"
                 }`}
                 onClick={() => setAdminPanel("adminHome")}
@@ -22,7 +22,7 @@ export default function Admin() {
             </div>
             <div className="buttons d-flex flex-column">
               <button
-                className={`btn fs-5 fw-light mx-4 mb-3 ${
+                className={`btn fs-5 mx-4 mb-3 ${
                   adminPanel == "brands" && "active"
                 }`}
                 onClick={() => setAdminPanel("brands")}
@@ -30,7 +30,7 @@ export default function Admin() {
                 Markalar
               </button>
               <button
-                className={`btn fs-5 fw-light mx-4 mb-3 ${
+                className={`btn fs-5 mx-4 mb-3 ${
                   adminPanel == "product" && "active"
                 }`}
                 onClick={() => setAdminPanel("product")}

@@ -6,7 +6,7 @@ export const ProtectedRoute = ({ children }) => {
     isAuth = true;
   }
   if (!isAuth) {
-    return <Navigate to="/" />;
+    return <Navigate to="/NotFound" />;
   }
   return children;
 };

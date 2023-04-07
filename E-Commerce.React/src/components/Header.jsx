@@ -7,14 +7,17 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import { authStore } from "../store/authStore";
 import { loaderStore } from "../store/loaderStore";
+import { CartSidebarStore } from "../store/CartSidebarStore";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import HomeCartMenu from "./HomeComponents/CartSidebar";
 import axios from "axios";
 
 function Header() {
   let navigate = useNavigate();
   const { logout, logoutStatus } = authStore();
   const { setIsLoading } = loaderStore();
+  const {sideBarActive,setSidebarActive}=CartSidebarStore();
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
@@ -50,8 +53,11 @@ function Header() {
 
   return (
     <>
+      <HomeCartMenu />
       <div className="text-center bg-black py-3">
-        <p className="text-white fs-5 fw-semibold">Black Friday. <span className="text-primary">Save up to 50%!</span></p>
+        <p className="text-white fs-5 fw-semibold">
+          Black Friday. <span className="text-primary">Save up to 50%!</span>
+        </p>
       </div>
       <Navbar className="navbar sticky-top" key="lg" bg="light" expand="lg">
         <Container>
@@ -164,7 +170,7 @@ function Header() {
                 </svg>
               </div>
             </Nav.Link>
-            <Nav.Link href="#!">
+            <Nav.Link href="/favorites">
               <div className="favorites mx-3">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -189,7 +195,7 @@ function Header() {
                 </div>
               </div>
             </Nav.Link>
-            <Nav.Link href="#!">
+            <Nav.Link href="" onClick={()=>{setSidebarActive(true)}}>
               {" "}
               <div className="cart mx-3">
                 <svg

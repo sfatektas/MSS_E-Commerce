@@ -11,6 +11,7 @@ import NotFound from "./pages/NotFound";
 import Account from "./pages/Account";
 import Footer from "./components/Footer";
 import Category from "./pages/Category";
+import Favorites from "./pages/Favorites";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 
 function App() {
@@ -42,6 +43,7 @@ function App() {
         />
         <Route path="/category/:defination" element={<Category />} />
         <Route path="*" element={<NotFound />} />
+        <Route path="/favorites" element={<Favorites />} />
       </Routes>
       <Footer />
     </>

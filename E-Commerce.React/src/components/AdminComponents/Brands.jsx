@@ -88,7 +88,7 @@ export default function Brands() {
       </Alert>
         <div className="list-brands col-8">
           <p className="mb-4 fs-4 fw-semibold text-muted">Marka Listesi</p>
-          <Table hover responsive variant="light table">
+          <Table hover responsive>
             <thead>
               <tr>
                 <th>Sıra</th>

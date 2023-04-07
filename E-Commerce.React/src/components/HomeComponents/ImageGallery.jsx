@@ -12,13 +12,8 @@ export default function imageGallery() {
     <>
       <div className="gallery row d-flex m-0 ">
         {imageList.map((logo, index) => (
-          <div
-            className="gallery-image col-6 col-lg-2 p-0"
-            key={index}
-          >
-            <a className="h-100 w-100" href="#!">
-              <img src={logo} className="w-100" />
-            </a>
+          <div className="gallery-image col-6 col-lg-2 p-0 d-flex" key={index}>
+            <img src={logo} className="w-100" />
           </div>
         ))}
       </div>
