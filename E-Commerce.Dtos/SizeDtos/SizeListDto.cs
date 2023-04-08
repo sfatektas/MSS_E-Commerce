@@ -1,4 +1,5 @@
 ﻿using E_Commerce.Dtos.Interfaces;
+using E_Commerce.Dtos.SizeTypeDtos;
 using E_Commerce.Dtos.SupplierProductDtos;
 using System;
 using System.Collections.Generic;
@@ -12,8 +13,10 @@ namespace E_Commerce.Dtos.SizeDtos
     {
         public int Id { get; init; }
         public string Value { get; init; }
+        public SizeTypeListDto SizeType { get; set; }
         public int SizeTypeId { get; init; }
-        public List<SupplierProductListDto> SupplierProducts { get; init; }
+
+        //public List<SupplierProductListDto> SupplierProducts { get; init; }
 
     }
 }

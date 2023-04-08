@@ -18,7 +18,6 @@ namespace E_Commerce.Business.Mapper.AutoMapper
         {
             CreateMap<ProductCreateDto, Product>();
             CreateMap<Product, ProductListDto>();
-            CreateMap<Product, AdminProductViewModel>();
         }
     }
 }

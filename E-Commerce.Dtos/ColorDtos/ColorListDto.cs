@@ -12,6 +12,6 @@ namespace E_Commerce.Dtos.ColorDtos
     {
         public int Id { get; init; }
         public string Defination { get; init; }
-        public List<SupplierProductListDto> SupplierProducts { get; init; }
+        //public List<SupplierProductListDto> SupplierProducts { get; init; }
     }
 }

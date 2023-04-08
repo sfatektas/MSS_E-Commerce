@@ -12,6 +12,6 @@ namespace E_Commerce.Dtos.OrderStatusTypeDtos
     {
         public int Id { get; init; }
         public string Defination { get; init; }
-        public List<OrderListDto> Orders { get; init; }
+        //public List<OrderListDto> Orders { get; init; }
     }
 }

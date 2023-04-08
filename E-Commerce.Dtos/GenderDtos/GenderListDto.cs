@@ -12,6 +12,6 @@ namespace E_Commerce.Dtos.GenderDtos
     {
         public int Id { get; init; }
         public string Defination { get; init; }
-        public List<CustomerListDto> Customers { get; init; }
+        //public List<CustomerListDto> Customers { get; init; }
     }
 }

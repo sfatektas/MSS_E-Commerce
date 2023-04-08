@@ -10,6 +10,7 @@ using E_Commerce.Presentation.ActionFilters;
 using E_Commerce.Presentation.Models;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,10 +57,14 @@ namespace E_Commerce.Presentation.Controllers
 
             return StatusCode(201);
         }
-        //[HttpDelete]
-        //public async Task<IActionResult> DeleteProduct(int id)
-        //{
-        //    _productService.RemoveAsync()
-        //}
+        [HttpDelete]
+        public async Task<IActionResult> DeleteProduct([FromRoute] int productId)
+        {
+            var data = await _productService.GetProductById(productId);
+            await _productService.RemoveAsync(data);
+
+             _storage.RemoveFile(data.ImageUrl);
+            return NoContent();
+        }
     }
 }

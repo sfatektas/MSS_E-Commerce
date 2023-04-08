@@ -13,7 +13,7 @@ namespace E_Commerce.Business.Interfaces
     {
         Task<List<ProductListDto>> GetAllProductsAsync(bool include = false);
         Task<List<ProductListDto>> GetAllProductsAsync(Expression<Func<Product, bool>> filter);
-        
+        Task<ProductListDto> GetProductById(int id);
         //Task Remo
 
     }

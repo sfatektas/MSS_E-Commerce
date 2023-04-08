@@ -4,9 +4,12 @@ using E_Commerce.Dtos.Interfaces;
 using E_Commerce.Dtos.OrderDetailDtos;
 using E_Commerce.Dtos.PriceHistoryDtos;
 using E_Commerce.Dtos.ProductCommentDtos;
+using E_Commerce.Dtos.ProductDtos;
 using E_Commerce.Dtos.ProductImageDtos;
 using E_Commerce.Dtos.ProductsVisitorDtos;
+using E_Commerce.Dtos.SizeDtos;
 using E_Commerce.Dtos.SupplierAddingProductDtos;
+using E_Commerce.Dtos.SupplierDtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,8 +21,13 @@ namespace E_Commerce.Dtos.SupplierProductDtos
     public record SupplierProductListDto : IListDto
     {
         public int Id { get; init; }
+
+        public ProductListDto ProductListDto { get; set; }
         public int ProductId { get; init; }
+        public SizeListDto Size { get; set; }
         public int SizeId { get; init; }
+
+        public SupplierListDto SupplierList { get; set; }
         public int SupplierId { get; init; }
         public double UnitPrice { get; init; }
         public int ColorId { get; init; }

@@ -8,10 +8,15 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="OrderValidationDtos\**" />
+	  <EmbeddedResource Remove="OrderValidationDtos\**" />
+	  <None Remove="OrderValidationDtos\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<Folder Include="ColorDtos\" />
 		<Folder Include="GenderDtos\" />
 		<Folder Include="OrderStatusTypeDtos\" />
-		<Folder Include="OrderValidationDtos\" />
 		<Folder Include="SizeTypeValidation\" />
 		<Folder Include="UserTypeValidation\" />
 	</ItemGroup>

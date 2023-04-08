@@ -41,7 +41,8 @@ namespace E_Commerce.Business.Services
             else
             {
                 var data = await _uow.GetProductRepository()
-                    .GetQueryable().Include(x => x.Brand)
+                    .GetQueryable()
+                    .Include(x => x.Brand)
                     .Include(x => x.Category)
                     .Include(x => x.SizeType)
                     .ToListAsync();
@@ -55,6 +56,13 @@ namespace E_Commerce.Business.Services
         public async Task<List<ProductListDto>> GetAllProductsAsync(Expression<Func<Product, bool>> filter)
         {
             var response = await base.GetAllAsync(filter);
+            if (response.Data == null)
+                throw new ProductNotFoundException();
+            return response.Data;
+        }
+        public async Task<ProductListDto> GetProductById(int id)
+        {
+            var response = await base.GetByIdAsync(id);
             if (response.Data == null)
                 throw new ProductNotFoundException();
             return response.Data;

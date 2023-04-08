@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace E_Commerce.Dtos.ProductDtos
@@ -22,9 +23,11 @@ namespace E_Commerce.Dtos.ProductDtos
         public int SizeTypeId { get; init; }
         public SizeTypeListDto SizeType { get; init; }
         public int CategoryId { get; init; }
-        public CategoryListDto Category{ get; set; }
+        public CategoryListDto Category{ get; init; }
         public string ImageUrl { get; init; }
-        public List<SupplierProductListDto> SupplierProducts { get; init; }
+
+        //[JsonIgnore]
+        //public List<SupplierProductListDto> SupplierProducts { get; init; }
 
     }
 }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace E_Commerce.Dtos.SizeTypeDtos
@@ -13,7 +14,9 @@ namespace E_Commerce.Dtos.SizeTypeDtos
     {
         public int Id { get; init; }
         public string Defination { get; init; }
-        public List<SizeListDto> Sizes { get; init; }
+
+        //[JsonIgnore]
+        //public List<SizeListDto> Sizes { get; init; }
 
     }
 }
