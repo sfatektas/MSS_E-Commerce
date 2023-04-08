@@ -13,7 +13,7 @@ export default function Admin() {
             <div className="d-flex flex-column p-4 ">
               <button
                 className={`btn fs-5 py-3 ${
-                  adminPanel == "adminHome" && "active"
+                  adminPanel === "adminHome" && "active"
                 }`}
                 onClick={() => setAdminPanel("adminHome")}
               >
@@ -23,7 +23,7 @@ export default function Admin() {
             <div className="buttons d-flex flex-column">
               <button
                 className={`btn fs-5 mx-4 mb-3 ${
-                  adminPanel == "brands" && "active"
+                  adminPanel === "brands" && "active"
                 }`}
                 onClick={() => setAdminPanel("brands")}
               >
@@ -31,7 +31,7 @@ export default function Admin() {
               </button>
               <button
                 className={`btn fs-5 mx-4 mb-3 ${
-                  adminPanel == "product" && "active"
+                  adminPanel === "product" && "active"
                 }`}
                 onClick={() => setAdminPanel("product")}
               >

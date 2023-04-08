@@ -13,9 +13,9 @@ export default function HomeFeatures() {
             </div>
             <div className="ps-4">
               <p className="text-white mb-0">
-                <span className="text-primary">FREE</span> DELIVERY
+                <span className="text-primary">ÜCRETSİZ</span> TESLİMAT
               </p>
-              <p className="text-muted fw-light fs-6">When order from $500.</p>
+              <p className="text-muted fw-light fs-6">$500 Üstü alışverişlerinizde</p>
             </div>
           </div>
           <div className="d-flex align-items-center py-5 features-item col-12 col-lg-4 justify-content-center justify-content-lg-start">
@@ -58,9 +58,9 @@ export default function HomeFeatures() {
             </div>
             <div className="ps-4">
               <p className="text-white mb-0">
-                <span className="text-primary">100% REFUND</span> OF MONEY
+                <span className="text-primary">100% </span>GERİ İADE
               </p>
-              <p className="text-muted fw-light fs-6">14-days of complanint.</p>
+              <p className="text-muted fw-light fs-6">14 Gün iade hakkı</p>
             </div>
           </div>
           <div className="d-flex align-items-center py-5 features-item col-12 col-lg-4 justify-content-center justify-content-lg-start">
@@ -87,9 +87,9 @@ export default function HomeFeatures() {
             </div>
             <div className="ps-4">
               <p className="text-white mb-0">
-                <span className="text-primary">QUALITY</span> INSPECTIONS
+                <span className="text-primary">KANITLANMIŞ</span> KALİTE
               </p>
-              <p className="text-muted fw-light fs-6">Over 10,000 products.</p>
+              <p className="text-muted fw-light fs-6">10.000'den fazla ürün</p>
             </div>
           </div>
         </div>

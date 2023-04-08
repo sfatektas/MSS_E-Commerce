@@ -1,4 +1,3 @@
-import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
@@ -60,7 +59,7 @@ function Header() {
           Black Friday. <span className="text-primary">Save up to 50%!</span>
         </p>
       </div>
-      <Navbar className="navbar sticky-top" key="lg" bg="light" expand="lg">
+      <Navbar className="navbar sticky-top shadow-sm" key="lg" bg="light" expand="lg">
         <Container>
           <Navbar.Brand className="logo order-1 order-lg-0 col-lg-3 d-flex align-items-center justify-content-center justify-content-lg-start">
             {/* <img height="40px" alt="logo" src={logo}></img> */}
@@ -85,13 +84,33 @@ function Header() {
             </Offcanvas.Header>
             <Offcanvas.Body className="d-flex flex-column">
               <Form className="d-flex mt-2">
-                <Form.Control
-                  type="search"
-                  placeholder="Ara"
-                  aria-label="Search"
-                  className="shadow-none"
-                />
-                <Button variant="outline-primary px-4">Ara</Button>
+                <div className="p-1 bg-light rounded rounded-pill shadow-sm mb-2 w-100">
+                  <div className="input-group">
+                    <input
+                      type="search"
+                      placeholder="Nasıl bir ürün arıyorsunuz?"
+                      aria-describedby="button-addon1"
+                      className="form-control border-0 bg-light"
+                    />
+                    <div className="input-group-append">
+                      <a href="#!" className="btn btn-link text-primary">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 20 20"
+                          fill="none"
+                        >
+                          <path
+                            fill="#000000"
+                            fillRule="evenodd"
+                            d="M4 9a5 5 0 1110 0A5 5 0 014 9zm5-7a7 7 0 104.2 12.6.999.999 0 00.093.107l3 3a1 1 0 001.414-1.414l-3-3a.999.999 0 00-.107-.093A7 7 0 009 2z"
+                          />
+                        </svg>
+                      </a>
+                    </div>
+                  </div>
+                </div>
               </Form>
               <Nav className="d-flex justify-content-between fw-semibold">
                 <Nav.Link href="/">Ana Sayfa</Nav.Link>
@@ -152,22 +171,13 @@ function Header() {
               <div className="user mx-3">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
+                  width="26"
+                  height="26"
+                  viewBox="0 0 1024 1024"
                 >
                   <path
-                    d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z"
-                    stroke="#292D32"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                  />
-                  <path
-                    d="M20.5899 22C20.5899 18.13 16.7399 15 11.9999 15C7.25991 15 3.40991 18.13 3.40991 22"
-                    stroke="#292D32"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
+                    fill="#000000"
+                    d="M512 512a192 192 0 1 0 0-384 192 192 0 0 0 0 384zm0 64a256 256 0 1 1 0-512 256 256 0 0 1 0 512zm320 320v-96a96 96 0 0 0-96-96H288a96 96 0 0 0-96 96v96a32 32 0 1 1-64 0v-96a160 160 0 0 1 160-160h448a160 160 0 0 1 160 160v96a32 32 0 1 1-64 0z"
                   />
                 </svg>
               </div>
