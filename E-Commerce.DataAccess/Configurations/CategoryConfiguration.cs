@@ -15,6 +15,36 @@ namespace E_Commerce.DataAccess.Configurations
         {
             builder.Property(x => x.Defination).IsRequired();
             builder.Property(x => x.Defination).HasMaxLength(400);
+
+            builder.HasData(new Category[]
+            {
+                new()
+                {
+                    Id = 1,
+                    IsActive= true,
+                    Defination = "TShirt",
+                },                new()
+                {
+                    Id = 2,
+                    IsActive= true,
+                    Defination = "Pantalon",
+                },                new()
+                {
+                    Id = 3,
+                    IsActive= true,
+                    Defination = "Ayakkabı",
+                },                new()
+                {
+                    Id = 4,
+                    IsActive= true,
+                    Defination = "Gömlek",
+                },                new()
+                {
+                    Id = 5,
+                    IsActive= true,
+                    Defination = "Bluz",
+                },
+            });
         }
     }
 }

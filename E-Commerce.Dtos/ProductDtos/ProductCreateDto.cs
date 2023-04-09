@@ -14,6 +14,6 @@ namespace E_Commerce.Dtos.ProductDtos
         public string Detail { get; init; }
         public int SizeTypeId { get; init; }
         public int CategoryId { get; init; }
-        public string ImageUrl { get; init; }
+        public string ImageUrl { get; set; }
     }
 }

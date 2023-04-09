@@ -10,6 +10,6 @@ namespace E_Commerce.Dtos.BrandDtos
     public record BrandCreateDto : ICreateDto
     {
         public string Defination { get; init; }
-        public string ImageUrl { get; init; }
+        public string ImageUrl { get; set; }
     }
 }

@@ -42,11 +42,15 @@ namespace E_Commerce.Presentation.ActionFilters
             {
                 await next();
             }
-            foreach (var error in result.GetValidationErrors())
+            else
             {
-                context.ModelState.AddModelError(error.ErrorCode, error.ErrorMessage);
+                context.ModelState.Clear();
+                foreach (var error in result.GetValidationErrors())
+                {
+                    context.ModelState.AddModelError("Error", error.ErrorMessage);
+                }
+                context.Result = new UnprocessableEntityObjectResult(context.ModelState);
             }
-            context.Result = new UnprocessableEntityObjectResult(context.ModelState);
         }
     }
 }

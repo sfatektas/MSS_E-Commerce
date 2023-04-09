@@ -2,6 +2,7 @@
 using E_Commerce.Entities.Exceptions;
 using E_Commerce.Entities.Exceptions.Abstract;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore.Query;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,12 +25,12 @@ namespace E_Commerce.Presentation.Middlewares
 
         public async Task InvokeAsync(HttpContext context)
         {
-			try
-			{
+            try
+            {
                 await _next.Invoke(context);
-			}
-			catch (BaseException e)
-			{
+            }
+            catch (BaseException e)
+            {
                 _loggerService.Error($"Hata mesajı : {e.Message} , Hata Detayı : {e.InnerException}");
                 //Will Create custom response model
                 context.Response.ContentType = "application/json";
@@ -45,6 +46,7 @@ namespace E_Commerce.Presentation.Middlewares
                 _loggerService.Error($"Hata mesajı : {e.Message} ,\n Hata Detayı : {e.InnerException}");
                 //Will Create custom response model
                 context.Response.ContentType = "application/json";
+                context.Response.StatusCode = (int)StatusCodes.Status400BadRequest;
                 await context.Response.WriteAsync(new ErrorModel()
                 {
                     Error = $"Hata mesajı : {e.Message} ,\n Hata Detayı : {e.InnerException}",

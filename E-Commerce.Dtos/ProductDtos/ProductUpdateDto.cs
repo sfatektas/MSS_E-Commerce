@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.Dtos.ProductDtos
 {
-    public record roductUpdateDto : IUpdateDto
+    public record ProductUpdateDto : IUpdateDto
     {
         public int Id { get; init; }
         public int BrandId { get; init; }

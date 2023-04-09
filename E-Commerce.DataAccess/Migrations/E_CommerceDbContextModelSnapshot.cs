@@ -31,15 +31,21 @@ namespace E_Commerce.DataAccess.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Defination")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)");
 
                     b.Property<string>("ImageUrl")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Defination");
 
                     b.ToTable("Brands");
                 });
@@ -53,7 +59,9 @@ namespace E_Commerce.DataAccess.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Defination")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -61,6 +69,38 @@ namespace E_Commerce.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Defination = "TShirt",
+                            IsActive = true
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Defination = "Pantalon",
+                            IsActive = true
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Defination = "Ayakkabı",
+                            IsActive = true
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Defination = "Gömlek",
+                            IsActive = true
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Defination = "Bluz",
+                            IsActive = true
+                        });
                 });
 
             modelBuilder.Entity("E_Commerce.Entities.EFCore.Color", b =>
@@ -72,7 +112,9 @@ namespace E_Commerce.DataAccess.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Defination")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -80,6 +122,80 @@ namespace E_Commerce.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Colors");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Defination = "Beyaz",
+                            IsActive = true
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Defination = "Siyah",
+                            IsActive = true
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Defination = "Gri",
+                            IsActive = true
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Defination = "Kahverengi",
+                            IsActive = true
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Defination = "Kırmızı",
+                            IsActive = true
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Defination = "Mavi",
+                            IsActive = true
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Defination = "Yeşil",
+                            IsActive = true
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Defination = "Sarı",
+                            IsActive = true
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Defination = "Turuncu",
+                            IsActive = true
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Defination = "Pembe",
+                            IsActive = true
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Defination = "Mor",
+                            IsActive = true
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Defination = "Lacivert",
+                            IsActive = true
+                        });
                 });
 
             modelBuilder.Entity("E_Commerce.Entities.EFCore.CustomerAddress", b =>
@@ -91,10 +207,14 @@ namespace E_Commerce.DataAccess.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("AddressDefination")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("City")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
@@ -106,7 +226,9 @@ namespace E_Commerce.DataAccess.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Town")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
@@ -153,7 +275,9 @@ namespace E_Commerce.DataAccess.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Defination")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -303,10 +427,14 @@ namespace E_Commerce.DataAccess.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("AddressDetail")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("City")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -324,7 +452,9 @@ namespace E_Commerce.DataAccess.Migrations
                         .HasColumnType("float");
 
                     b.Property<string>("Town")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
@@ -379,7 +509,9 @@ namespace E_Commerce.DataAccess.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Defination")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -434,16 +566,22 @@ namespace E_Commerce.DataAccess.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Detail")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<string>("ImageUrl")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<int>("SizeTypeId")
                         .HasColumnType("int");
@@ -468,7 +606,9 @@ namespace E_Commerce.DataAccess.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Content")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -503,7 +643,9 @@ namespace E_Commerce.DataAccess.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("ImageUrl")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -587,13 +729,18 @@ namespace E_Commerce.DataAccess.Migrations
 
                     b.Property<string>("Adress")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("FacebookLink")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<bool>("IsActive")
                         .ValueGeneratedOnAdd()
@@ -605,20 +752,28 @@ namespace E_Commerce.DataAccess.Migrations
 
                     b.Property<string>("Logo")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("PinterestLink")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Slogan")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
 
                     b.Property<string>("TwitterLink")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.HasKey("Id");
 
@@ -636,20 +791,161 @@ namespace E_Commerce.DataAccess.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<string>("SizeTypeId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("SizeTypeId1")
+                    b.Property<int>("SizeTypeId")
                         .HasColumnType("int");
 
                     b.Property<string>("Value")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SizeTypeId1");
+                    b.HasIndex("SizeTypeId");
 
                     b.ToTable("Sizes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            IsActive = true,
+                            SizeTypeId = 1,
+                            Value = "Small"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            IsActive = true,
+                            SizeTypeId = 1,
+                            Value = "Medium"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            IsActive = true,
+                            SizeTypeId = 1,
+                            Value = "Large"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            IsActive = true,
+                            SizeTypeId = 1,
+                            Value = "XXL"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            IsActive = true,
+                            SizeTypeId = 1,
+                            Value = "XXXL"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            IsActive = true,
+                            SizeTypeId = 2,
+                            Value = "29 30"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            IsActive = true,
+                            SizeTypeId = 2,
+                            Value = "29 31"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            IsActive = true,
+                            SizeTypeId = 2,
+                            Value = "29 32"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            IsActive = true,
+                            SizeTypeId = 2,
+                            Value = "30 31"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            IsActive = true,
+                            SizeTypeId = 2,
+                            Value = "30 32"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            IsActive = true,
+                            SizeTypeId = 3,
+                            Value = "36"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            IsActive = true,
+                            SizeTypeId = 3,
+                            Value = "37"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            IsActive = true,
+                            SizeTypeId = 3,
+                            Value = "38"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            IsActive = true,
+                            SizeTypeId = 3,
+                            Value = "39"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            IsActive = true,
+                            SizeTypeId = 3,
+                            Value = "40"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            IsActive = true,
+                            SizeTypeId = 3,
+                            Value = "41"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            IsActive = true,
+                            SizeTypeId = 3,
+                            Value = "41.5"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            IsActive = true,
+                            SizeTypeId = 3,
+                            Value = "42"
+                        },
+                        new
+                        {
+                            Id = 19,
+                            IsActive = true,
+                            SizeTypeId = 3,
+                            Value = "42.5"
+                        },
+                        new
+                        {
+                            Id = 20,
+                            IsActive = true,
+                            SizeTypeId = 3,
+                            Value = "43"
+                        });
                 });
 
             modelBuilder.Entity("E_Commerce.Entities.EFCore.SizeType", b =>
@@ -661,7 +957,9 @@ namespace E_Commerce.DataAccess.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Defination")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -669,6 +967,26 @@ namespace E_Commerce.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("SizeTypes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Defination = "Üst Giyim",
+                            IsActive = true
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Defination = "Alt Giyim",
+                            IsActive = true
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Defination = "Ayak Numarası",
+                            IsActive = true
+                        });
                 });
 
             modelBuilder.Entity("E_Commerce.Entities.EFCore.Slider", b =>
@@ -683,7 +1001,9 @@ namespace E_Commerce.DataAccess.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
@@ -699,7 +1019,9 @@ namespace E_Commerce.DataAccess.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("ImageUrl")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -708,10 +1030,14 @@ namespace E_Commerce.DataAccess.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("SubTitle")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.HasKey("Id");
 
@@ -765,10 +1091,12 @@ namespace E_Commerce.DataAccess.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CustomProductDefination")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("CustomProductTitle")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -783,7 +1111,6 @@ namespace E_Commerce.DataAccess.Migrations
                         .HasColumnType("int");
 
                     b.Property<double>("UnitPrice")
-                        .HasMaxLength(10000000)
                         .HasColumnType("float");
 
                     b.Property<int>("VisitCounter")
@@ -811,7 +1138,9 @@ namespace E_Commerce.DataAccess.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Defination")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -1177,7 +1506,9 @@ namespace E_Commerce.DataAccess.Migrations
                 {
                     b.HasOne("E_Commerce.Entities.EFCore.SizeType", "SizeType")
                         .WithMany("Sizes")
-                        .HasForeignKey("SizeTypeId1");
+                        .HasForeignKey("SizeTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("SizeType");
                 });

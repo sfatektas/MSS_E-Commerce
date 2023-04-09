@@ -16,10 +16,10 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.14.0" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Extensions.Caching.Redis" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="6.0.15" />
     <PackageReference Include="NLog.Extensions.Logging" Version="5.2.3" />
   </ItemGroup>
@@ -44,7 +44,6 @@
     <Folder Include="Validations\FluentValidations\OrderStatusTypeValidation\" />
     <Folder Include="Validations\FluentValidations\OrderDetailValidation\" />
     <Folder Include="Validations\FluentValidations\OrderValidation\" />
-    <Folder Include="Validations\FluentValidations\ProductValidation\" />
     <Folder Include="Validations\FluentValidations\CategoryValidation\" />
   </ItemGroup>
 

@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
 using E_Commerce.Business.Consts;
 using E_Commerce.Business.Interfaces;
+using E_Commerce.Business.Interfaces.Storage;
 using E_Commerce.Business.Mapper.AutoMapper;
 using E_Commerce.Business.Services;
+using E_Commerce.Business.Services.Storage;
 using E_Commerce.Business.Validations.FluentValidations;
+using E_Commerce.Business.Validations.FluentValidations.ProductValidation;
 using E_Commerce.Business.Validations.FluentValidations.SiteOptionValidation;
 using E_Commerce.Common;
 using E_Commerce.Common.Interfaces;
@@ -11,10 +14,14 @@ using E_Commerce.DataAccess.Contexts;
 using E_Commerce.DataAccess.Interfaces;
 using E_Commerce.DataAccess.UnitOfWorks;
 using E_Commerce.Dtos;
+using E_Commerce.Dtos.BrandDtos;
+using E_Commerce.Dtos.ProductDtos;
 using E_Commerce.Dtos.SiteOptionDtos;
 using E_Commerce.Entities.EFCore.Identities;
 using E_Commerce.Presentation;
 using E_Commerce.Presentation.ActionFilters;
+using E_Commerce.Presentation.Models;
+using E_Commerce.Presentation.Validators;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Cors.Infrastructure;
@@ -23,6 +30,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using StackExchange.Redis;
 using System.Text;
 
 namespace E_Commerce.API.ServiceExtensions
@@ -65,11 +73,19 @@ namespace E_Commerce.API.ServiceExtensions
             var profileList = new List<Profile>
             {
                     new SiteOptionProfile(),
+                    new CategoryProfile(),
+                    new ColorProfile(),
+                    new SizeTypeProfile(),
+                    new BrandProfile(),
+                    new SizeProfile(),
             };
 
             services.AddAutoMapper(opt =>
             {
                 opt.AddProfiles(profileList);
+                opt.AddProfile(new ProductProfile());
+                opt.CreateMap<BrandCreateModel, BrandCreateDto>(); // UI mapping
+                opt.CreateMap<ProductCreateModel , ProductCreateDto>(); 
             });
         }
         public static void ConfigureServices(this IServiceCollection services)
@@ -77,11 +93,21 @@ namespace E_Commerce.API.ServiceExtensions
             services.AddScoped<IUow, Uow>();
             services.AddScoped<ISiteOptionService, SiteOptionService>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
+            services.AddScoped<ITokenManager,TokenManager>();
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IColorService, ColorService>();
+            services.AddScoped<ISizeTypeService, SizeTypeService>();
+            services.AddScoped<IBrandService, BrandService>();
+            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<ISizeService, SizeService>();
         }
         public static void ConfigureValidations(this IServiceCollection services)
         {
             services.AddTransient<IValidator<SiteOptionCreateDto>, SiteOptionCreateValidatior>();
             services.AddTransient<IValidator<UserLoginModel>, UserLoginModelValidator>();
+            services.AddTransient<IValidator<BrandCreateModel>, BrandCreateModelValidator>();
+            services.AddTransient<IValidator<ProductCreateModel>, ProductCreateModelValidator>();
+            services.AddTransient<IValidator<ProductCreateDto>, ProductCreateDtoValidator>();
         }
         public static void ConfigureCors(this IServiceCollection services)
         {
@@ -127,13 +153,29 @@ namespace E_Commerce.API.ServiceExtensions
         public static void ConfigureActionFilters(this IServiceCollection services)
         {
             services.AddScoped<ValidateFilterAttiribute<UserLoginModel>>();
+            services.AddScoped<ValidateFilterAttiribute<BrandCreateModel>>();
+            services.AddScoped<ValidateFilterAttiribute<ProductCreateModel>>();
         } 
         public static void ConfigureRedis(this IServiceCollection services,IConfiguration configuration)
         {
-            services.AddDistributedRedisCache(opt =>
+            services.AddStackExchangeRedisCache(opt =>
             {
-                opt.Configuration = configuration["RedisConnection"];
+                opt.Configuration = configuration.GetConnectionString("RedisConnection");
             });
+            services.AddScoped<RedisService>();
+        }
+        public static void ConfigureSessions(this IServiceCollection services, IConfiguration configuration)
+        {
+            var jwtOptions = configuration.GetSection("JWTTokenOptions");
+            services.AddSession(opt =>
+            {
+                opt.IdleTimeout = TimeSpan.FromMinutes(int.Parse(jwtOptions["ExpireMinitue"]));
+            });
+        }
+        public static void ConfigureStorage(this IServiceCollection services)
+        {
+            //services.AddScoped<IStorage , AzureStorage>();
+            services.AddScoped<IStorage, LocalStorage>();
         }
 
     }

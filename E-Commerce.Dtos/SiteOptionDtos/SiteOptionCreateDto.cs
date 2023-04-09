@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.Dtos.SiteOptionDtos
 {
-    public class SiteOptionCreateDto : ICreateDto
+    public record SiteOptionCreateDto : ICreateDto
     {
-        public string Logo { get; set; }
-        public string Slogan { get; set; }
-        public string FacebookLink { get; set; }
-        public string TwitterLink { get; set; }
-        public string LinkedInLink { get; set; }
-        public string PinterestLink { get; set; }
-        public string PhoneNumber { get; set; }
-        public string Email { get; set; }
-        public string Adress { get; set; }
+        public string Logo { get; init; }
+        public string Slogan { get; init; }
+        public string FacebookLink { get; init; }
+        public string TwitterLink { get; init; }
+        public string LinkedInLink { get; init; }
+        public string PinterestLink { get; init; }
+        public string PhoneNumber { get; init; }
+        public string Email { get; init; }
+        public string Adress { get; init; }
     }
 }
