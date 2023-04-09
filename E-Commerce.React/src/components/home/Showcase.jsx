@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function Showcase(props) {
   return (
     <div className="col-12 col-lg-3 col-md-6 d-flex flex-row">
@@ -13,7 +11,7 @@ export default function Showcase(props) {
             />
           </a>
           <div className="showcase-buttons d-flex flex-column">
-            <a className="btn text- mb-2">
+            <a href="#!" className="btn text- mb-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -30,7 +28,7 @@ export default function Showcase(props) {
                 ></path>
               </svg>
             </a>
-            <a className="btn text- mb-2">
+            <a href="#!" className="btn text- mb-2">
               <svg
                 width="24"
                 height="24"

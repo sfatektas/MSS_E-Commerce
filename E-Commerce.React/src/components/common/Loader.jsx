@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function Loader(props) {
   return (
     <div className="loader-main vh-100 d-flex flex-column justify-content-center align-items-center">

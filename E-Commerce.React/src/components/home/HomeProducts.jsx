@@ -1,6 +1,5 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect,useState } from "react";
 import Showcase from "./Showcase";
-import { useJsonState } from "../../store/productStore";
 
 const data = [
   {
@@ -102,11 +101,11 @@ const data = [
 ];
 
 export default function HomeProducts() {
-  const { jsonState,setJsonState} = useJsonState();
+  const [homeProducts, sethomeProducts] = useState([])
 
   useEffect(() => {
-    setJsonState(data);
-  }, [setJsonState]);
+    sethomeProducts(data);
+  }, [homeProducts]);
 
   return (
     <div className="products-main container mb-5">
@@ -116,7 +115,7 @@ export default function HomeProducts() {
       </div>
       <div className="products-content">
         <div className="row">
-          {jsonState.map((item) => (
+          {homeProducts.map((item) => (
             <Showcase
               key={item.id}
               id={item.id}

@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { CartSidebarStore } from "../../store/CartSidebarStore";
+import { cartSidebarStore } from "../../store/cartSidebarStore";
 
 const data = [
   {
@@ -59,7 +58,7 @@ export default function CartSidebar() {
     totalPrice += item.price;
     return null; // Boş bir değer döndür, çünkü map fonksiyonu bir dizi döndürmelidir
   });
-  const { sidebarActive, setSidebarActive } = CartSidebarStore();
+  const { sidebarActive, setSidebarActive } = cartSidebarStore();
   return (
     <>
       <div

@@ -1,6 +1,6 @@
-import Header from "./components/Header";
 import "./assets/style/style.scss";
-import { Routes, Route, Redirect } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
+import Header from "./components/common/Header";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Home from "./pages/Home";
@@ -9,28 +9,27 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import NotFound from "./pages/NotFound";
 import Account from "./pages/Account";
-import Footer from "./components/Footer";
+import Footer from "./components/common/Footer";
 import Category from "./pages/Category";
 import Favorites from "./pages/Favorites";
 import Product from "./pages/Product";
 import Cart from "./pages/Cart";
 import Campaign from "./pages/Campaign";
-import { ProtectedRoute } from "./components/ProtectedRoute";
+import { ProtectedRoute } from "./components/common/ProtectedRoute";
 
 function App() {
-  let isAuth;
-
-  if (localStorage.getItem("TOKEN")) {
-    isAuth = true;
-  }
-
   return (
     <>
       <Header />
       <Routes>
-        <Route path="/admin" element={ <ProtectedRoute>
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute>
               <Admin />
-            </ProtectedRoute>} />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/" element={<Home />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/about" element={<About />} />
@@ -47,7 +46,14 @@ function App() {
         <Route path="/category/:defination" element={<Category />} />
         <Route path="/campaign" element={<Campaign />} />
         <Route path="*" element={<NotFound />} />
-        <Route path="cart" element={<Cart />} />
+        <Route
+          path="cart"
+          element={
+            <ProtectedRoute>
+              <Cart />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/favorites" element={<Favorites />} />
         <Route path="/product/:name" element={<Product />} />
       </Routes>

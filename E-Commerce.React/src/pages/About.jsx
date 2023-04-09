@@ -1,6 +1,6 @@
 import Container from "react-bootstrap/Container";
-import ShowBrands from "../components/HomeComponents/ShowBrands";
-import Navigation from "../components/Navigation";
+import ShowBrands from "../components/home/ShowBrands";
+import Navigation from "../components/common/Navigation";
 
 export default function About() {
   return (
@@ -85,7 +85,6 @@ export default function About() {
                   height="75"
                   viewBox="0 0 1024 1024"
                   fill="#EF3636"
-                  class="icon"
                   version="1.1"
                   className="mb-3"
                 >

@@ -50,11 +50,9 @@ export default function Product() {
   useEffect(() => {
     axios
       .get("https://e-commercemss.azurewebsites.net/api/Brands")
-      .then((response) => {
-        setBrands(response.data);
-      })
+      .then(({ data }) => setBrands(data))
       .catch((error) => {
-        console.log(error);
+        /* Handle error */
       });
   }, []);
 
@@ -111,7 +109,7 @@ export default function Product() {
       });
   }
   function deleteProduct(productId) {
-    console.log(productId)
+    console.log(productId);
     // if (window.confirm("Bu ürünü silmek istediğinize emin misiniz?")) {
     //   axios
     //     .delete(`https://e-commercemss.azurewebsites.net/api/Products/${brand}`)

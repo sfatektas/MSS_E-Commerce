@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Brands from "../components/AdminComponents/Brands";
-import Product from "../components/AdminComponents/Product";
-import AdminHome from "../components/AdminComponents/AdminHome";
+import Brands from "../components/admin/Brands";
+import Product from "../components/admin/Product";
+import AdminHome from "../components/admin/AdminHome";
 
 export default function Admin() {
   const [adminPanel, setAdminPanel] = useState("adminHome");

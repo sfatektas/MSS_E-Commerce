@@ -4,19 +4,19 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Offcanvas from "react-bootstrap/Offcanvas";
-import { authStore } from "../store/authStore";
-import { loaderStore } from "../store/loaderStore";
-import { CartSidebarStore } from "../store/CartSidebarStore";
+import { authStore } from "../../store/authStore";
+import { loaderStore } from "../../store/loaderStore";
+import { cartSidebarStore } from "../../store/cartSidebarStore";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import HomeCartMenu from "./HomeComponents/CartSidebar";
+import CartSidebar from "../home/CartSidebar";
 import axios from "axios";
 
 function Header() {
   let navigate = useNavigate();
   const { logout, logoutStatus } = authStore();
-  const { setIsLoading } = loaderStore();
-  const { sideBarActive, setSidebarActive } = CartSidebarStore();
+  const { setLoadingStatus } = loaderStore();
+  const { setSidebarActive } = cartSidebarStore();
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
@@ -31,11 +31,11 @@ function Header() {
   }, [logoutStatus]);
 
   useEffect(() => {
-    if (logoutStatus == 204) {
-      alert("Başarıyla Çıkış Yapıldı");
+    if (logoutStatus === 204) {
+      alert("Başarıyla çıkış yapıldı, yönlendiriliyorsunuz");
       setTimeout(() => {
         navigate("/");
-      }, 2000);
+      }, 1000);
     }
   }, [logoutStatus]);
 
@@ -47,13 +47,17 @@ function Header() {
       .get("https://e-commercemss.azurewebsites.net/api/Categories")
       .then((response) => {
         setCategories(response.data);
-        setIsLoading(false);
+        setLoadingStatus(false);
+      })
+      .catch((error) => {
+        console.error(error);
       });
-  }, []);
+  }, [setLoadingStatus]);
+  
 
   return (
     <>
-      <HomeCartMenu />
+      <CartSidebar />
       <div className="text-center bg-black py-3">
         <p className="text-white fs-5 fw-semibold">
           Black Friday. <span className="text-primary">Save up to 50%!</span>

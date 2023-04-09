@@ -24,7 +24,7 @@ export default function ShowBrands() {
             {brands.slice(0, 6).map((item, index) => (
               <div className="brand-image text-center col-6 col-lg-3 col-xl-2 py-5" key={index}>
                 <a href="#!">
-                  <img src={`https://e-commercemss.azurewebsites.net/api/files/${item.imageUrl}`} />
+                  <img src={`https://e-commercemss.azurewebsites.net/api/files/${item.imageUrl}`} alt={item.defination} />
                 </a>
               </div>
             ))}

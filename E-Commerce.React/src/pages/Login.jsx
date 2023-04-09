@@ -1,8 +1,8 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import { authStore } from "../store/authStore";
 import { useNavigate } from "react-router-dom";
-import Navigation from "../components/Navigation";
+import Navigation from "../components/common/Navigation";
 
 
 export default function Login() {
@@ -15,7 +15,7 @@ export default function Login() {
   const { authText, loginFetch, loginStatus } = authStore();
 
   useEffect(() => {
-    if (loginStatus == 200) {
+    if (loginStatus === 200) {
       setTimeout(() => {
         navigate("/");
       }, 2000);

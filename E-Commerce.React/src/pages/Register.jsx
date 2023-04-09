@@ -1,7 +1,6 @@
-import React from "react";
 import { Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import Navigation from "../components/Navigation";
+import Navigation from "../components/common/Navigation";
 
 export default function Register() {
   let navigate = useNavigate();
