@@ -109,20 +109,19 @@ export default function Product() {
       });
   }
   function deleteProduct(productId) {
-    console.log(productId);
-    // if (window.confirm("Bu ürünü silmek istediğinize emin misiniz?")) {
-    //   axios
-    //     .delete(`https://e-commercemss.azurewebsites.net/api/Products/${brand}`)
-    //     .then((response) => {
-    //       console.log(response);
-    //       setInfo("Marka başarıyla silindi");
-    //       setVariant("success");
-    //       setModalShow(true);
-    //     })
-    //     .catch((error) => {
-    //       console.log(error);
-    //     });
-    // }
+    if (window.confirm("Bu ürünü silmek istediğinize emin misiniz?")) {
+      axios
+        .delete(`https://e-commercemss.azurewebsites.net/api/Products/${productId}`)
+        .then((response) => {
+          console.log(response);
+          setInfo("Ürün başarıyla silindi");
+          setVariant("success");
+          setModalShow(true);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   }
   return (
     <>
