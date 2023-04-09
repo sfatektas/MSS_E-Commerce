@@ -1,7 +1,7 @@
 import Carousel from 'react-bootstrap/Carousel';
 import Button from 'react-bootstrap/Button';
-import sliderImage2 from '../assets/img/slider2.png'
-import sliderImage3 from '../assets/img/slider3.png'
+import sliderImage2 from '../../assets/img/slider2.png'
+import sliderImage3 from '../../assets/img/slider3.png'
 
 function CarouselFade() {
   return (
@@ -13,9 +13,9 @@ function CarouselFade() {
           alt="First slide"
         />
         <Carousel.Caption>
-          <h3>First slide label</h3>
-          <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-          <Button variant='dark' className='text-white px-5 py-2 fw-light'>Collection</Button>
+          <h3 className='mb-4'>First slide label</h3>
+          <p className='mb-4'>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          <Button variant='dark' className='text-white px-5 py-2 fw-light'>Koleksiyon</Button>
         </Carousel.Caption>
       </Carousel.Item>
       <Carousel.Item>
@@ -26,9 +26,9 @@ function CarouselFade() {
         />
 
         <Carousel.Caption>
-          <h3>Second slide label</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-          <Button variant='dark' className='text-white px-5 py-2 fw-light'>Collection</Button>
+          <h3 className='mb-4'>Second slide label</h3>
+          <p className='mb-4'>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          <Button variant='dark' className='text-white px-5 py-2 fw-light'>Koleksiyon</Button>
         </Carousel.Caption>
       </Carousel.Item>
     </Carousel>
