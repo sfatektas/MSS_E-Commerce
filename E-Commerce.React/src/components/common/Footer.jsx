@@ -8,7 +8,9 @@ export default function Footer() {
       .get("https://e-commercemss.azurewebsites.net/api/Categories")
       .then((response) => {
         setCategories(response.data);
-      });
+      }).catch((error)=>{
+        console.log(error.response.data)
+      })
   }, []);
   return (
     <>

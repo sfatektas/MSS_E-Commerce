@@ -22,17 +22,22 @@ function Header() {
   useEffect(() => {
     //TOKEN SÜRESİ GEÇMİŞSE OTOMATİK LOGOUT
     const nowDate = new Date().getTime();
-    let tokenDate = new Date(localStorage.getItem("EXPIRE DATE")).getTime();
+    let tokenDate = new Date(localStorage.getItem("session_expire")).getTime();
     let difference = tokenDate - nowDate;
     if (difference < 0) {
-      localStorage.removeItem("TOKEN");
-      localStorage.removeItem("EXPIRE DATE");
+      localStorage.removeItem("user_token");
+      localStorage.removeItem("session_expire");
     }
   }, [logoutStatus]);
 
   useEffect(() => {
     if (logoutStatus === 204) {
       alert("Başarıyla çıkış yapıldı, yönlendiriliyorsunuz");
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
+    }else if(logoutStatus==="ERR_NETWORK"){
+      alert("Hatalı çıkış yapıldı, lütfen destek birimimize ulaşın");
       setTimeout(() => {
         navigate("/");
       }, 1000);
@@ -50,7 +55,7 @@ function Header() {
         setLoadingStatus(false);
       })
       .catch((error) => {
-        console.error(error);
+        console.error(error.response.data);
       });
   }, [setLoadingStatus]);
   
@@ -133,27 +138,11 @@ function Header() {
                 <Nav.Link href="/contact">İletişim</Nav.Link>
 
                 <Nav.Link href="/about">Hakkımızda</Nav.Link>
-                {/* {localStorage.getItem("TOKEN") ? null : (
-                <Nav.Link className="text-black" href="/login">
-                  Login
-                </Nav.Link>
-              )}
-              {localStorage.getItem("TOKEN") ? null : (
-                <Nav.Link className="text-black" href="/register">
-                  Register
-                </Nav.Link>
-              )} */}
-                {/* <Nav.Link
-                className="d-block d-lg-none"
-                onClick={handleModal}
-              >
-                Logout
-              </Nav.Link> */}
               </Nav>
             </Offcanvas.Body>
           </Navbar.Offcanvas>
           <Nav className="d-flex flex-row col-lg-3 justify-content-end order-3">
-            {localStorage.getItem("TOKEN") ? (
+            {localStorage.getItem("user_token") ? (
               <Nav.Link onClick={handleLogout}>
                 <div className="logout mx-3">
                   <svg
@@ -170,7 +159,7 @@ function Header() {
               </Nav.Link>
             ) : null}
             <Nav.Link
-              href={localStorage.getItem("TOKEN") ? "/account" : "/login"}
+              href={localStorage.getItem("user_token") ? "/account" : "/login"}
             >
               <div className="user mx-3">
                 <svg

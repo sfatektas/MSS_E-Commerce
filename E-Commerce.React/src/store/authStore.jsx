@@ -15,19 +15,12 @@ export const authStore = create((set) => ({
           password: password,
         }
       );
-
-      if (response.status === 200) {
-        console.log("Giriş Başarılı");
-        set({
-          authText: "Giriş başarılı, yönlendiriliyorsunuz..",
-          loginStatus: 200,
-        });
-        localStorage.setItem("TOKEN", response.data.token);
-        localStorage.setItem("EXPIRE DATE", response.data.expireToken);
-      } else {
-        console.log("Sistem Arızası");
-        set({ loginStatus: null });
-      }
+      set({
+        authText: "Giriş başarılı, yönlendiriliyorsunuz..",
+        loginStatus: 200,
+      });
+      localStorage.setItem("user_token", response.data.token);
+      localStorage.setItem("session_expire", response.data.expireToken);
     } catch (error) {
       console.log(error.response.data.Error);
       set({
@@ -39,24 +32,23 @@ export const authStore = create((set) => ({
 
   logout: async () => {
     try {
-      const token = localStorage.getItem("TOKEN");
+      const token = localStorage.getItem("user_token");
       const response = await axios.get(
         `https://e-commercemss.azurewebsites.net/api/Auth/Logout/${token}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-
-      if (response.status === 204) {
-        console.log("Çıkış Başarılı : " + response.status);
-        set({ logoutStatus: response.status });
-        localStorage.removeItem("TOKEN");
-        localStorage.removeItem("EXPIRE DATE");
-      }
+      localStorage.removeItem("user_token");
+      localStorage.removeItem("session_expire");
+      set({ logoutStatus: response.status });
     } catch (error) {
-      console.log("Çıkış hatalı : " + error.response);
-      console.log(error);
-      set({ logoutStatus: error.response.status });
+      //Token localstorage'de kullanıcı eliyle bozulduğu zaman API'den hata dönüyor.
+      //Hata olsun ya da olmasın veriler localstorage'den siliniyor.
+      localStorage.removeItem("user_token");
+      localStorage.removeItem("session_expire");
+      console.log(error.code);
+      set({ logoutStatus: error.code });
     }
   },
 }));

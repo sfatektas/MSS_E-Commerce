@@ -32,7 +32,7 @@ export default function Product() {
         setProductList(response.data);
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error.response.data);
       });
   }, []);
 
@@ -43,7 +43,7 @@ export default function Product() {
         setCategories(response.data);
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error.response.data);
       });
   }, []);
 
@@ -52,7 +52,7 @@ export default function Product() {
       .get("https://e-commercemss.azurewebsites.net/api/Brands")
       .then(({ data }) => setBrands(data))
       .catch((error) => {
-        /* Handle error */
+        console.log(error.response.data)
       });
   }, []);
 
@@ -63,7 +63,7 @@ export default function Product() {
         setSizeTypes(response.data);
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error.response.data);
       });
   }, []);
 
@@ -82,7 +82,6 @@ export default function Product() {
       SizeTypeId: productSizeTypes,
       File: productFile,
     };
-    console.log(createProduct);
     axios
       .post(
         "https://e-commercemss.azurewebsites.net/api/Products",
@@ -105,7 +104,7 @@ export default function Product() {
         setInfo(error.response.data.Error);
         setVariant("danger");
         setModalShow(true);
-        console.log(error);
+        console.log(error.response.data);
       });
   }
   function deleteProduct(productId) {
@@ -119,7 +118,7 @@ export default function Product() {
           setModalShow(true);
         })
         .catch((error) => {
-          console.log(error);
+          console.log(error.response.data);
         });
     }
   }

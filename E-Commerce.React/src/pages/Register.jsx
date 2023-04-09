@@ -6,7 +6,7 @@ export default function Register() {
   let navigate = useNavigate();
 
   function registerPage() {
-    if (localStorage.getItem("TOKEN")) {
+    if (localStorage.getItem("user_token")) {
       return setTimeout(() => {
         navigate("/");
       }, 0);

@@ -12,7 +12,6 @@ export default function Brands() {
   const [show, setModalShow] = useState(false);
   const [variant, setVariant] = useState("");
 
-
   useEffect(() => {
     axios
       .get("https://e-commercemss.azurewebsites.net/api/Brands")
@@ -20,7 +19,7 @@ export default function Brands() {
         setBrands(response.data);
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error.response.data);
       });
   }, []);
 
@@ -35,7 +34,7 @@ export default function Brands() {
           setModalShow(true);
         })
         .catch((error) => {
-          console.log(error);
+          console.log(error.response.data);
         });
     }
   }
@@ -73,7 +72,7 @@ export default function Brands() {
         setInfo(error.response.data.Error);
         setVariant("danger");
         setModalShow(true);
-        console.log(error);
+        console.log(error.response.data);
       });
   }
   return (
