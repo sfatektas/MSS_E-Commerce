@@ -4,31 +4,18 @@ import BannerThreeImg from "../components/home/BannerThreeImg";
 import HomeProducts from "../components/home/HomeProducts";
 import ShowBrands from "../components/home/ShowBrands";
 import ImageGallery from "../components/home/ImageGallery";
-import HomeFeatures from "../components/home/HomeFeatures"
-import Loader from "../components/common/Loader";
-import { loaderStore } from "../store/loaderStore";
+import HomeFeatures from "../components/home/HomeFeatures";
 
 export default function Home() {
-  const { isLoading } = loaderStore();
-
   return (
     <>
-      {isLoading ? (
-        <>
-          <Loader />
-        </>
-      ) : (
-        <>
-          {" "}
-          <CarouselFade />
-          <BannerTwoImg />
-          <HomeProducts />
-          <BannerThreeImg />
-          <ShowBrands />
-          <ImageGallery />
-          <HomeFeatures />
-        </>
-      )}
+      <CarouselFade />
+      <BannerTwoImg />
+      <HomeProducts />
+      <BannerThreeImg />
+      <ShowBrands />
+      <ImageGallery />
+      <HomeFeatures />
     </>
   );
 }

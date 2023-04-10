@@ -1,17 +1,8 @@
-import axios from "axios";
-import { useState, useEffect } from "react";
+import { generalStore } from "../../store/generalStore";
 
 export default function Footer() {
-  const [categories, setCategories] = useState([]);
-  useEffect(() => {
-    axios
-      .get("https://e-commercemss.azurewebsites.net/api/Categories")
-      .then((response) => {
-        setCategories(response.data);
-      }).catch((error)=>{
-        console.log(error.response.data)
-      })
-  }, []);
+  const { options, categories } = generalStore();
+
   return (
     <>
       <div className="footer">
@@ -19,10 +10,17 @@ export default function Footer() {
           <div className="container">
             <div className="row py-5">
               <div className="contact col-6 col-lg-3 mb-5 mb-lg-0">
-                <p className="title text-white fw-bold mb-4 text-uppercase">İLETİŞİM</p>
+                <p className="title text-white fw-bold mb-4 text-uppercase">
+                  İLETİŞİM
+                </p>
                 <p className="subtitle text-muted mb-4">
                   Herhangi bir sorunuz varsa, lütfen bizimle iletişime geçin.
-                  support@mss.com
+                  <a
+                    href={`mailto: ${options && options.email}`}
+                    className="text-white text-decoration-none"
+                  >
+                    {options && options.email}
+                  </a>
                 </p>
                 <div className="d-flex align-items-center">
                   <svg
@@ -75,50 +73,62 @@ export default function Footer() {
                       fill=""
                     />
                   </svg>
-                  <p className="number m-2 fs-4 text-white">
-                    <span className="fs-6">+90</span> 123 456 789
-                  </p>
+                  <a
+                    href={`tel:${options && options.phoneNumber}`}
+                    className="number m-2 fs-4 text-white text-decoration-none"
+                  >
+                    <span className="fs-6">+90</span>{" "}
+                    {options && options.phoneNumber}
+                  </a>
                 </div>
               </div>
               <div className="location col-6 col-lg-3">
-                <p className="title text-white fw-bold mb-4 text-uppercase">MAZAĞA ADRESİ</p>
+                <p className="title text-white fw-bold mb-4 text-uppercase">
+                  MAZAĞA ADRESİ
+                </p>
                 <p className="subtitle text-muted mb-4">
-                  Bahçeşehir / İstanbul
+                  {options && options.adress}
                 </p>
                 <p className="text-muted">
-                  Pazartesi – Cuma: <span className="text-white">09.00 – 17.00</span>
+                  Pazartesi – Cuma:{" "}
+                  <span className="text-white">09.00 – 17.00</span>
                 </p>
                 <p className="text-muted">
                   Cumartes: <span className="text-white">09.00 – 12.00</span>
                 </p>
               </div>
               <div className="categories col-6 col-lg-2">
-                <p className="title text-white fw-bold mb-4 text-uppercase">KATEGORİLER</p>
+                <p className="title text-white fw-bold mb-4 text-uppercase">
+                  KATEGORİLER
+                </p>
                 <ul className="text-muted list-unstyled">
-                  {categories.map((item, index) => (
-                    <li key={index} className="mb-2">
-                      <a
-                        className="text-decoration-none text-muted"
-                        href={`/category/${item.defination}`}
-                      >
-                        {item.defination}
-                      </a>
-                    </li>
-                  ))}
+                  {categories &&
+                    categories.map((item, index) => (
+                      <li key={index} className="mb-2">
+                        <a
+                          className="text-decoration-none text-muted"
+                          href={`/category/${item.defination}`}
+                        >
+                          {item.defination}
+                        </a>
+                      </li>
+                    ))}
                 </ul>
               </div>
               <div className="newsletter col-6 col-lg-4">
-                <p className="title text-white fw-bold mb-4 text-uppercase">Bültene Abone Ol</p>
-                <p className="subtitle text-muted mb-4">
-                En son güncellemeler için haftalık bültene abone olun.
+                <p className="title text-white fw-bold mb-4 text-uppercase">
+                  Bültene Abone Ol
                 </p>
-                <div className="mb-3 input-group">
+                <p className="subtitle text-muted mb-4">
+                  En son güncellemeler için haftalık bültene abone olun.
+                </p>
+                <div className="mb-3 input-group shadow rounded-3">
                   <input
                     placeholder="E-Posta Adresiniz"
                     aria-label="E-Posta Adresiniz"
-                    className="bg-secondary py-3 form-control"
+                    className="bg-secondary py-3 form-control border-0 rounded-pill"
                   />
-                  <button className="newsletter-button btn btn-primary border text-white">
+                  <button className="newsletter-button btn btn-primary text-white rounded-pill">
                     Abone Ol
                   </button>
                 </div>
@@ -132,12 +142,42 @@ export default function Footer() {
               <div className="copyright col-12 col-lg-4 order-3 order-lg-1 d-flex align-items-center justify-content-center justify-content-lg-start">
                 <p className="text-muted m-0">
                   Copyright © 2022{" "}
-                  <a href="#!" className="text-primary fw-bold text-decoration-none">MSS</a>. All Rights
-                  Reserved.
+                  <a
+                    href="#!"
+                    className="text-primary fw-bold text-decoration-none"
+                  >
+                    MSS
+                  </a>
+                  . All Rights Reserved.
                 </p>
               </div>
               <div className="social-links col-12 col-lg-4 order-2 d-flex justify-content-center align-items-center mb-4 mb-lg-0">
-                <a href="#!" className="facebook mx-3">
+                <a
+                  href={`tel:${options && options.phoneNumber}`}
+                  className="mx-3"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="30"
+                    height="30"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      clipRule="evenodd"
+                      d="M8.20049 15.799C1.3025 8.90022 2.28338 5.74115 3.01055 4.72316C3.10396 4.55862 5.40647 1.11188 7.87459 3.13407C14.0008 8.17945 6.5 8 11.3894 12.6113C16.2788 17.2226 15.8214 9.99995 20.8659 16.1249C22.8882 18.594 19.4413 20.8964 19.2778 20.9888C18.2598 21.717 15.0995 22.6978 8.20049 15.799Z"
+                      stroke="#FFFFFF"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </a>
+                <a
+                  href={options && options.facebookLink}
+                  className="facebook mx-3"
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="30"
@@ -153,7 +193,10 @@ export default function Footer() {
                     />
                   </svg>
                 </a>
-                <a href="#!" className="twitter mx-3">
+                <a
+                  href={options && options.twitterLink}
+                  className="twitter mx-3"
+                >
                   <svg
                     width="30"
                     height="30"
@@ -185,7 +228,10 @@ export default function Footer() {
                     </g>
                   </svg>
                 </a>
-                <a href="#!" className="linkedin mx-3">
+                <a
+                  href={options && options.linkedInLink}
+                  className="linkedin mx-3"
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="#fff"
@@ -198,13 +244,11 @@ export default function Footer() {
                     <path d="M28.778 1.004h-25.56c-0.008-0-0.017-0-0.027-0-1.199 0-2.172 0.964-2.186 2.159v25.672c0.014 1.196 0.987 2.161 2.186 2.161 0.010 0 0.019-0 0.029-0h25.555c0.008 0 0.018 0 0.028 0 1.2 0 2.175-0.963 2.194-2.159l0-0.002v-25.67c-0.019-1.197-0.994-2.161-2.195-2.161-0.010 0-0.019 0-0.029 0h0.001zM9.9 26.562h-4.454v-14.311h4.454zM7.674 10.293c-1.425 0-2.579-1.155-2.579-2.579s1.155-2.579 2.579-2.579c1.424 0 2.579 1.154 2.579 2.578v0c0 0.001 0 0.002 0 0.004 0 1.423-1.154 2.577-2.577 2.577-0.001 0-0.002 0-0.003 0h0zM26.556 26.562h-4.441v-6.959c0-1.66-0.034-3.795-2.314-3.795-2.316 0-2.669 1.806-2.669 3.673v7.082h-4.441v-14.311h4.266v1.951h0.058c0.828-1.395 2.326-2.315 4.039-2.315 0.061 0 0.121 0.001 0.181 0.003l-0.009-0c4.5 0 5.332 2.962 5.332 6.817v7.855z" />
                   </svg>
                 </a>
-                <a href="#!" className="instagram mx-3">
-                  <svg
-                    width="30"
-                    height="30"
-                    viewBox="0 0 20 20"
-                    version="1.1"
-                  >
+                <a
+                  href={options && options.pinterestLink}
+                  className="instagram mx-3"
+                >
+                  <svg width="30" height="30" viewBox="0 0 20 20" version="1.1">
                     <g
                       id="Page-1"
                       stroke="none"

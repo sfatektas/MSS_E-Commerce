@@ -1,4 +1,12 @@
+import { useEffect } from "react";
+import { generalStore } from "../../store/generalStore";
+
 export default function Loader(props) {
+  const {getCategories}=generalStore();
+  useEffect(() => {
+    getCategories()
+  }, [])
+  
   return (
     <div className="loader-main vh-100 d-flex flex-column justify-content-center align-items-center">
       <div className="loader loader--style2" title="1">

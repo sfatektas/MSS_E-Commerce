@@ -15,7 +15,7 @@ export default function BannerThreeImg() {
               <p className="subtitle text-white fw-light mb-4 fs-4">
                 get the discount of 25%
               </p>
-              <a href="/campaign" className="btn btn-light">
+              <a href="/campaign" className="btn btn-light rounded-3">
               Kampanyalar
               </a>
             </div>
@@ -33,7 +33,7 @@ export default function BannerThreeImg() {
                 <p className="subtitle text-white fw-light mb-4 fs-6">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit.{" "}
                 </p>
-                <a href="/campaign" className="btn btn-light">
+                <a href="/campaign" className="btn btn-light rounded-3">
                 Kampanyalar
                 </a>
               </div>
@@ -50,7 +50,7 @@ export default function BannerThreeImg() {
                 <p className="subtitle text-white fw-light mb-4 fs-6">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                 </p>
-                <a href="/campaign" className="btn btn-light">
+                <a href="/campaign" className="btn btn-light rounded-3">
                   Kampanyalar
                 </a>
               </div>

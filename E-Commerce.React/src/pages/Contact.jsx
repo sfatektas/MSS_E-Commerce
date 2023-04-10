@@ -1,7 +1,9 @@
 import Container from "react-bootstrap/Container";
 import Navigation from "../components/common/Navigation";
+import { generalStore } from "../store/generalStore";
 
 export default function Contact() {
+  const { options } = generalStore();
   return (
     <>
       <Navigation link="İletişim" />
@@ -10,7 +12,7 @@ export default function Contact() {
           <div className="col-12 col-lg-4 d-flex flex-column mb-5 mb-lg-0">
             <p className="text-muted fw-light mb-4">BİZE ULAŞIN</p>
             <p className="fs-2 fw-semibold mb-4">
-            Acentelerimizden birini ziyaret edin veya bizimle iletişime geçin
+              Acentelerimizden birini ziyaret edin veya bizimle iletişime geçin
             </p>
             <p className="fw-semibold mb-4">Ana Merkez</p>
             <div className="d-flex align-items-center mb-3">
@@ -42,9 +44,7 @@ export default function Contact() {
                   strokeLinejoin="round"
                 />
               </svg>
-              <p className="px-3 text-muted fw-light">
-                Bahçeşehir / İstanbul
-              </p>
+              <p className="px-3 text-muted fw-light">{options && options.adress}</p>
             </div>
             <div className="d-flex align-items-center mb-3">
               <svg
@@ -62,7 +62,9 @@ export default function Contact() {
                   strokeLinejoin="round"
                 />
               </svg>
-              <p className="px-3 text-muted fw-light">contact@mss.com</p>
+              <a href={`mailto: ${options && options.email}`} className="px-3 text-muted fw-light text-decoration-none">
+                {options && options.email}
+              </a>
             </div>
             <div className="d-flex align-items-center mb-3">
               {" "}
@@ -83,7 +85,7 @@ export default function Contact() {
                   strokeLinejoin="round"
                 />
               </svg>
-              <p className="px-3 text-muted fw-light">+90 123 456 78</p>
+              <a href={`tel:${options && options.phoneNumber}`} className="px-3 text-muted fw-light text-decoration-none">+90 {options && options.phoneNumber}</a>
             </div>
             <div className="d-flex align-items-center mb-3">
               <svg
@@ -110,7 +112,7 @@ export default function Contact() {
                 Sizi dinlemeyi seviyoruz
               </label>
               <div className="input-container d-flex flex-column mb-3">
-                <label className="mb-2">
+                <label className="mb-3">
                   İsim <span className="text-primary">*</span>
                 </label>
                 <input
@@ -118,11 +120,11 @@ export default function Contact() {
                   type="text"
                   name="uname"
                   required
-                  className="p-2"
+                  className="mb-3 p-3 text-muted bg-light rounded rounded-3 shadow-sm border-0"
                 />
               </div>
               <div className="input-container d-flex flex-column mb-3">
-                <label className="mb-2">
+                <label className="mb-3">
                   Email <span className="text-primary">*</span>
                 </label>
                 <input
@@ -130,11 +132,11 @@ export default function Contact() {
                   type="text"
                   name="email"
                   required
-                  className="p-2"
+                  className="mb-3 p-3 text-muted bg-light rounded rounded-3 shadow-sm border-0"
                 />
               </div>
               <div className="input-container d-flex flex-column mb-3">
-                <label className="mb-2">
+                <label className="mb-3">
                   Konu <span className="text-primary">*</span>
                 </label>
                 <input
@@ -142,11 +144,11 @@ export default function Contact() {
                   type="text"
                   name="subject"
                   required
-                  className="p-2"
+                  className="mb-3 p-3 text-muted bg-light rounded rounded-3 shadow-sm border-0"
                 />
               </div>
               <div className="input-container d-flex flex-column mb-5">
-                <label className="mb-2">
+                <label className="mb-3">
                   Mesaj <span className="text-primary">*</span>
                 </label>
                 <textarea
@@ -154,13 +156,13 @@ export default function Contact() {
                   type="text"
                   name="mesaj"
                   required
-                  className="p-2"
+                  className="mb-3 p-3 text-muted bg-light rounded rounded-3 shadow-sm border-0"
                 />
               </div>
               <div className="button-container d-flex flex-column mb-5">
                 <button
                   type="submit"
-                  className="btn bg-primary text-white py-2"
+                  className="btn bg-primary text-white py-2 rounded-3"
                 >
                   Gönder
                 </button>

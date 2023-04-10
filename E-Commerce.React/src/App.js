@@ -16,48 +16,59 @@ import Product from "./pages/Product";
 import Cart from "./pages/Cart";
 import Campaign from "./pages/Campaign";
 import { ProtectedRoute } from "./components/common/ProtectedRoute";
+import { generalStore } from "./store/generalStore";
+import Loader from "./components/common/Loader";
 
 function App() {
+  const { loader } = generalStore();
   return (
     <>
-      <Header />
-      <Routes>
-        <Route
-          path="/admin"
-          element={
-            <ProtectedRoute>
-              <Admin />
-            </ProtectedRoute>
-          }
-        />
-        <Route path="/" element={<Home />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route
-          path="/account"
-          element={
-            <ProtectedRoute>
-              <Account />
-            </ProtectedRoute>
-          }
-        />
-        <Route path="/category/:defination" element={<Category />} />
-        <Route path="/campaign" element={<Campaign />} />
-        <Route path="*" element={<NotFound />} />
-        <Route
-          path="cart"
-          element={
-            <ProtectedRoute>
-              <Cart />
-            </ProtectedRoute>
-          }
-        />
-        <Route path="/favorites" element={<Favorites />} />
-        <Route path="/product/:name" element={<Product />} />
-      </Routes>
-      <Footer />
+      {loader ? (
+        <>
+          <Loader />
+        </>
+      ) : (
+        <>
+          <Header />
+          <Routes>
+            <Route
+              path="/admin"
+              element={
+                <ProtectedRoute>
+                  <Admin />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="/" element={<Home />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route
+              path="/account"
+              element={
+                <ProtectedRoute>
+                  <Account />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="/category/:defination" element={<Category />} />
+            <Route path="/campaign" element={<Campaign />} />
+            <Route path="*" element={<NotFound />} />
+            <Route
+              path="cart"
+              element={
+                <ProtectedRoute>
+                  <Cart />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="/favorites" element={<Favorites />} />
+            <Route path="/product/:name" element={<Product />} />
+          </Routes>
+          <Footer />
+        </>
+      )}
     </>
   );
 }

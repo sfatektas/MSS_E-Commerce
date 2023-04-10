@@ -15,7 +15,7 @@ export default function Register() {
         <>
           <Navigation link="Kayıt Ol" />
           <Container className="login-page align-items-center align-items-lg-start d-flex flex-column flex-lg-row justify-content-around mb-5">
-            <div className="register-form p-5 bg-light shadow">
+            <div className="register-form p-5 bg-light shadow rounded-3">
               <form className="d-flex flex-column">
                 <label className="fw-bold h4">Kayıt Ol</label>
                 <small id="emailHelp" className="form-text text-muted mb-2">
@@ -30,13 +30,14 @@ export default function Register() {
                     type="text"
                     name="uname"
                     required
+                    className="border rounded-3"
                   />
                 </div>
                 <div className="input-container d-flex flex-column mb-3">
                   <label className="mb-2">
                     Ad <span className="text-primary">*</span>
                   </label>
-                  <input placeholder="Ad" type="text" name="name" required />
+                  <input placeholder="Ad" type="text" name="name" required className="border rounded-3" />
                 </div>
                 <div className="input-container d-flex flex-column mb-3">
                   <label className="mb-2">
@@ -47,6 +48,7 @@ export default function Register() {
                     type="text"
                     name="surName"
                     required
+                    className="border rounded-3"
                   />
                 </div>
                 <div className="input-container d-flex flex-column mb-3">
@@ -58,6 +60,7 @@ export default function Register() {
                     type="email"
                     name="email"
                     required
+                    className="border rounded-3"
                   />
                 </div>
                 <div className="input-container d-flex flex-column mb-4">
@@ -69,6 +72,7 @@ export default function Register() {
                     type="password"
                     name="pass"
                     required
+                    className="border rounded-3"
                   />
                 </div>
                 <div className="input-container d-flex flex-column mb-4">
@@ -81,12 +85,13 @@ export default function Register() {
                     type="password"
                     name="pass-again"
                     required
+                    className="border rounded-3"
                   />
                 </div>
                 <div className="button-container d-flex flex-column">
                   <button
                     type="submit"
-                    className="btn bg-primary text-white py-2"
+                    className="btn bg-primary text-white py-2 rounded-3"
                   >
                     Kayıt Ol
                   </button>{" "}
