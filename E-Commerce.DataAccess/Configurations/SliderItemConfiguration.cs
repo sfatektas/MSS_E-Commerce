@@ -17,6 +17,7 @@ namespace E_Commerce.DataAccess.Configurations
             builder.Property(x=>x.ImageUrl).IsRequired().HasMaxLength(250);
             builder.Property(x => x.Title).IsRequired().HasMaxLength(300);
             builder.Property(x => x.SubTitle).IsRequired().HasMaxLength(300);
+
         }
     }
 }

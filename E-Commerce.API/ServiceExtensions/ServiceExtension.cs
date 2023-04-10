@@ -8,6 +8,7 @@ using E_Commerce.Business.Services.Storage;
 using E_Commerce.Business.Validations.FluentValidations;
 using E_Commerce.Business.Validations.FluentValidations.ProductValidation;
 using E_Commerce.Business.Validations.FluentValidations.SiteOptionValidation;
+using E_Commerce.Business.Validations.FluentValidations.SliderItemsValidation;
 using E_Commerce.Common;
 using E_Commerce.Common.Interfaces;
 using E_Commerce.DataAccess.Contexts;
@@ -17,6 +18,8 @@ using E_Commerce.Dtos;
 using E_Commerce.Dtos.BrandDtos;
 using E_Commerce.Dtos.ProductDtos;
 using E_Commerce.Dtos.SiteOptionDtos;
+using E_Commerce.Dtos.SliderDtos;
+using E_Commerce.Dtos.SliderItemsDtos;
 using E_Commerce.Entities.EFCore.Identities;
 using E_Commerce.Presentation;
 using E_Commerce.Presentation.ActionFilters;
@@ -78,6 +81,7 @@ namespace E_Commerce.API.ServiceExtensions
                     new SizeTypeProfile(),
                     new BrandProfile(),
                     new SizeProfile(),
+                    new SliderItemProfile(),
             };
 
             services.AddAutoMapper(opt =>
@@ -100,6 +104,7 @@ namespace E_Commerce.API.ServiceExtensions
             services.AddScoped<IBrandService, BrandService>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ISizeService, SizeService>();
+            services.AddScoped<ISliderItemService, SliderItemService>();
         }
         public static void ConfigureValidations(this IServiceCollection services)
         {
@@ -108,6 +113,7 @@ namespace E_Commerce.API.ServiceExtensions
             services.AddTransient<IValidator<BrandCreateModel>, BrandCreateModelValidator>();
             services.AddTransient<IValidator<ProductCreateModel>, ProductCreateModelValidator>();
             services.AddTransient<IValidator<ProductCreateDto>, ProductCreateDtoValidator>();
+            services.AddTransient<IValidator<SliderItemCreateDto>, SliderItemCreateDtoValidator>();
         }
         public static void ConfigureCors(this IServiceCollection services)
         {
