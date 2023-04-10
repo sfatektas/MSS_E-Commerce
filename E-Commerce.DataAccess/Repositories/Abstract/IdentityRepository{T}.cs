@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.DataAccess.Repositories.Abstract
 {
-    public abstract class IdentityRepository<T> : IIdentityRepository<T> where T : AppUser, new()
+    public class IdentityRepository<T> : IIdentityRepository<T> where T : AppUser, new()
     {
         readonly E_CommerceDbContext _context;
 
@@ -76,7 +76,7 @@ namespace E_Commerce.DataAccess.Repositories.Abstract
             _context.Set<T>().Remove(entity);
         }
 
-        public void Update(T unchanged, T updated)
+        public void Update(T updated)
         {
             _context.Update(updated);
         }

@@ -17,6 +17,7 @@ using E_Commerce.Dtos;
 using E_Commerce.Dtos.BrandDtos;
 using E_Commerce.Dtos.ProductDtos;
 using E_Commerce.Dtos.SiteOptionDtos;
+using E_Commerce.Dtos.SupplierDtos;
 using E_Commerce.Entities.EFCore.Identities;
 using E_Commerce.Presentation;
 using E_Commerce.Presentation.ActionFilters;
@@ -78,14 +79,16 @@ namespace E_Commerce.API.ServiceExtensions
                     new SizeTypeProfile(),
                     new BrandProfile(),
                     new SizeProfile(),
+                    new ProductProfile(),
+                    new SupplierProfile()
             };
 
             services.AddAutoMapper(opt =>
             {
                 opt.AddProfiles(profileList);
-                opt.AddProfile(new ProductProfile());
                 opt.CreateMap<BrandCreateModel, BrandCreateDto>(); // UI mapping
-                opt.CreateMap<ProductCreateModel , ProductCreateDto>(); 
+                opt.CreateMap<ProductCreateModel , ProductCreateDto>();
+                opt.CreateMap<SupplierCreateModel, SupplierCreateDto>();
             });
         }
         public static void ConfigureServices(this IServiceCollection services)
@@ -100,6 +103,7 @@ namespace E_Commerce.API.ServiceExtensions
             services.AddScoped<IBrandService, BrandService>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ISizeService, SizeService>();
+            services.AddScoped<ISupplierService, SupplierService>();
         }
         public static void ConfigureValidations(this IServiceCollection services)
         {
@@ -108,6 +112,7 @@ namespace E_Commerce.API.ServiceExtensions
             services.AddTransient<IValidator<BrandCreateModel>, BrandCreateModelValidator>();
             services.AddTransient<IValidator<ProductCreateModel>, ProductCreateModelValidator>();
             services.AddTransient<IValidator<ProductCreateDto>, ProductCreateDtoValidator>();
+            services.AddTransient<IValidator<SupplierCreateModel>, SupplierCreateModelValidator>();
         }
         public static void ConfigureCors(this IServiceCollection services)
         {
@@ -155,6 +160,7 @@ namespace E_Commerce.API.ServiceExtensions
             services.AddScoped<ValidateFilterAttiribute<UserLoginModel>>();
             services.AddScoped<ValidateFilterAttiribute<BrandCreateModel>>();
             services.AddScoped<ValidateFilterAttiribute<ProductCreateModel>>();
+            services.AddScoped<ValidateFilterAttiribute<SupplierCreateModel>>();
         } 
         public static void ConfigureRedis(this IServiceCollection services,IConfiguration configuration)
         {

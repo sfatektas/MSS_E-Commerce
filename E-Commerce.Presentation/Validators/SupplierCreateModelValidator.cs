@@ -10,5 +10,9 @@ namespace E_Commerce.Presentation.Validators
 {
     public class SupplierCreateModelValidator : AbstractValidator<SupplierCreateModel>
     {
+        public SupplierCreateModelValidator()
+        {
+            RuleFor(x=>x.Username).NotEmpty(); // will add.
+        }
     }
 }

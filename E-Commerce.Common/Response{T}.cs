@@ -3,12 +3,13 @@ using E_Commerce.Common.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace E_Commerce.Common
 {
-    public class Response<T> : Response ,  IResponse<T> where T : class
+    public class Response<T> : Response ,  IResponse<T> where T : class ,new()
     {
         public T Data { get; set; }
         public List<ValidationError> ValidationErrors { get; set; }
