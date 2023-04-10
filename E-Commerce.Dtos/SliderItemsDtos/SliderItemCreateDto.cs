@@ -13,5 +13,7 @@ namespace E_Commerce.Dtos.SliderItemsDtos
         public string ImageUrl { get; init; }
         public string Title { get; init; }
         public string SubTitle { get; init; }
+        public string ButtonText { get; init; }
+        public string ButtonLink { get; init; }
     }
 }

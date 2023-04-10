@@ -20,6 +20,7 @@ using E_Commerce.Dtos.ProductDtos;
 using E_Commerce.Dtos.SiteOptionDtos;
 using E_Commerce.Dtos.SliderDtos;
 using E_Commerce.Dtos.SliderItemsDtos;
+using E_Commerce.Dtos.SupplierDtos;
 using E_Commerce.Entities.EFCore.Identities;
 using E_Commerce.Presentation;
 using E_Commerce.Presentation.ActionFilters;
@@ -81,13 +82,14 @@ namespace E_Commerce.API.ServiceExtensions
                     new SizeTypeProfile(),
                     new BrandProfile(),
                     new SizeProfile(),
+                    new SliderItemProfile(),
             };
 
             services.AddAutoMapper(opt =>
             {
                 opt.AddProfiles(profileList);
                 opt.CreateMap<BrandCreateModel, BrandCreateDto>(); // UI mapping
-                opt.CreateMap<ProductCreateModel , ProductCreateDto>();
+                opt.CreateMap<ProductCreateModel, ProductCreateDto>();
                 opt.CreateMap<SupplierCreateModel, SupplierCreateDto>();
             });
         }
@@ -96,13 +98,14 @@ namespace E_Commerce.API.ServiceExtensions
             services.AddScoped<IUow, Uow>();
             services.AddScoped<ISiteOptionService, SiteOptionService>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
-            services.AddScoped<ITokenManager,TokenManager>();
+            services.AddScoped<ITokenManager, TokenManager>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IColorService, ColorService>();
             services.AddScoped<ISizeTypeService, SizeTypeService>();
             services.AddScoped<IBrandService, BrandService>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ISizeService, SizeService>();
+            services.AddScoped<ISliderItemService, SliderItemService>();
         }
         public static void ConfigureValidations(this IServiceCollection services)
         {
@@ -111,6 +114,8 @@ namespace E_Commerce.API.ServiceExtensions
             services.AddTransient<IValidator<BrandCreateModel>, BrandCreateModelValidator>();
             services.AddTransient<IValidator<ProductCreateModel>, ProductCreateModelValidator>();
             services.AddTransient<IValidator<ProductCreateDto>, ProductCreateDtoValidator>();
+            services.AddTransient<IValidator<SupplierCreateModel>,SupplierCreateModelValidator>();
+            services.AddTransient<IValidator<SliderItemCreateDto>,SliderItemCreateDtoValidator>();
         }
         public static void ConfigureCors(this IServiceCollection services)
         {
@@ -119,9 +124,9 @@ namespace E_Commerce.API.ServiceExtensions
                 opt.AddPolicy("DefaultPolicy",
                       policy =>
                       {
-                                policy.AllowAnyOrigin()
-                                .AllowAnyHeader()
-                                .AllowAnyMethod();
+                          policy.AllowAnyOrigin()
+                          .AllowAnyHeader()
+                          .AllowAnyMethod();
                       });
             });
         }
@@ -129,7 +134,7 @@ namespace E_Commerce.API.ServiceExtensions
         {
             services.AddSingleton<ILoggerService, LoggerService>();
         }
-        public static void ConfigureJWTBearer(this IServiceCollection services , IConfiguration configuration)
+        public static void ConfigureJWTBearer(this IServiceCollection services, IConfiguration configuration)
         {
             var jwtoptions = configuration.GetSection("JWTTokenOptions");
             services.AddAuthentication(options =>
@@ -159,8 +164,8 @@ namespace E_Commerce.API.ServiceExtensions
             services.AddScoped<ValidateFilterAttiribute<BrandCreateModel>>();
             services.AddScoped<ValidateFilterAttiribute<ProductCreateModel>>();
             services.AddScoped<ValidateFilterAttiribute<SupplierCreateModel>>();
-        } 
-        public static void ConfigureRedis(this IServiceCollection services,IConfiguration configuration)
+        }
+        public static void ConfigureRedis(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddStackExchangeRedisCache(opt =>
             {
