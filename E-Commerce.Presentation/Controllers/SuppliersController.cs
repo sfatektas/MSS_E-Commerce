@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using E_Commerce.Business.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +12,18 @@ namespace E_Commerce.Presentation.Controllers
     [Route("api/[controller]")]
     public class SuppliersController : ControllerBase
     {
+        readonly ISupplierService _supplierService;
+
+        public SuppliersController(ISupplierService supplierService)
+        {
+            _supplierService = supplierService;
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetAllSupplier()
         {
-            return Ok();
+            var data = await _supplierService.GetAllSupplierAsync();
+            return Ok(data);
         }
 
         [HttpPost]

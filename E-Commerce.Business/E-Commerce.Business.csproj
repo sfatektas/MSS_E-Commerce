@@ -31,8 +31,8 @@
     <Folder Include="Validations\FluentValidations\GenderValidation\" />
     <Folder Include="Validations\FluentValidations\PriceHistoryValidation\" />
     <Folder Include="Validations\FluentValidations\SliderValidation\" />
-    <Folder Include="Validations\FluentValidations\UserTypeValidation\" />
     <Folder Include="Validations\FluentValidations\SupplierProductValidation\" />
+    <Folder Include="Validations\FluentValidations\UserTypeValidation\" />
     <Folder Include="Validations\FluentValidations\SupplierAddingProductValidation\" />
     <Folder Include="Validations\FluentValidations\SizeValidation\" />
     <Folder Include="Validations\FluentValidations\SizeTypeValidation\" />

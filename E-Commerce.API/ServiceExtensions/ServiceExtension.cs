@@ -81,15 +81,14 @@ namespace E_Commerce.API.ServiceExtensions
                     new SizeTypeProfile(),
                     new BrandProfile(),
                     new SizeProfile(),
-                    new SliderItemProfile(),
             };
 
             services.AddAutoMapper(opt =>
             {
                 opt.AddProfiles(profileList);
-                opt.AddProfile(new ProductProfile());
                 opt.CreateMap<BrandCreateModel, BrandCreateDto>(); // UI mapping
-                opt.CreateMap<ProductCreateModel , ProductCreateDto>(); 
+                opt.CreateMap<ProductCreateModel , ProductCreateDto>();
+                opt.CreateMap<SupplierCreateModel, SupplierCreateDto>();
             });
         }
         public static void ConfigureServices(this IServiceCollection services)
@@ -104,7 +103,6 @@ namespace E_Commerce.API.ServiceExtensions
             services.AddScoped<IBrandService, BrandService>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ISizeService, SizeService>();
-            services.AddScoped<ISliderItemService, SliderItemService>();
         }
         public static void ConfigureValidations(this IServiceCollection services)
         {
@@ -113,7 +111,6 @@ namespace E_Commerce.API.ServiceExtensions
             services.AddTransient<IValidator<BrandCreateModel>, BrandCreateModelValidator>();
             services.AddTransient<IValidator<ProductCreateModel>, ProductCreateModelValidator>();
             services.AddTransient<IValidator<ProductCreateDto>, ProductCreateDtoValidator>();
-            services.AddTransient<IValidator<SliderItemCreateDto>, SliderItemCreateDtoValidator>();
         }
         public static void ConfigureCors(this IServiceCollection services)
         {
@@ -161,6 +158,7 @@ namespace E_Commerce.API.ServiceExtensions
             services.AddScoped<ValidateFilterAttiribute<UserLoginModel>>();
             services.AddScoped<ValidateFilterAttiribute<BrandCreateModel>>();
             services.AddScoped<ValidateFilterAttiribute<ProductCreateModel>>();
+            services.AddScoped<ValidateFilterAttiribute<SupplierCreateModel>>();
         } 
         public static void ConfigureRedis(this IServiceCollection services,IConfiguration configuration)
         {
