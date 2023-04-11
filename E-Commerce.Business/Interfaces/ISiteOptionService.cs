@@ -12,5 +12,7 @@ namespace E_Commerce.Business.Interfaces
     public interface ISiteOptionService
     {
         Task<Response<SiteOptionListDto>> GetOptionAsync();
+
+        Task UpdateOptionAsync(SiteOptionUpdateDto dto);
     }
 }

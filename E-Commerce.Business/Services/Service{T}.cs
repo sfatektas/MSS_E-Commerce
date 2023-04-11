@@ -88,7 +88,7 @@ namespace E_Commerce.Business.Services
         {
             try
             {
-                _uow.GetRepository<T>().Update(await _uow.GetRepository<T>().GetByFilterAsync(x => x.Id == dto.Id), _mapper.Map<T>(dto));
+                _uow.GetRepository<T>().Update(_mapper.Map<T>(dto));
                 await _uow.SaveChangesAsync();
                 return new Response<UpdateDto>(ResponseType.Success, dto);
             }

@@ -26,7 +26,7 @@ namespace E_Commerce.DataAccess.Interfaces
 
         void Remove(T entity);
 
-        void Update(T unchanged, T updated);
+        void Update(T updated);
 
         IQueryable<T> GetQueryable();
 

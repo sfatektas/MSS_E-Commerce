@@ -14,6 +14,7 @@ namespace E_Commerce.Business.Mapper.AutoMapper
         public SiteOptionProfile()
         {
             CreateMap<SiteOption, SiteOptionListDto>();
+            CreateMap<SiteOption, SiteOptionUpdateDto>().ReverseMap() ;
         }
 
     }

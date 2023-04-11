@@ -194,7 +194,7 @@ namespace E_Commerce.Business.Helpers
                         LinkedInLink = "frontçuSelimlinkedin.in",
                         PhoneNumber = "054984357954",
                         TwitterLink = "xxx.twiter.com",
-                        PinterestLink = "aaa.pinterest.com"
+                        InstagramLink = "aaa.pinterest.com"
                     });
             }
             if (!context.Admins.Any())

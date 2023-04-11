@@ -14,7 +14,7 @@ namespace E_Commerce.Dtos.SiteOptionDtos
         public string FacebookLink { get; init; }
         public string TwitterLink { get; init; }
         public string LinkedInLink { get; init; }
-        public string PinterestLink { get; init; }
+        public string InstagramLink { get; init; }
         public string PhoneNumber { get; init; }
         public string Email { get; init; }
         public string Adress { get; init; }

@@ -33,5 +33,11 @@ namespace E_Commerce.Presentation.Controllers
                 return Ok(response.Data);
             return NotFound("Site Ayarları Bulunamadı");
         }
+        [HttpPut]
+        public async Task<IActionResult> Update([FromBody] SiteOptionUpdateDto dto)
+        {
+            await _siteOptionService.UpdateOptionAsync(dto);
+            return NoContent();
+        }
     }
 }

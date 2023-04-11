@@ -83,6 +83,7 @@ namespace E_Commerce.API.ServiceExtensions
                     new BrandProfile(),
                     new SizeProfile(),
                     new SliderItemProfile(),
+                    new ProductProfile()
             };
 
             services.AddAutoMapper(opt =>
