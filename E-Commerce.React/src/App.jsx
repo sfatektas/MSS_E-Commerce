@@ -8,6 +8,7 @@ import Admin from "./pages/Admin";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import NotFound from "./pages/NotFound";
+import Forbidden from "./pages/Forbidden";
 import Account from "./pages/Account";
 import Footer from "./components/common/Footer";
 import Category from "./pages/Category";
@@ -56,6 +57,7 @@ function App() {
             <Route path="/category/:defination" element={<Category />} />
             <Route path="/campaign" element={<Campaign />} />
             <Route path="*" element={<NotFound />} />
+            <Route path="/forbidden" element={<Forbidden />} />
             <Route
               path="cart"
               element={

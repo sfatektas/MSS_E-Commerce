@@ -33,7 +33,6 @@ function Header() {
 
   useEffect(() => {
     if (logoutStatus === 204) {
-      alert("Başarıyla çıkış yapıldı, yönlendiriliyorsunuz");
       setTimeout(() => {
         navigate("/");
       }, 1000);

@@ -141,12 +141,12 @@ export default function Footer() {
             <div className="row d-flex justify-content-between py-5 pb-0 pb-lg-5">
               <div className="copyright col-12 col-lg-4 order-3 order-lg-1 d-flex align-items-center justify-content-center justify-content-lg-start">
                 <p className="text-muted m-0">
-                  Copyright © 2022{" "}
+                  Copyright © 2023
                   <a
                     href="#!"
                     className="text-primary fw-bold text-decoration-none"
                   >
-                    MSS
+                    <span> MSS</span>
                   </a>
                   . All Rights Reserved.
                 </p>

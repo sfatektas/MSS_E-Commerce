@@ -1,7 +1,16 @@
+import axios from "axios";
+import Alert from "react-bootstrap/Alert";
+import Button from "react-bootstrap/Button";
 import { generalStore } from "../../store/generalStore";
 import { useEffect, useState } from "react";
 
 export default function Options() {
+  //MODAL
+  const [info, setInfo] = useState("");
+  const [show, setModalShow] = useState(false);
+  const [variant, setVariant] = useState("");
+
+  //API
   const { options, getOptions } = generalStore();
   const [id, setId] = useState("");
   const [logo, setLogo] = useState("");
@@ -23,7 +32,7 @@ export default function Options() {
       setFacebook(options.facebookLink);
       setTwitter(options.twitterLink);
       setLinkedin(options.linkedInLink);
-      setInstagram(options.pinterestLink);
+      setInstagram(options.instagramLink);
       setPhone(options.phoneNumber);
       setEmail(options.email);
       setAdress(options.adress);
@@ -34,6 +43,35 @@ export default function Options() {
 
   function handleSubmit(event) {
     event.preventDefault();
+    let setOptions = {
+      id: id,
+      logo: logo,
+      slogan: slogan,
+      facebookLink: facebookLink,
+      twitterLink: twitterLink,
+      linkedInLink: linkedInLink,
+      instagramLink: instagramLink,
+      phoneNumber: phoneNumber,
+      email: email,
+      adress: adress,
+    };
+    console.log(setOptions);
+    axios
+      .put("https://e-commercemss.azurewebsites.net/api/siteoption", setOptions)
+      .then((response) => {
+        setInfo("Ayarlar başarıyla güncellendi");
+        setVariant("success");
+        setModalShow(true);
+        setTimeout(() => {
+          window.location.reload(false);
+        }, 2000);
+      })
+      .catch((error) => {
+        setInfo(error.response.data.Error);
+        setVariant("danger");
+        setModalShow(true);
+        console.log(error.response.data);
+      });
   }
 
   return (
@@ -42,6 +80,14 @@ export default function Options() {
         Site Ayarları
       </p>
       <div className="row">
+        <Alert show={show} variant={variant}>
+          <Alert.Heading>{info}</Alert.Heading>
+          <div className="d-flex justify-content-end">
+            <Button onClick={() => setModalShow(false)} variant={variant}>
+              Kapat
+            </Button>
+          </div>
+        </Alert>
         <div className="options">
           <div className="d-flex justify-content-between">
             <p className="mb-4 fs-4 fw-semibold text-muted">Site Ayarları</p>
