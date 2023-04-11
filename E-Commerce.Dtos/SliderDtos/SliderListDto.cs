@@ -1,5 +1,6 @@
 ﻿using E_Commerce.Dtos.Interfaces;
 using E_Commerce.Dtos.SliderItemsDtos;
+using E_Commerce.Entities.EFCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,6 @@ namespace E_Commerce.Dtos.SliderDtos
     {
         public int Id { get; init; }
         public string Name { get; init; }
-        public List<SliderItemListDto> SliderItems { get; init; }
+        public List<SliderItemListDto> SliderItems { get; set; }
     }
 }
