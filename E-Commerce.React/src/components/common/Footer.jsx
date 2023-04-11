@@ -237,7 +237,7 @@ export default function Footer() {
                   </svg>
                 </a>
                 <a
-                  href={options && options.pinterestLink}
+                  href={options && options.instagramLink}
                   className="instagram mx-3"
                 >
                   <svg width="30" height="30" viewBox="0 0 20 20" version="1.1">

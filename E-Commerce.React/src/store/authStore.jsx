@@ -1,7 +1,6 @@
 import { create } from "zustand";
 import axios from "axios";
 
-
 export const authStore = create((set) => ({
   authText: null,
   loginStatus: null,
@@ -21,7 +20,6 @@ export const authStore = create((set) => ({
         loginStatus: 200,
       });
       localStorage.setItem("user_token", response.data.token);
-      localStorage.setItem("session_expire", response.data.expireToken);
     } catch (error) {
       console.log(error.response.data.Error);
       set({
@@ -41,13 +39,11 @@ export const authStore = create((set) => ({
         }
       );
       localStorage.removeItem("user_token");
-      localStorage.removeItem("session_expire");
       set({ logoutStatus: response.status });
     } catch (error) {
       //Token localstorage'de kullanıcı eliyle bozulduğu zaman API'den hata dönüyor.
       //Hata olsun ya da olmasın veriler localstorage'den siliniyor.
       localStorage.removeItem("user_token");
-      localStorage.removeItem("session_expire");
       console.log(error.code);
       set({ logoutStatus: error.code });
     }
