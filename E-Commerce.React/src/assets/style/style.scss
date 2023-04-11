@@ -33,6 +33,12 @@ body {
 
 // HEADER
 
+.logo {
+    .logo-text {
+        letter-spacing: 20px;
+    }
+}
+
 .navbar-nav {
     .nav-link {
         color: #000;
@@ -389,7 +395,7 @@ body {
 
 .footer {
 
-        background-color: $secondary;
+    background-color: $secondary;
 
 }
 

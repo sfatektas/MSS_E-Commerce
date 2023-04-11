@@ -167,7 +167,7 @@ function Header() {
           <div className="logo order-1 order-lg-0 col-lg-3 d-flex align-items-center justify-content-center justify-content-lg-start ">
             <a
               href="/"
-              className="logo text-decoration-none text-black display-5 fw-bold"
+              className="logo-text text-decoration-none text-black display-5 fw-bold"
             >
               {options && options.logo}
             </a>
