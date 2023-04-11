@@ -1,4 +1,4 @@
-import { cartSidebarStore } from "../../store/cartSidebarStore";
+import { cartSidebarStore } from "../../store/generalStore";
 
 const data = [
   {

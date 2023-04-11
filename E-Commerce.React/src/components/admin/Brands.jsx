@@ -113,7 +113,7 @@ export default function Brands() {
                     <button
                       value={item.defination}
                       onClick={(e) => deleteBrand(e.target.value)}
-                      className="btn bg-light border px-4 rounded-3"
+                      className="btn btn-light border px-4 rounded-3"
                     >
                       Markayı Sil
                     </button>
@@ -147,7 +147,7 @@ export default function Brands() {
             <button
               onClick={handleSubmit}
               type="submit"
-              className="btn bg-light border py-2 mb-2 rounded-3"
+              className="btn btn-light border py-2 mb-2 rounded-3"
             >
               Marka Ekle
             </button>

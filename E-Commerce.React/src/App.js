@@ -16,11 +16,12 @@ import Product from "./pages/Product";
 import Cart from "./pages/Cart";
 import Campaign from "./pages/Campaign";
 import { ProtectedRoute } from "./components/common/ProtectedRoute";
-import { generalStore } from "./store/generalStore";
+import { loaderStore } from "./store/generalStore";
 import Loader from "./components/common/Loader";
 
 function App() {
-  const { loader } = generalStore();
+  const { loader } = loaderStore();
+
   return (
     <>
       {loader ? (

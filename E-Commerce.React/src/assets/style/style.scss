@@ -5,6 +5,7 @@ $primary: #EF3636;
 $primary_hover: #D93131;
 $info: #5296d6;
 $secondary: #252525;
+$transition: all .2s linear;
 
 @import "~bootstrap/scss/bootstrap";
 // Bootstrap Customizations
@@ -13,6 +14,21 @@ body {
     p {
         margin: 0;
     }
+
+    a {
+        path {
+            transition: $transition
+        }
+
+        &:hover {
+            svg {
+                path {
+                    fill: $primary
+                }
+            }
+        }
+    }
+
 }
 
 // HEADER
@@ -20,6 +36,14 @@ body {
 .navbar-nav {
     .nav-link {
         color: #000;
+
+        svg {
+            transition: $transition;
+
+            path {
+                transition: $transition
+            }
+        }
 
         &:hover {
             color: $primary;
@@ -34,6 +58,7 @@ body {
 
     .dropdown-item {
         color: #000;
+        transition: $transition;
 
         &:hover {
             color: $primary;
@@ -209,7 +234,7 @@ body {
 .brands {
     .brand-image {
         img {
-            transition: all .2s linear;
+            transition: $transition
         }
 
         &:hover {
@@ -231,7 +256,7 @@ body {
         img {
             width: 340px;
             height: auto;
-            transition: all .2s linear;
+            transition: $transition
         }
 
         &:hover {
@@ -270,6 +295,7 @@ body {
 //FEATURES
 
 .showcase {
+
     &:hover {
         .showcase-buttons {
             a {
@@ -325,7 +351,7 @@ body {
             border-radius: 100%;
             box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
             background-color: #fff;
-            transition: all .2s linear;
+            transition: $transition
         }
     }
 
@@ -362,25 +388,9 @@ body {
 //FOOTER
 
 .footer {
-    .footer-top {
-        background-color: $secondary;
-    }
 
-    .footer-bottom {
         background-color: $secondary;
 
-        .social-links {
-            a {
-                &:hover {
-                    svg {
-                        path {
-                            fill: $primary
-                        }
-                    }
-                }
-            }
-        }
-    }
 }
 
 //FOOTER
@@ -425,7 +435,7 @@ body {
     .admin-header {
         button {
             box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
-            transition: all .2s linear;
+            transition: $transition;
 
             &:hover {
                 background-color: $light;
@@ -452,7 +462,7 @@ body {
         border-right: 1px solid #e5e5e5;
         padding: 10px 15px;
         margin-right: 20px;
-        transition: all .2s linear;
+        transition: $transition
     }
 
     input[type=file]::file-selector-button:hover {
@@ -524,7 +534,7 @@ body {
 //ABOUT
 
 .about-card {
-    transition: all .2s linear;
+    transition: $transition;
 
     &:hover {
         transform: scale(1.05);
@@ -533,12 +543,3 @@ body {
 }
 
 //ABOUT
-
-//CONTACT
-
-.contact-form {
-
-
-}
-
-//CONTACT

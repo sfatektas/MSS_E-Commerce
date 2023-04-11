@@ -254,7 +254,7 @@ export default function Product() {
             </div>
             <button
               type="submit"
-              className="btn bg-light border py-2 mb-2 rounded-3"
+              className="btn btn-light border py-2 mb-2 rounded-3"
               onClick={handleSubmit}
             >
               Ürün Ekle
