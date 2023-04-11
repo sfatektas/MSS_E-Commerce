@@ -20,7 +20,8 @@ export default function Login() {
         navigate("/");
       }, 2000);
     }
-  }, [loginStatus]);
+  }, [loginStatus,navigate]);
+
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -60,7 +61,7 @@ export default function Login() {
     <>
       <Navigation link="Hesabım" />
       <Container className="login-page align-items-center d-flex flex-column mb-5">
-        <div className="login-form d-flex flex-column p-5 shadow m-5 m-lg-0">
+        <div className="login-form d-flex flex-column p-5 shadow m-5 m-lg-0 rounded-3">
           <form>
             <label className="mb-4 fw-bold h4">Giriş Yap</label>
             <div className="input-container d-flex flex-column mb-3">
@@ -73,6 +74,7 @@ export default function Login() {
                 name="uname"
                 onChange={handleUname}
                 required
+                className="border rounded-3"
               />
               <p className="text-primary">{unameError}</p>
             </div>
@@ -87,6 +89,7 @@ export default function Login() {
                 value={password}
                 onChange={handlePassword}
                 required
+                className="border rounded-3"
               />
               <p className="text-primary">{passwordError}</p>
             </div>
@@ -95,7 +98,7 @@ export default function Login() {
               <button
                 onClick={handleSubmit}
                 type="submit"
-                className="btn bg-primary text-white py-2"
+                className="btn bg-primary text-white py-2 rounded-3"
                 disabled={buttonStatus}
               >
                 Giriş Yap
@@ -103,7 +106,7 @@ export default function Login() {
             </div>
           </form>
           <a className="text-decoration-none text-white" href="/register">
-            <button type="submit" className="btn bg-dark w-100 text-white py-2">
+            <button type="submit" className="btn bg-dark w-100 text-white py-2 rounded-3">
               Kayıt Ol
             </button>
           </a>

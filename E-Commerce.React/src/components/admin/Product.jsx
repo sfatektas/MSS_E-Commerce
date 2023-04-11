@@ -28,7 +28,6 @@ export default function Product() {
     axios
       .get("https://e-commercemss.azurewebsites.net/api/Products")
       .then((response) => {
-        console.log(response.data);
         setProductList(response.data);
       })
       .catch((error) => {
@@ -112,7 +111,6 @@ export default function Product() {
       axios
         .delete(`https://e-commercemss.azurewebsites.net/api/Products/${productId}`)
         .then((response) => {
-          console.log(response);
           setInfo("Ürün başarıyla silindi");
           setVariant("success");
           setModalShow(true);
@@ -172,7 +170,7 @@ export default function Product() {
                     <button
                       value={item.id}
                       onClick={(e) => deleteProduct(e.target.value)}
-                      className="btn btn-dark text-white px-4"
+                      className="btn btn-light border px-4 rounded-3"
                     >
                       Ürünü Sil
                     </button>
@@ -185,25 +183,25 @@ export default function Product() {
         <div className="product-right col-12 col-lg-4  border-start">
           <p className="mb-4 fs-4 fw-semibold text-muted">Ürün Ekle</p>
           <form className="d-flex flex-column flex-column">
-            <label className="mb-3">Ürün Başlığı</label>
+            <label className="mb-3 fw-semibold ">Ürün Başlığı</label>
             <input
-              className="mb-3 d-flex p-2"
+              className="mb-3 py-2 px-3 text-muted bg-light rounded-3 shadow-sm border-0"
               name="brand"
               type="text"
               placeholder="Ürün Başlığı"
               onChange={(e) => setProductName(e.target.value)}
             />
-            <label className="mb-2">Ürün Detaylar</label>
+            <label className="mb-3 fw-semibold ">Ürün Detaylar</label>
             <textarea
-              className="mb-3 d-flex p-2"
+              className="mb-3 p-3 text-muted bg-light rounded-3 shadow-sm border-0"
               name="brand"
               type="text"
               placeholder="Ürün Detaylar"
               onChange={(e) => setProductSpecs(e.target.value)}
             />
-            <label className="mb-2">Ürün Marka</label>
+            <label className="mb-3 fw-semibold ">Ürün Marka</label>
             <select
-              className="p-2 mb-3"
+              className="mb-3 p-3 text-muted bg-light rounded-3 shadow-sm border-0"
               name="brand"
               id="brand"
               onChange={(e) => setProductBrand(e.target.value)}
@@ -216,9 +214,9 @@ export default function Product() {
                 </option>
               ))}
             </select>
-            <label className="mb-2">Ürün Kategori</label>
+            <label className="mb-3 fw-semibold ">Ürün Kategori</label>
             <select
-              className="p-2 mb-3"
+              className="mb-3 p-3 text-muted bg-light rounded-3 shadow-sm border-0"
               name="category"
               id="category"
               onChange={(e) => setproductCategory(e.target.value)}
@@ -230,9 +228,9 @@ export default function Product() {
                 </option>
               ))}
             </select>
-            <label className="mb-2">Beden Türü</label>
+            <label className="mb-3 fw-semibold ">Beden Türü</label>
             <select
-              className="p-2 mb-3"
+              className="mb-3 p-3 text-muted bg-light rounded-3 shadow-sm border-0"
               name="sizeType"
               id="sizeType"
               onChange={(e) => setProductSizeTypes(e.target.value)}
@@ -244,10 +242,10 @@ export default function Product() {
                 </option>
               ))}
             </select>
-            <label className="mb-2">Ürün Görseli</label>
+            <label className="mb-3 fw-semibold ">Ürün Görseli</label>
             <div className="file-input mb-3">
               <input
-                className="product-image-button btn ps-0 w-100"
+                className="product-image-button btn ps-0 w-100 border rounded-3"
                 type="file"
                 name=""
                 id=""
@@ -256,7 +254,7 @@ export default function Product() {
             </div>
             <button
               type="submit"
-              className="btn bg-dark text-white py-2 mb-2"
+              className="btn btn-light border py-2 mb-2 rounded-3"
               onClick={handleSubmit}
             >
               Ürün Ekle

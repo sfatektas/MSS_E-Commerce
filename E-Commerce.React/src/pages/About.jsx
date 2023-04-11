@@ -10,7 +10,7 @@ export default function About() {
         <div className="row about mb-5 pb-5">
           <div className="col-12 col-lg-6">
             <img
-              className="w-100"
+              className="w-100 rounded-5"
               src="https://demo2.wpopal.com/ekommart/wp-content/uploads/2020/02/About-1.jpg"
               alt=""
             />

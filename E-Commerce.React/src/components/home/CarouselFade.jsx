@@ -15,7 +15,7 @@ function CarouselFade() {
         <Carousel.Caption>
           <h3 className='mb-4'>First slide label</h3>
           <p className='mb-4'>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-          <Button variant='dark' className='text-white px-5 py-2 fw-light'>Koleksiyon</Button>
+          <Button variant='dark' className='text-white px-5 py-2 fw-light rounded-3'>Koleksiyon</Button>
         </Carousel.Caption>
       </Carousel.Item>
       <Carousel.Item>
@@ -28,7 +28,7 @@ function CarouselFade() {
         <Carousel.Caption>
           <h3 className='mb-4'>Second slide label</h3>
           <p className='mb-4'>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-          <Button variant='dark' className='text-white px-5 py-2 fw-light'>Koleksiyon</Button>
+          <Button variant='dark' className='text-white px-5 py-2 fw-light rounded-3'>Koleksiyon</Button>
         </Carousel.Caption>
       </Carousel.Item>
     </Carousel>

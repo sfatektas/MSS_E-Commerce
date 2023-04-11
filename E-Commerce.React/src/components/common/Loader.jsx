@@ -1,4 +1,12 @@
+import { useEffect } from "react";
+import { generalStore } from "../../store/generalStore";
+
 export default function Loader(props) {
+  const { getOptions } = generalStore();
+  useEffect(() => {
+    getOptions();
+  }, []);
+
   return (
     <div className="loader-main vh-100 d-flex flex-column justify-content-center align-items-center">
       <div className="loader loader--style2" title="1">
@@ -27,9 +35,7 @@ export default function Loader(props) {
           </path>
         </svg>
       </div>
-      <div className="ms-3 text-white fs-4 fw-light">
-        Loading...
-      </div>
+      <div className="ms-3 text-white fs-4 fw-light">Loading...</div>
     </div>
   );
 }

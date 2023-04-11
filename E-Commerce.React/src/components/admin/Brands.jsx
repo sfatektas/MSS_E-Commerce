@@ -113,7 +113,7 @@ export default function Brands() {
                     <button
                       value={item.defination}
                       onClick={(e) => deleteBrand(e.target.value)}
-                      className="btn btn-dark text-white px-4"
+                      className="btn btn-light border px-4 rounded-3"
                     >
                       Markayı Sil
                     </button>
@@ -126,18 +126,18 @@ export default function Brands() {
         <div className="add-brands col-12 col-lg-4 border-start">
           <p className="mb-4 fs-4 fw-semibold text-muted">Marka Ekle</p>
           <form className="d-flex flex-column flex-column">
-            <label className="mb-3">Marka Adı</label>
+            <label className="mb-3 fw-semibold ">Marka Adı</label>
             <input
-              className="mb-3 d-flex p-2"
+              className="mb-3 py-2 px-3 text-muted bg-light rounded-3 shadow-sm border-0"
               name="brand"
               type="text"
               placeholder="Marka Adı"
               onChange={(e) => setBrandName(e.target.value)}
             />
-            <label className="mb-2">Marka Görseli</label>
+            <label className="mb-3 fw-semibold ">Marka Görseli</label>
             <div className="file-input mb-3">
               <input
-                className="btn ps-0 w-100"
+                className="btn ps-0 w-100 border rounded-3"
                 type="file"
                 name=""
                 id=""
@@ -147,7 +147,7 @@ export default function Brands() {
             <button
               onClick={handleSubmit}
               type="submit"
-              className="btn bg-dark text-white py-2 mb-2"
+              className="btn btn-light border py-2 mb-2 rounded-3"
             >
               Marka Ekle
             </button>
