@@ -4,6 +4,7 @@ using E_Commerce.DataAccess.Repositories;
 using E_Commerce.DataAccess.Repositories.Abstract;
 using E_Commerce.DataAccess.Repositories.IdentitiyRepositories;
 using E_Commerce.Entities.EFCore;
+using E_Commerce.Entities.EFCore.Identities;
 using E_Commerce.Entities.EFCore.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -29,10 +30,12 @@ namespace E_Commerce.DataAccess.UnitOfWorks
         public ProductRepository GetProductRepository() => new ProductRepository(_context);
         public OrderRepository GetOrderRepository() => new OrderRepository(_context);
         public Repository<T> GetRepository<T>() where T : BaseEntity, IBaseEntity, new() => new Repository<T>(_context);
+        public IdentityRepository<T> GetIdentityRepository<T>() where T : AppUser, new() => new IdentityRepository<T>(_context);
 
         public async Task SaveChangesAsync()
         {
             await _context.SaveChangesAsync();
         }
+
     }
 }

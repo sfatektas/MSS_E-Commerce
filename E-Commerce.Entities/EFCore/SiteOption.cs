@@ -13,7 +13,7 @@ namespace E_Commerce.Entities.EFCore
         public string FacebookLink { get; set; }
         public string TwitterLink { get; set; }
         public string LinkedInLink { get; set; }
-        public string PinterestLink { get; set; }
+        public string InstagramLink { get; set; }
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
         public string Adress { get; set; }

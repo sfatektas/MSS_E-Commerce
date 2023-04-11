@@ -78,7 +78,7 @@ namespace E_Commerce.DataAccess.Repositories.Abstract
             _context.Set<T>().Remove(entity);
         }
 
-        public void Update(T unchanged, T updated)
+        public void Update(T updated)
         {
             _context.Update(updated);
         }

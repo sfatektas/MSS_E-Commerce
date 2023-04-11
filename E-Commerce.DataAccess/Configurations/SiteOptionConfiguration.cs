@@ -18,7 +18,7 @@ namespace E_Commerce.DataAccess.Configurations
             builder.Property(x=>x.Slogan).IsRequired().HasMaxLength(350);
             builder.Property(x=>x.FacebookLink).IsRequired().HasMaxLength(200);
             builder.Property(x=>x.TwitterLink).IsRequired().HasMaxLength(200);
-            builder.Property(x=>x.PinterestLink).IsRequired().HasMaxLength(200);
+            builder.Property(x=>x.InstagramLink).IsRequired().HasMaxLength(200);
             builder.Property(x=>x.PhoneNumber).IsRequired().HasMaxLength(200);
             builder.Property(x => x.Email).IsRequired().HasMaxLength(100);
             builder.Property(x=>x.Adress).IsRequired().HasMaxLength(500);

@@ -19,9 +19,9 @@ using System.Threading.Tasks;
 namespace E_Commerce.Business.Services
 {
     public class Service<CreateDto, ListDto, UpdateDto, T> : IService<CreateDto, ListDto, UpdateDto, T>
-            where CreateDto : class, ICreateDto
-            where ListDto : class, IListDto
-            where UpdateDto : class, IUpdateDto
+            where CreateDto : class, ICreateDto , new()
+            where ListDto : class, IListDto , new()
+            where UpdateDto : class, IUpdateDto , new()
             where T : BaseEntity , new()
     {
         readonly IUow _uow;
@@ -88,7 +88,7 @@ namespace E_Commerce.Business.Services
         {
             try
             {
-                _uow.GetRepository<T>().Update(await _uow.GetRepository<T>().GetByFilterAsync(x => x.Id == dto.Id), _mapper.Map<T>(dto));
+                _uow.GetRepository<T>().Update(_mapper.Map<T>(dto));
                 await _uow.SaveChangesAsync();
                 return new Response<UpdateDto>(ResponseType.Success, dto);
             }

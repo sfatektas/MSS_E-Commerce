@@ -57,7 +57,7 @@ namespace E_Commerce.Presentation.Controllers
 
             return StatusCode(201);
         }
-        [HttpDelete]
+        [HttpDelete("{productid:int}")]
         public async Task<IActionResult> DeleteProduct([FromRoute] int productId)
         {
             var data = await _productService.GetProductById(productId);
