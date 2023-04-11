@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 
 export default function Options() {
   const { options, getOptions } = generalStore();
+  const [id, setId] = useState("");
   const [logo, setLogo] = useState("");
   const [slogan, setSlogan] = useState("");
   const [facebookLink, setFacebook] = useState("");
@@ -16,6 +17,7 @@ export default function Options() {
   useEffect(() => {
     const fetchData = async () => {
       const options = await getOptions();
+      setId(options.id);
       setLogo(options.logo);
       setSlogan(options.slogan);
       setFacebook(options.facebookLink);

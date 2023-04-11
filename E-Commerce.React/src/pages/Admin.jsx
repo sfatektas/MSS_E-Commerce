@@ -4,6 +4,7 @@ import Product from "../components/admin/Product";
 import AdminHome from "../components/admin/AdminHome";
 import Options from "../components/admin/Options";
 import Contents from "../components/admin/Contents";
+import UserManagement from "../components/admin/UserManagement";
 
 export default function Admin() {
   const [adminPanel, setAdminPanel] = useState("adminHome");
@@ -23,19 +24,19 @@ export default function Admin() {
               </button>
               <button
                 className={`btn fs-5 mb-3 rounded-3 ${
-                  adminPanel === "options" && "active"
-                }`}
-                onClick={() => setAdminPanel("options")}
-              >
-                Site Ayarları
-              </button>
-              <button
-                className={`btn fs-5 mb-3 rounded-3 ${
                   adminPanel === "contents" && "active"
                 }`}
                 onClick={() => setAdminPanel("contents")}
               >
                 İçerik Ayarları
+              </button>
+              <button
+                className={`btn fs-5 mb-3 rounded-3 ${
+                  adminPanel === "product" && "active"
+                }`}
+                onClick={() => setAdminPanel("product")}
+              >
+                Ürünler
               </button>
               <button
                 className={`btn fs-5 mb-3 rounded-3 ${
@@ -47,11 +48,19 @@ export default function Admin() {
               </button>
               <button
                 className={`btn fs-5 mb-3 rounded-3 ${
-                  adminPanel === "product" && "active"
+                  adminPanel === "options" && "active"
                 }`}
-                onClick={() => setAdminPanel("product")}
+                onClick={() => setAdminPanel("options")}
               >
-                Ürünler
+                Site Ayarları
+              </button>
+              <button
+                className={`btn fs-5 mb-3 rounded-3 ${
+                  adminPanel === "userManagement" && "active"
+                }`}
+                onClick={() => setAdminPanel("userManagement")}
+              >
+                Kullanıcı Yönetimi
               </button>
             </div>
           </div>
@@ -63,6 +72,7 @@ export default function Admin() {
                 {adminPanel === "product" && <Product />}
                 {adminPanel === "options" && <Options />}
                 {adminPanel === "contents" && <Contents />}
+                {adminPanel === "userManagement" && <UserManagement />}
               </div>
             </div>
           </div>

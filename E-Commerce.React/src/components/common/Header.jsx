@@ -188,13 +188,13 @@ function Header() {
             </Offcanvas.Header>
             <Offcanvas.Body className="d-flex flex-column">
               <Form className="d-flex mt-2">
-                <div className="p-1 bg-light rounded rounded-pill shadow-sm mb-2 w-100">
+                <div className="p-1 bg-light rounded-pill shadow-sm mb-2 w-100">
                   <div className="input-group">
                     <input
                       type="search"
                       placeholder="Nasıl bir ürün arıyorsunuz?"
                       aria-describedby="button-addon1"
-                      className="form-control border-0 bg-light"
+                      className="form-control border-0 bg-light rounded-pill"
                     />
                     <div className="input-group-append">
                       <a href="#!" className="btn btn-link text-primary">
