@@ -1,7 +1,6 @@
 import Carousel from 'react-bootstrap/Carousel';
 import Button from 'react-bootstrap/Button';
-import sliderImage2 from '../../assets/img/slider2.png'
-import sliderImage3 from '../../assets/img/slider3.png'
+import sliderImage from '../../assets/img/slider.png'
 
 function CarouselFade() {
   return (
@@ -9,7 +8,7 @@ function CarouselFade() {
       <Carousel.Item>
         <img
           className="d-block w-100"
-          src={sliderImage3}
+          src={sliderImage}
           alt="First slide"
         />
         <Carousel.Caption>
@@ -21,7 +20,7 @@ function CarouselFade() {
       <Carousel.Item>
         <img
           className="d-block w-100"
-          src={sliderImage2}
+          src={sliderImage}
           alt="Second slide"
         />
 

@@ -1,7 +1,8 @@
 import { useParams } from "react-router-dom";
 
 export default function Product() {
-    const {name} = useParams();
+    const {name} = useParams(); 
+    // Ürün linki sorgulanıp true dönerse sayfa görüntülenecek.
   return (
     <>
     <div className="container vh-100">

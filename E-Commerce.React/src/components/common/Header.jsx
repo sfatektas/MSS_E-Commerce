@@ -9,6 +9,7 @@ import { generalStore, cartSidebarStore } from "../../store/generalStore";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import CartSidebar from "../home/CartSidebar";
+import { Base64 } from "js-base64";
 
 function Header() {
   let navigate = useNavigate();
@@ -22,22 +23,37 @@ function Header() {
   }, []);
 
   useEffect(() => {
-    const nowDate = new Date().getTime();
-    let tokenDate = new Date(localStorage.getItem("session_expire")).getTime();
-    let difference = tokenDate - nowDate;
-    if (difference < 0) {
-      localStorage.removeItem("user_token");
-      localStorage.removeItem("session_expire");
-    }
-  }, [logoutStatus]);
+    try {
+      const token = localStorage.getItem("user_token");
+      const startIndex = token.indexOf(".");
+      const endIndex = token.lastIndexOf(".");
+      const filteredToken = token.slice(startIndex, endIndex + 1);
+      const trimmedPayload = filteredToken.substring(
+        1,
+        filteredToken.length - 1
+      );
+      const decodedPayload = Base64.decode(trimmedPayload);
+
+      let tokenExpire = JSON.parse(decodedPayload).exp;
+      let tokenString = tokenExpire.toString();
+      tokenString += "000";
+      let finalExpireToken = parseInt(tokenString) - 10800000;
+      const nowDate = new Date().getTime();
+      let difference = finalExpireToken - nowDate;
+      if (difference < 0) {
+        localStorage.removeItem("user_token");
+      }
+    } catch {}
+  }, []);
 
   useEffect(() => {
     if (logoutStatus === 204) {
       setTimeout(() => {
+        alert("Başarıyla çıkış yapıldı, yönlendiriliyorsunuz.");
         navigate("/");
       }, 1000);
     } else if (logoutStatus === "ERR_NETWORK") {
-      alert("Hatalı çıkış yapıldı, lütfen destek birimimize ulaşın");
+      alert("Hatalı çıkış yapıldı, lütfen destek birimimize ulaşın.");
       setTimeout(() => {
         navigate("/");
       }, 1000);
@@ -124,7 +140,7 @@ function Header() {
                 </svg>
               </a>
               <a
-                href={options && options.pinterestLink}
+                href={options && options.instagramLink}
                 className="instagram mx-3"
               >
                 <svg width="24" height="24" viewBox="0 0 20 20" version="1.1">
