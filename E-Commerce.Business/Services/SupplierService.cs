@@ -19,6 +19,18 @@ namespace E_Commerce.Business.Services
         {
         }
 
+        public async Task CreateSupplierAsync(SupplierCreateDto dto)
+        {
+            var response = await base.GetByFilterAsync(x => x.Email == dto.Email || x.PhoneNumber == dto.PhoneNumber || x.PhoneNumber == dto.PhoneNumber);
+            if (response.ResponseType == ResponseType.NotFound)
+            {
+                dto.UserTypeId = (int)AppUserType.Supplier;
+                var response2 = await base.CreateAsync(dto);
+            }
+            else
+                throw new SupplierBadRequestException();
+        }
+
         public async Task<List<SupplierListDto>> GetAllSupplierAsync()
         {
             var response = await base.GetAllAsync();

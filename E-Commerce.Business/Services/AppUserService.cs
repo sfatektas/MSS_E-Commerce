@@ -22,7 +22,7 @@ namespace E_Commerce.Business.Services
             _mapper = mapper;
         }
 
-        public async Task ChangeStatusUser(int id, bool isActive)
+        public async Task ChangeStatusUser(int id, bool isActive) // 
         {
             var user = await _uow.GetIdentityRepository<AppUser>().GetByFilterAsync(x=>x.Id== id);
             if (user == null)

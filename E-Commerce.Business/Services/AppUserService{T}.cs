@@ -34,6 +34,7 @@ namespace E_Commerce.Business.Services
         {
             var entity = _mapper.Map<T>(dto);
             await _uow.GetIdentityRepository<T>().CreateAsync(entity);
+            await _uow.SaveChangesAsync();
             return new Response<CreateDto>(Common.Enums.ResponseType.Success , dto);
         }
 
@@ -45,9 +46,20 @@ namespace E_Commerce.Business.Services
             return new Response<List<ListDto>>(ResponseType.Success, _mapper.Map<List<ListDto>>(data));
         }
 
-        public Task<IResponse<List<ListDto>>> GetAllAsync(Expression<Func<T, bool>> filter)
+        public async Task<IResponse<List<ListDto>>> GetAllAsync(Expression<Func<T, bool>> filter)
         {
-            throw new NotImplementedException();
+            var data = await _uow.GetIdentityRepository<T>().GetAllAsync(filter);
+            if (data == null)
+                return new Response<List<ListDto>>(ResponseType.NotFound, null);
+            return new Response<List<ListDto>>(ResponseType.Success, _mapper.Map<List<ListDto>>(data));
+        }
+
+        public async Task<IResponse<ListDto>> GetByFilterAsync(Expression<Func<T, bool>> filter)
+        {
+            var data = await _uow.GetIdentityRepository<T>().GetByFilterAsync(filter);
+            if (data == null)
+                return new Response<ListDto>(ResponseType.NotFound, null);
+            return new Response<ListDto>(ResponseType.Success, _mapper.Map<ListDto>(data));
         }
 
         public async Task<IResponse<ListDto>> GetByIdAsync(int id)

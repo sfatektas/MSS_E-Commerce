@@ -15,9 +15,9 @@ namespace E_Commerce.Presentation.Models
         public string PasswordConfirm { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
-        public string CompanyName { get; init; }
-        public string CompanyUserName { get; init; }
-        public string CompanyDetail { get; init; }
+        public string CompanyName { get; set; }
+        public string CompanyUserName { get; set; }
+        public string CompanyDetail { get; set; }
 
         private IFormFile _file;
 
@@ -25,7 +25,7 @@ namespace E_Commerce.Presentation.Models
         {
             get { return _file; }
             init {
-                if(_file.ContentType.Contains("image"))
+                if (value.ContentType.Contains("image"))
                     _file = value; 
             }
         }

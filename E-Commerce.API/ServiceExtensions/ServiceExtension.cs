@@ -87,7 +87,8 @@ namespace E_Commerce.API.ServiceExtensions
                     new ProductProfile(),
                     new SliderProfile(),
                     new CustomerProfile(),
-                    new GenderProfile()
+                    new GenderProfile(),
+                    new SupplierProfile()
             };
 
             services.AddAutoMapper(opt =>
@@ -126,6 +127,7 @@ namespace E_Commerce.API.ServiceExtensions
             services.AddTransient<IValidator<SupplierCreateModel>,SupplierCreateModelValidator>();
             services.AddTransient<IValidator<SliderItemCreateDto>,SliderItemCreateDtoValidator>();
             services.AddTransient<IValidator<SliderCreateDto>,SliderCreateDtoValidator>();
+            services.AddTransient<IValidator<SupplierCreateModel>,SupplierCreateModelValidator>();
         }
         public static void ConfigureCors(this IServiceCollection services)
         {

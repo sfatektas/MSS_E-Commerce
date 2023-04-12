@@ -1,4 +1,5 @@
 ﻿using E_Commerce.Business.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -44,6 +45,7 @@ namespace E_Commerce.Presentation.Controllers
                 throw new ArgumentException(nameof(userType) + "Yanlış parametre kullanımı.");
 
         }
+        //[Authorize(Roles = "Admin")]
         [HttpPut("{id:int}")]
         public async Task<IActionResult> Update([FromRoute] int id, [FromQuery] bool status)
         {
