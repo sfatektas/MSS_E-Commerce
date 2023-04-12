@@ -14,7 +14,7 @@ export default function Footer() {
                   İLETİŞİM
                 </p>
                 <p className="subtitle text-muted mb-4">
-                  Herhangi bir sorunuz varsa, lütfen bizimle iletişime geçin.
+                  Herhangi bir sorunuz varsa, lütfen bizimle iletişime geçin.{" "}
                   <a
                     href={`mailto: ${options && options.email}`}
                     className="text-white text-decoration-none"
@@ -104,7 +104,7 @@ export default function Footer() {
                 <ul className="text-muted list-unstyled">
                   {categories &&
                     categories.map((item, index) => (
-                      <li key={index} className="mb-2">
+                      <li key={index} className="mb-1">
                         <a
                           className="text-decoration-none text-muted"
                           href={`/category/${item.defination}`}
