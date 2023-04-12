@@ -6,7 +6,6 @@ import AdminHome from "../components/admin/AdminHome";
 import Options from "../components/admin/Options";
 import Contents from "../components/admin/Contents";
 import UserManagement from "../components/admin/UserManagement";
-
 import { Base64 } from "js-base64";
 
 export default function Admin() {
@@ -19,7 +18,7 @@ export default function Admin() {
   const tokenPayload = Base64.decode(trimmedPayload);
   let userRole = JSON.parse(tokenPayload).role;
 
-  if (userRole == "Admin") {
+  if (userRole === "Admin") {
     return (
       <>
         <div className="">
