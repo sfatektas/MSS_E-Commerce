@@ -86,6 +86,8 @@ namespace E_Commerce.API.ServiceExtensions
                     new SliderItemProfile(),
                     new ProductProfile(),
                     new SliderProfile(),
+                    new CustomerProfile(),
+                    new GenderProfile()
             };
 
             services.AddAutoMapper(opt =>
@@ -110,6 +112,9 @@ namespace E_Commerce.API.ServiceExtensions
             services.AddScoped<ISizeService, SizeService>();
             services.AddScoped<ISliderItemService, SliderItemService>();
             services.AddScoped<ISliderService, SliderService>();
+            services.AddScoped<ICustomerService, CustomerService>();
+            services.AddScoped<ISupplierService,SupplierService>();
+            services.AddScoped<IAppUserService,AppUserService>();
         }
         public static void ConfigureValidations(this IServiceCollection services)
         {

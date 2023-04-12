@@ -11,5 +11,6 @@ namespace E_Commerce.Dtos.AppUserDtos
     {
         public int Id { get; init; }
         public int UserTypeId { get; init; }
+        public bool IsActive { get; init; }
     }
 }
