@@ -19,7 +19,7 @@ export const generalStore = create((set) => ({
       );
       set({ categories: response.data});
     } catch (error) {
-      console.error("Kategorileri alma hatası:", error.message);
+      console.error(error);
       throw error;
     }
   },
@@ -32,7 +32,7 @@ export const generalStore = create((set) => ({
       loaderStore.getState().setLoader(false);
       return response.data;
     } catch (error) {
-      console.error("Site seçeneklerini alma hatası:", error.message);
+      console.error(error);
       throw error;
     }
   },

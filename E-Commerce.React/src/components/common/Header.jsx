@@ -70,13 +70,13 @@ function Header() {
       <div className="bg-black">
         <div className="container">
           <div className="header-top row d-flex align-items-center py-2">
-            <div className="slogan col-12 col-lg-8">
+            <div className="slogan col-12 col-lg-8 text-center text-lg-start mb-2 mb-lg-0">
               <p className="text-white fs-5 fw-semibold">
                 <span className="text-primary">Kampanya! </span>
                 {options && options.slogan}
               </p>
             </div>
-            <div className="social-links col-12 col-lg-4 d-flex justify-content-end mb-4 mb-lg-0">
+            <div className="social-links col-12 col-lg-4 d-flex justify-content-center justify-content-lg-end mb-2 mb-lg-0">
               <a
                 href={options && options.facebookLink}
                 className="facebook mx-3"
