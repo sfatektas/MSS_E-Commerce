@@ -13,5 +13,7 @@ namespace E_Commerce.Business.Interfaces
         Task<List<SupplierListDto>> GetAllSupplierAsync();
 
         Task CreateSupplierAsync(SupplierCreateDto dto);
+
+        Task RemoveSupplier(int supplierId);
     }
 }

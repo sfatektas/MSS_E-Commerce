@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using AspNetCoreRateLimit;
+using AutoMapper;
 using E_Commerce.Business.Consts;
 using E_Commerce.Business.Interfaces;
 using E_Commerce.Business.Interfaces.Storage;
@@ -23,6 +24,7 @@ using E_Commerce.Dtos.SliderDtos;
 using E_Commerce.Dtos.SliderItemsDtos;
 using E_Commerce.Dtos.SupplierDtos;
 using E_Commerce.Entities.EFCore.Identities;
+using E_Commerce.Entities.Exceptions;
 using E_Commerce.Presentation;
 using E_Commerce.Presentation.ActionFilters;
 using E_Commerce.Presentation.Models;
@@ -33,6 +35,7 @@ using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using StackExchange.Redis;
@@ -198,6 +201,40 @@ namespace E_Commerce.API.ServiceExtensions
             //services.AddScoped<IStorage , AzureStorage>();
             services.AddScoped<IStorage, LocalStorage>();
         }
+        public static void ConfigureRateLimit(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddOptions();
+            services.AddMemoryCache();
+            var rateLimitRules = new List<RateLimitRule>()
+            {
+                new RateLimitRule()
+                {
+                    Endpoint = configuration["IpRateLimiting:Endpoint"],
+                    Limit = int.Parse(configuration["IpRateLimiting:Limit"]),
+                    Period = configuration["IpRateLimiting:Period"]
+                }
+            };
 
+            services.Configure<IpRateLimitOptions>(opt =>
+            {
+                opt.GeneralRules = rateLimitRules;
+                opt.QuotaExceededResponse = new()
+                {
+                    ContentType = "application/json",
+                    Content = configuration["IpRateLimiting:ErrorMessage"],
+                    StatusCode = 429
+                };
+                //opt.QuotaExceededMessage = new ErrorModel
+                //{
+                //    StatusCode = 429,
+                //    Error = configuration["IpRateLimiting:ErrorMessage"].ToString()
+                //}.ToString();
+            });
+
+            services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>();
+            services.AddSingleton<IIpPolicyStore, MemoryCacheIpPolicyStore>();
+            services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
+            services.AddSingleton<IProcessingStrategy, AsyncKeyLockProcessingStrategy>();
+        }
     }
 }

@@ -42,10 +42,20 @@ namespace E_Commerce.Presentation.Controllers
         public async Task<IActionResult> AddSupplier([FromForm] SupplierCreateModel model)
         {
             var mappedData = _mapper.Map<SupplierCreateDto>(model);
-            mappedData.ImageUrl = Guid.NewGuid().ToString();
-            await _storage.UploadFile(mappedData.ImageUrl, model.File);
+            var imageUrlGuid = Guid.NewGuid().ToString();
+
+            mappedData.ImageUrl = imageUrlGuid + Path.GetExtension(model.File.FileName);
+
+            await _storage.UploadFile(imageUrlGuid, model.File);
             await _supplierService.CreateSupplierAsync(mappedData);
             return StatusCode(201);
         }
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> DeleteSupplier([FromRoute] int id)
+        {
+            await _supplierService.RemoveSupplier(id);
+            return NoContent();
+        }
+
     }
 }

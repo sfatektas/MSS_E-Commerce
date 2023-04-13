@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -262,9 +263,11 @@ namespace E_Commerce.Business.Helpers
                     new Supplier()
                     {
                         UserName = "ChekkoNargile",
+                        NormalizedUserName = "ChekkoNargile".ToUpper(),
                         Email = "info@chekko.com",
                         PhoneNumber = "05468461389",
                         CompanyName = "Chekko LTD. ŞTI",
+                        NormalizedEmail =  "info@chekko.com".ToUpper(),
                         CompanyUserName = "chekkonargile",
                         CompanyDetail = "Yer Fıstığı kabuklu nargile kömürü",
                         UserTypeId = (int)AppUserType.Supplier,

@@ -8,7 +8,7 @@ namespace E_Commerce.Entities.RequestFeatures.Abstract
 {
     public class RequestParameter
     {
-        public const int MaxPageSize = 20;
+        private const int MaxPageSize = 20;
         public int PageNumber { get; set; }
 
         private int _pageSize;

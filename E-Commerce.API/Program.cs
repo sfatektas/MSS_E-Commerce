@@ -1,3 +1,4 @@
+using AspNetCoreRateLimit;
 using E_Commerce.API.ServiceExtensions;
 using E_Commerce.Business.Helpers;
 using E_Commerce.Presentation.Middlewares;
@@ -33,6 +34,7 @@ builder.Services.ConfigureActionFilters();
 builder.Services.ConfigureJWTBearer(builder.Configuration);
 builder.Services.ConfigureRedis(builder.Configuration);
 builder.Services.ConfigureStorage();
+builder.Services.ConfigureRateLimit(builder.Configuration);
 
 
 
@@ -51,6 +53,7 @@ app.UseForwardedHeaders();
 app.UseStaticFiles();
 
 //app.UseSession(); //
+app.UseIpRateLimiting();
 
 app.UseCors();
 app.UseAuthentication();
