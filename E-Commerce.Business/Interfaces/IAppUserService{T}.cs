@@ -19,6 +19,7 @@ namespace E_Commerce.Business.Interfaces
         Task<IResponse<CreateDto>> CreateAsync(CreateDto dto);
         Task<IResponse<ListDto>> GetByIdAsync(int id);
         Task<IResponse<List<ListDto>>> GetAllAsync();
+        Task<IResponse<ListDto>> GetByFilterAsync(Expression<Func<T,bool>> filter);
         Task<IResponse<List<ListDto>>> GetAllAsync(Expression<Func<T, bool>> filter);
         Task<IResponse<UpdateDto>> UpdateAsync(UpdateDto dto);
         Task<IResponse> RemoveAsync(ListDto dto);

@@ -15,7 +15,7 @@ namespace E_Commerce.Dtos.AppUserDtos
         public string PasswordConfirm { get; init; }
         public string Email { get; init; }
         public string PhoneNumber { get; init; }
-        public int UserTypeId { get; init; }
+        public int UserTypeId { get; set; }
 
     }
 }

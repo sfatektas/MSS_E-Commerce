@@ -227,20 +227,52 @@ namespace E_Commerce.Business.Helpers
             {
                 var CustomerList = new List<Customer>()
                 {
+                    //new Customer
+                    //{
+                    //    FirstName = "Sefa",
+                    //    LastName = "Tektaş",
+                    //    UserName = "sfatektas",
+                    //    Email = "sfatektas55@gmail.com",
+                    //    GenderId = (int)GenderType.Men,
+                    //    UserTypeId = (int)AppUserType.Customer,
+
+                    //},
                     new Customer
                     {
-                        FirstName = "Sefa",
-                        LastName = "Tektaş",
-                        UserName = "sfatektas",
-                        Email = "sfatektas55@gmail.com",
+                        FirstName = "Murat",
+                        LastName = "Baran",
+                        UserName = "mrtbrn",
+                        Email = "mrtbrn@gmail.com",
                         GenderId = (int)GenderType.Men,
                         UserTypeId = (int)AppUserType.Customer,
 
-                    }
+                    },
+
                 };
                 foreach (var customer in CustomerList)
                 {
                     var result = await userManager.CreateAsync(customer, "Customer123");
+                }
+                await context.SaveChangesAsync();
+            }
+            if (!context.Suppliers.Any())
+            {
+                var supplierList = new List<Supplier>()
+                {
+                    new Supplier()
+                    {
+                        UserName = "ChekkoNargile",
+                        Email = "info@chekko.com",
+                        PhoneNumber = "05468461389",
+                        CompanyName = "Chekko LTD. ŞTI",
+                        CompanyUserName = "chekkonargile",
+                        CompanyDetail = "Yer Fıstığı kabuklu nargile kömürü",
+                        UserTypeId = (int)AppUserType.Supplier,
+                    }
+                };
+                foreach (var supplier in supplierList)
+                {
+                    var result = await userManager.CreateAsync(supplier, "Supplier123");
                 }
                 await context.SaveChangesAsync();
             }

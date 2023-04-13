@@ -11,5 +11,7 @@ namespace E_Commerce.Business.Interfaces
     public interface ISupplierService : IAppUserService<SupplierCreateDto , SupplierListDto , SupplierUpdateDto , Supplier>
     {
         Task<List<SupplierListDto>> GetAllSupplierAsync();
+
+        Task CreateSupplierAsync(SupplierCreateDto dto);
     }
 }

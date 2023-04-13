@@ -10,7 +10,6 @@ namespace E_Commerce.Dtos.SupplierDtos
 {
     public record SupplierListDto : AppUserListDto,  IListDto
     {
-        public int Id { get; init; }
         public string CompanyName { get; init; }
         public string CompanyUserName { get; init; }
         public string CompanyDetail { get; init; }

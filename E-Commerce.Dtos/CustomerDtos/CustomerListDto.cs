@@ -1,4 +1,5 @@
-﻿using E_Commerce.Dtos.CustomerAddressDtos;
+﻿using E_Commerce.Dtos.AppUserDtos;
+using E_Commerce.Dtos.CustomerAddressDtos;
 using E_Commerce.Dtos.FavoriteProductDtos;
 using E_Commerce.Dtos.GenderDtos;
 using E_Commerce.Dtos.Interfaces;
@@ -13,12 +14,14 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.Dtos.CustomerDtos
 {
-    public record CustomerListDto : IListDto
+    public record CustomerListDto : AppUserListDto , IListDto
     {
         public int Id { get; init; }
         public string FirstName { get; init; }
         public string LastName { get; init; }
         public GenderListDto Gender { get; init; }
+        public string Email { get; init; }
+        public string  PhoneNumber { get; init; }
         public int GenderId { get; init; }
         public double EarnedPoint { get; init; }
         public double CurrentPoint { get; init; }

@@ -13,6 +13,6 @@ namespace E_Commerce.Dtos.SupplierDtos
         public string CompanyName { get; init; }
         public string CompanyUserName { get; init; }
         public string CompanyDetail { get; init; }
-        public string ImageUrl { get; init; }
+        public string ImageUrl { get; set; }
     }
 }

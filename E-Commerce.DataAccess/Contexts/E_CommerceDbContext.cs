@@ -55,6 +55,7 @@ namespace E_Commerce.DataAccess.Contexts
             //modelBuilder.ApplyConfiguration(new AppUserConfiguration());
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             base.OnModelCreating(modelBuilder);
+            // IdentityUser tarafında olan base configuration değerlereinide kapsar.
         }
     }
 }

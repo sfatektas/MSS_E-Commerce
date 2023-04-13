@@ -86,6 +86,9 @@ namespace E_Commerce.API.ServiceExtensions
                     new SliderItemProfile(),
                     new ProductProfile(),
                     new SliderProfile(),
+                    new CustomerProfile(),
+                    new GenderProfile(),
+                    new SupplierProfile()
             };
 
             services.AddAutoMapper(opt =>
@@ -110,6 +113,9 @@ namespace E_Commerce.API.ServiceExtensions
             services.AddScoped<ISizeService, SizeService>();
             services.AddScoped<ISliderItemService, SliderItemService>();
             services.AddScoped<ISliderService, SliderService>();
+            services.AddScoped<ICustomerService, CustomerService>();
+            services.AddScoped<ISupplierService,SupplierService>();
+            services.AddScoped<IAppUserService,AppUserService>();
         }
         public static void ConfigureValidations(this IServiceCollection services)
         {
@@ -121,6 +127,7 @@ namespace E_Commerce.API.ServiceExtensions
             services.AddTransient<IValidator<SupplierCreateModel>,SupplierCreateModelValidator>();
             services.AddTransient<IValidator<SliderItemCreateDto>,SliderItemCreateDtoValidator>();
             services.AddTransient<IValidator<SliderCreateDto>,SliderCreateDtoValidator>();
+            services.AddTransient<IValidator<SupplierCreateModel>,SupplierCreateModelValidator>();
         }
         public static void ConfigureCors(this IServiceCollection services)
         {

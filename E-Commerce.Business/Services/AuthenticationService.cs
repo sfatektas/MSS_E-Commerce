@@ -49,7 +49,7 @@ namespace E_Commerce.Business.Services
                 {
                     var tokenOptions = _configuration.GetSection("JWTTokenOptions");
 
-                    var tokenModel = await _tokenManger.GenerateToken(GetClaims(user), tokenOptions["SecretKey"], tokenOptions["Audience"], tokenOptions["Issuer"], int.Parse(tokenOptions["ExpireMinitue"]));
+                    var tokenModel = await _tokenManger.GenerateToken(await GetClaims(user), tokenOptions["SecretKey"], tokenOptions["Audience"], tokenOptions["Issuer"], int.Parse(tokenOptions["ExpireMinitue"]));
                     await _signInManager.SignInAsync(user, false);
                     return tokenModel;
                 }
@@ -59,14 +59,19 @@ namespace E_Commerce.Business.Services
                 }
             }
         }
-        private List<Claim> GetClaims(AppUser user)
+        private async Task<List<Claim>> GetClaims(AppUser user)
         {
+            var roles = await _userManager.GetRolesAsync(user);
             List<Claim> claims = new List<Claim>()
             {
                 new Claim("Id",$"{user.Id}"),
                 new Claim(ClaimTypes.NameIdentifier , user.UserName),
                 new Claim(ClaimTypes.Email , user.Email),
             };
+            foreach (var role in roles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role , role.ToString()));
+            }
             return claims;
         }
 
