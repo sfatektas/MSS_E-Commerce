@@ -1,6 +1,7 @@
 import Table from "react-bootstrap/Table";
 import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -10,19 +11,11 @@ export default function Product() {
   const [categories, setCategories] = useState([]);
   const [brands, setBrands] = useState([]);
   const [sizeTypes, setSizeTypes] = useState([]);
-
-  //Post Stateleri
-  const [productName, setProductName] = useState("");
-  const [productSpecs, setProductSpecs] = useState("");
-  const [productBrand, setProductBrand] = useState("");
-  const [productCategory, setproductCategory] = useState("");
-  const [productSizeTypes, setProductSizeTypes] = useState("");
-  const [productFile, setProductFile] = useState();
-
   //Modal Stateleri
   const [info, setInfo] = useState("");
-  const [show, setModalShow] = useState(false);
+  const [infoModal, setInfoModal] = useState(false);
   const [variant, setVariant] = useState("");
+  const [productAddModal, setProductAddModal] = useState();
 
   useEffect(() => {
     axios
@@ -51,7 +44,7 @@ export default function Product() {
       .get("https://e-commercemss.azurewebsites.net/api/Brands")
       .then(({ data }) => setBrands(data))
       .catch((error) => {
-        console.log(error.response.data)
+        console.log(error.response.data);
       });
   }, []);
 
@@ -66,122 +59,85 @@ export default function Product() {
       });
   }, []);
 
-  function handleFile(event) {
-    event.preventDefault();
-    setProductFile(event.target.files[0]);
-  }
-
-  function handleSubmit(event) {
-    event.preventDefault();
-    let createProduct = {
-      Name: productName,
-      Detail: productSpecs,
-      BrandId: productBrand,
-      CategoryId: productCategory,
-      SizeTypeId: productSizeTypes,
-      File: productFile,
-    };
-    axios
-      .post(
-        "https://e-commercemss.azurewebsites.net/api/Products",
-        createProduct,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      )
-      .then((response) => {
-        setInfo("Ürün Başarıyla Eklendi");
-        setVariant("success");
-        setModalShow(true);
-        setTimeout(() => {
-          window.location.reload(false);
-        }, 2000);
-      })
-      .catch((error) => {
-        setInfo(error.response.data.Error);
-        setVariant("danger");
-        setModalShow(true);
-        console.log(error.response.data);
-      });
-  }
   function deleteProduct(productId) {
     if (window.confirm("Bu ürünü silmek istediğinize emin misiniz?")) {
       axios
-        .delete(`https://e-commercemss.azurewebsites.net/api/Products/${productId}`)
+        .delete(
+          `https://e-commercemss.azurewebsites.net/api/Products/${productId}`
+        )
         .then((response) => {
           setInfo("Ürün başarıyla silindi");
           setVariant("success");
-          setModalShow(true);
+          setInfoModal(true);
         })
         .catch((error) => {
           console.log(error.response.data);
         });
     }
   }
-  return (
-    <>
-      <p className="display-6 text-center mb-4 border-bottom border-bottom pb-4">
-        Ürünler
-      </p>
 
-      <div className="row">
-        <Alert show={show} variant={variant}>
-          <Alert.Heading>{info}</Alert.Heading>
-          <div className="d-flex justify-content-end">
-            <Button onClick={() => setModalShow(false)} variant={variant}>
-              Kapat
-            </Button>
-          </div>
-        </Alert>
-        <div className="product-left col-12 col-lg-8">
-          <p className="mb-4 fs-4 fw-semibold text-muted">Ürün Listesi</p>
-          <Table hover responsive>
-            <thead>
-              <tr>
-                <th>Sıra</th>
-                <th>Ürün Başlığı</th>
-                <th>Teknik Detaylar</th>
-                <th>Marka</th>
-                <th>Kategori</th>
-                <th>Beden Türü</th>
-                <th>Ürün Görsel</th>
-                <th>Kontrol</th>
-              </tr>
-            </thead>
-            <tbody>
-              {productList.map((item, index) => (
-                <tr key={index} className="align-middle">
-                  <td>{index + 1}</td>
-                  <td>{item.name}</td>
-                  <td>{item.detail}</td>
-                  <td className="text-uppercase">{item.brand.defination}</td>
-                  <td>{item.category.defination}</td>
-                  <td>{item.sizeType.defination}</td>
-                  <td>
-                    <img
-                      height="100px"
-                      src={`https://e-commercemss.azurewebsites.net/api/files/${item.imageUrl}`}
-                      alt={item.name}
-                    />
-                  </td>
-                  <td className="p-0">
-                    <button
-                      value={item.id}
-                      onClick={(e) => deleteProduct(e.target.value)}
-                      className="btn btn-light border px-4 rounded-3"
-                    >
-                      Ürünü Sil
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        </div>
-        <div className="product-right col-12 col-lg-4  border-start">
-          <p className="mb-4 fs-4 fw-semibold text-muted">Ürün Ekle</p>
+  function AddProductModal(props) {
+    //Post Stateleri
+    const [productName, setProductName] = useState("");
+    const [productSpecs, setProductSpecs] = useState("");
+    const [productBrand, setProductBrand] = useState("");
+    const [productCategory, setproductCategory] = useState("");
+    const [productSizeTypes, setProductSizeTypes] = useState("");
+    const [productFile, setProductFile] = useState();
+
+    function handleFile(event) {
+      event.preventDefault();
+      setProductFile(event.target.files[0]);
+    }
+
+    function handleSubmit(event) {
+      event.preventDefault();
+      let createProduct = {
+        Name: productName,
+        Detail: productSpecs,
+        BrandId: productBrand,
+        CategoryId: productCategory,
+        SizeTypeId: productSizeTypes,
+        File: productFile,
+      };
+      axios
+        .post(
+          "https://e-commercemss.azurewebsites.net/api/Products",
+          createProduct,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        )
+        .then((response) => {
+          setInfo("Ürün Başarıyla Eklendi");
+          setVariant("success");
+          setInfoModal(true);
+          setTimeout(() => {
+            window.location.reload(false);
+          }, 2000);
+        })
+        .catch((error) => {
+          setInfo(error.response.data.Error);
+          setVariant("danger");
+          setInfoModal(true);
+          console.log(error.response.data);
+        });
+    }
+    return (
+      <Modal
+        {...props}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            Ürün Ekle
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
           <form className="d-flex flex-column flex-column">
             <label className="mb-3 fw-semibold ">Ürün Başlığı</label>
             <input
@@ -260,7 +216,88 @@ export default function Product() {
               Ürün Ekle
             </button>
           </form>
+        </Modal.Body>
+        <Modal.Footer>
+          <button
+            className="btn btn-light border rounded-3 px-5"
+            onClick={props.onHide}
+          >
+            Kapat
+          </button>
+        </Modal.Footer>
+      </Modal>
+    );
+  }
+
+  return (
+    <>
+
+      <div className="row">
+        <Alert show={infoModal} variant={variant}>
+          <Alert.Heading>{info}</Alert.Heading>
+          <div className="d-flex justify-content-end">
+            <Button onClick={() => setInfoModal(false)} variant={variant}>
+              Kapat
+            </Button>
+          </div>
+        </Alert>
+        <div className="admin-product col-12">
+          <div className="d-flex justify-content-between">
+            <p className="mb-4 fs-4 fw-semibold text-muted">Ürünler</p>
+            <button
+              className="btn btn-light rounded-3 border px-5 fw-semibold"
+              onClick={() => setProductAddModal(true)}
+            >
+              Ürün Ekle
+            </button>
+          </div>
+          <Table responsive hover borderless>
+            <thead>
+              <tr>
+                <th className="px-0">Sıra</th>
+                <th>Ürün Başlığı</th>
+                <th>Teknik Detaylar</th>
+                <th>Marka</th>
+                <th>Kategori</th>
+                <th>Beden Türü</th>
+                <th>Ürün Görseli</th>
+                <th>Kontrol</th>
+              </tr>
+            </thead>
+            <tbody>
+              {productList.map((item, index) => (
+                <tr key={index} className="align-middle">
+                  <td>{index + 1}</td>
+                  <td>{item.name}</td>
+                  <td>{item.detail}</td>
+                  <td className="text-uppercase">{item.brand.defination}</td>
+                  <td>{item.category.defination}</td>
+                  <td>{item.sizeType.defination}</td>
+                  <td>
+                    <img
+                      height="50px"
+                      src={`https://e-commercemss.azurewebsites.net/api/files/${item.imageUrl}`}
+                      alt={item.name}
+                    />
+                  </td>
+                  <td className="p-0">
+                    <button
+                      value={item.id}
+                      onClick={(e) => deleteProduct(e.target.value)}
+                      className="btn btn-light border px-4 rounded-3"
+                    >
+                      Ürünü Sil
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
         </div>
+        <AddProductModal
+          show={productAddModal}
+          onHide={() => setProductAddModal(false)}
+        />
       </div>
     </>
   );

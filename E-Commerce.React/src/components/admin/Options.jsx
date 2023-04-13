@@ -76,9 +76,6 @@ export default function Options() {
 
   return (
     <>
-      <p className="display-6 text-center mb-4 border-bottom pb-4">
-        Site Ayarları
-      </p>
       <div className="row">
         <Alert show={show} variant={variant}>
           <Alert.Heading>{info}</Alert.Heading>
@@ -92,7 +89,7 @@ export default function Options() {
           <div className="d-flex justify-content-between">
             <p className="mb-4 fs-4 fw-semibold text-muted">Site Ayarları</p>
             <button
-              className="btn btn-light border px-5 rounded-3"
+              className="btn btn-light border px-5 rounded-3 fw-semibold"
               onClick={handleSubmit}
             >
               Kaydet

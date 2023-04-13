@@ -3,13 +3,13 @@ import { useState, useEffect } from "react";
 import Table from "react-bootstrap/Table";
 import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
 
 export default function Brands() {
-  const [brandName, setBrandName] = useState("");
-  const [file, setFile] = useState();
   const [brands, setBrands] = useState([]);
   const [info, setInfo] = useState("");
-  const [show, setModalShow] = useState(false);
+  const [infoModal, setInfoModal] = useState(false);
+  const [brandAddModal, setBrandAddModal] = useState();
   const [variant, setVariant] = useState("");
 
   useEffect(() => {
@@ -31,7 +31,7 @@ export default function Brands() {
           console.log(response);
           setInfo("Marka başarıyla silindi");
           setVariant("success");
-          setModalShow(true);
+          setInfoModal(true);
         })
         .catch((error) => {
           console.log(error.response.data);
@@ -39,92 +39,58 @@ export default function Brands() {
     }
   }
 
-  function handleFile(event) {
-    setFile(event.target.files[0]);
-  }
+  function AddBrand(props) {
+    const [brandName, setBrandName] = useState("");
+    const [file, setFile] = useState();
+    function handleFile(event) {
+      setFile(event.target.files[0]);
+    }
 
-  function handleSubmit(event) {
-    let brandCreateModel = {
-      defination: brandName,
-      file: file,
-    };
+    function handleSubmit(event) {
+      let brandCreateModel = {
+        defination: brandName,
+        file: file,
+      };
 
-    event.preventDefault();
-    axios
-      .post(
-        "https://e-commercemss.azurewebsites.net/api/Brands",
-        brandCreateModel,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      )
-      .then((response) => {
-        setInfo("Marka Başarıyla Eklendi");
-        setVariant("success");
-        setModalShow(true);
-        setTimeout(() => {
-          window.location.reload(false);
-        }, 2000);
-      })
-      .catch((error) => {
-        setInfo(error.response.data.Error);
-        setVariant("danger");
-        setModalShow(true);
-        console.log(error.response.data);
-      });
-  }
-  return (
-    <>
-      <p className="display-6 text-center mb-4 border-bottom pb-4">Markalar</p>
-      <div className="row">
-        <Alert show={show} variant={variant}>
-          <Alert.Heading>{info}</Alert.Heading>
-          <div className="d-flex justify-content-end">
-            <Button onClick={() => setModalShow(false)} variant={variant}>
-              Kapat
-            </Button>
-          </div>
-        </Alert>
-        <div className="list-brands col-12 col-lg-8">
-          <p className="mb-4 fs-4 fw-semibold text-muted">Marka Listesi</p>
-          <Table hover responsive>
-            <thead>
-              <tr>
-                <th>Sıra</th>
-                <th>Marka Adı</th>
-                <th>Logo</th>
-                <th>Kontrol</th>
-              </tr>
-            </thead>
-            <tbody>
-              {brands.map((item, index) => (
-                <tr key={index} className="align-middle">
-                  <td>{index + 1}</td>
-                  <td className="text-uppercase">{item.defination}</td>
-                  <td>
-                    <img
-                      src={`https://e-commercemss.azurewebsites.net/api/files/${item.imageUrl}`}
-                      alt={item.defination}
-                    />
-                  </td>
-                  <td className="p-0">
-                    <button
-                      value={item.defination}
-                      onClick={(e) => deleteBrand(e.target.value)}
-                      className="btn btn-light border px-4 rounded-3"
-                    >
-                      Markayı Sil
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        </div>
-        <div className="add-brands col-12 col-lg-4 border-start">
-          <p className="mb-4 fs-4 fw-semibold text-muted">Marka Ekle</p>
+      event.preventDefault();
+      axios
+        .post(
+          "https://e-commercemss.azurewebsites.net/api/Brands",
+          brandCreateModel,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        )
+        .then((response) => {
+          setInfo("Marka Başarıyla Eklendi");
+          setVariant("success");
+          setInfoModal(true);
+          setTimeout(() => {
+            window.location.reload(false);
+          }, 2000);
+        })
+        .catch((error) => {
+          setInfo(error.response.data.Error);
+          setVariant("danger");
+          setInfoModal(true);
+          console.log(error.response.data);
+        });
+    }
+    return (
+      <Modal
+        {...props}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            Marka Ekle
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
           <form className="d-flex flex-column flex-column">
             <label className="mb-3 fw-semibold ">Marka Adı</label>
             <input
@@ -152,7 +118,79 @@ export default function Brands() {
               Marka Ekle
             </button>
           </form>
+        </Modal.Body>
+        <Modal.Footer>
+          <button
+            className="btn btn-light border rounded-3 px-5"
+            onClick={props.onHide}
+          >
+            Kapat
+          </button>
+        </Modal.Footer>
+      </Modal>
+    );
+  }
+
+  return (
+    <>
+      <div className="row">
+        <Alert show={infoModal} variant={variant}>
+          <Alert.Heading>{info}</Alert.Heading>
+          <div className="d-flex justify-content-end">
+            <Button onClick={() => setBrandAddModal(false)} variant={variant}>
+              Kapat
+            </Button>
+          </div>
+        </Alert>
+        <div className="admin-brands col-12">
+          <div className="d-flex justify-content-between">
+            <p className="mb-4 fs-4 fw-semibold text-muted">Markalar</p>
+            <button
+              className="btn btn-light rounded-3 border px-5 fw-semibold"
+              onClick={() => setBrandAddModal(true)}
+            >
+              Marka Ekle
+            </button>
+          </div>
+          <Table responsive hover borderless>
+            <thead>
+              <tr>
+                <th className="px-0">Sıra</th>
+                <th>Marka Adı</th>
+                <th>Logo</th>
+                <th>Kontrol</th>
+              </tr>
+            </thead>
+            <tbody>
+              {brands.map((item, index) => (
+                <tr key={index} className="align-middle">
+                  <td>{index + 1}</td>
+                  <td className="text-uppercase">{item.defination}</td>
+                  <td>
+                    <img
+                      height="50px"
+                      src={`https://e-commercemss.azurewebsites.net/api/files/${item.imageUrl}`}
+                      alt={item.defination}
+                    />
+                  </td>
+                  <td className="p-0">
+                    <button
+                      value={item.defination}
+                      onClick={(e) => deleteBrand(e.target.value)}
+                      className="btn btn-light border px-4 rounded-3"
+                    >
+                      Markayı Sil
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
         </div>
+        <AddBrand
+          show={brandAddModal}
+          onHide={() => setBrandAddModal(false)}
+        />
       </div>
     </>
   );
