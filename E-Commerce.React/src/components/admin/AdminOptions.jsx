@@ -4,7 +4,7 @@ import Button from "react-bootstrap/Button";
 import { generalStore } from "../../store/generalStore";
 import { useEffect, useState } from "react";
 
-export default function Options() {
+export default function AdminOptions() {
   //MODAL
   const [info, setInfo] = useState("");
   const [show, setModalShow] = useState(false);
@@ -57,7 +57,15 @@ export default function Options() {
     };
     console.log(setOptions);
     axios
-      .put("https://e-commercemss.azurewebsites.net/api/siteoption", setOptions)
+      .put(
+        "https://e-commercemss.azurewebsites.net/api/siteoption",
+        setOptions ,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("user_token")}`,
+          },
+        }
+      )
       .then((response) => {
         setInfo("Ayarlar başarıyla güncellendi");
         setVariant("success");
@@ -76,9 +84,6 @@ export default function Options() {
 
   return (
     <>
-      <p className="display-6 text-center mb-4 border-bottom pb-4">
-        Site Ayarları
-      </p>
       <div className="row">
         <Alert show={show} variant={variant}>
           <Alert.Heading>{info}</Alert.Heading>
@@ -92,7 +97,7 @@ export default function Options() {
           <div className="d-flex justify-content-between">
             <p className="mb-4 fs-4 fw-semibold text-muted">Site Ayarları</p>
             <button
-              className="btn btn-light border px-5 rounded-3"
+              className="btn btn-light border px-5 rounded-3 fw-semibold"
               onClick={handleSubmit}
             >
               Kaydet
