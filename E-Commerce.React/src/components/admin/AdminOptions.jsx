@@ -4,7 +4,7 @@ import Button from "react-bootstrap/Button";
 import { generalStore } from "../../store/generalStore";
 import { useEffect, useState } from "react";
 
-export default function Options() {
+export default function AdminOptions() {
   //MODAL
   const [info, setInfo] = useState("");
   const [show, setModalShow] = useState(false);
@@ -57,7 +57,15 @@ export default function Options() {
     };
     console.log(setOptions);
     axios
-      .put("https://e-commercemss.azurewebsites.net/api/siteoption", setOptions)
+      .put(
+        "https://e-commercemss.azurewebsites.net/api/siteoption",
+        setOptions ,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("user_token")}`,
+          },
+        }
+      )
       .then((response) => {
         setInfo("Ayarlar başarıyla güncellendi");
         setVariant("success");

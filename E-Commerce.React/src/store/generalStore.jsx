@@ -17,7 +17,7 @@ export const generalStore = create((set) => ({
       const response = await axios.get(
         "https://e-commercemss.azurewebsites.net/api/Categories"
       );
-      set({ categories: response.data});
+      set({ categories: response.data });
     } catch (error) {
       console.error(error);
       throw error;
@@ -28,7 +28,7 @@ export const generalStore = create((set) => ({
       const response = await axios.get(
         "https://e-commercemss.azurewebsites.net/api/siteoption"
       );
-      set({ options: response.data});
+      set({ options: response.data });
       loaderStore.getState().setLoader(false);
       return response.data;
     } catch (error) {
