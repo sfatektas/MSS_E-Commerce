@@ -35,7 +35,7 @@ export default function Loader(props) {
           </path>
         </svg>
       </div>
-      <div className="ms-3 text-white fs-4 fw-light">Loading...</div>
+      <div className="ms-3 text-white fs-4 fw-light">Sayfa yükleniyor...</div>
     </div>
   );
 }

@@ -5,7 +5,7 @@ import Modal from "react-bootstrap/Modal";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-export default function Product() {
+export default function AdminProducts() {
   //Form Listelemeleri
   const [productList, setProductList] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -19,7 +19,11 @@ export default function Product() {
 
   useEffect(() => {
     axios
-      .get("https://e-commercemss.azurewebsites.net/api/Products")
+      .get("https://e-commercemss.azurewebsites.net/api/Products", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("user_token")}`,
+        },
+      })
       .then((response) => {
         setProductList(response.data);
       })
@@ -30,7 +34,11 @@ export default function Product() {
 
   useEffect(() => {
     axios
-      .get("https://e-commercemss.azurewebsites.net/api/Categories")
+      .get("https://e-commercemss.azurewebsites.net/api/Categories", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("user_token")}`,
+        },
+      })
       .then((response) => {
         setCategories(response.data);
       })
@@ -41,7 +49,11 @@ export default function Product() {
 
   useEffect(() => {
     axios
-      .get("https://e-commercemss.azurewebsites.net/api/Brands")
+      .get("https://e-commercemss.azurewebsites.net/api/Brands", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("user_token")}`,
+        },
+      })
       .then(({ data }) => setBrands(data))
       .catch((error) => {
         console.log(error.response.data);
@@ -50,7 +62,11 @@ export default function Product() {
 
   useEffect(() => {
     axios
-      .get("https://e-commercemss.azurewebsites.net/api/sizetypes")
+      .get("https://e-commercemss.azurewebsites.net/api/sizetypes", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("user_token")}`,
+        },
+      })
       .then((response) => {
         setSizeTypes(response.data);
       })
@@ -63,7 +79,12 @@ export default function Product() {
     if (window.confirm("Bu ürünü silmek istediğinize emin misiniz?")) {
       axios
         .delete(
-          `https://e-commercemss.azurewebsites.net/api/Products/${productId}`
+          `https://e-commercemss.azurewebsites.net/api/Products/${productId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("user_token")}`,
+            },
+          }
         )
         .then((response) => {
           setInfo("Ürün başarıyla silindi");
@@ -106,6 +127,7 @@ export default function Product() {
           createProduct,
           {
             headers: {
+              Authorization: `Bearer ${localStorage.getItem("user_token")}`,
               "Content-Type": "multipart/form-data",
             },
           }
@@ -122,6 +144,7 @@ export default function Product() {
           setInfo(error.response.data.Error);
           setVariant("danger");
           setInfoModal(true);
+          setProductAddModal(false);
           console.log(error.response.data);
         });
     }
@@ -231,7 +254,6 @@ export default function Product() {
 
   return (
     <>
-
       <div className="row">
         <Alert show={infoModal} variant={variant}>
           <Alert.Heading>{info}</Alert.Heading>

@@ -2,17 +2,26 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import Modal from "react-bootstrap/Modal";
+import Alert from "react-bootstrap/Alert";
+import Button from "react-bootstrap/Button";
 
-export default function UserManagement() {
+export default function AdminUserManagement() {
   const [management, setManagement] = useState("customers");
   const [customer, setCustomer] = useState([]);
   const [supplier, setSupplier] = useState([]);
-  const [addSupplier, setAddSupplier] = useState("");
+  const [info, setInfo] = useState("");
+  const [infoModal, setInfoModal] = useState(false);
+  const [variant, setVariant] = useState("");
 
   useEffect(() => {
     axios
       .get(
-        "https://e-commercemss.azurewebsites.net/api/users?usertype=customer"
+        "https://e-commercemss.azurewebsites.net/api/users?usertype=customer",
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("user_token")}`,
+          },
+        }
       )
       .then((response) => {
         setCustomer(response.data);
@@ -25,7 +34,12 @@ export default function UserManagement() {
   useEffect(() => {
     axios
       .get(
-        "https://e-commercemss.azurewebsites.net/api/users?usertype=supplier"
+        "https://e-commercemss.azurewebsites.net/api/users?usertype=supplier",
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("user_token")}`,
+          },
+        }
       )
       .then((response) => {
         setSupplier(response.data);
@@ -48,7 +62,12 @@ export default function UserManagement() {
           .put(
             `https://e-commercemss.azurewebsites.net/api/users/${id}?status=${
               status ? false : true
-            }`
+            }`,
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("user_token")}`,
+              },
+            }
           )
           .then((response) => {
             window.location.reload(false);
@@ -108,7 +127,7 @@ export default function UserManagement() {
   }
 
   function Suppliers() {
-    const [modalShow, setModalShow] = useState(false);
+    const [userAddModal, setUserAddModal] = useState(false);
     function handleCheckbox(id, status, name) {
       if (
         window.confirm(
@@ -160,21 +179,28 @@ export default function UserManagement() {
         };
         axios
           .post(
-            "https://e-commercemss.azurewebsites.net/api/supplier",
+            "https://e-commercemss.azurewebsites.net/api/suppliers",
             createSupplier,
             {
               headers: {
+                Authorization: `Bearer ${localStorage.getItem("user_token")}`,
                 "Content-Type": "multipart/form-data",
               },
             }
           )
           .then((response) => {
-            console.log(response);
+            setInfo("Satıcı Başarıyla Eklendi");
+            setVariant("success");
+            setInfoModal(true);
+
             setTimeout(() => {
               window.location.reload(false);
             }, 2000);
           })
           .catch((error) => {
+            setInfo(error.response.data.Error);
+            setVariant("danger");
+            setInfoModal(true);
             console.log(error);
           });
       }
@@ -296,7 +322,7 @@ export default function UserManagement() {
             <p className="mb-4 fs-4 fw-semibold text-muted">Satıcılar</p>
             <button
               className="btn btn-light rounded-3 border px-5 fw-semibold"
-              onClick={() => setModalShow(true)}
+              onClick={() => setUserAddModal(true)}
             >
               Satıcı Ekle
             </button>
@@ -340,8 +366,8 @@ export default function UserManagement() {
           </div>
 
           <AddSuplierModal
-            show={modalShow}
-            onHide={() => setModalShow(false)}
+            show={userAddModal}
+            onHide={() => setUserAddModal(false)}
           />
         </div>
       </div>
@@ -350,8 +376,16 @@ export default function UserManagement() {
 
   return (
     <>
-    <p className="mb-4 fs-4 fw-semibold text-muted">Kullanıcı Yönetimi</p>
-      <div className="d-flex w-100 shadow-sm rounded-3 mb-3 border">
+      <Alert show={infoModal} variant={variant}>
+        <Alert.Heading>{info}</Alert.Heading>
+        <div className="d-flex justify-content-end">
+          <Button onClick={() => setInfoModal(false)} variant={variant}>
+            Kapat
+          </Button>
+        </div>
+      </Alert>
+      <p className="mb-4 fs-4 fw-semibold text-muted">Kullanıcı Yönetimi</p>
+      <div className="d-flex w-100 rounded-3 mb-3 border">
         <button
           className="btn btn-light col-6 rounded-end rounded-3 fw-semibold py-3"
           onClick={() => setManagement("customers")}

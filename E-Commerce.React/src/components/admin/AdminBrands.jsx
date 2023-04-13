@@ -5,7 +5,7 @@ import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
-export default function Brands() {
+export default function AdminBrands() {
   const [brands, setBrands] = useState([]);
   const [info, setInfo] = useState("");
   const [infoModal, setInfoModal] = useState(false);
@@ -14,7 +14,11 @@ export default function Brands() {
 
   useEffect(() => {
     axios
-      .get("https://e-commercemss.azurewebsites.net/api/Brands")
+      .get("https://e-commercemss.azurewebsites.net/api/Brands", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("user_token")}`,
+        },
+      })
       .then((response) => {
         setBrands(response.data);
       })
@@ -26,7 +30,11 @@ export default function Brands() {
   function deleteBrand(brand) {
     if (window.confirm("Bu markayı silmek istediğinize emin misiniz?")) {
       axios
-        .delete(`https://e-commercemss.azurewebsites.net/api/brands/${brand}`)
+        .delete(`https://e-commercemss.azurewebsites.net/api/brands/${brand}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("user_token")}`,
+          },
+        })
         .then((response) => {
           console.log(response);
           setInfo("Marka başarıyla silindi");
@@ -59,6 +67,7 @@ export default function Brands() {
           brandCreateModel,
           {
             headers: {
+              Authorization: `Bearer ${localStorage.getItem("user_token")}`,
               "Content-Type": "multipart/form-data",
             },
           }
@@ -75,6 +84,7 @@ export default function Brands() {
           setInfo(error.response.data.Error);
           setVariant("danger");
           setInfoModal(true);
+          setBrandAddModal(false);
           console.log(error.response.data);
         });
     }
@@ -187,10 +197,7 @@ export default function Brands() {
             </tbody>
           </Table>
         </div>
-        <AddBrand
-          show={brandAddModal}
-          onHide={() => setBrandAddModal(false)}
-        />
+        <AddBrand show={brandAddModal} onHide={() => setBrandAddModal(false)} />
       </div>
     </>
   );
