@@ -75,12 +75,20 @@ namespace E_Commerce.Business.Services
         }
         public static string GetUserNameFromToken(string token)
         {
-            var parts = token.Split('.');
-            var decoded = Convert.FromBase64String(parts[1]);
-            var part = Encoding.UTF8.GetString(decoded);
-            var jwt = JObject.Parse(part);
-            var username = jwt["nameid"].Value<string>();
-            return username;
+            try
+            {
+                var parts = token.Split('.');
+                var decoded = Convert.FromBase64String(parts[1]);
+                var part = Encoding.UTF8.GetString(decoded);
+                var jwt = JObject.Parse(part);
+                var username = jwt["nameid"].Value<string>();
+                return username;
+            }
+            catch (Exception) // token içerisindeki kullanıcı adı değeri yok ise boş dönsün
+            {
+                return "";
+            }
+
         }
     }
 }

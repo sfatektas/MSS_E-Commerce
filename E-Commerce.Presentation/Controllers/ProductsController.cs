@@ -8,6 +8,7 @@ using E_Commerce.Dtos.ProductDtos;
 using E_Commerce.Entities.RequestFeatures;
 using E_Commerce.Presentation.ActionFilters;
 using E_Commerce.Presentation.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -34,7 +35,7 @@ namespace E_Commerce.Presentation.Controllers
             _storage = storage;
             _mapper = mapper;
         }
-
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetProducts()
         {

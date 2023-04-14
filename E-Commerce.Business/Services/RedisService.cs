@@ -19,14 +19,14 @@ namespace E_Commerce.Business.Services
         {
             var options = new ConfigurationOptions();
             //this.connectionMultiplexer = ConnectionMultiplexer.Connect(configuration.GetConnectionString("RedisConnection"));   
-            this.connectionMultiplexer = ConnectionMultiplexer.Connect(configuration.GetConnectionString("RedisRemoteConnection"));
+            this.connectionMultiplexer = ConnectionMultiplexer.Connect(configuration.GetConnectionString("RedisConnection"));
             
             _database = connectionMultiplexer.GetDatabase();
         }
-        public void Add(string key, object value, int duration)
+        public async Task Add(string key, object value, int duration)
         {
             var result = JsonConvert.SerializeObject(value);
-            _database.StringSet(key, result, TimeSpan.FromMinutes(duration));
+            await _database.StringSetAsync(key, result, TimeSpan.FromMinutes(duration));
         }
         public async Task<T> Get<T>(string key)
         {
@@ -36,6 +36,11 @@ namespace E_Commerce.Business.Services
         public async Task<bool> Remove(string key)
         {
             return await _database.KeyDeleteAsync(key);
+        }
+        public async Task<bool> IsExist(string key)
+        {
+            RedisValue value = await _database.StringGetAsync(key);
+            return value.HasValue ? true : false;   
         }
     }
 }
