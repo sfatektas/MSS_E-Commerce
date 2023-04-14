@@ -51,6 +51,7 @@ namespace E_Commerce.Presentation.Middlewares
                         return;
                          // bu senaryoya göre aynı anda 2 cihazda oturum açılamaz
                     }
+                    await _next.Invoke(context);
                 }
                 else if (await redisService.IsExist($"token:{username}:deactive"))
                 {
@@ -64,6 +65,8 @@ namespace E_Commerce.Presentation.Middlewares
                         }.ToString(), (int)HttpStatusCode.Unauthorized, "application/json");
                         return;
                     }
+                    await _next.Invoke(context);
+
                 }
                 else
                 {
@@ -75,7 +78,6 @@ namespace E_Commerce.Presentation.Middlewares
                     return;
                 }
             }
-            await _next.Invoke(context);
         }
     }
 }

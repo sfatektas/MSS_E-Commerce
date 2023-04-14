@@ -19,7 +19,7 @@ namespace E_Commerce.Business.Services
         {
             var options = new ConfigurationOptions();
             //this.connectionMultiplexer = ConnectionMultiplexer.Connect(configuration.GetConnectionString("RedisConnection"));   
-            this.connectionMultiplexer = ConnectionMultiplexer.Connect(configuration.GetConnectionString("RedisConnection"));
+            this.connectionMultiplexer = ConnectionMultiplexer.Connect(configuration.GetConnectionString("RedisRemoteConnection"));
             
             _database = connectionMultiplexer.GetDatabase();
         }
