@@ -15,7 +15,6 @@ import Category from "./pages/Category";
 import Favorites from "./pages/Favorites";
 import Product from "./pages/Product";
 import Cart from "./pages/Cart";
-import Campaign from "./pages/Campaign";
 import { ProtectedRoute } from "./components/common/ProtectedRoute";
 import { loaderStore } from "./store/generalStore";
 import Loader from "./components/common/Loader";
@@ -55,7 +54,7 @@ function App() {
               }
             />
             <Route path="/category/:defination" element={<Category />} />
-            <Route path="/campaign" element={<Campaign />} />
+            <Route path="/category/:defination/:name" element={<Product />} />
             <Route path="*" element={<NotFound />} />
             <Route path="/forbidden" element={<Forbidden />} />
             <Route
@@ -67,7 +66,6 @@ function App() {
               }
             />
             <Route path="/favorites" element={<Favorites />} />
-            <Route path="/product/:name" element={<Product />} />
           </Routes>
           <Footer />
         </>

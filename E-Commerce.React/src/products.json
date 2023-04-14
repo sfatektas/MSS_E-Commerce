@@ -1,0 +1,142 @@
+[
+    {
+        "id": 1,
+        "category": "Ayakkabı",
+        "title": "Ayakkabı Ürün 1",
+        "price": 180.22,
+        "image": "https://floimages.mncdn.com/media/catalog/product/22-09/29/tb107-0_109_2.jpg"
+    },
+    {
+        "id": 2,
+        "category": "Ayakkabı",
+        "title": "Ayakkabı Ürün 2",
+        "price": 180.22,
+        "image": "https://floimages.mncdn.com/media/catalog/product/22-09/29/tb107-0_109_2.jpg"
+    },
+    {
+        "id": 3,
+        "category": "Ayakkabı",
+        "title": "Ayakkabı Ürün 3",
+        "price": 180.22,
+        "image": "https://floimages.mncdn.com/media/catalog/product/22-09/29/tb107-0_109_2.jpg"
+    },
+    {
+        "id": 4,
+        "category": "Ayakkabı",
+        "title": "Ayakkabı Ürün 4",
+        "price": 180.22,
+        "image": "https://floimages.mncdn.com/media/catalog/product/22-09/29/tb107-0_109_2.jpg"
+    },
+    {
+        "id": 5,
+        "category": "TShirt",
+        "title": "TShirt Ürün 1",
+        "price": 180.22,
+        "image": "https://cdn.tommylife.com.tr/p-cagla-baskili-yazi-nakisli-o-yaka-erkek-oversize-t-shirt-88105-t-shirt-tommylife-t12er-88105-165496-31-O.jpg"
+    },
+    {
+        "id": 6,
+        "category": "TShirt",
+        "title": "TShirt Ürün 2",
+        "price": 180.22,
+        "image": "https://cdn.tommylife.com.tr/p-cagla-baskili-yazi-nakisli-o-yaka-erkek-oversize-t-shirt-88105-t-shirt-tommylife-t12er-88105-165496-31-O.jpg"
+    },
+    {
+        "id": 7,
+        "category": "TShirt",
+        "title": "TShirt Ürün 3",
+        "price": 180.22,
+        "image": "https://cdn.tommylife.com.tr/p-cagla-baskili-yazi-nakisli-o-yaka-erkek-oversize-t-shirt-88105-t-shirt-tommylife-t12er-88105-165496-31-O.jpg"
+    },
+    {
+        "id": 8,
+        "category": "TShirt",
+        "title": "TShirt Ürün 4",
+        "price": 180.22,
+        "image": "https://cdn.tommylife.com.tr/p-cagla-baskili-yazi-nakisli-o-yaka-erkek-oversize-t-shirt-88105-t-shirt-tommylife-t12er-88105-165496-31-O.jpg"
+    },
+    {
+        "id": 9,
+        "category": "Bluz",
+        "title": "Bluz Ürün 1",
+        "price": 180.22,
+        "image": "https://cdn.sorsware.com/oxxo/ContentImages/Product/22y/22YOX-POPYAKTOP/balon-kollu-crop-bluz_biscuit-kahverengi_1_detay.jpg"
+    },
+    {
+        "id": 10,
+        "category": "Bluz",
+        "title": "Bluz Ürün 2",
+        "price": 180.22,
+        "image": "https://cdn.sorsware.com/oxxo/ContentImages/Product/22y/22YOX-POPYAKTOP/balon-kollu-crop-bluz_biscuit-kahverengi_1_detay.jpg"
+    },
+    {
+        "id": 11,
+        "category": "Bluz",
+        "title": "Bluz Ürün 3",
+        "price": 180.22,
+        "image": "https://cdn.sorsware.com/oxxo/ContentImages/Product/22y/22YOX-POPYAKTOP/balon-kollu-crop-bluz_biscuit-kahverengi_1_detay.jpg"
+    },
+    {
+        "id": 12,
+        "category": "Bluz",
+        "title": "Bluz Ürün 4",
+        "price": 180.22,
+        "image": "https://cdn.sorsware.com/oxxo/ContentImages/Product/22y/22YOX-POPYAKTOP/balon-kollu-crop-bluz_biscuit-kahverengi_1_detay.jpg"
+    },
+    {
+        "id": 13,
+        "category": "Gömlek",
+        "title": "Gömlek Ürün 1",
+        "price": 180.22,
+        "image": "https://cdn.ramsey.com.tr/10129192-630-casual-gomlek-ramsey-314683-15-B.jpg"
+    },
+    {
+        "id": 14,
+        "category": "Gömlek",
+        "title": "Gömlek Ürün 2",
+        "price": 180.22,
+        "image": "https://cdn.ramsey.com.tr/10129192-630-casual-gomlek-ramsey-314683-15-B.jpg"
+    },
+    {
+        "id": 15,
+        "category": "Gömlek",
+        "title": "Gömlek Ürün 3",
+        "price": 180.22,
+        "image": "https://cdn.ramsey.com.tr/10129192-630-casual-gomlek-ramsey-314683-15-B.jpg"
+    },
+    {
+        "id": 16,
+        "category": "Gömlek",
+        "title": "Gömlek Ürün 4",
+        "price": 180.22,
+        "image": "https://cdn.ramsey.com.tr/10129192-630-casual-gomlek-ramsey-314683-15-B.jpg"
+    },
+    {
+        "id": 17,
+        "category": "Pantalon",
+        "title": "Pantalon Ürün 1",
+        "price": 180.22,
+        "image": "https://cdn3.sorsware.com/addax/ContentImages/Product/2022-yaz-sezonu/ADX-00028570/cok-cepli-pantolon-pn5002-l10_adx-00028570_tas-bej_6_buyuk.jpg"
+    },
+    {
+        "id": 18,
+        "category": "Pantalon",
+        "title": "Pantalon Ürün 2",
+        "price": 180.22,
+        "image": "https://cdn3.sorsware.com/addax/ContentImages/Product/2022-yaz-sezonu/ADX-00028570/cok-cepli-pantolon-pn5002-l10_adx-00028570_tas-bej_6_buyuk.jpg"
+    },
+    {
+        "id": 19,
+        "category": "Pantalon",
+        "title": "Pantalon Ürün 3",
+        "price": 180.22,
+        "image": "https://cdn3.sorsware.com/addax/ContentImages/Product/2022-yaz-sezonu/ADX-00028570/cok-cepli-pantolon-pn5002-l10_adx-00028570_tas-bej_6_buyuk.jpg"
+    },
+    {
+        "id": 20,
+        "category": "Pantalon",
+        "title": "Pantalon Ürün 4",
+        "price": 180.22,
+        "image": "https://cdn3.sorsware.com/addax/ContentImages/Product/2022-yaz-sezonu/ADX-00028570/cok-cepli-pantolon-pn5002-l10_adx-00028570_tas-bej_6_buyuk.jpg"
+    }
+]
