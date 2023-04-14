@@ -13,6 +13,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using NeoSmart.Utils;
 
 namespace E_Commerce.Business.Services
 {
@@ -78,14 +79,16 @@ namespace E_Commerce.Business.Services
             try
             {
                 var parts = token.Split('.');
-                var decoded = Convert.FromBase64String(parts[1]);
+                var decoded = UrlBase64.Decode(parts[1]); // Anlamsız decode probleminden dolayı 2 saat harcandı.
+                //var decoded = Convert.FromBase64String(parts[1]);
                 var part = Encoding.UTF8.GetString(decoded);
                 var jwt = JObject.Parse(part);
                 var username = jwt["nameid"].Value<string>();
                 return username;
             }
-            catch (Exception) // token içerisindeki kullanıcı adı değeri yok ise boş dönsün
+            catch (Exception e) // token içerisindeki kullanıcı adı değeri yok ise boş dönsün
             {
+                throw new Exception("Decode Hatası");
                 return "";
             }
 

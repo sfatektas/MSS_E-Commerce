@@ -65,12 +65,12 @@ namespace E_Commerce.Business.Services
             List<Claim> claims = new List<Claim>()
             {
                 new Claim("Id",$"{user.Id}"),
-                new Claim(ClaimTypes.NameIdentifier , user.UserName),
-                new Claim(ClaimTypes.Email , user.Email),
+                new Claim(ClaimTypes.NameIdentifier , user.UserName.ToLower()),
+                new Claim(ClaimTypes.Email , user.Email.ToLower()),
             };
             foreach (var role in roles)
             {
-                claims.Add(new Claim(ClaimTypes.Role , role.ToString()));
+                claims.Add(new Claim(ClaimTypes.Role , role.ToString().ToLower()));
             }
             return claims;
         }

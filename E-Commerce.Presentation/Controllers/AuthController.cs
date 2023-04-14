@@ -41,7 +41,7 @@ namespace E_Commerce.Presentation.Controllers
         public async Task<IActionResult> Login([FromBody] UserLoginModel model)
         {
             var tokenModel = await _authenticationService.CheckLogin(model);
-            await _redisService.Add($"token:{model.UserName}", tokenModel, int.Parse(_configuration.GetSection("JWTTokenOptions")["ExpireMinitue"]));
+            await _redisService.Add($"token:{model.UserName}", tokenModel, int.Parse(_configuration.GetSection("JWTTokenOptions")["ExpireMinitue"])); // Büyük harfe çeviriyorum çünki base64stringe çeviriken anlamsız hata verebiliyor.
             return Ok(tokenModel);
         }
         [HttpGet("[action]/{token}")]
