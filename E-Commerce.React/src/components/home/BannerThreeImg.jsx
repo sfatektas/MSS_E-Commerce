@@ -10,49 +10,40 @@ export default function BannerThreeImg() {
           <div className="banner-item">
             <img className="banner-image w-100" src={bannerImage} alt="" />
             <div className="banner-content text-center">
-              <p className="campaign p-1 fw-bold">ONLY THIS WEEK</p>
-              <p className="title display-3 fw-bold text-white">BEST SELLING</p>
+              <p className="campaign p-1 fw-bold">BU HAFTAYA ÖZEL</p>
+              <p className="title display-3 fw-bold text-white">KAMPANYA</p>
               <p className="subtitle text-white fw-light mb-4 fs-4">
-                get the discount of 25%
+                2 Al 1 Öde!
               </p>
-              <a href="/campaign" className="btn btn-light rounded-3">
-              Kampanyalar
-              </a>
             </div>
           </div>
           <div>
             <div className="banner-item">
               <img className="banner-image w-100" src={bannerImage2} alt="" />
               <div className="banner-content align-items-end pe-5">
-                <p className="campaign bg-primary d-inline-flex text-white p-1 fw-bold mb-2">
-                  50% OFF
+                <p className="campaign bg-primary d-inline-flex text-white p-1 fw-bold mb-2 text-uppercase">
+                  25% İndirim
                 </p>
-                <p className="title fs-3 fw-bold text-white">
-                  PHANTOM VISION ACADEMY
+                <p className="title fs-3 fw-bold text-white text-uppercase">
+                  CASUAL ÜRÜNLERDE İNDİRİM
                 </p>
                 <p className="subtitle text-white fw-light mb-4 fs-6">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit.{" "}
                 </p>
-                <a href="/campaign" className="btn btn-light rounded-3">
-                Kampanyalar
-                </a>
               </div>
             </div>
             <div className="banner-item">
               <img className="banner-image w-100" src={bannerImage3} alt="" />
               <div className="banner-content align-items-start ps-5">
-                <p className="campaign bg-primary d-inline-flex text-white p-1 fw-bold mb-2">
-                  50% OFF
+                <p className="campaign bg-primary d-inline-flex text-white p-1 fw-bold mb-2 text-uppercase">
+                  10% İndirim
                 </p>
-                <p className="title fs-3 fw-bold text-white">
-                  ODYSSEY REACT FLYKNIT 2
+                <p className="title fs-3 fw-bold text-white text-uppercase">
+                  İLK ALIMA ÖZEL
                 </p>
                 <p className="subtitle text-white fw-light mb-4 fs-6">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                 </p>
-                <a href="/campaign" className="btn btn-light rounded-3">
-                  Kampanyalar
-                </a>
               </div>
             </div>
           </div>
