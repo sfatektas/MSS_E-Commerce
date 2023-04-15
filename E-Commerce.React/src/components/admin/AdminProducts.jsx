@@ -28,7 +28,7 @@ export default function AdminProducts() {
         setProductList(response.data);
       })
       .catch((error) => {
-        console.log(error.response.data);
+        console.log(error);
       });
   }, []);
 

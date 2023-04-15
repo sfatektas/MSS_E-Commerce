@@ -6,7 +6,7 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import { authStore } from "../../store/authStore";
 import { generalStore, cartSidebarStore } from "../../store/generalStore";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CartSidebar from "../home/CartSidebar";
 import { Base64 } from "js-base64";

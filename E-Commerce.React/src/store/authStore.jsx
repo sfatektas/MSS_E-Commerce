@@ -44,7 +44,7 @@ export const authStore = create((set) => ({
       //Token localstorage'de kullanıcı eliyle bozulduğu zaman API'den hata dönüyor.
       //Hata olsun ya da olmasın veriler localstorage'den siliniyor.
       localStorage.removeItem("user_token");
-      console.log(error.code);
+      console.log(error);
       set({ logoutStatus: error.code });
     }
   },

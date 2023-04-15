@@ -13,7 +13,7 @@ import Account from "./pages/Account";
 import Footer from "./components/common/Footer";
 import Category from "./pages/Category";
 import Favorites from "./pages/Favorites";
-import Product from "./pages/Product";
+import Product from "./pages/Product"
 import Cart from "./pages/Cart";
 import { ProtectedRoute } from "./components/common/ProtectedRoute";
 import { loaderStore } from "./store/generalStore";
