@@ -41,7 +41,7 @@ namespace E_Commerce.Presentation.Controllers
         public async Task<IActionResult> Login([FromBody] UserLoginModel model)
         {
             var tokenModel = await _authenticationService.CheckLogin(model);
-            _redisService.Add($"token:{model.UserName}", tokenModel, int.Parse(_configuration.GetSection("JWTTokenOptions")["ExpireMinitue"]));
+            await _redisService.Add($"token:{model.UserName}", tokenModel, int.Parse(_configuration.GetSection("JWTTokenOptions")["ExpireMinitue"])); // Büyük harfe çeviriyorum çünki base64stringe çeviriken anlamsız hata verebiliyor.
             return Ok(tokenModel);
         }
         [HttpGet("[action]/{token}")]
@@ -53,6 +53,7 @@ namespace E_Commerce.Presentation.Controllers
             {
                 string username = TokenManager.GetUserNameFromToken(token);
                 var isComplated = await _redisService.Remove($"token:{username}");
+                await _redisService.Add($"token:{username}:deactive", token, 60*24);
                 if(isComplated)
                     return StatusCode(204);
                 return BadRequest("Token silinemedi veya bulunamadı.");

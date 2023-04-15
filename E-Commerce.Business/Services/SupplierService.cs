@@ -38,7 +38,7 @@ namespace E_Commerce.Business.Services
                 var result = await _userManager.CreateAsync(_mapper.Map<Supplier>(dto),dto.Password);
                 if (!result.Succeeded) 
                     throw new SupplierBadRequestException("Satıcı eklenirken veritabanı kaynaklı bir sorun oluştu.");
-                var roleResult = await _userManager.AddToRoleAsync(entity, "Supplier"); // todo role will add.
+                var roleResult = await _userManager.AddToRoleAsync(await _userManager.FindByEmailAsync(entity.Email), "Supplier"); // todo role will add.
             }
             else
                 throw new SupplierBadRequestException();

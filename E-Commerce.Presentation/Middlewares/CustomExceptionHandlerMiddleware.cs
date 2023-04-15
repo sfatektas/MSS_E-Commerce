@@ -1,6 +1,7 @@
 ﻿using E_Commerce.Business.Interfaces;
 using E_Commerce.Entities.Exceptions;
 using E_Commerce.Entities.Exceptions.Abstract;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore.Query;
 using System;
@@ -12,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.Presentation.Middlewares
 {
+    [EnableCors("DefaultPolicy")]
     public class CustomExceptionHandlerMiddleware 
     {
         private readonly ILoggerService _loggerService;
