@@ -7,7 +7,8 @@ import { Base64 } from "js-base64";
 import { Navigate } from "react-router-dom";
 
 export default function Account() {
-  const token = localStorage.getItem("user_token");
+  try{
+    const token = localStorage.getItem("user_token");
   const startIndex = token.indexOf(".");
   const endIndex = token.lastIndexOf(".");
   const tokenFiltered = token.slice(startIndex, endIndex + 1);
@@ -15,13 +16,16 @@ export default function Account() {
   const tokenPayload = Base64.decode(trimmedPayload);
   let userRole = JSON.parse(tokenPayload).role;
 
-  if (userRole === "Supplier") {
+  if (userRole === "supplier") {
     return <SupplierAccount />;
-  } else if (userRole === "Customer") {
+  } else if (userRole === "customer") {
     return <CustomerAccount />;
-  } else if(userRole==="Admin"){
+  } else if(userRole==="admin"){
     return <Navigate to="/admin" />;
   } else{
     return <Navigate to="/login"/>
+  }
+  }catch{
+    return <Navigate to="/forbidden" />;
   }
 }
