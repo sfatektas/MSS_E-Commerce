@@ -1,5 +1,8 @@
-﻿using E_Commerce.Business.Interfaces;
+﻿using AutoMapper;
+using E_Commerce.Business.Interfaces;
 using E_Commerce.Common.Interfaces;
+using E_Commerce.Dtos.SliderDtos;
+using E_Commerce.Presentation.ActionFilters;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -17,10 +20,11 @@ namespace E_Commerce.Presentation.Controllers
     {
 
         private readonly ISliderService _sliderService;
-
-        public SliderController(ISliderService sliderService)
+        private readonly IMapper _mapper;
+        public SliderController(ISliderService sliderService, IMapper mapper)
         {
             _sliderService = sliderService;
+            _mapper = mapper;
         }
 
         [HttpGet]
