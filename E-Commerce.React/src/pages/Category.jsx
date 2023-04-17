@@ -170,7 +170,7 @@ export default function Category(props) {
             <p className="showcase-price text-primary fw-bold mb-3">
               ${props.price}
             </p>
-            <a className="btn w-100 rounded-3" href={`/product/${props.title}`}>
+            <a className="btn w-100 rounded-3" href={`/category/${props.category}/${props.title}`}>
               Satın Al
             </a>
           </div>
