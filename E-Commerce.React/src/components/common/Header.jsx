@@ -252,9 +252,9 @@ function Header() {
             </Offcanvas.Body>
           </Navbar.Offcanvas>
           <Nav className="d-flex flex-row col-lg-3 justify-content-end">
-          <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-lg`} />
+          <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-lg`} className="mx-3 mx-lg-0"/>
             {localStorage.getItem("user_token") ? (
-              <Nav.Link onClick={handleLogout}>
+              <Nav.Link onClick={handleLogout} className="mx-2 mx-lg-0">
                 <div className="logout mx-3">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -271,6 +271,7 @@ function Header() {
             ) : null}
             <Nav.Link
               href={localStorage.getItem("user_token") ? "/account" : "/login"}
+              className="mx-2 mx-lg-0"
             >
               <div className="user mx-3">
                 <svg
@@ -286,7 +287,7 @@ function Header() {
                 </svg>
               </div>
             </Nav.Link>
-            <Nav.Link href="/favorites">
+            <Nav.Link href="/favorites" className="mx-2 mx-lg-0">
               <div className="favorites mx-3">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -315,6 +316,7 @@ function Header() {
               onClick={() => {
                 setSidebarActive(true);
               }}
+              className="mx-2 mx-lg-0"
             >
               {" "}
               <div className="cart mx-3">

@@ -6,7 +6,7 @@ export default function BannerTwoImg() {
     <>
       <div className="banner-row d-flex mb-5">
         <div className="banner d-flex flex-md-row flex-column w-100 align-items-center justify-content-center margin-top-100">
-          <div className="banner-item h-100 rounded-3 rounded-end">
+          <div className="banner-item h-100">
             <img className="banner-image w-100" src={bannerImage} alt="" />
             <div className="banner-content align-items-start ps-5">
               <p className="title display-4 fw-bold text-white text-uppercase">
@@ -20,7 +20,7 @@ export default function BannerTwoImg() {
               </a>
             </div>
           </div>
-          <div className="banner-item h-100 rounded-3 rounded-start">
+          <div className="banner-item h-100">
             <img className="banner-image w-100" src={bannerImage2} alt="" />
             <div className="banner-content align-items-start ps-5">
               <span className="title fs-3 fw-bold text-white text-uppercase">
