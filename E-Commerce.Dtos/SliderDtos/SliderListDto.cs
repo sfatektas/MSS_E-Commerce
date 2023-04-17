@@ -13,6 +13,7 @@ namespace E_Commerce.Dtos.SliderDtos
     {
         public int Id { get; init; }
         public string Name { get; init; }
+        public bool isActive { get; set; }
         public List<SliderItemListDto> SliderItems { get; set; }
     }
 }

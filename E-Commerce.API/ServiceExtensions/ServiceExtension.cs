@@ -98,6 +98,7 @@ namespace E_Commerce.API.ServiceExtensions
             {
                 opt.AddProfiles(profileList);
                 opt.CreateMap<BrandCreateModel, BrandCreateDto>(); // UI mapping
+                opt.CreateMap<SliderItemCreateModel, SliderItemCreateDto>();
                 opt.CreateMap<ProductCreateModel, ProductCreateDto>();
                 opt.CreateMap<SupplierCreateModel, SupplierCreateDto>();
             });
@@ -125,10 +126,11 @@ namespace E_Commerce.API.ServiceExtensions
             services.AddTransient<IValidator<SiteOptionCreateDto>, SiteOptionCreateValidatior>();
             services.AddTransient<IValidator<UserLoginModel>, UserLoginModelValidator>();
             services.AddTransient<IValidator<BrandCreateModel>, BrandCreateModelValidator>();
+            services.AddTransient<IValidator<SliderItemCreateModel>, SliderItemCreateModelValidator>();
+            services.AddTransient<IValidator<SliderItemCreateDto>,SliderItemCreateDtoValidator>();
             services.AddTransient<IValidator<ProductCreateModel>, ProductCreateModelValidator>();
             services.AddTransient<IValidator<ProductCreateDto>, ProductCreateDtoValidator>();
             services.AddTransient<IValidator<SupplierCreateModel>,SupplierCreateModelValidator>();
-            services.AddTransient<IValidator<SliderItemCreateDto>,SliderItemCreateDtoValidator>();
             services.AddTransient<IValidator<SliderCreateDto>,SliderCreateDtoValidator>();
             services.AddTransient<IValidator<SupplierCreateModel>,SupplierCreateModelValidator>();
         }
@@ -179,6 +181,7 @@ namespace E_Commerce.API.ServiceExtensions
             services.AddScoped<ValidateFilterAttiribute<BrandCreateModel>>();
             services.AddScoped<ValidateFilterAttiribute<ProductCreateModel>>();
             services.AddScoped<ValidateFilterAttiribute<SupplierCreateModel>>();
+            services.AddScoped<ValidateFilterAttiribute<SliderItemCreateModel>>();
         }
         public static void ConfigureRedis(this IServiceCollection services, IConfiguration configuration)
         {
