@@ -94,7 +94,7 @@ export default function Showcase(props) {
         show={favoritesModal}
         onHide={() => setFavoritesModal(false)}
       />
-      <div className="showcase d-flex flex-column align-items-center shadow-sm p-0 my-3 rounded-3 w-100 overflow-hidden">
+      <div className="showcase d-flex flex-column align-items-center shadow-sm p-0 mb-3 rounded-3 w-100 overflow-hidden">
         <div className="showcase-image mb-3 d-flex align-items-center position-relative">
           <a href={`/category/${props.category}/${props.title}`}>
             <img

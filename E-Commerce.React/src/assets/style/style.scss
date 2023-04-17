@@ -815,6 +815,7 @@ body {
                 box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
             }
         }
+
         .active {
             border-radius: 10px;
             box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
@@ -832,29 +833,129 @@ body {
     }
 }
 
-.product-bottom{
-    .specs-header{
-        a{
-            border: $secondary 3px solid;
+.product-bottom {
+    .specs-header {
+        a {
+            border: $secondary 2px solid;
             border-radius: 10px;
-            &:hover{
+
+            &:hover {
                 color: #fff;
                 background-color: $secondary;
             }
         }
     }
-    .active{
+
+    .active {
         color: #fff;
         border: none;
         background-color: $secondary;
     }
-    .specs-content{
+
+    .specs-content {
         height: 400px;
-        .details{
+
+        div {
             color: #000;
             background-color: transparent;
         }
     }
 }
 
+.product-showcase {
+    position: relative;
+
+    .carousel-buttons {
+        z-index: 2;
+        position: absolute;
+        top: 50%;
+        width: 100%;
+
+        .prev {
+            position: absolute;
+            left: -100px;
+        }
+
+        .next {
+            position: absolute;
+            right: -100px;
+        }
+    }
+
+    .product-showcase-page {
+        flex-wrap: nowrap;
+        transition: all .5s ease-in-out;
+    }
+}
+
+
 //PRODUCTS
+
+//CATEGORY
+
+.filters {
+    font-size: 13px;
+
+    .price-min,
+    .price-max,
+    .category-search-box,
+    a {
+        height: 30px;
+        border: $secondary 1px solid;
+
+        &:hover {
+            &:hover {
+                svg {
+                    path {
+                        fill: #fff
+                    }
+                }
+            }
+        }
+    }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    input[type=checkbox] {
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+        accent-color: $primary;
+    }
+
+    .category-color {
+        .black {
+            width: 15px;
+            height: 15px;
+            border-radius: 100%;
+            background-color: #000;
+        }
+
+        .blue {
+            width: 15px;
+            height: 15px;
+            border-radius: 100%;
+            background-color: #003ce3;
+        }
+
+        .red {
+            width: 15px;
+            height: 15px;
+            border-radius: 100%;
+            background-color: #ea0000;
+        }
+
+        .yellow {
+            width: 15px;
+            height: 15px;
+            border-radius: 100%;
+            background-color: #e2ea00;
+        }
+    }
+}
+
+//CATEGORY
