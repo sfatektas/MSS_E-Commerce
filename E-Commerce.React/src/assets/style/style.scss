@@ -788,6 +788,74 @@ body {
 
 //PRODUCTS
 
+.product-left {
+    .big-image {
+        @include center;
+        max-width: 100%;
+        height: 615px;
+        overflow: hidden;
 
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+    }
+
+    .mini-images {
+        overflow: hidden;
+
+        img {
+            width: 75px;
+            border-radius: 10px;
+            object-fit: contain;
+            transition: $transition;
+
+            &:hover {
+                opacity: 75%;
+                box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+            }
+        }
+        .active {
+            border-radius: 10px;
+            box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+        }
+    }
+}
+
+.product-right {
+    .supplier {
+        background-color: #fff;
+
+        &:hover {
+            background-color: $light;
+        }
+    }
+}
+
+.product-bottom{
+    .specs-header{
+        a{
+            border: $secondary 3px solid;
+            border-radius: 10px;
+            &:hover{
+                color: #fff;
+                background-color: $secondary;
+            }
+        }
+    }
+    .active{
+        color: #fff;
+        border: none;
+        background-color: $secondary;
+    }
+    .specs-content{
+        height: 400px;
+        .details{
+            color: #000;
+            background-color: transparent;
+        }
+    }
+}
 
 //PRODUCTS
