@@ -179,8 +179,8 @@ function Header() {
         bg="light"
         expand="lg"
       >
-        <Container>
-          <div className="logo order-1 order-lg-0 col-lg-3 d-flex align-items-center justify-content-center justify-content-lg-start ">
+        <Container className="d-flex flex-column flex-lg-row">
+          <div className="logo col-lg-3 d-flex align-items-center justify-content-center justify-content-lg-start ">
             <a
               href="/"
               className="logo-text text-decoration-none text-black display-5 fw-bold"
@@ -189,12 +189,12 @@ function Header() {
             </a>
           </div>
 
-          <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-lg`} />
+          
           <Navbar.Offcanvas
             id={`offcanvasNavbar-expand-lg`}
             aria-labelledby={`offcanvasNavbarLabel-expand-lg`}
             placement="start"
-            className="col-lg-6 order-2"
+            className="col-lg-6"
           >
             <Offcanvas.Header closeButton>
               <Offcanvas.Title id={`offcanvasNavbarLabel-expand-lg`}>
@@ -251,7 +251,8 @@ function Header() {
               </Nav>
             </Offcanvas.Body>
           </Navbar.Offcanvas>
-          <Nav className="d-flex flex-row col-lg-3 justify-content-end order-3">
+          <Nav className="d-flex flex-row col-lg-3 justify-content-end">
+          <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-lg`} />
             {localStorage.getItem("user_token") ? (
               <Nav.Link onClick={handleLogout}>
                 <div className="logout mx-3">

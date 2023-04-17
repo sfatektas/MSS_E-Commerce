@@ -87,8 +87,6 @@ body {
             }
         }
     }
-
-
 }
 
 
@@ -147,6 +145,8 @@ body {
     }
 
     .carousel-caption {
+        @include center;
+        flex-direction: column;
         position: absolute;
         margin: 0;
         color: white;
@@ -154,14 +154,14 @@ body {
         bottom: 10px;
         transform: translate(-50%, -50%);
 
-        @media screen and (max-width:1199px) {
+        @media screen and (max-width:992) {
             left: 50%;
         }
 
         h3 {
             @include heading-type-4;
 
-            @media screen and (max-width:1199px) {
+            @media screen and (max-width:992) {
                 @include heading-type-3;
             }
         }
@@ -233,7 +233,7 @@ body {
 }
 
 
-@media screen and (max-width: 1199px) {
+@media screen and (max-width: 992) {
     .banner-row {
 
         .banner {
@@ -275,7 +275,8 @@ body {
         img {
             width: 340px;
             height: auto;
-            transition: $transition
+            transition: $transition;
+            object-fit: cover;
         }
 
         &:hover {
@@ -536,7 +537,7 @@ body {
     position: fixed;
     top: 0;
     right: -450px;
-    width: 450px;
+    // width: 450px;
     height: 100vh;
     z-index: 2001;
     transition: all .5s linear;
@@ -874,11 +875,22 @@ body {
         .prev {
             position: absolute;
             left: -100px;
+
         }
 
         .next {
             position: absolute;
             right: -100px;
+        }
+
+        @media screen and (max-width: 992px) {
+            .next {
+                right: 0px;
+            }
+
+            .prev {
+                left: 0px;
+            }
         }
     }
 

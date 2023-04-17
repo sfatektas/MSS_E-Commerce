@@ -12,6 +12,17 @@ export default function HomeProducts() {
     sethomeProducts(data);
   }, [homeProducts]);
 
+  useEffect(() => {
+    function shuffleProducts(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+    shuffleProducts(data);
+  }, [data]);
+
 
   return (
     <div className="products-main container mb-5">

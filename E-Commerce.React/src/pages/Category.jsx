@@ -3,12 +3,19 @@ import { generalStore } from "../store/generalStore";
 import { Navigate } from "react-router-dom";
 import productJson from "../products.json";
 import Showcase from "../components/home/Showcase";
+import { useState } from "react";
 
 const data = productJson;
 
 export default function Category(props) {
   const { defination } = useParams();
   const { categories } = generalStore();
+  const [filtersShow, setFiltersShow] = useState("d-none")
+
+  function handleFilter(){
+    filtersShow=="d-none"?setFiltersShow("d-block"):setFiltersShow("d-none")
+  }
+
   try {
     let definationList = categories.map((item) => {
       return item.defination;
@@ -23,7 +30,10 @@ export default function Category(props) {
             </p>
 
             <div className="row">
-              <div className="filters col-2">
+              <button onClick={handleFilter} className="btn btn-dark py-3 mb-4 d-lg-none" href="#!">
+                Filteler
+              </button>
+              <div className={`filters col-12 col-lg-2 d-lg-block ${filtersShow}`}>
                 <div className="d-flex flex-column border rounded-3">
                   <div className="border-bottom p-3 mb-3">
                     <p>
@@ -99,7 +109,7 @@ export default function Category(props) {
                         >
                           <path
                             fill="#000000"
-                            fill-rule="evenodd"
+                            fillRule="evenodd"
                             d="M4 9a5 5 0 1110 0A5 5 0 014 9zm5-7a7 7 0 104.2 12.6.999.999 0 00.093.107l3 3a1 1 0 001.414-1.414l-3-3a.999.999 0 00-.107-.093A7 7 0 009 2z"
                           ></path>
                         </svg>
@@ -145,7 +155,7 @@ export default function Category(props) {
                         >
                           <path
                             fill="#000000"
-                            fill-rule="evenodd"
+                            fillRule="evenodd"
                             d="M4 9a5 5 0 1110 0A5 5 0 014 9zm5-7a7 7 0 104.2 12.6.999.999 0 00.093.107l3 3a1 1 0 001.414-1.414l-3-3a.999.999 0 00-.107-.093A7 7 0 009 2z"
                           ></path>
                         </svg>
@@ -154,7 +164,7 @@ export default function Category(props) {
                   </div>
                 </div>
               </div>
-              <div className="products col-10">
+              <div className="products col-12 col-lg-10">
                 <div className="row">
                   {data.map((item) => {
                     if (item.category == defination) {

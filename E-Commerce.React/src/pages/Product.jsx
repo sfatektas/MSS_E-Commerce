@@ -58,6 +58,17 @@ export default function Product() {
     }
   }
 
+  useEffect(() => {
+    function shuffleProducts(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+    shuffleProducts(data);
+  }, [data]);
+
   function AddedCartModal(props) {
     return (
       <Modal
@@ -138,7 +149,7 @@ export default function Product() {
     <>
       <div className="container">
         <div className="row my-5">
-          <div className="col-6">
+          <div className="col-12 col-lg-6">
             <div className="product-left">
               <div className="row mb-4 d-flex flex-column">
                 <div className="big-image mb-4">
@@ -167,7 +178,7 @@ export default function Product() {
               </div>
             </div>
           </div>
-          <div className="col-6">
+          <div className="col-12 col-lg-6">
             <div className="product-right bg-light px-4 rounded-3">
               <div className="product-title mb-2">
                 <p className="fw-semibold fs-2 pt-3">{product.title}</p>
@@ -589,10 +600,10 @@ export default function Product() {
             show={favoritesModal}
             onHide={() => setFavoritesModal(false)}
           />
-          <div className="specs-header d-flex justify-content-center mb-4">
+          <div className="specs-header d-flex flex-column flex-lg-row justify-content-center mb-4">
             <a
               href="#!"
-              className={`text-decoration-none btn p-3 mx-3 ${
+              className={`text-decoration-none btn p-3 mx-3 mb-2 mb-lg-0 ${
                 productDetails == "details" ? "active" : ""
               }`}
               onClick={() => setDroductDetails("details")}
@@ -601,7 +612,7 @@ export default function Product() {
             </a>
             <a
               href="#!"
-              className={`text-decoration-none btn p-3 mx-3 ${
+              className={`text-decoration-none btn p-3 mx-3 mb-2 mb-lg-0  ${
                 productDetails == "campaigns" ? "active" : ""
               }`}
               onClick={() => setDroductDetails("campaigns")}
@@ -610,7 +621,7 @@ export default function Product() {
             </a>
             <a
               href="#!"
-              className={`text-decoration-none btn p-3 mx-3 ${
+              className={`text-decoration-none btn p-3 mx-3 mb-2 mb-lg-0  ${
                 productDetails == "comments" ? "active" : ""
               }`}
               onClick={() => setDroductDetails("comments")}
@@ -671,7 +682,9 @@ export default function Product() {
           </div>
         </div>
         <div className="product-showcase">
-          <p className="text-center fw-semibold fs-3 mb-4">Beğenebileceğiniz Ürünler</p>
+          <p className="text-center fw-semibold fs-3 mb-4">
+            Beğenebileceğiniz Ürünler
+          </p>
           <div className="carousel-buttons d-flex justify-content-between">
             <a className="btn prev" onClick={() => calcCarousel("prev")}>
               <svg
