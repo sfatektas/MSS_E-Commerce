@@ -1,6 +1,5 @@
 import Navigation from "../components/common/Navigation";
 
-
 export default function Favorites() {
   return (
     <>

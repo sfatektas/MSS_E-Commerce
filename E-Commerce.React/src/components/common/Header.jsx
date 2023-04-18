@@ -8,14 +8,16 @@ import { authStore } from "../../store/authStore";
 import { generalStore, cartSidebarStore } from "../../store/generalStore";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import CartSidebar from "../home/CartSidebar";
+import CartSidebar from "../common/CartSidebar";
 import { Base64 } from "js-base64";
+
 
 function Header() {
   let navigate = useNavigate();
   const { logout, logoutStatus } = authStore();
   const { setSidebarActive } = cartSidebarStore();
   const { options, getOptions, categories, getCategories } = generalStore();
+
 
   useEffect(() => {
     getOptions();
@@ -66,7 +68,7 @@ function Header() {
 
   return (
     <>
-      <CartSidebar />
+      <CartSidebar/>
       <div className="bg-black">
         <div className="container">
           <div className="header-top row d-flex align-items-center py-2">
@@ -239,7 +241,7 @@ function Header() {
                     categories.map((item, index) => (
                       <NavDropdown.Item
                         key={index}
-                        href={`/category/${item.defination}`}
+                        href={`/${item.defination}`}
                       >
                         {item.defination}
                       </NavDropdown.Item>
@@ -252,7 +254,7 @@ function Header() {
             </Offcanvas.Body>
           </Navbar.Offcanvas>
           <Nav className="d-flex flex-row col-lg-3 justify-content-end">
-          <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-lg`} className="mx-3 mx-lg-0"/>
+          <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-lg`} className="mx- mx-lg-0"/>
             {localStorage.getItem("user_token") ? (
               <Nav.Link onClick={handleLogout} className="mx-2 mx-lg-0">
                 <div className="logout mx-3">

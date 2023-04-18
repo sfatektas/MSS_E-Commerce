@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { generalStore } from "../store/generalStore";
 import { Navigate } from "react-router-dom";
 import productJson from "../products.json";
-import Showcase from "../components/home/Showcase";
+import Showcase from "../components/common/Showcase";
 import { useState } from "react";
 
 const data = productJson;

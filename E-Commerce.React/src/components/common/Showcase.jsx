@@ -96,7 +96,7 @@ export default function Showcase(props) {
       />
       <div className="showcase d-flex flex-column align-items-center shadow-sm p-0 mb-3 rounded-3 w-100 overflow-hidden">
         <div className="showcase-image mb-3 d-flex align-items-center position-relative">
-          <a href={`/category/${props.category}/${props.title}`}>
+          <a href={`/${props.category}/${props.title}`}>
             <img
               className="w-100"
               src={props.image}
@@ -169,7 +169,7 @@ export default function Showcase(props) {
           </p>
           <a
             className="btn w-100 rounded-3"
-            href={`/category/${props.category}/${props.title}`}
+            href={`/${props.category}/${props.title}`}
           >
             Satın Al
           </a>

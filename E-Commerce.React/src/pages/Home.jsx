@@ -1,20 +1,19 @@
-import CarouselFade from "../components/home/CarouselFade";
-import BannerTwoImg from "../components/home/BannerTwoImg";
-import BannerThreeImg from "../components/home/BannerThreeImg";
+import HomeCarousel from "../components/home/HomeCarousel";
 import HomeProducts from "../components/home/HomeProducts";
-import ShowBrands from "../components/home/ShowBrands";
-import ImageGallery from "../components/home/ImageGallery";
+import BrandsShowcase from "../components/common/BrandsShowcase";
+import HomeImageGallery from "../components/home/HomeImageGallery";
 import HomeFeatures from "../components/home/HomeFeatures";
+import {BannerThreeImg,BannerTwoImg} from "../components/home/HomeBanners"
 
 export default function Home() {
   return (
     <>
-      <CarouselFade />
+      <HomeCarousel />
       <BannerTwoImg />
       <HomeProducts />
       <BannerThreeImg />
-      <ShowBrands />
-      <ImageGallery />
+      <BrandsShowcase />
+      <HomeImageGallery />
       <HomeFeatures />
     </>
   );

@@ -14,7 +14,7 @@ export default function Footer() {
                   İLETİŞİM
                 </p>
                 <p className="subtitle text-muted mb-4">
-                  Herhangi bir sorunuz varsa, lütfen bizimle iletişime geçin.{" "}
+                  Herhangi bir sorunuz varsa lütfen bizimle iletişime geçin.{" "}
                   <a
                     href={`mailto: ${options && options.email}`}
                     className="text-white text-decoration-none"

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import productJson from "../../products.json";
-import Showcase from "./Showcase";
+import Showcase from "../common/Showcase";
 
 const data = productJson;
 

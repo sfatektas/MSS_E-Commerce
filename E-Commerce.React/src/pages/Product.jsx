@@ -6,8 +6,7 @@ import Carousel from "react-bootstrap/Carousel";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { generalStore } from "../store/generalStore";
-
-import Showcase from "../components/home/Showcase";
+import Showcase from "../components/common/Showcase";
 
 const data = productJson;
 // Ürünler API'den çekildiği zaman title sorgulanıp true dönerse sayfa görüntülenecek.
@@ -22,7 +21,7 @@ export default function Product() {
   const [basketModal, setBasketModal] = useState(false);
   const [favoritesModal, setFavoritesModal] = useState(false);
   const [carouselPosition, setCarouselPosition] = useState(0);
-
+ 
   function addBasket() {
     setBasketModal(true);
   }
@@ -600,7 +599,7 @@ export default function Product() {
             show={favoritesModal}
             onHide={() => setFavoritesModal(false)}
           />
-          <div className="specs-header d-flex flex-column flex-lg-row justify-content-center mb-4">
+          <div className="specs-header d-flex flex-column flex-lg-row justify-content-center mb-4" >
             <a
               href="#!"
               className={`text-decoration-none btn p-3 mx-3 mb-2 mb-lg-0 ${

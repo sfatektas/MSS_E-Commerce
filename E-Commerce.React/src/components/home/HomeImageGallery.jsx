@@ -1,4 +1,4 @@
-export default function imageGallery() {
+export default function HomeImageGallery() {
   let imageList = [
     "https://demo2.wpopal.com/ekommart/wp-content/uploads/2020/02/h1_gallery_1.jpg",
     "https://demo2.wpopal.com/ekommart/wp-content/uploads/2020/02/h1_gallery_2.jpg",
