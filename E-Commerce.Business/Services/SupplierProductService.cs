@@ -40,24 +40,42 @@ namespace E_Commerce.Business.Services
                                     && s.SupplierId == supplierProduct.SupplierId
                                     && s.ProductId == supplierProduct.ProductId
                                     && s.SizeId == supplierProduct.SizeId);
-            
+
+        }
+        public async Task AddProductToStock(int supplierProductId, int amount)
+        {
+            var data = await _uow.GetRepository<ProductsInStock>().GetByFilterAsync(x => x.SupplierProductId == supplierProductId);
+            if (data == null)
+                await _uow.GetRepository<ProductsInStock>().CreateAsync(new()
+                {
+                    SupplierProductId = supplierProductId,
+                    Amount = amount,
+                });
+            else // daha önceden stokta bulunuyorsa eğer , stoktaki ürünün miktarının arttırıyorum.
+            {
+                data.Amount += amount;
+                _uow.GetRepository<ProductsInStock>().Update(data);
+                await _uow.SaveChangesAsync();
+            }
         }
         public async Task<int> CreateSupplierProduct(SupplierProductCreateDto supplierProduct)
         {
             var existData = await IndexDataIsExistAsync(supplierProduct);
-            if (existData != null) // bu bilgilere ait kayıt var mı 
-                throw new Exception("Bu bilgilere sahip bir ürün kayıtı mevcut.");
+            if (existData == null) // bu bilgilere ait kayıt var mı 
+            {
+                var response = await base.CreateAsync(supplierProduct);
+                if (response.ResponseType != Common.Enums.ResponseType.Success)
+                    throw new SupplierProductBadRequestException("Ürün eklenirken bir hata oluştu.");
+            }
 
-            var response = await base.CreateAsync(supplierProduct);
-            if (response.ResponseType != Common.Enums.ResponseType.Success)
-                throw new SupplierProductBadRequestException("Ürün eklenirken bir hata oluştu.");
-            
             var data = await IndexDataIsExistAsync(supplierProduct);
+
+            await this.AddProductToStock(data.Id, supplierProduct.Amount);
             return data.Id;
         }
         public async Task AddImageUrls(List<ProductImageCreateDto> dtos)
         {
-            if(dtos!=null)
+            if (dtos != null)
                 foreach (var dto in dtos)
                 {
                     await _uow.GetRepository<ProductImage>().CreateAsync(_mapper.Map<ProductImage>(dto));
@@ -68,7 +86,7 @@ namespace E_Commerce.Business.Services
         {
             var data = await _uow.GetRepository<ProductsInStock>()
                 .GetQueryable()
-                .Include(x=>x.SupplierProduct)
+                .Include(x => x.SupplierProduct)
                 .Include(x => x.SupplierProduct.Color)
                 .Include(x => x.SupplierProduct.Size)
                 .Where(x => (x.UnitPrice >= parameter.MinPrice && x.UnitPrice <= parameter.MaxPrice)
@@ -86,7 +104,7 @@ namespace E_Commerce.Business.Services
             // Bu delegate muhabbeti için detaylara bak 
             var data = await _uow.GetRepository<ProductsInStock>()
                 .GetQueryable()
-                .Include(x=>x.SupplierProduct)
+                .Include(x => x.SupplierProduct)
                 .Where(x => x.SupplierProduct.SupplierId == supplierid)
                 .Include(x => x.SupplierProduct.Size)
                 .Include(x => x.SupplierProduct.Color)
@@ -100,6 +118,8 @@ namespace E_Commerce.Business.Services
 
         public async Task<CustomProductInStockListDto> GetCustomSupplierProductAsync(int supplierProductId)
         {
+            List<DifferentColorAvaibleProductListDto> difcollorList = new();
+            List<DifferentSizeAvaibleProductListDto> difsizeList = new();
             // TODO - Uygun olan rekler , uygun olan bedenler ayrı bir model içerisinde ilerlesin.
             var productInStock = await GetSupplierProduct(supplierProductId);
             if (productInStock == null)
@@ -109,21 +129,35 @@ namespace E_Commerce.Business.Services
                 productInStock.SupplierProduct.ProductId,
                 productInStock.SupplierProduct.SupplierId);
 
-            List<(Color color , int ProductInStock)> avaiableColors = await GetAvaiableColors(
-                productInStock.SupplierProduct.SupplierId, 
+            List<(Color color, int ProductInStock)> avaiableColors = await GetAvaiableColors(
+                productInStock.SupplierProduct.SupplierId,
                 productInStock.SupplierProduct.ProductId,
                 productInStock.SupplierProduct.ColorId);
 
-            List<(Size size , int ProductInStock)> avaiableSizes = await GetAvaiableSizes(
+            List<(Size size, int ProductInStock)> avaiableSizes = await GetAvaiableSizes(
                 productInStock.SupplierProduct.SupplierId,
                 productInStock.SupplierProduct.ProductId,
                 productInStock.SupplierProduct.SizeId);
+
+            avaiableColors.ForEach(x =>
+                difcollorList.Add(new DifferentColorAvaibleProductListDto
+                    {
+                        Color = _mapper.Map<ColorListDto>(x.color),
+                        SupplierProductId = x.ProductInStock,
+                    }));
+            avaiableSizes.ForEach(x => 
+                difsizeList.Add(new DifferentSizeAvaibleProductListDto
+                    {
+                        Size = _mapper.Map<SizeListDto>(x.size),
+                        SupplierProductId = x.ProductInStock,
+                    }));
+
             return new()
             {
-                  AvaiableColors = _mapper.Map<List<DifferentColorAvaibleProductListDto>>(avaiableColors),
-                  AvaiableSizes = _mapper.Map<List<DifferentSizeAvaibleProductListDto>>(avaiableSizes),
-                  SupplierProduct = _mapper.Map<ProductInStockListDto>(productInStock),
-                  SupplierProductsFromOtherSupplier = _mapper.Map<List<ProductInStockListDto>>(otherSuppliers)
+                AvaiableColors = difcollorList,
+                AvaiableSizes = difsizeList,
+                SupplierProduct = _mapper.Map<ProductInStockListDto>(productInStock),
+                SupplierProductsFromOtherSupplier = _mapper.Map<List<ProductInStockListDto>>(otherSuppliers)
             };
         }
         private async Task<ProductsInStock> GetSupplierProduct(int supplierProductId)
@@ -140,6 +174,8 @@ namespace E_Commerce.Business.Services
                     .ThenInclude(x => x.Supplier)
                 .Include(x => x.SupplierProduct)
                     .ThenInclude(x => x.ProductImages)
+                .Include(x => x.SupplierProduct.Product.Brand)
+                .Include(x => x.SupplierProduct.Product.Category)
                 .FirstOrDefaultAsync();
             return product;
         }
@@ -164,16 +200,16 @@ namespace E_Commerce.Business.Services
                 .Select(x => new
                 {
                     Color = x.SupplierProduct.Color,
-                    ProductInStockId = x.Id
+                    SupplierProductId = x.SupplierProductId
                 })
                 .ToListAsync();
-            List<(Color color, int ProductInStockId)> tuple = new();
+            List<(Color color, int SupplierProductId)> tuple = new();
 
             avaiableColors.ForEach(item =>
-                tuple.Add(new(item.Color, item.ProductInStockId)));
+                tuple.Add(new(item.Color, item.SupplierProductId)));
             return tuple;
         }
-        private async Task<List<(Size Size, int ProductInStockId)>> GetAvaiableSizes(int supplierId , int productId, int currentSize)
+        private async Task<List<(Size Size, int ProductInStockId)>> GetAvaiableSizes(int supplierId, int productId, int currentSize)
         {
             var avaiableColors = await GetQueryableRepository<ProductsInStock>()
                 .Include(x => x.SupplierProduct)
@@ -181,16 +217,16 @@ namespace E_Commerce.Business.Services
                 .Where(x => x.SupplierProduct.SupplierId == supplierId
                         && x.SupplierProduct.ProductId == productId
                         && x.SupplierProduct.SizeId != currentSize)
-                .Select(x => new 
-                { 
+                .Select(x => new
+                {
                     Size = x.SupplierProduct.Size,
-                    ProductInStockId = x.Id 
+                    SupplierProductId = x.SupplierProductId
                 })
                 .ToListAsync();
-            List<(Size Size, int ProductInStockId)> tuple = new();
+            List<(Size Size, int SupplierProductId)> tuple = new();
 
             avaiableColors.ForEach(item =>
-                tuple.Add(new(item.Size, item.ProductInStockId)));
+                tuple.Add(new(item.Size, item.SupplierProductId)));
             return tuple;
         }
         private IQueryable<T> GetQueryableRepository<T>() where T : BaseEntity, new() => _uow.GetRepository<T>().GetQueryable();

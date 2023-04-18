@@ -14,6 +14,7 @@ namespace E_Commerce.Presentation.Models
         public int SupplierId { get; init; }
         public double UnitPrice { get; init; }
         public int ColorId { get; init; }
+        public int Amount { get; init; }
         public string CustomProductTitle { get; init; }
         public string CustomProductDefination { get; init; }
         public List<IFormFile> Files { get; set; }
