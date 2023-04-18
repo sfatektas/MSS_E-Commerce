@@ -2,8 +2,11 @@ import { useParams } from "react-router-dom";
 import productJson from "../products.json";
 import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
-import { generalStore } from "../store/generalStore";
+import Carousel from "react-bootstrap/Carousel";
+import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import { generalStore } from "../store/generalStore";
+import Showcase from "../components/common/Showcase";
 
 const data = productJson;
 // Ürünler API'den çekildiği zaman title sorgulanıp true dönerse sayfa görüntülenecek.
@@ -12,22 +15,13 @@ export default function Product() {
   const [product, setProduct] = useState([]);
   const { options } = generalStore();
   const [productPiece, setProductPiece] = useState(0);
+  const [colorVariant, setColorVariant] = useState();
+  const [sizeVariant, setSizeVariant] = useState();
+  const [productDetails, setDroductDetails] = useState("details");
   const [basketModal, setBasketModal] = useState(false);
   const [favoritesModal, setFavoritesModal] = useState(false);
-  useEffect(() => {
-    data.map((item) => {
-      if (item.title == name) {
-        return setProduct(item);
-      }
-    });
-  }, []);
-
-  function calcPiece(piece) {
-    if (piece !== -1 || productPiece !== 0) {
-      setProductPiece(productPiece + piece);
-    }
-  }
-
+  const [carouselPosition, setCarouselPosition] = useState(0);
+ 
   function addBasket() {
     setBasketModal(true);
   }
@@ -40,6 +34,39 @@ export default function Product() {
       setFavoritesModal(false);
     }, 1500);
   }, [basketModal, favoritesModal]);
+
+  function calcPiece(piece) {
+    if (piece !== -1 || productPiece !== 0) {
+      setProductPiece(productPiece + piece);
+    }
+  }
+
+  function calcCarousel(position) {
+    let carouselWidth = 330; // Showcase genişliğini gir.
+    let carouselItems = 12; // Carousel'e kaç tane showcase item basılacaksa onun değerini gir.
+    let carouselLimit = carouselWidth * (carouselItems - 4); // Carousel limit hesaplaması
+
+    if (position == "next") {
+      if (carouselPosition > -carouselLimit) {
+        setCarouselPosition(carouselPosition - 1320);
+      }
+    } else {
+      if (carouselPosition < 0) {
+        setCarouselPosition(carouselPosition + 1320);
+      }
+    }
+  }
+
+  useEffect(() => {
+    function shuffleProducts(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+    shuffleProducts(data);
+  }, [data]);
 
   function AddedCartModal(props) {
     return (
@@ -69,7 +96,7 @@ export default function Product() {
               </svg>
             </div>
             <div className="basket-modal-text ps-2">
-              <p>Ürün favorilere eklendi</p>
+              <p>Ürün sepete eklendi</p>
             </div>
           </div>
         </Modal.Body>
@@ -109,96 +136,19 @@ export default function Product() {
     );
   }
 
-  function Showcase(props) {
-    return (
-      <div className="col-12 col-lg-3 col-md-6 d-flex flex-row">
-        <div className="showcase d-flex flex-column align-items-center shadow-sm p-0 my-3 rounded-3 w-100 overflow-hidden">
-          <div className="showcase-image mb-3 d-flex align-items-center position-relative">
-            <a href={`/category/${props.category}/${props.title}`}>
-              <img
-                className="w-100"
-                src={props.image}
-                alt={props.title + " Image"}
-              />
-            </a>
-            <div className="showcase-buttons d-flex flex-column">
-              <a onClick={addFavorites} className="btn text- mb-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="26"
-                  height="26"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                >
-                  <path
-                    d="M11.8456 6.42726L12 6.59097L12.1544 6.42726C14.132 4.33053 17.4026 4.57697 19.0807 6.94915C20.57 9.05459 20.2133 12.0335 18.275 13.6776L12 19L5.725 13.6776C3.78668 12.0335 3.42999 9.05459 4.91934 6.94915C6.59738 4.57698 9.86801 4.33053 11.8456 6.42726Z"
-                    stroke="#464455"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </a>
-              <a onClick={addBasket} className="btn text- mb-2">
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 32 32"
-                  id="svg5"
-                  version="1.1"
-                >
-                  <defs id="defs2"></defs>
-                  <g id="layer1" transform="translate(36,-244)">
-                    <path
-                      d="m -31.371094,255.00586 c -1.625564,0 -2.864805,1.51618 -2.589843,3.10351 l 2.27539,13.13477 c 0.27851,1.60776 1.701467,2.76172 3.314453,2.76172 h 16.767578 c 1.6146248,0 3.0129936,-1.16108 3.3105472,-2.74805 a 1.0001,1.0001 0 0 0 0.00195,-0.0137 l 2.2734375,-13.12109 v -0.002 c 0.2984384,-1.59859 -0.9594241,-3.11523 -2.5859375,-3.11523 z m 0,2 h 22.7675784 c 0.4158021,0 0.6977222,0.33936 0.6210937,0.74805 a 1.0001,1.0001 0 0 0 -0.00195,0.0137 l -2.2753911,13.12695 c -0.124292,0.65116 -0.680335,1.11133 -1.34375,1.11133 h -16.767578 c -0.666611,0 -1.23316,-0.46316 -1.34375,-1.10156 l -2.27539,-13.13672 c -0.07374,-0.42569 0.201707,-0.76172 0.61914,-0.76172 z"
-                      id="rect40272"
-                    ></path>
-                    <path
-                      d="m -24.695312,246.07227 a 1,1 0 0 0 -0.556641,0.52734 l -4,9 a 1,1 0 0 0 0.507812,1.32031 1,1 0 0 0 1.320313,-0.50781 l 4,-9 a 1,1 0 0 0 -0.507813,-1.32031 1,1 0 0 0 -0.763671,-0.0195 z"
-                      id="path41727"
-                    ></path>
-                    <path
-                      d="m -15.279297,246.07227 a 1,1 0 0 0 -0.763672,0.0195 1,1 0 0 0 -0.507812,1.32031 l 4,9 a 1,1 0 0 0 1.318359,0.50781 1,1 0 0 0 0.507813,-1.32031 l -4,-9 a 1,1 0 0 0 -0.554688,-0.52734 z"
-                      id="path41729"
-                    ></path>
-                    <path
-                      d="m -20,259.00586 a 1,1 0 0 0 -1,1 v 8 a 1,1 0 0 0 1,1 1,1 0 0 0 1,-1 v -8 a 1,1 0 0 0 -1,-1 z"
-                      id="path43195"
-                    ></path>
-                    <path
-                      d="m -24,259.00586 a 1,1 0 0 0 -1,1 v 8 a 1,1 0 0 0 1,1 1,1 0 0 0 1,-1 v -8 a 1,1 0 0 0 -1,-1 z"
-                      id="path43243"
-                    ></path>
-                    <path
-                      d="m -16,259.00586 a 1,1 0 0 0 -1,1 v 8 a 1,1 0 0 0 1,1 1,1 0 0 0 1,-1 v -8 a 1,1 0 0 0 -1,-1 z"
-                      id="path43245"
-                    ></path>
-                  </g>
-                </svg>
-              </a>
-            </div>
-          </div>
-          <div className="showcase-content mb-5 text-center">
-            <p className="showcase-category text-muted fw-light mb-3">
-              {props.category}
-            </p>
-            <p className="showcase-title fw-semibold mb-3">{props.title}</p>
-            <p className="showcase-price text-primary fw-bold mb-3">
-              ${props.price}
-            </p>
-            <a className="btn w-100 rounded-3" href={`/category/${props.category}/${props.title}`}>
-              Satın Al
-            </a>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  useEffect(() => {
+    data.map((item) => {
+      if (item.title == name) {
+        return setProduct(item);
+      }
+    });
+  }, []);
 
   return (
     <>
       <div className="container">
         <div className="row my-5">
-          <div className="col-6">
+          <div className="col-12 col-lg-6">
             <div className="product-left">
               <div className="row mb-4 d-flex flex-column">
                 <div className="big-image mb-4">
@@ -227,7 +177,7 @@ export default function Product() {
               </div>
             </div>
           </div>
-          <div className="col-6">
+          <div className="col-12 col-lg-6">
             <div className="product-right bg-light px-4 rounded-3">
               <div className="product-title mb-2">
                 <p className="fw-semibold fs-2 pt-3">{product.title}</p>
@@ -251,54 +201,57 @@ export default function Product() {
               </div>
               <div className="product-price d-flex justify-content-between mb-2">
                 <p className="fs-3 fw-semibold">{product.price} TL</p>
-                <div className="product-rating d-flex justify-content-center align-items-center">
-                  <span className="pt-1">4,7</span>
-                  <div className="stars ms-2">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 47.94 47.94"
-                      width="15px"
-                      height="15px"
-                      fill="#ffc107"
-                    >
-                      <path d="M26.285,2.486l5.407,10.956c0.376,0.762,1.103,1.29,1.944,1.412l12.091,1.757 c2.118,0.308,2.963,2.91,1.431,4.403l-8.749,8.528c-0.608,0.593-0.886,1.448-0.742,2.285l2.065,12.042 c0.362,2.109-1.852,3.717-3.746,2.722l-10.814-5.685c-0.752-0.395-1.651-0.395-2.403,0l-10.814,5.685 c-1.894,0.996-4.108-0.613-3.746-2.722l2.065-12.042c0.144-0.837-0.134-1.692-0.742-2.285l-8.749-8.528 c-1.532-1.494-0.687-4.096,1.431-4.403l12.091-1.757c0.841-0.122,1.568-0.65,1.944-1.412l5.407-10.956 C22.602,0.567,25.338,0.567,26.285,2.486z"></path>
-                    </svg>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 47.94 47.94"
-                      width="15px"
-                      height="15px"
-                      fill="#ffc107"
-                    >
-                      <path d="M26.285,2.486l5.407,10.956c0.376,0.762,1.103,1.29,1.944,1.412l12.091,1.757 c2.118,0.308,2.963,2.91,1.431,4.403l-8.749,8.528c-0.608,0.593-0.886,1.448-0.742,2.285l2.065,12.042 c0.362,2.109-1.852,3.717-3.746,2.722l-10.814-5.685c-0.752-0.395-1.651-0.395-2.403,0l-10.814,5.685 c-1.894,0.996-4.108-0.613-3.746-2.722l2.065-12.042c0.144-0.837-0.134-1.692-0.742-2.285l-8.749-8.528 c-1.532-1.494-0.687-4.096,1.431-4.403l12.091-1.757c0.841-0.122,1.568-0.65,1.944-1.412l5.407-10.956 C22.602,0.567,25.338,0.567,26.285,2.486z"></path>
-                    </svg>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 47.94 47.94"
-                      width="15px"
-                      height="15px"
-                      fill="#ffc107"
-                    >
-                      <path d="M26.285,2.486l5.407,10.956c0.376,0.762,1.103,1.29,1.944,1.412l12.091,1.757 c2.118,0.308,2.963,2.91,1.431,4.403l-8.749,8.528c-0.608,0.593-0.886,1.448-0.742,2.285l2.065,12.042 c0.362,2.109-1.852,3.717-3.746,2.722l-10.814-5.685c-0.752-0.395-1.651-0.395-2.403,0l-10.814,5.685 c-1.894,0.996-4.108-0.613-3.746-2.722l2.065-12.042c0.144-0.837-0.134-1.692-0.742-2.285l-8.749-8.528 c-1.532-1.494-0.687-4.096,1.431-4.403l12.091-1.757c0.841-0.122,1.568-0.65,1.944-1.412l5.407-10.956 C22.602,0.567,25.338,0.567,26.285,2.486z"></path>
-                    </svg>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 47.94 47.94"
-                      width="15px"
-                      height="15px"
-                      fill="#ffc107"
-                    >
-                      <path d="M26.285,2.486l5.407,10.956c0.376,0.762,1.103,1.29,1.944,1.412l12.091,1.757 c2.118,0.308,2.963,2.91,1.431,4.403l-8.749,8.528c-0.608,0.593-0.886,1.448-0.742,2.285l2.065,12.042 c0.362,2.109-1.852,3.717-3.746,2.722l-10.814-5.685c-0.752-0.395-1.651-0.395-2.403,0l-10.814,5.685 c-1.894,0.996-4.108-0.613-3.746-2.722l2.065-12.042c0.144-0.837-0.134-1.692-0.742-2.285l-8.749-8.528 c-1.532-1.494-0.687-4.096,1.431-4.403l12.091-1.757c0.841-0.122,1.568-0.65,1.944-1.412l5.407-10.956 C22.602,0.567,25.338,0.567,26.285,2.486z"></path>
-                    </svg>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 47.94 47.94"
-                      width="15px"
-                      height="15px"
-                      fill="#dddddd"
-                    >
-                      <path d="M26.285,2.486l5.407,10.956c0.376,0.762,1.103,1.29,1.944,1.412l12.091,1.757 c2.118,0.308,2.963,2.91,1.431,4.403l-8.749,8.528c-0.608,0.593-0.886,1.448-0.742,2.285l2.065,12.042 c0.362,2.109-1.852,3.717-3.746,2.722l-10.814-5.685c-0.752-0.395-1.651-0.395-2.403,0l-10.814,5.685 c-1.894,0.996-4.108-0.613-3.746-2.722l2.065-12.042c0.144-0.837-0.134-1.692-0.742-2.285l-8.749-8.528 c-1.532-1.494-0.687-4.096,1.431-4.403l12.091-1.757c0.841-0.122,1.568-0.65,1.944-1.412l5.407-10.956 C22.602,0.567,25.338,0.567,26.285,2.486z"></path>
-                    </svg>
+                <div className="product-rating d-flex flex-column align-items-end">
+                  <p style={{ fontSize: "14px" }}>Değerlendirme</p>
+                  <div className="d-flex align-items-center">
+                    <span className="pt-1">4,7</span>
+                    <div className="stars ms-2">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 47.94 47.94"
+                        width="15px"
+                        height="15px"
+                        fill="#ffc107"
+                      >
+                        <path d="M26.285,2.486l5.407,10.956c0.376,0.762,1.103,1.29,1.944,1.412l12.091,1.757 c2.118,0.308,2.963,2.91,1.431,4.403l-8.749,8.528c-0.608,0.593-0.886,1.448-0.742,2.285l2.065,12.042 c0.362,2.109-1.852,3.717-3.746,2.722l-10.814-5.685c-0.752-0.395-1.651-0.395-2.403,0l-10.814,5.685 c-1.894,0.996-4.108-0.613-3.746-2.722l2.065-12.042c0.144-0.837-0.134-1.692-0.742-2.285l-8.749-8.528 c-1.532-1.494-0.687-4.096,1.431-4.403l12.091-1.757c0.841-0.122,1.568-0.65,1.944-1.412l5.407-10.956 C22.602,0.567,25.338,0.567,26.285,2.486z"></path>
+                      </svg>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 47.94 47.94"
+                        width="15px"
+                        height="15px"
+                        fill="#ffc107"
+                      >
+                        <path d="M26.285,2.486l5.407,10.956c0.376,0.762,1.103,1.29,1.944,1.412l12.091,1.757 c2.118,0.308,2.963,2.91,1.431,4.403l-8.749,8.528c-0.608,0.593-0.886,1.448-0.742,2.285l2.065,12.042 c0.362,2.109-1.852,3.717-3.746,2.722l-10.814-5.685c-0.752-0.395-1.651-0.395-2.403,0l-10.814,5.685 c-1.894,0.996-4.108-0.613-3.746-2.722l2.065-12.042c0.144-0.837-0.134-1.692-0.742-2.285l-8.749-8.528 c-1.532-1.494-0.687-4.096,1.431-4.403l12.091-1.757c0.841-0.122,1.568-0.65,1.944-1.412l5.407-10.956 C22.602,0.567,25.338,0.567,26.285,2.486z"></path>
+                      </svg>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 47.94 47.94"
+                        width="15px"
+                        height="15px"
+                        fill="#ffc107"
+                      >
+                        <path d="M26.285,2.486l5.407,10.956c0.376,0.762,1.103,1.29,1.944,1.412l12.091,1.757 c2.118,0.308,2.963,2.91,1.431,4.403l-8.749,8.528c-0.608,0.593-0.886,1.448-0.742,2.285l2.065,12.042 c0.362,2.109-1.852,3.717-3.746,2.722l-10.814-5.685c-0.752-0.395-1.651-0.395-2.403,0l-10.814,5.685 c-1.894,0.996-4.108-0.613-3.746-2.722l2.065-12.042c0.144-0.837-0.134-1.692-0.742-2.285l-8.749-8.528 c-1.532-1.494-0.687-4.096,1.431-4.403l12.091-1.757c0.841-0.122,1.568-0.65,1.944-1.412l5.407-10.956 C22.602,0.567,25.338,0.567,26.285,2.486z"></path>
+                      </svg>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 47.94 47.94"
+                        width="15px"
+                        height="15px"
+                        fill="#ffc107"
+                      >
+                        <path d="M26.285,2.486l5.407,10.956c0.376,0.762,1.103,1.29,1.944,1.412l12.091,1.757 c2.118,0.308,2.963,2.91,1.431,4.403l-8.749,8.528c-0.608,0.593-0.886,1.448-0.742,2.285l2.065,12.042 c0.362,2.109-1.852,3.717-3.746,2.722l-10.814-5.685c-0.752-0.395-1.651-0.395-2.403,0l-10.814,5.685 c-1.894,0.996-4.108-0.613-3.746-2.722l2.065-12.042c0.144-0.837-0.134-1.692-0.742-2.285l-8.749-8.528 c-1.532-1.494-0.687-4.096,1.431-4.403l12.091-1.757c0.841-0.122,1.568-0.65,1.944-1.412l5.407-10.956 C22.602,0.567,25.338,0.567,26.285,2.486z"></path>
+                      </svg>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 47.94 47.94"
+                        width="15px"
+                        height="15px"
+                        fill="#dddddd"
+                      >
+                        <path d="M26.285,2.486l5.407,10.956c0.376,0.762,1.103,1.29,1.944,1.412l12.091,1.757 c2.118,0.308,2.963,2.91,1.431,4.403l-8.749,8.528c-0.608,0.593-0.886,1.448-0.742,2.285l2.065,12.042 c0.362,2.109-1.852,3.717-3.746,2.722l-10.814-5.685c-0.752-0.395-1.651-0.395-2.403,0l-10.814,5.685 c-1.894,0.996-4.108-0.613-3.746-2.722l2.065-12.042c0.144-0.837-0.134-1.692-0.742-2.285l-8.749-8.528 c-1.532-1.494-0.687-4.096,1.431-4.403l12.091-1.757c0.841-0.122,1.568-0.65,1.944-1.412l5.407-10.956 C22.602,0.567,25.338,0.567,26.285,2.486z"></path>
+                      </svg>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -306,28 +259,70 @@ export default function Product() {
                 <div className="variants mb-4 d-flex justify-content-between">
                   <div className="colors">
                     <p className="mb-2 fw-semibold text-muted">Renk:</p>
-                    <button className="black border rounded-3 px-3 py-1 btn btn-outline-dark">
+                    <button
+                      className={`black border rounded-3 px-3 py-1 btn btn-outline-dark me-2 ${
+                        colorVariant == "black" ? "active" : ""
+                      }`}
+                      value="black"
+                      onClick={() => setColorVariant("black")}
+                    >
                       Siyah
                     </button>
-                    <button className="blue border ms-2 rounded-3 px-3 py-1 btn btn-outline-dark">
+                    <button
+                      className={`black border rounded-3 px-3 py-1 btn btn-outline-dark me-2 ${
+                        colorVariant == "blue" ? "active" : ""
+                      }`}
+                      value="blue"
+                      onClick={() => setColorVariant("blue")}
+                    >
                       Mavi
                     </button>
-                    <button className="red border ms-2 rounded-3 px-3 py-1 btn btn-outline-dark">
+                    <button
+                      className={`black border rounded-3 px-3 py-1 btn btn-outline-dark ${
+                        colorVariant == "red" ? "active" : ""
+                      }`}
+                      value="red"
+                      onClick={() => setColorVariant("red")}
+                    >
                       Kırmızı
                     </button>
                   </div>
                   <div className="size-type">
                     <p className="mb-2 fw-semibold text-muted">Beden:</p>
-                    <button className="size btn btn-outline-dark me-2 border rounded-3 p-2 py-1">
+                    <button
+                      className={`size btn btn-outline-dark me-2 border rounded-3 p-2 py-1 ${
+                        sizeVariant == "s" ? "active" : ""
+                      }`}
+                      value="s"
+                      onClick={() => setSizeVariant("s")}
+                    >
                       S
                     </button>
-                    <button className="size btn btn-outline-dark me-2 border rounded-3 p-2 py-1">
+                    <button
+                      className={`size btn btn-outline-dark me-2 border rounded-3 p-2 py-1 ${
+                        sizeVariant == "m" ? "active" : ""
+                      }`}
+                      value="m"
+                      onClick={() => setSizeVariant("m")}
+                    >
                       M
                     </button>
-                    <button className="size btn btn-outline-dark me-2 border rounded-3 p-2 py-1">
+                    <button
+                      className={`size btn btn-outline-dark me-2 border rounded-3 p-2 py-1 ${
+                        sizeVariant == "l" ? "active" : ""
+                      }`}
+                      value="l"
+                      onClick={() => setSizeVariant("l")}
+                    >
                       L
                     </button>
-                    <button className="size btn btn-outline-dark me-2 border rounded-3 p-2 py-1">
+                    <button
+                      className={`size btn btn-outline-dark border rounded-3 p-2 py-1 ${
+                        sizeVariant == "xl" ? "active" : ""
+                      }`}
+                      value="xl"
+                      onClick={() => setSizeVariant("xl")}
+                    >
                       XL
                     </button>
                   </div>
@@ -350,7 +345,10 @@ export default function Product() {
                       </button>
                     </div>
                   </div>
-                  <button onClick={addBasket} className="btn btn-dark text-white fs-5 py-3 w-100 ms-4 rounded-3">
+                  <button
+                    onClick={addBasket}
+                    className="btn btn-dark text-white fs-5 py-3 w-100 ms-4 rounded-3"
+                  >
                     Sepete Ekle
                   </button>
                 </div>
@@ -544,7 +542,9 @@ export default function Product() {
                       strokeLinejoin="round"
                     ></path>
                   </svg>
-                  <p className="ms-2 text-black">Favori Ürün</p>
+                  <p className="ms-2 text-black" onClick={addFavorites}>
+                    Favori Ürün
+                  </p>
                 </a>
                 <a
                   href="#!"
@@ -591,30 +591,6 @@ export default function Product() {
           </div>
         </div>
         <div className="product-bottom">
-          <div className="specs-header d-flex justify-content-center mb-4">
-            <a href="#!" className="text-decoration-none btn p-3 mx-3 active">
-              Ürün Özellikleri
-            </a>
-            <a href="#!" className="text-decoration-none btn p-3 mx-3">
-              Kampanyalar
-            </a>
-            <a href="#!" className="text-decoration-none btn p-3 mx-3">
-              Yorumlar
-            </a>
-            <a href="#!" className="text-decoration-none btn p-3 mx-3">
-              Taksit Seçenekleri
-            </a>
-          </div>
-          <div className="specs-content mb-4 p-4">
-            <div className="details active">
-              <div className="detail-item d-flex">
-                <p>Marka :</p>
-                <span className="ms-2">{product.title}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="other-products mb-4">
           <AddedCartModal
             show={basketModal}
             onHide={() => setBasketModal(false)}
@@ -623,20 +599,171 @@ export default function Product() {
             show={favoritesModal}
             onHide={() => setFavoritesModal(false)}
           />
-          <div className="row">
-            <p className="fs-2 fw-semibold text-center mb-4">Beğenebileceğiniz Ürünler</p>
-            {data.slice(0,4).map((item) => {
-              return (
-                <Showcase
-                  key={item.id}
-                  id={item.id}
-                  title={item.title}
-                  category={item.category}
-                  price={item.price}
-                  image={item.image}
-                />
-              );
-            })}
+          <div className="specs-header d-flex flex-column flex-lg-row justify-content-center mb-4" >
+            <a
+              href="#!"
+              className={`text-decoration-none btn p-3 mx-3 mb-2 mb-lg-0 ${
+                productDetails == "details" ? "active" : ""
+              }`}
+              onClick={() => setDroductDetails("details")}
+            >
+              Ürün Özellikleri
+            </a>
+            <a
+              href="#!"
+              className={`text-decoration-none btn p-3 mx-3 mb-2 mb-lg-0  ${
+                productDetails == "campaigns" ? "active" : ""
+              }`}
+              onClick={() => setDroductDetails("campaigns")}
+            >
+              Kampanyalar
+            </a>
+            <a
+              href="#!"
+              className={`text-decoration-none btn p-3 mx-3 mb-2 mb-lg-0  ${
+                productDetails == "comments" ? "active" : ""
+              }`}
+              onClick={() => setDroductDetails("comments")}
+            >
+              Yorumlar
+            </a>
+            <a
+              href="#!"
+              className={`text-decoration-none btn p-3 mx-3 ${
+                productDetails == "credit-card" ? "active" : ""
+              }`}
+              onClick={() => setDroductDetails("credit-card")}
+            >
+              Taksit Seçenekleri
+            </a>
+          </div>
+          <div className="specs-content mb-4 p-4">
+            {productDetails == "details" && (
+              <div className="details active">
+                <div className="detail-item d-flex">
+                  <p className="fw-semibold">Özellik :</p>
+                  <span className="ms-2">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  </span>
+                </div>
+              </div>
+            )}
+            {productDetails == "campaigns" && (
+              <div className="campaigns active">
+                <div className="campaign-item d-flex">
+                  <p className="fw-semibold">Kampanya :</p>
+                  <span className="ms-2">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  </span>
+                </div>
+              </div>
+            )}
+            {productDetails == "comments" && (
+              <div className="comments active">
+                <div className="comment-item d-flex">
+                  <p className="fw-semibold">Yorumlar :</p>
+                  <span className="ms-2">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  </span>
+                </div>
+              </div>
+            )}
+            {productDetails == "credit-card" && (
+              <div className="credit-card active">
+                <div className="credit-card-item d-flex">
+                  <p className="fw-semibold">Taksit Seçenekleri :</p>
+                  <span className="ms-2">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  </span>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+        <div className="product-showcase">
+          <p className="text-center fw-semibold fs-3 mb-4">
+            Beğenebileceğiniz Ürünler
+          </p>
+          <div className="carousel-buttons d-flex justify-content-between">
+            <a className="btn prev" onClick={() => calcCarousel("prev")}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="-4.5 0 20 20"
+                version="1.1"
+              >
+                <g
+                  id="Page-1"
+                  stroke="none"
+                  strokeWidth="1"
+                  fill="none"
+                  fillRule="evenodd"
+                >
+                  <g
+                    id="Dribbble-Light-Preview"
+                    transform="translate(-345.000000, -6679.000000)"
+                    fill="#000000"
+                  >
+                    <g id="icons" transform="translate(56.000000, 160.000000)">
+                      <path
+                        d="M299.633777,6519.29231 L299.633777,6519.29231 C299.228878,6518.90256 298.573377,6518.90256 298.169513,6519.29231 L289.606572,6527.55587 C288.797809,6528.33636 288.797809,6529.60253 289.606572,6530.38301 L298.231646,6538.70754 C298.632403,6539.09329 299.27962,6539.09828 299.685554,6538.71753 L299.685554,6538.71753 C300.100809,6538.32879 300.104951,6537.68821 299.696945,6537.29347 L291.802968,6529.67648 C291.398069,6529.28574 291.398069,6528.65315 291.802968,6528.26241 L299.633777,6520.70538 C300.038676,6520.31563 300.038676,6519.68305 299.633777,6519.29231"
+                        id="arrow_left-[#335]"
+                      ></path>
+                    </g>
+                  </g>
+                </g>
+              </svg>
+            </a>
+            <a className="btn next" onClick={() => calcCarousel("next")}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="-4.5 0 20 20"
+                version="1.1"
+              >
+                <g
+                  id="Page-1"
+                  stroke="none"
+                  strokeWidth="1"
+                  fill="none"
+                  fillRule="evenodd"
+                >
+                  <g
+                    id="Dribbble-Light-Preview"
+                    transform="translate(-305.000000, -6679.000000)"
+                    fill="#000000"
+                  >
+                    <g id="icons" transform="translate(56.000000, 160.000000)">
+                      <path
+                        d="M249.365851,6538.70769 L249.365851,6538.70769 C249.770764,6539.09744 250.426289,6539.09744 250.830166,6538.70769 L259.393407,6530.44413 C260.202198,6529.66364 260.202198,6528.39747 259.393407,6527.61699 L250.768031,6519.29246 C250.367261,6518.90671 249.720021,6518.90172 249.314072,6519.28247 L249.314072,6519.28247 C248.899839,6519.67121 248.894661,6520.31179 249.302681,6520.70653 L257.196934,6528.32352 C257.601847,6528.71426 257.601847,6529.34685 257.196934,6529.73759 L249.365851,6537.29462 C248.960938,6537.68437 248.960938,6538.31795 249.365851,6538.70769"
+                        id="arrow_right-[#336]"
+                      ></path>
+                    </g>
+                  </g>
+                </g>
+              </svg>
+            </a>
+          </div>
+          <div className="overflow-hidden">
+            <div
+              className="row product-showcase-page d-flex position-relative"
+              style={{ left: carouselPosition }}
+            >
+              {data.slice(0, 12).map((item) => {
+                return (
+                  <Showcase
+                    key={item.id}
+                    id={item.id}
+                    title={item.title}
+                    category={item.category}
+                    price={item.price}
+                    image={item.image}
+                  />
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>

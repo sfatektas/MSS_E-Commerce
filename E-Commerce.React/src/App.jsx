@@ -13,7 +13,7 @@ import Account from "./pages/Account";
 import Footer from "./components/common/Footer";
 import Category from "./pages/Category";
 import Favorites from "./pages/Favorites";
-import Product from "./pages/Product"
+import Product from "./pages/Product";
 import Cart from "./pages/Cart";
 import { ProtectedRoute } from "./components/common/ProtectedRoute";
 import { loaderStore } from "./store/generalStore";
@@ -53,8 +53,8 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            <Route path="/category/:defination" element={<Category />} />
-            <Route path="/category/:defination/:name" element={<Product />} />
+            <Route path="/:defination" element={<Category />} />
+            <Route path="/:defination/:name" element={<Product />} />
             <Route path="*" element={<NotFound />} />
             <Route path="/forbidden" element={<Forbidden />} />
             <Route
@@ -65,7 +65,14 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            <Route path="/favorites" element={<Favorites />} />
+            <Route
+              path="/favorites"
+              element={
+                <ProtectedRoute>
+                  <Favorites />
+                </ProtectedRoute>
+              }
+            />
           </Routes>
           <Footer />
         </>
