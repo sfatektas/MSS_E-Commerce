@@ -14,7 +14,7 @@ export default function Footer() {
                   İLETİŞİM
                 </p>
                 <p className="subtitle text-muted mb-4">
-                  Herhangi bir sorunuz varsa, lütfen bizimle iletişime geçin.{" "}
+                  Herhangi bir sorunuz varsa lütfen bizimle iletişime geçin.{" "}
                   <a
                     href={`mailto: ${options && options.email}`}
                     className="text-white text-decoration-none"
@@ -122,7 +122,7 @@ export default function Footer() {
                 <p className="subtitle text-muted mb-4">
                   En son güncellemeler için haftalık bültene abone olun.
                 </p>
-                <div className="mb-3 input-group shadow rounded-3">
+                <div className="mb-3 input-group shadow rounded-pill">
                   <input
                     placeholder="E-Posta Adresiniz"
                     aria-label="E-Posta Adresiniz"
@@ -271,6 +271,7 @@ export default function Footer() {
                 <img
                   src="https://demo2.wpopal.com/ekommart/wp-content/uploads/2020/02/payment.png"
                   alt=""
+                  width={"250px"}
                 />
               </div>
             </div>

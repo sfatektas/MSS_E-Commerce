@@ -87,8 +87,6 @@ body {
             }
         }
     }
-
-
 }
 
 
@@ -147,21 +145,16 @@ body {
     }
 
     .carousel-caption {
+        @include center;
+        flex-direction: column;
         position: absolute;
         margin: 0;
         color: white;
-        left: 50%;
-        bottom: 10px;
-        transform: translate(-50%, -50%);
-
-        @media screen and (max-width:1199px) {
-            left: 50%;
-        }
-
+        bottom: 150px;
         h3 {
             @include heading-type-4;
 
-            @media screen and (max-width:1199px) {
+            @media screen and (max-width:992px) {
                 @include heading-type-3;
             }
         }
@@ -189,6 +182,15 @@ body {
 
             img {
                 transition: all .5s ease-out;
+            }
+
+            @media screen and (max-width:992px) {
+                width: 100%;
+
+                img {
+                    height: 100%;
+                    object-fit: cover;
+                }
             }
 
             &:hover {
@@ -228,14 +230,14 @@ body {
     }
 }
 
+
 .margin-top-100 {
     margin-top: -100px;
 }
 
 
-@media screen and (max-width: 1199px) {
+@media screen and (max-width: 992px) {
     .banner-row {
-
         .banner {
             margin-top: -100px;
         }
@@ -275,7 +277,8 @@ body {
         img {
             width: 340px;
             height: auto;
-            transition: $transition
+            transition: $transition;
+            object-fit: cover;
         }
 
         &:hover {
@@ -535,11 +538,12 @@ body {
 .cart-sidebar {
     position: fixed;
     top: 0;
-    right: -450px;
-    width: 450px;
+    right: -500px;
+    // width: 450px;
     height: 100vh;
     z-index: 2001;
-    transition: all .5s linear;
+    overflow-y: scroll;
+    transition: $transition;
 }
 
 .cart-sidebar.active {
@@ -874,11 +878,22 @@ body {
         .prev {
             position: absolute;
             left: -100px;
+
         }
 
         .next {
             position: absolute;
             right: -100px;
+        }
+
+        @media screen and (max-width: 992px) {
+            .next {
+                right: 0px;
+            }
+
+            .prev {
+                left: 0px;
+            }
         }
     }
 

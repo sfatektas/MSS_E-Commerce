@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import productJson from "../../products.json";
-import Showcase from "./Showcase";
+import Showcase from "../common/Showcase";
 
 const data = productJson;
 
@@ -11,6 +11,17 @@ export default function HomeProducts() {
   useEffect(() => {
     sethomeProducts(data);
   }, [homeProducts]);
+
+  useEffect(() => {
+    function shuffleProducts(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+    shuffleProducts(data);
+  }, [data]);
 
 
   return (
