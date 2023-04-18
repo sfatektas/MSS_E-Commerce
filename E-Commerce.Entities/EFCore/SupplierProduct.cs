@@ -11,7 +11,7 @@ namespace E_Commerce.Entities.EFCore
     public class SupplierProduct : BaseEntity
     {
         public int ProductId { get; set; }
-        public Product Products { get; set; }
+        public Product Product { get; set; }
         public int SizeId { get; set; }
         public Size Size { get; set; }
 
@@ -27,6 +27,7 @@ namespace E_Commerce.Entities.EFCore
         public DateTime CreatedDate { get; set; } = DateTime.UtcNow.AddHours(UtcTimeConstant.TurkeyUTC);
 
         //Navigate Prop
+        // Ürünün genel değerlendirme puanı
 
         public ProductsInStock ProductsInStock { get; set; }
         public List<PriceHistory> PriceHistories { get; set; }

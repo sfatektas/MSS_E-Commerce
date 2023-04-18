@@ -13,15 +13,17 @@ namespace E_Commerce.Entities.RequestFeatures
 
         public string Size { get; set; }
 
+        private int _minPrice;
+
         public int MinPrice
         {
             get
             {
-                return this.MinPrice;
+                return this._minPrice;
             }
             set
             {
-                MinPrice = value < 0 ? 0 : value;  
+                _minPrice = value < 0 ? 0 : value;  
             }
         }
 

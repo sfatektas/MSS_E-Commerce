@@ -31,7 +31,6 @@
     <Folder Include="Validations\FluentValidations\FavoriteProductValidation\" />
     <Folder Include="Validations\FluentValidations\GenderValidation\" />
     <Folder Include="Validations\FluentValidations\PriceHistoryValidation\" />
-    <Folder Include="Validations\FluentValidations\SupplierProductValidation\" />
     <Folder Include="Validations\FluentValidations\UserTypeValidation\" />
     <Folder Include="Validations\FluentValidations\SupplierAddingProductValidation\" />
     <Folder Include="Validations\FluentValidations\SizeValidation\" />

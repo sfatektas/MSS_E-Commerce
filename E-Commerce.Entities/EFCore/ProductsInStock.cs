@@ -8,8 +8,8 @@ namespace E_Commerce.Entities.EFCore
 {
     public class ProductsInStock : BaseEntity
     {
-        public int SupplierProductsId { get; set; }
-        public SupplierProduct SupplierProducts { get; set; }
+        public int SupplierProductId { get; set; }
+        public SupplierProduct SupplierProduct { get; set; }
         public double UnitPrice{ get; set; }
         public double Amount { get; set; }
     }

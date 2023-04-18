@@ -1,15 +1,13 @@
-﻿using E_Commerce.Common;
-using E_Commerce.Dtos.Interfaces;
+﻿using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace E_Commerce.Dtos.SupplierProductDtos
+namespace E_Commerce.Presentation.Models
 {
-    public record SupplierProductCreateDto : ICreateDto
+    public class SupplierProductCreateModel
     {
         public int ProductId { get; init; }
         public int SizeId { get; init; }
@@ -18,6 +16,6 @@ namespace E_Commerce.Dtos.SupplierProductDtos
         public int ColorId { get; init; }
         public string CustomProductTitle { get; init; }
         public string CustomProductDefination { get; init; }
-        public DateTime CreatedDate { get; init; } = DateTime.UtcNow.AddHours(UtcTimeConstant.TurkeyUTC);
+        public List<IFormFile> Files { get; set; }
     }
 }

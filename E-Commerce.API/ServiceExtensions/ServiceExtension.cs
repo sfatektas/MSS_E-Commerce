@@ -11,6 +11,7 @@ using E_Commerce.Business.Validations.FluentValidations.ProductValidation;
 using E_Commerce.Business.Validations.FluentValidations.SiteOptionValidation;
 using E_Commerce.Business.Validations.FluentValidations.SliderItemsValidation;
 using E_Commerce.Business.Validations.FluentValidations.SliderValidation;
+using E_Commerce.Business.Validations.FluentValidations.SupplierProductValidation;
 using E_Commerce.Common;
 using E_Commerce.Common.Interfaces;
 using E_Commerce.DataAccess.Contexts;
@@ -23,6 +24,7 @@ using E_Commerce.Dtos.SiteOptionDtos;
 using E_Commerce.Dtos.SliderDtos;
 using E_Commerce.Dtos.SliderItemsDtos;
 using E_Commerce.Dtos.SupplierDtos;
+using E_Commerce.Dtos.SupplierProductDtos;
 using E_Commerce.Entities.EFCore.Identities;
 using E_Commerce.Entities.Exceptions;
 using E_Commerce.Presentation;
@@ -50,7 +52,8 @@ namespace E_Commerce.API.ServiceExtensions
             services.AddDbContext<E_CommerceDbContext>(x =>
             {
                 //"RemoteDb"
-                x.UseSqlServer(configuration.GetConnectionString("RemoteDb"));
+                x.UseMySQL(configuration.GetConnectionString("AzureMySql"));
+                //x.UseSqlServer(configuration.GetConnectionString("RemoteDb"));
             });
             services.AddIdentity<AppUser, AppRole>(opt =>
             {
@@ -91,7 +94,11 @@ namespace E_Commerce.API.ServiceExtensions
                     new SliderProfile(),
                     new CustomerProfile(),
                     new GenderProfile(),
-                    new SupplierProfile()
+                    new SupplierProfile(),
+                    new SupplierProductProfile(),
+                    new ProductImageProfile(),
+                    new ProductInStockProfile(),
+                    new OtherProfile()
             };
 
             services.AddAutoMapper(opt =>
@@ -101,6 +108,7 @@ namespace E_Commerce.API.ServiceExtensions
                 opt.CreateMap<SliderItemCreateModel, SliderItemCreateDto>();
                 opt.CreateMap<ProductCreateModel, ProductCreateDto>();
                 opt.CreateMap<SupplierCreateModel, SupplierCreateDto>();
+                opt.CreateMap<SupplierProductCreateModel, SupplierProductCreateDto>();
             });
         }
         public static void ConfigureServices(this IServiceCollection services)
@@ -120,6 +128,7 @@ namespace E_Commerce.API.ServiceExtensions
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<ISupplierService,SupplierService>();
             services.AddScoped<IAppUserService,AppUserService>();
+            services.AddScoped<ISupplierProductService, SupplierProductService>();
         }
         public static void ConfigureValidations(this IServiceCollection services)
         {
@@ -133,6 +142,10 @@ namespace E_Commerce.API.ServiceExtensions
             services.AddTransient<IValidator<SupplierCreateModel>,SupplierCreateModelValidator>();
             services.AddTransient<IValidator<SliderCreateDto>,SliderCreateDtoValidator>();
             services.AddTransient<IValidator<SupplierCreateModel>,SupplierCreateModelValidator>();
+            services.AddTransient<IValidator<SupplierProductCreateModel>, SupplierProductCreateModelValidator>();
+            services.AddTransient<IValidator<SupplierProductCreateDto>, SupplierProductCreateDtoValidator>();
+            services.AddTransient<IValidator<SupplierProductUpdateDto>, SupplierProductUpdateDtoValidator>();
+
         }
         public static void ConfigureCors(this IServiceCollection services)
         {
@@ -182,6 +195,7 @@ namespace E_Commerce.API.ServiceExtensions
             services.AddScoped<ValidateFilterAttiribute<ProductCreateModel>>();
             services.AddScoped<ValidateFilterAttiribute<SupplierCreateModel>>();
             services.AddScoped<ValidateFilterAttiribute<SliderItemCreateModel>>();
+            services.AddScoped<ValidateFilterAttiribute<SupplierProductCreateModel>>();
         }
         public static void ConfigureRedis(this IServiceCollection services, IConfiguration configuration)
         {

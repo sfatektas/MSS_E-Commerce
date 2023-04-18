@@ -7,9 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net;
+using Microsoft.AspNetCore.Cors;
 
 namespace E_Commerce.Presentation.Middlewares
 {
+    [EnableCors("DefaultPolicy")]
     public class RequestResponseMiddleware 
     {
         readonly RequestDelegate _next;

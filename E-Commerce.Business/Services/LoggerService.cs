@@ -18,17 +18,17 @@ namespace E_Commerce.Business.Services
 
         public void Info(string message)
         {
-            Logger.Error(message);
+            Logger.Info(message);
         }
 
-        public void Trance(string message)
+        public void Trace(string message)
         {
-            Logger.Error(message);
+            Logger.Trace(message);
         }
 
         public void Warning(string message)
         {
-            Logger.Error(message);
+            Logger.Warn(message);
         }
         public void Debug(string message)
         {
