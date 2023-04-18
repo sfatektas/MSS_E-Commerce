@@ -156,7 +156,7 @@ namespace E_Commerce.Business.Services
             {
                 AvaiableColors = difcollorList,
                 AvaiableSizes = difsizeList,
-                SupplierProduct = _mapper.Map<ProductInStockListDto>(productInStock),
+                ProductInStock= _mapper.Map<ProductInStockListDto>(productInStock),
                 SupplierProductsFromOtherSupplier = _mapper.Map<List<ProductInStockListDto>>(otherSuppliers)
             };
         }

@@ -36,7 +36,6 @@
     <Folder Include="Validations\FluentValidations\SizeValidation\" />
     <Folder Include="Validations\FluentValidations\SizeTypeValidation\" />
     <Folder Include="Validations\FluentValidations\ProductsVisitorValidation\" />
-    <Folder Include="Validations\FluentValidations\ProductsInStockValidation\" />
     <Folder Include="Validations\FluentValidations\ProductImageValidation\" />
     <Folder Include="Validations\FluentValidations\ProductCommentValidation\" />
     <Folder Include="Validations\FluentValidations\OrderStatusTypeValidation\" />

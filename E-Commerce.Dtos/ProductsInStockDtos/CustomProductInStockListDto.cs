@@ -14,7 +14,7 @@ namespace E_Commerce.Dtos.ProductsInStockDtos
     {
         public List<DifferentSizeAvaibleProductListDto> AvaiableSizes { get; set; }
         public List<DifferentColorAvaibleProductListDto> AvaiableColors { get; set; }
-        public ProductInStockListDto SupplierProduct { get; set; }
+        public ProductInStockListDto ProductInStock { get; set; }
         public List<ProductInStockListDto> SupplierProductsFromOtherSupplier { get; set; }
 
     }
