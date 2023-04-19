@@ -133,7 +133,6 @@ namespace E_Commerce.API.ServiceExtensions
             services.AddTransient<IValidator<SupplierCreateModel>,SupplierCreateModelValidator>();
             services.AddTransient<IValidator<SliderCreateDto>,SliderCreateDtoValidator>();
             services.AddTransient<IValidator<SupplierCreateModel>,SupplierCreateModelValidator>();
-            services.AddTransient<IValidator<SliderCreateModel>, SliderCreateModelValidator>();
         }
         public static void ConfigureCors(this IServiceCollection services)
         {
@@ -183,7 +182,6 @@ namespace E_Commerce.API.ServiceExtensions
             services.AddScoped<ValidateFilterAttiribute<ProductCreateModel>>();
             services.AddScoped<ValidateFilterAttiribute<SupplierCreateModel>>();
             services.AddScoped<ValidateFilterAttiribute<SliderItemCreateModel>>();
-            services.AddScoped<ValidateFilterAttiribute<SliderCreateModel>>();
         }
         public static void ConfigureRedis(this IServiceCollection services, IConfiguration configuration)
         {

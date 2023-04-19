@@ -45,9 +45,7 @@ namespace E_Commerce.Business.Services
             var slider = await _uow.GetRepository<Slider>().GetByFilterAsync(x => x.Id == id);
 
             if (slider != null)
-            {
                 await base.RemoveAsync(_mapper.Map<SliderListDto>(slider));
-            }
             else
                 throw new SliderNotFoundException("Böyle bir slider bulunamadı");
 
