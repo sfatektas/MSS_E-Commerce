@@ -1,4 +1,5 @@
 ﻿using E_Commerce.Dtos.Interfaces;
+using E_Commerce.Dtos.ProductsInStockDtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +8,10 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.Dtos.BasketDtos
 {
-    public class BasketItemListDto : IListDto
+    public class BasketItemListDto 
     {
-        public int Id { get; init; }
+        public int ProductInStockId { get; init; }
+        public ProductInStockListDto ProductInStock { get; set; }
+        public int Amount { get; init; }
     }
 }

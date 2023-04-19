@@ -133,6 +133,8 @@ namespace E_Commerce.API.ServiceExtensions
             services.AddScoped<IAppUserService,AppUserService>();
             services.AddScoped<ISupplierProductService, SupplierProductService>();
             services.AddScoped<IProductInStockService , ProductInStockService>();
+            services.AddScoped<IBasketService , BasketService>();
+
         }
         public static void ConfigureValidations(this IServiceCollection services)
         {
@@ -210,7 +212,7 @@ namespace E_Commerce.API.ServiceExtensions
             {
                 opt.Configuration = configuration.GetConnectionString("RedisConnection");
             });
-            services.AddScoped<RedisService>();
+            services.AddSingleton<RedisService>();
         }
         public static void ConfigureSessions(this IServiceCollection services, IConfiguration configuration)
         {

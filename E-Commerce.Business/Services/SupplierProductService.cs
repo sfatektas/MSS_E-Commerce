@@ -42,7 +42,7 @@ namespace E_Commerce.Business.Services
                                     && s.SizeId == supplierProduct.SizeId);
 
         }
-        public async Task AddProductToStock(int supplierProductId, int amount)
+        public async Task AddProductToStock(int supplierProductId, int amount , double unitprice)
         {
             var data = await _uow.GetRepository<ProductsInStock>().GetByFilterAsync(x => x.SupplierProductId == supplierProductId);
             if (data == null)
@@ -50,10 +50,12 @@ namespace E_Commerce.Business.Services
                 {
                     SupplierProductId = supplierProductId,
                     Amount = amount,
+                    UnitPrice = unitprice
                 });
             else // daha önceden stokta bulunuyorsa eğer , stoktaki ürünün miktarının arttırıyorum.
             {
                 data.Amount += amount;
+                data.UnitPrice = unitprice;
                 _uow.GetRepository<ProductsInStock>().Update(data);
                 await _uow.SaveChangesAsync();
             }
@@ -70,7 +72,7 @@ namespace E_Commerce.Business.Services
 
             var data = await IndexDataIsExistAsync(supplierProduct);
 
-            await this.AddProductToStock(data.Id, supplierProduct.Amount);
+            await this.AddProductToStock(data.Id, supplierProduct.Amount,supplierProduct.UnitPrice);
             return data.Id;
         }
         public async Task AddImageUrls(List<ProductImageCreateDto> dtos)
@@ -109,6 +111,9 @@ namespace E_Commerce.Business.Services
                 .Include(x => x.SupplierProduct.Size)
                 .Include(x => x.SupplierProduct.Color)
                 .Include(x => x.SupplierProduct.Product)
+                    .Include(x => x.SupplierProduct.Product.SizeType)
+                    .Include(x => x.SupplierProduct.Product.Brand)
+                    .Include(x => x.SupplierProduct.Product.Category)
                 .Include(x => x.SupplierProduct.ProductImages)
                 .ToListAsync();
             if (data.Count == 0)
@@ -132,12 +137,14 @@ namespace E_Commerce.Business.Services
             List<(Color color, int ProductInStock)> avaiableColors = await GetAvaiableColors(
                 productInStock.SupplierProduct.SupplierId,
                 productInStock.SupplierProduct.ProductId,
-                productInStock.SupplierProduct.ColorId);
+                productInStock.SupplierProduct.ColorId,
+                productInStock.SupplierProduct.SizeId);
 
             List<(Size size, int ProductInStock)> avaiableSizes = await GetAvaiableSizes(
                 productInStock.SupplierProduct.SupplierId,
                 productInStock.SupplierProduct.ProductId,
-                productInStock.SupplierProduct.SizeId);
+                productInStock.SupplierProduct.SizeId,
+                productInStock.SupplierProduct.ColorId);
 
             avaiableColors.ForEach(x =>
                 difcollorList.Add(new DifferentColorAvaibleProductListDto
@@ -189,13 +196,14 @@ namespace E_Commerce.Business.Services
                 .ToListAsync();
             return othersuppliers;
         }
-        private async Task<List<(Color color, int ProductInStockId)>> GetAvaiableColors(int supplierid, int productId, int currentColorId)
+        private async Task<List<(Color color, int ProductInStockId)>> GetAvaiableColors(int supplierid, int productId, int currentColorId,int sizeId)
         {
             var avaiableColors = await GetQueryableRepository<ProductsInStock>()
                 .Include(x => x.SupplierProduct)
                     .ThenInclude(x => x.Color)
                 .Where(x => x.SupplierProduct.SupplierId == supplierid
                         && x.SupplierProduct.ProductId == productId
+                        && x.SupplierProduct.SizeId == sizeId
                         && x.SupplierProduct.ColorId != currentColorId)
                 .Select(x => new
                 {
@@ -209,13 +217,14 @@ namespace E_Commerce.Business.Services
                 tuple.Add(new(item.Color, item.SupplierProductId)));
             return tuple;
         }
-        private async Task<List<(Size Size, int ProductInStockId)>> GetAvaiableSizes(int supplierId, int productId, int currentSize)
+        private async Task<List<(Size Size, int ProductInStockId)>> GetAvaiableSizes(int supplierId, int productId, int currentSize,int colorId)
         {
             var avaiableColors = await GetQueryableRepository<ProductsInStock>()
                 .Include(x => x.SupplierProduct)
                     .ThenInclude(x => x.Size)
                 .Where(x => x.SupplierProduct.SupplierId == supplierId
                         && x.SupplierProduct.ProductId == productId
+                        && x.SupplierProduct.ColorId == colorId
                         && x.SupplierProduct.SizeId != currentSize)
                 .Select(x => new
                 {

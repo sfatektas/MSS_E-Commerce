@@ -10,5 +10,6 @@ namespace E_Commerce.Business.Interfaces
     public interface IBasketService
     {
         Task<BasketListDto> GetBasket(string customerusername);
+        Task CreateOrUpdateBasket(BasketCreateDto dto);
     }
 }

@@ -19,6 +19,6 @@ namespace E_Commerce.Business.Interfaces
         Task<CustomProductInStockListDto> GetCustomSupplierProductAsync(int supplierProductId);
         Task<int> CreateSupplierProduct(SupplierProductCreateDto dto);
         Task AddImageUrls(List<ProductImageCreateDto> dtos);
-        Task AddProductToStock(int supplierProductId, int amount);
+        Task AddProductToStock(int supplierProductId, int amount , double unitprice);
     }
 }

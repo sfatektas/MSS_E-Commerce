@@ -44,16 +44,24 @@ var app = builder.Build();
 app.UseMiddleware<CustomExceptionHandlerMiddleware>();
 app.UseMiddleware<RequestResponseMiddleware>(); 
 app.UseMiddleware<TokenMiddleware>();
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+//if (app.Environment.IsDevelopment())
+//{
+//    app.UseSwagger();
+//    app.UseSwaggerUI();
+//}
+app.UseSwagger();
+app.UseSwaggerUI();
+
+
 app.UseForwardedHeaders();
 app.UseStaticFiles();
 
 //app.UseSession(); //
 app.UseIpRateLimiting();
+
+//app.UseRouting();
+
+//app.UseMiddleware<CustomRoutingMiddleware>()
 
 app.UseCors();
 app.UseAuthentication();

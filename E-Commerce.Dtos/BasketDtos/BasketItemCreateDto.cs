@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.Dtos.BasketDtos
 {
-    public class BasketListDto
+    public class BasketItemCreateDto
     {
-        public string CustomerUsername { get; init; }
+        public int ProductInStockId { get; set; }
 
-        public List<BasketItemListDto> BasketItems { get; init; }
+        public int Amount { get; set; }     
     }
 }

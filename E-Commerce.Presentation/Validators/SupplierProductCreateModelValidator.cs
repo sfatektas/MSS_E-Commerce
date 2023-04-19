@@ -12,6 +12,7 @@ namespace E_Commerce.Presentation.Validators
     {
         public SupplierProductCreateModelValidator()
         {
+            RuleFor(x => x.CustomProductTitle).MinimumLength(5).WithMessage("Başlık alanı minimum 5 karakter olabilir.");
             RuleFor(x => x.UnitPrice).GreaterThan(0);
             RuleFor(x => x.SupplierId).NotEqual(0);
             RuleFor(x => x.ProductId).NotEqual(0);

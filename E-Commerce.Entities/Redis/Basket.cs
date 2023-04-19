@@ -9,7 +9,7 @@ namespace E_Commerce.Entities.Redis
 {
     public class Basket : BaseEntity
     {
-        public int CustomerId { get; set; }
+        public int CustomerUsername { get; set; } // belki usernamealabiliriz.
         public List<BasketItem> BasketItems { get; set; }         
     }
 }
