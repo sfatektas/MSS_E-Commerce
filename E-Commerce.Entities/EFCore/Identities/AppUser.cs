@@ -19,8 +19,10 @@ namespace E_Commerce.Entities.EFCore.Identities
         public string CompanyName { get; set; }
         public string CompanyUserName { get; set; }
         public string CompanyDetail { get; set; }
+        public double CompanyPoint { get; set; } 
         public string ImageUrl { get; set; }
 
+        // TODO Satıcının genel ürün puanlanması yapılacak. 
         public List<SupplierProduct> SupplierProducts { get; set; }
     }
     public class Customer : AppUser

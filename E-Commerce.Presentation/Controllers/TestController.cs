@@ -24,10 +24,12 @@ namespace E_Commerce.Presentation.Controllers
         {
             _storage = storage;
         }
+        [HttpGet]
         public IActionResult Get()
         {
             return Ok("It's working");
         }
+        [HttpGet("[action]")]
         public IActionResult IsAuthenticate()
         {
             return Ok("you are already authorize");

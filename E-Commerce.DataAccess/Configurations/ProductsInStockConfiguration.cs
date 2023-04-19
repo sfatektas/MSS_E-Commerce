@@ -14,7 +14,7 @@ namespace E_Commerce.DataAccess.Configurations
         public void Configure(EntityTypeBuilder<ProductsInStock> builder)
         {
             builder.HasKey(x => x.Id);
-            builder.HasIndex(x => x.SupplierProductsId);
+            builder.HasIndex(x => x.SupplierProductId);
             builder.Property(x=>x.IsActive).HasDefaultValue(true);  
         }
     }

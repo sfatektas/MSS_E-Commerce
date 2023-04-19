@@ -16,9 +16,10 @@ namespace E_Commerce.Dtos.SupplierProductDtos
         public int SupplierId { get; init; }
         public double UnitPrice { get; init; }
         public int ColorId { get; init; }
+        public int Amount { get; init; }
         public string CustomProductTitle { get; init; }
         public string CustomProductDefination { get; init; }
-        public int VisitCounter { get; init; }
         public DateTime CreatedDate { get; init; } = DateTime.UtcNow.AddHours(UtcTimeConstant.TurkeyUTC);
     }
+    //TODO supplierCreateModelYapılacak.
 }

@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using E_Commerce.Business.Interfaces;
 using E_Commerce.Business.Interfaces.Storage;
+using E_Commerce.Dtos.ProductImageDtos;
 using E_Commerce.Dtos.SupplierDtos;
+using E_Commerce.Dtos.SupplierProductDtos;
 using E_Commerce.Presentation.ActionFilters;
 using E_Commerce.Presentation.Models;
 using Microsoft.AspNetCore.Cors;
@@ -20,14 +22,16 @@ namespace E_Commerce.Presentation.Controllers
     public class SuppliersController : ControllerBase
     {
         readonly ISupplierService _supplierService;
+        readonly ISupplierProductService _supplierProductService;
         readonly IMapper _mapper;
         readonly IStorage _storage;
 
-        public SuppliersController(ISupplierService supplierService, IMapper mapper, IStorage storage)
+        public SuppliersController(ISupplierService supplierService, IMapper mapper, IStorage storage, ISupplierProductService supplierProductService)
         {
             _supplierService = supplierService;
             _mapper = mapper;
             _storage = storage;
+            _supplierProductService = supplierProductService;
         }
 
         [HttpGet]
@@ -55,6 +59,45 @@ namespace E_Commerce.Presentation.Controllers
         {
             await _supplierService.RemoveSupplier(id);
             return NoContent();
+        }
+
+        [HttpGet("{supplierid:int}/products")]
+        public async Task<IActionResult> GetProductsFromSupplierId([FromRoute] int supplierid)
+        {
+            var data = await _supplierProductService.GetAllProductInStockAsync(supplierid);
+            return Ok(data);
+        }
+
+
+        [HttpPost("{supplierid:int}/products")]
+        [ServiceFilter(typeof(ValidateFilterAttiribute<SupplierProductCreateModel>))]
+        public async Task<IActionResult> AddSupplierProducts([FromForm] SupplierProductCreateModel model)
+        {
+            List<ProductImageCreateDto> productImageList = new List<ProductImageCreateDto>();
+            var dto = _mapper.Map<SupplierProductCreateDto>(model);
+            var supplierProductId = await _supplierProductService.CreateSupplierProduct(dto);
+
+            foreach (var file in model.Files)
+            {
+                var imageUrlGuid = Guid.NewGuid().ToString();
+
+                //dto.ImageUrl = imageUrlGuid + Path.GetExtension(file.FileName);
+                await _storage.UploadFile(imageUrlGuid, file);
+
+                productImageList.Add(new()
+                {
+                    ImageUrl = imageUrlGuid + Path.GetExtension(file.FileName),
+                    SupplierProductId = supplierProductId
+                });
+            }
+            await _supplierProductService.AddImageUrls(productImageList);
+            return NoContent();
+        }
+        [HttpGet("{supplierid:int}/products/{supplierproductid:int}")]
+        // Eğer azure patlıyorsa ip adresini white list olarak ekle .
+        public async Task<IActionResult> GetOneSupplierProductForSale([FromRoute] int supplierId , [FromRoute] int supplierProductId)
+        {
+            return Ok(await _supplierProductService.GetCustomSupplierProductAsync(supplierProductId));
         }
 
     }

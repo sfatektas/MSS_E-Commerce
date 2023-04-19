@@ -228,26 +228,26 @@ namespace E_Commerce.Business.Helpers
             {
                 var CustomerList = new List<Customer>()
                 {
-                    //new Customer
-                    //{
-                    //    FirstName = "Sefa",
-                    //    LastName = "Tektaş",
-                    //    UserName = "sfatektas",
-                    //    Email = "sfatektas55@gmail.com",
-                    //    GenderId = (int)GenderType.Men,
-                    //    UserTypeId = (int)AppUserType.Customer,
-
-                    //},
                     new Customer
                     {
-                        FirstName = "Murat",
-                        LastName = "Baran",
-                        UserName = "mrtbrn",
-                        Email = "mrtbrn@gmail.com",
+                        FirstName = "Sefa",
+                        LastName = "Tektaş",
+                        UserName = "sfatektas",
+                        Email = "sfatektas55@gmail.com",
                         GenderId = (int)GenderType.Men,
                         UserTypeId = (int)AppUserType.Customer,
 
                     },
+                    //new Customer
+                    //{
+                    //    FirstName = "Murat",
+                    //    LastName = "Baran",
+                    //    UserName = "mrtbrn",
+                    //    Email = "mrtbrn@gmail.com",
+                    //    GenderId = (int)GenderType.Men,
+                    //    UserTypeId = (int)AppUserType.Customer,
+
+                    //},
 
                 };
                 foreach (var customer in CustomerList)
@@ -262,13 +262,11 @@ namespace E_Commerce.Business.Helpers
                 {
                     new Supplier()
                     {
-                        UserName = "ChekkoNargile",
-                        NormalizedUserName = "ChekkoNargile".ToUpper(),
-                        Email = "info@chekko.com",
-                        PhoneNumber = "05468461389",
+                        UserName = "Chekko",
+                        Email = "info2@chekko.com",
+                        PhoneNumber = "0546846138932",
                         CompanyName = "Chekko LTD. ŞTI",
-                        NormalizedEmail =  "info@chekko.com".ToUpper(),
-                        CompanyUserName = "chekkonargile",
+                        CompanyUserName = "chekkonargile2",
                         CompanyDetail = "Yer Fıstığı kabuklu nargile kömürü",
                         UserTypeId = (int)AppUserType.Supplier,
                     }

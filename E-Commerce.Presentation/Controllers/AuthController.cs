@@ -44,6 +44,7 @@ namespace E_Commerce.Presentation.Controllers
             await _redisService.Add($"token:{model.UserName}", tokenModel, int.Parse(_configuration.GetSection("JWTTokenOptions")["ExpireMinitue"])); // Büyük harfe çeviriyorum çünki base64stringe çeviriken anlamsız hata verebiliyor.
             return Ok(tokenModel);
         }
+
         [HttpGet("[action]/{token}")]
         [Authorize]
         public async Task<IActionResult> LogOut([FromRoute]string token) // client tarafından logout actionuna username parametresi gelecek.

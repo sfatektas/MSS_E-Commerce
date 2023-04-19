@@ -19,6 +19,7 @@ namespace E_Commerce.Dtos.SupplierProductDtos
         public string CustomProductTitle { get; init; }
         public string CustomProductDefination { get; init; }
         public int VisitCounter { get; init; }
+        public double CompanyPoint { get; init; }
         public DateTime CreatedDate { get; init; } = DateTime.UtcNow.AddHours(UtcTimeConstant.TurkeyUTC);
     }
 }

@@ -31,13 +31,11 @@
     <Folder Include="Validations\FluentValidations\FavoriteProductValidation\" />
     <Folder Include="Validations\FluentValidations\GenderValidation\" />
     <Folder Include="Validations\FluentValidations\PriceHistoryValidation\" />
-    <Folder Include="Validations\FluentValidations\SupplierProductValidation\" />
     <Folder Include="Validations\FluentValidations\UserTypeValidation\" />
     <Folder Include="Validations\FluentValidations\SupplierAddingProductValidation\" />
     <Folder Include="Validations\FluentValidations\SizeValidation\" />
     <Folder Include="Validations\FluentValidations\SizeTypeValidation\" />
     <Folder Include="Validations\FluentValidations\ProductsVisitorValidation\" />
-    <Folder Include="Validations\FluentValidations\ProductsInStockValidation\" />
     <Folder Include="Validations\FluentValidations\ProductImageValidation\" />
     <Folder Include="Validations\FluentValidations\ProductCommentValidation\" />
     <Folder Include="Validations\FluentValidations\OrderStatusTypeValidation\" />

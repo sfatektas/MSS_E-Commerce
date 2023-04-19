@@ -12,7 +12,7 @@ namespace E_Commerce.Business.Interfaces
 
         void Error(string message);
         void Info(string message);
-        void Trance(string message);
+        void Trace(string message);
         void Debug(string message);
 
     }

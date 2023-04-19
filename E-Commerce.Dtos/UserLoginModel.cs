@@ -8,7 +8,20 @@ namespace E_Commerce.Dtos
 {
     public record UserLoginModel
     {
-        public string UserName { get; init; }
+        private string _username;
+
+
+        public string UserName
+        {
+            get 
+            { 
+                return _username; 
+            }
+            set
+            {
+                _username = value.ToLower();
+            }
+        }
 
         public string Password { get; init; }
     }
