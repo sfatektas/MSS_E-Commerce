@@ -1,5 +1,6 @@
 ﻿using E_Commerce.Business.Interfaces;
 using E_Commerce.Dtos.BasketDtos;
+using E_Commerce.Presentation.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -28,9 +29,13 @@ namespace E_Commerce.Presentation.Controllers
             return Ok(dto);
         }
         [HttpPost("{customername}")]
-        public async Task<IActionResult> AddBasket([FromBody] BasketCreateDto dto)
+        public async Task<IActionResult> AddBasket([FromBody] AddBasketCreateModel model)
         {
-            await _basketService.CreateOrUpdateBasket(dto);
+            await _basketService.CreateOrUpdateBasket(model.Username , 
+                new() { 
+                    Amount = model.Amount ,
+                    ProductInStockId = model.ProductInStockId
+                });
             return StatusCode(201);
         }
     }

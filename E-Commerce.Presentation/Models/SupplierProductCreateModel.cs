@@ -19,4 +19,5 @@ namespace E_Commerce.Presentation.Models
         public string CustomProductDefination { get; init; }
         public List<IFormFile> Files { get; set; }
     }
+
 }
