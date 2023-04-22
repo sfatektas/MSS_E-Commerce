@@ -160,6 +160,12 @@ namespace E_Commerce.API.ServiceExtensions
         {
             services.AddCors(opt =>
             {
+                opt.AddDefaultPolicy(builder =>
+                {
+                    builder.AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
                 opt.AddPolicy("DefaultPolicy",
                       policy =>
                       {
