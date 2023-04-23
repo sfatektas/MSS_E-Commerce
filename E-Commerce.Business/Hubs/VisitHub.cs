@@ -10,7 +10,6 @@ namespace E_Commerce.Business.Hubs
 {
     public class VisitHub : Hub
     {
-        //readonly HttpContext _httpContext;
         private static Dictionary<string, string> ClientsGroupDictionary = new();
 
         private IHttpContextAccessor _httpContextAccessor;

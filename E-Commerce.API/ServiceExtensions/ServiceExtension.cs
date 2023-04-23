@@ -134,6 +134,7 @@ namespace E_Commerce.API.ServiceExtensions
             services.AddScoped<ISupplierProductService, SupplierProductService>();
             services.AddScoped<IProductInStockService , ProductInStockService>();
             services.AddScoped<IBasketService , BasketService>();
+            services.AddScoped<ISalesProductService , SalesProductService>();
 
         }
         public static void ConfigureValidations(this IServiceCollection services)
