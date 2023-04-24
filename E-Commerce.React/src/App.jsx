@@ -55,8 +55,8 @@ function App() {
             />
             <Route path="/:defination" element={<Category />} />
             <Route path="/:defination/:name" element={<Product />} />
-            <Route path="*" element={<NotFound />} />
-            <Route path="/forbidden" element={<Forbidden />} />
+            <Route path="/NotFound" element={<NotFound />} />
+            <Route path="/Forbidden" element={<Forbidden />} />
             <Route
               path="cart"
               element={
