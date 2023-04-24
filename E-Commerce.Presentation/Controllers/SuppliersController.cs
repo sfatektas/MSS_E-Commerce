@@ -94,6 +94,7 @@ namespace E_Commerce.Presentation.Controllers
             return NoContent();
         }
         [HttpGet("{supplierid:int}/products/{supplierproductid:int}")]
+        // Eğer azure patlıyorsa ip adresini white list olarak ekle .
         public async Task<IActionResult> GetOneSupplierProductForSale([FromRoute] int supplierId , [FromRoute] int supplierProductId)
         {
             return Ok(await _supplierProductService.GetCustomSupplierProductAsync(supplierProductId));

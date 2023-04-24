@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic.Core.Tokenizer;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -42,6 +43,8 @@ namespace E_Commerce.Presentation.Controllers
         {
             var tokenModel = await _authenticationService.CheckLogin(model);
             await _redisService.Add($"token:{model.UserName}", tokenModel, int.Parse(_configuration.GetSection("JWTTokenOptions")["ExpireMinitue"])); // Büyük harfe çeviriyorum çünki base64stringe çeviriken anlamsız hata verebiliyor.
+            await _redisService.Add($"token:{model.UserName}:deactive", tokenModel.Token, 60 * 24);
+            // Oturumu devam eden token silindiğinde otomatik olarak eski tokenı kontrol etmek için login işleminde atama yapıyorum.
             return Ok(tokenModel);
         }
 

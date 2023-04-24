@@ -14,7 +14,6 @@ namespace E_Commerce.Dtos.SupplierDtos
         public string CompanyUserName { get; init; }
         public string CompanyDetail { get; init; }
         public double CompanyPoint { get; init; }
-
         public string ImageUrl { get; init; }
 
         //public List<SupplierProduct> SupplierProducts { get; set; }

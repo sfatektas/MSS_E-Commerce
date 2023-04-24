@@ -19,6 +19,7 @@ namespace E_Commerce.DataAccess.Interfaces
 
         IQueryable<T> GetAllAsync<TKey>(Expression<Func<T, bool>> filter, Expression<Func<T, TKey>> keySelector, OrderByType OrderByType = OrderByType.DESC , bool trackChanges =false);
         Task CreateAsync(T entity);
+        Task MultipleCreateAsynct(List<T> entities);
 
         Task<T> FindAsync(object id);
 

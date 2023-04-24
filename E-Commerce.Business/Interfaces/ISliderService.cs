@@ -15,6 +15,7 @@ namespace E_Commerce.Business.Interfaces
     public interface ISliderService : IService<SliderCreateDto, SliderListDto, SliderUpdateDto, Slider>
     {
         Task<List<SliderListDto>> GetAllSliderAsync();
+        Task DeleteSliderAsync(int id);
 
 
     }

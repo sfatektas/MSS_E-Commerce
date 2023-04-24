@@ -20,6 +20,7 @@
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Core" Version="1.1.0" />
     <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="6.0.15" />
     <PackageReference Include="NLog.Extensions.Logging" Version="5.2.3" />
     <PackageReference Include="UrlBase64" Version="0.1.2" />
@@ -36,7 +37,6 @@
     <Folder Include="Validations\FluentValidations\SizeValidation\" />
     <Folder Include="Validations\FluentValidations\SizeTypeValidation\" />
     <Folder Include="Validations\FluentValidations\ProductsVisitorValidation\" />
-    <Folder Include="Validations\FluentValidations\ProductsInStockValidation\" />
     <Folder Include="Validations\FluentValidations\ProductImageValidation\" />
     <Folder Include="Validations\FluentValidations\ProductCommentValidation\" />
     <Folder Include="Validations\FluentValidations\OrderStatusTypeValidation\" />

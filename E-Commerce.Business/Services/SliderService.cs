@@ -2,6 +2,8 @@
 using E_Commerce.Business.Interfaces;
 using E_Commerce.Business.Validations.FluentValidations.SliderValidation;
 using E_Commerce.DataAccess.Interfaces;
+using E_Commerce.Dtos.BrandDtos;
+using E_Commerce.Dtos.Interfaces;
 using E_Commerce.Dtos.SliderDtos;
 using E_Commerce.Dtos.SliderItemsDtos;
 using E_Commerce.Entities.EFCore;
@@ -31,10 +33,22 @@ namespace E_Commerce.Business.Services
         {
             var sliders = await _uow.GetRepository<Slider>().GetQueryable().
                 Include(x => x.SliderItems).ToListAsync();
-                
+
             if (sliders == null)
                 throw new SliderNotFoundException();
             return _mapper.Map<List<SliderListDto>>(sliders);
+        }
+
+
+        public async Task DeleteSliderAsync(int id)
+        {
+            var slider = await _uow.GetRepository<Slider>().GetByFilterAsync(x => x.Id == id);
+
+            if (slider != null)
+                await base.RemoveAsync(_mapper.Map<SliderListDto>(slider));
+            else
+                throw new SliderNotFoundException("Böyle bir slider bulunamadı");
+
         }
 
     }

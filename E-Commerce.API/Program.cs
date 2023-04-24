@@ -1,6 +1,7 @@
 using AspNetCoreRateLimit;
 using E_Commerce.API.ServiceExtensions;
 using E_Commerce.Business.Helpers;
+using E_Commerce.Business.Hubs;
 using E_Commerce.Presentation.Middlewares;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -35,6 +36,8 @@ builder.Services.ConfigureJWTBearer(builder.Configuration);
 builder.Services.ConfigureRedis(builder.Configuration);
 builder.Services.ConfigureStorage();
 builder.Services.ConfigureRateLimit(builder.Configuration);
+builder.Services.AddSignalR();
+builder.Services.AddHttpContextAccessor();
 
 
 
@@ -44,20 +47,30 @@ var app = builder.Build();
 app.UseMiddleware<CustomExceptionHandlerMiddleware>();
 app.UseMiddleware<RequestResponseMiddleware>(); 
 app.UseMiddleware<TokenMiddleware>();
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+//if (app.Environment.IsDevelopment())
+//{
+//    app.UseSwagger();
+//    app.UseSwaggerUI();
+//}
+app.UseSwagger();
+app.UseSwaggerUI();
+
+
 app.UseForwardedHeaders();
 app.UseStaticFiles();
 
 //app.UseSession(); //
 app.UseIpRateLimiting();
 
+//app.UseRouting();
+
+//app.UseMiddleware<CustomRoutingMiddleware>()
+
 app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.MapHub<VisitHub>("/visit");
 
 app.MapControllers();
 

@@ -27,7 +27,7 @@ namespace E_Commerce.Entities.RequestFeatures
             }
         }
 
-        public int MaxPrice { get; set; }
+        public int MaxPrice { get; set; } = int.MaxValue;
 
         public string Search { get; set; }
     }

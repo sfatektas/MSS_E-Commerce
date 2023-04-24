@@ -7,6 +7,7 @@ using E_Commerce.Business.Mapper.AutoMapper;
 using E_Commerce.Business.Services;
 using E_Commerce.Business.Services.Storage;
 using E_Commerce.Business.Validations.FluentValidations;
+using E_Commerce.Business.Validations.FluentValidations.ProductsInStockValidation;
 using E_Commerce.Business.Validations.FluentValidations.ProductValidation;
 using E_Commerce.Business.Validations.FluentValidations.SiteOptionValidation;
 using E_Commerce.Business.Validations.FluentValidations.SliderItemsValidation;
@@ -20,6 +21,7 @@ using E_Commerce.DataAccess.UnitOfWorks;
 using E_Commerce.Dtos;
 using E_Commerce.Dtos.BrandDtos;
 using E_Commerce.Dtos.ProductDtos;
+using E_Commerce.Dtos.ProductsInStockDtos;
 using E_Commerce.Dtos.SiteOptionDtos;
 using E_Commerce.Dtos.SliderDtos;
 using E_Commerce.Dtos.SliderItemsDtos;
@@ -98,7 +100,8 @@ namespace E_Commerce.API.ServiceExtensions
                     new SupplierProductProfile(),
                     new ProductImageProfile(),
                     new ProductInStockProfile(),
-                    new OtherProfile()
+                    new BasketProfile(),
+                    new OtherProfile(),
             };
 
             services.AddAutoMapper(opt =>
@@ -129,6 +132,10 @@ namespace E_Commerce.API.ServiceExtensions
             services.AddScoped<ISupplierService,SupplierService>();
             services.AddScoped<IAppUserService,AppUserService>();
             services.AddScoped<ISupplierProductService, SupplierProductService>();
+            services.AddScoped<IProductInStockService , ProductInStockService>();
+            services.AddScoped<IBasketService , BasketService>();
+            services.AddScoped<ISalesProductService , SalesProductService>();
+
         }
         public static void ConfigureValidations(this IServiceCollection services)
         {
@@ -145,12 +152,21 @@ namespace E_Commerce.API.ServiceExtensions
             services.AddTransient<IValidator<SupplierProductCreateModel>, SupplierProductCreateModelValidator>();
             services.AddTransient<IValidator<SupplierProductCreateDto>, SupplierProductCreateDtoValidator>();
             services.AddTransient<IValidator<SupplierProductUpdateDto>, SupplierProductUpdateDtoValidator>();
+            services.AddTransient<IValidator<ProductInStockUpdateDto>,ProductInStockUpdateDtoValidator>();
+            services.AddTransient<IValidator<ProductsInStockCreateDto>,ProductInStockCreateValidator>();
+
 
         }
         public static void ConfigureCors(this IServiceCollection services)
         {
             services.AddCors(opt =>
             {
+                opt.AddDefaultPolicy(builder =>
+                {
+                    builder.AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
                 opt.AddPolicy("DefaultPolicy",
                       policy =>
                       {
@@ -203,7 +219,7 @@ namespace E_Commerce.API.ServiceExtensions
             {
                 opt.Configuration = configuration.GetConnectionString("RedisConnection");
             });
-            services.AddScoped<RedisService>();
+            services.AddSingleton<RedisService>();
         }
         public static void ConfigureSessions(this IServiceCollection services, IConfiguration configuration)
         {

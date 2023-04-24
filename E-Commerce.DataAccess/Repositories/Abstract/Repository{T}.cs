@@ -27,6 +27,10 @@ namespace E_Commerce.DataAccess.Repositories.Abstract
         {
             await _context.Set<T>().AddAsync(entity);
         }
+        public async Task MultipleCreateAsynct(List<T> entities)
+        {
+            await _context.AddRangeAsync(entities);
+        }
 
         public async Task<T> FindAsync(object id)
         {
