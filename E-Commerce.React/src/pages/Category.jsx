@@ -10,10 +10,12 @@ const data = productJson;
 export default function Category(props) {
   const { defination } = useParams();
   const { categories } = generalStore();
-  const [filtersShow, setFiltersShow] = useState("d-none")
+  const [filtersShow, setFiltersShow] = useState("d-none");
 
-  function handleFilter(){
-    filtersShow=="d-none"?setFiltersShow("d-block"):setFiltersShow("d-none")
+  function handleFilter() {
+    filtersShow == "d-none"
+      ? setFiltersShow("d-block")
+      : setFiltersShow("d-none");
   }
 
   try {
@@ -30,10 +32,16 @@ export default function Category(props) {
             </p>
 
             <div className="row">
-              <button onClick={handleFilter} className="btn btn-dark py-3 mb-4 d-lg-none" href="#!">
+              <button
+                onClick={handleFilter}
+                className="btn btn-dark py-3 mb-4 d-lg-none"
+                href="#!"
+              >
                 Filteler
               </button>
-              <div className={`filters col-12 col-lg-2 d-lg-block ${filtersShow}`}>
+              <div
+                className={`filters col-12 col-lg-2 d-lg-block ${filtersShow}`}
+              >
                 <div className="d-flex flex-column border rounded-3">
                   <div className="border-bottom p-3 mb-3">
                     <p>
@@ -162,6 +170,13 @@ export default function Category(props) {
                       </a>
                     </form>
                   </div>
+                  <button
+                    onClick={() => setFiltersShow("d-none")}
+                    className="btn btn-dark py-3 mb-4 d-lg-none"
+                    href="#!"
+                  >
+                    Kapat
+                  </button>
                 </div>
               </div>
               <div className="products col-12 col-lg-10">

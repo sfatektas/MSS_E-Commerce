@@ -151,6 +151,7 @@ body {
         margin: 0;
         color: white;
         bottom: 150px;
+
         h3 {
             @include heading-type-4;
 
@@ -878,12 +879,13 @@ body {
         .prev {
             position: absolute;
             left: -100px;
-
+            border: none;
         }
 
         .next {
             position: absolute;
             right: -100px;
+            border: none;
         }
 
         @media screen and (max-width: 992px) {
