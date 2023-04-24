@@ -1,16 +1,27 @@
 import { useParams } from "react-router-dom";
 import { generalStore } from "../store/generalStore";
 import { Navigate } from "react-router-dom";
-import productJson from "../products.json";
 import Showcase from "../components/common/Showcase";
-import { useState } from "react";
-
-const data = productJson;
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function Category(props) {
   const { defination } = useParams();
   const { categories } = generalStore();
   const [filtersShow, setFiltersShow] = useState("d-none");
+  const [products, setProducts] = useState([]);
+  useEffect(() => {
+    axios
+      .get(
+        `https://e-commercemss.azurewebsites.net/api/salesproducts?category=${defination}`
+      )
+      .then((response) => {
+        setProducts(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   function handleFilter() {
     filtersShow == "d-none"
@@ -181,16 +192,17 @@ export default function Category(props) {
               </div>
               <div className="products col-12 col-lg-10">
                 <div className="row">
-                  {data.map((item) => {
-                    if (item.category == defination) {
+                  {products.map((item) => {
+                    if (item.category.defination == defination) {
                       return (
                         <Showcase
-                          key={item.id}
-                          id={item.id}
-                          title={item.title}
-                          category={item.category}
-                          price={item.price}
-                          image={item.image}
+                          key={item.supplierProductId}
+                          id={item.supplierProductId}
+                          title={item.productTitle}
+                          brand={item.brand.defination}
+                          price={item.unitPrice}
+                          image={item.imageUrls[0]}
+                          category={item.category.defination}
                         />
                       );
                     }
