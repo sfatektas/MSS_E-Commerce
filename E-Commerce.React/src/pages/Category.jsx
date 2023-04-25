@@ -13,7 +13,7 @@ export default function Category(props) {
   useEffect(() => {
     axios
       .get(
-        `https://e-commercemss.azurewebsites.net/api/salesproducts?category=${defination}`
+        `https://e-commercemss.azurewebsites.net/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1`
       )
       .then((response) => {
         setProducts(response.data);
