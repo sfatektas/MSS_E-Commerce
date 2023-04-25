@@ -11,37 +11,49 @@ export default function Category(props) {
   const [filtersShow, setFiltersShow] = useState("d-none");
   const [products, setProducts] = useState([]);
   const [listBrands, setListBrands] = useState();
-  const [filterBrand, setFilterBrand] = useState("")
+  const [filterBrand, setFilterBrand] = useState("");
   const [listSizes, setListSizes] = useState();
-  const [filterSize, setSilterSize] = useState("")
+  const [filterSize, setFilterSize] = useState("");
   const [listColors, setListColors] = useState();
-  const [filterColor, setFilterColor] = useState("")
+  const [filterColor, setFilterColor] = useState("");
   const [productsLink, setProductsLink] = useState(
     `https://e-commercemss.azurewebsites.net/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${filterColor}&size=${filterSize}&brand=${filterBrand}`
   );
 
-  function colorFilter(color){
-    setFilterColor(color)
-    setProductsLink(`https://e-commercemss.azurewebsites.net/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${color}&size=${filterSize}&brand=${filterBrand}`)
+  function colorFilter(color) {
+    setFilterColor(color);
+    setProductsLink(
+      `https://e-commercemss.azurewebsites.net/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${color}&size=${filterSize}&brand=${filterBrand}`
+    );
   }
 
-  function brandFilter(brand){
-    setFilterBrand(brand)
-    setProductsLink(`https://e-commercemss.azurewebsites.net/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${filterColor}&size=${filterSize}&brand=${brand}`)
+  function brandFilter(brand) {
+    setFilterBrand(brand);
+    setProductsLink(
+      `https://e-commercemss.azurewebsites.net/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${filterColor}&size=${filterSize}&brand=${brand}`
+    );
+  }
+
+  function sizeFilter(size) {
+    setFilterSize(size);
+    setProductsLink(
+      `https://e-commercemss.azurewebsites.net/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${filterColor}&size=${size}&brand=${filterBrand}`
+    );
   }
 
   useEffect(() => {
+    console.log(productsLink);
     axios
       .get(productsLink)
       .then((response) => {
         setProducts(response.data);
-        console.log(productsLink)
+        console.log(productsLink);
       })
       .catch((error) => {
         console.log(error.response.data.Error);
-        alert(error.response.data.Error)
+        alert(error.response.data.Error);
       });
-  }, [productsLink,filterColor]);
+  }, [productsLink, filterColor]);
 
   useEffect(() => {
     axios
@@ -103,7 +115,10 @@ export default function Category(props) {
                 <div className="d-flex flex-column border rounded-3">
                   <div className="border-bottom p-3 mb-3">
                     <p>
-                      <span className="fw-semibold">+50 Ürün</span> listeleniyor
+                      <span className="fw-semibold">
+                        {products.length} Ürün
+                      </span>{" "}
+                      listeleniyor
                     </p>
                   </div>
                   <div className="category-brand px-3 mb-3 pb-3 border-bottom">
@@ -111,7 +126,12 @@ export default function Category(props) {
                     {listBrands.map((item) => {
                       return (
                         <div key={item.id} className="d-flex mb-1">
-                          <input type="radio" name="brand" value={item.defination} onClick={(e)=>brandFilter(e.target.value)}/>
+                          <input
+                            type="radio"
+                            name="brand"
+                            value={item.defination}
+                            onClick={(e) => brandFilter(e.target.value)}
+                          />
                           <p className="ms-2">{item.defination}</p>
                         </div>
                       );
@@ -125,7 +145,12 @@ export default function Category(props) {
                           className="d-flex align-items-center mb-1"
                           key={item.id}
                         >
-                          <input type="radio" name="color" value={item.defination}  onClick={(e)=>colorFilter(e.target.value)}/>
+                          <input
+                            type="radio"
+                            name="color"
+                            value={item.defination}
+                            onClick={(e) => colorFilter(e.target.value)}
+                          />
                           <div className="black ms-2"></div>{" "}
                           {/*Renk kodu gelecek*/}
                           <p className="ms-2">{item.defination}</p>
@@ -172,7 +197,12 @@ export default function Category(props) {
                     {listSizes.map((item) => {
                       return (
                         <div className="d-flex mb-1" key={item.id}>
-                          <input type="radio" name="size" />
+                          <input
+                            type="radio"
+                            name="size"
+                            value={item.value}
+                            onClick={(e) => sizeFilter(e.target.value)}
+                          />
                           <p className="ms-2">{item.value}</p>
                         </div>
                       );

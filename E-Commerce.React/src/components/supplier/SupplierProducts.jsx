@@ -45,7 +45,6 @@ export default function SupplierProducts() {
       )
       .then((response) => {
         setProducts(response.data);
-        console.log(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -88,43 +87,41 @@ export default function SupplierProducts() {
     const decodedPayload = Base64.decode(trimmedPayload);
     let supplierId = JSON.parse(decodedPayload).Id;
     //Post Stateleri
-    const [productId, setProductId] = useState()
+    const [productId, setProductId] = useState();
     const [productTitle, setProductTitle] = useState();
-    const [productSize, setProductSize] = useState()
-    const [productColor, setProductColor] = useState()
+    const [productSize, setProductSize] = useState();
+    const [productColor, setProductColor] = useState();
     const [productInfo, setProductInfo] = useState();
-    const [productFile, setProductFile] = useState([]);
+    const [productFile, setProductFile] = useState(null);
     const [productPrice, setProductPrice] = useState();
-    const [productAmount, setProductAmount] = useState()
-
-    useEffect(() => {
-      console.log(productFile)
-    }, [productFile])
-    
+    const [productAmount, setProductAmount] = useState();
 
     function handleFile(event) {
       event.preventDefault();
-      setProductFile([...productFile, ...event.target.files]);
+      setProductFile(event.target.files);
     }
 
     function handleSubmit(event) {
       event.preventDefault();
-      let createProduct = {
-        ProductId: productId,
-        SizeId: productSize,
-        ColorId:productColor,
-        SupplierId: supplierId,
-        UnitPrice: productPrice,
-        Amount:productAmount,
-        CustomProductTitle:productTitle,
-        CustomProductDefination:productInfo,
-        Files: productFile,
-      };
-      console.log(createProduct)
+
+      const formData = new FormData();
+
+      for (let i = 0; i < productFile.length; i++) {
+        formData.append("files", productFile[i]);
+      }
+
+      formData.append("ProductId", productId);
+      formData.append("SizeId", productSize);
+      formData.append("ColorId", productColor);
+      formData.append("SupplierId", supplierId);
+      formData.append("UnitPrice", productPrice);
+      formData.append("Amount", productAmount);
+      formData.append("CustomProductTitle", productTitle);
+      formData.append("CustomProductDefination", productInfo);
       axios
         .post(
           `https://e-commercemss.azurewebsites.net/api/suppliers/${supplierId}/products/`,
-          createProduct,
+          formData,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("user_token")}`,
@@ -136,7 +133,7 @@ export default function SupplierProducts() {
           setInfo("Ürün Başarıyla Eklendi");
           setVariant("success");
           setInfoModal(true);
-          console.log(response)
+          console.log(response);
           // setTimeout(() => {
           //   window.location.reload(false);
           // }, 2000);
@@ -221,28 +218,28 @@ export default function SupplierProducts() {
                 </option>
               ))}
             </select>
-              <div className="d-flex">
-                <div className="d-flex flex-column">
+            <div className="d-flex">
+              <div className="d-flex flex-column">
                 <label className="mb-3 fw-semibold ">Ürün Fiyatı</label>
-            <input
-              className="mb-3 py-2 px-3 text-muted bg-light rounded-3 shadow-sm border-0"
-              name="price"
-              type="number"
-              placeholder="Ürün Fiyatı"
-              onChange={(e) => setProductPrice(e.target.value)}
-            />
-                </div>
-                <div className="d-flex flex-column">
-                <label className="mb-3 fw-semibold ">Ürün Stok Miktarı</label>
-            <input
-              className="mb-3 py-2 px-3 text-muted bg-light rounded-3 shadow-sm border-0"
-              name="amount"
-              type="number"
-              placeholder="Ürün Stok Miktarı"
-              onChange={(e) => setProductAmount(e.target.value)}
-            />
-                </div>
+                <input
+                  className="mb-3 py-2 px-3 text-muted bg-light rounded-3 shadow-sm border-0"
+                  name="price"
+                  type="number"
+                  placeholder="Ürün Fiyatı"
+                  onChange={(e) => setProductPrice(e.target.value)}
+                />
               </div>
+              <div className="d-flex flex-column">
+                <label className="mb-3 fw-semibold ">Ürün Stok Miktarı</label>
+                <input
+                  className="mb-3 py-2 px-3 text-muted bg-light rounded-3 shadow-sm border-0"
+                  name="amount"
+                  type="number"
+                  placeholder="Ürün Stok Miktarı"
+                  onChange={(e) => setProductAmount(e.target.value)}
+                />
+              </div>
+            </div>
             <label className="mb-3 fw-semibold ">Ürün Görseli</label>
             <div className="file-input mb-3">
               <input

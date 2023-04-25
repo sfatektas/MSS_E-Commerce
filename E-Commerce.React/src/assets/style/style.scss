@@ -37,7 +37,9 @@ body {
 
 .logo {
     .logo-text {
-        letter-spacing: 20px;
+        &:first-letter{
+            color: $primary;
+        }
     }
 }
 
