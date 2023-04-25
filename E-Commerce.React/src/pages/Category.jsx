@@ -10,20 +10,67 @@ export default function Category(props) {
   const { categories } = generalStore();
   const [filtersShow, setFiltersShow] = useState("d-none");
   const [products, setProducts] = useState([]);
+  const [listBrands, setListBrands] = useState();
+  const [filterBrand, setFilterBrand] = useState("")
+  const [listSizes, setListSizes] = useState();
+  const [filterSize, setSilterSize] = useState("")
+  const [listColors, setListColors] = useState();
+  const [filterColor, setFilterColor] = useState("")
+  const [productsLink, setProductsLink] = useState(
+    `https://e-commercemss.azurewebsites.net/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${filterColor}&size=${filterSize}&brand=${filterBrand}`
+  );
+
+  function colorFilter(color){
+    setFilterColor(color)
+    setProductsLink(`https://e-commercemss.azurewebsites.net/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${color}&size=${filterSize}&brand=${filterBrand}`)
+  }
+
+  function brandFilter(brand){
+    setFilterBrand(brand)
+    setProductsLink(`https://e-commercemss.azurewebsites.net/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${filterColor}&size=${filterSize}&brand=${brand}`)
+  }
+
   useEffect(() => {
     axios
-      .get(
-        `https://e-commercemss.azurewebsites.net/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1`
-      )
+      .get(productsLink)
       .then((response) => {
         setProducts(response.data);
+        console.log(productsLink)
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error.response.data.Error);
+        alert(error.response.data.Error)
       });
+  }, [productsLink,filterColor]);
+
+  useEffect(() => {
+    axios
+      .get("https://e-commercemss.azurewebsites.net/api/brands")
+      .then((response) => {
+        setListBrands(response.data);
+      })
+      .catch((error) => [console.log(error)]);
   }, []);
 
-  function handleFilter() {
+  useEffect(() => {
+    axios
+      .get("https://e-commercemss.azurewebsites.net/api/colors")
+      .then((response) => {
+        setListColors(response.data);
+      })
+      .catch((error) => [console.log(error)]);
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get("https://e-commercemss.azurewebsites.net/api/sizes")
+      .then((response) => {
+        setListSizes(response.data);
+      })
+      .catch((error) => [console.log(error)]);
+  }, []);
+
+  function handleFilterShow() {
     filtersShow == "d-none"
       ? setFiltersShow("d-block")
       : setFiltersShow("d-none");
@@ -44,7 +91,7 @@ export default function Category(props) {
 
             <div className="row">
               <button
-                onClick={handleFilter}
+                onClick={handleFilterShow}
                 className="btn btn-dark py-3 mb-4 d-lg-none"
                 href="#!"
               >
@@ -61,45 +108,30 @@ export default function Category(props) {
                   </div>
                   <div className="category-brand px-3 mb-3 pb-3 border-bottom">
                     <p className="fw-semibold mb-3">Marka</p>
-                    <div className="d-flex mb-1">
-                      <input type="checkbox" name="" id="" />
-                      <p className="ms-2">Nike</p>
-                    </div>
-                    <div className="d-flex mb-1">
-                      <input type="checkbox" name="" id="" />
-                      <p className="ms-2">Benetton</p>
-                    </div>
-                    <div className="d-flex mb-1">
-                      <input type="checkbox" name="" id="" />
-                      <p className="ms-2">Reebok</p>
-                    </div>
-                    <div className="d-flex mb-1">
-                      <input type="checkbox" name="" id="" />
-                      <p className="ms-2">Adidas</p>
-                    </div>
+                    {listBrands.map((item) => {
+                      return (
+                        <div key={item.id} className="d-flex mb-1">
+                          <input type="radio" name="brand" value={item.defination} onClick={(e)=>brandFilter(e.target.value)}/>
+                          <p className="ms-2">{item.defination}</p>
+                        </div>
+                      );
+                    })}
                   </div>
                   <div className="category-color px-3 mb-3 pb-3 border-bottom">
                     <p className="fw-semibold mb-3">Renk</p>
-                    <div className="d-flex align-items-center mb-1">
-                      <input type="checkbox" name="" id="" />
-                      <div className="black ms-2"></div>
-                      <p className="ms-2">Siyah</p>
-                    </div>
-                    <div className="d-flex align-items-center mb-1">
-                      <input type="checkbox" name="" id="" />
-                      <div className="blue ms-2"></div>
-                      <p className="ms-2">Mavi</p>
-                    </div>
-                    <div className="d-flex align-items-center mb-1">
-                      <input type="checkbox" name="" id="" />
-                      <div className="red ms-2"></div>
-                      <p className="ms-2">Kırmızı</p>
-                    </div>
-                    <div className="d-flex align-items-center mb-1">
-                      <input type="checkbox" name="" id="" />
-                      <div className="yellow ms-2"></div>
-                      <p className="ms-2">Sarı</p>
-                    </div>
+                    {listColors.map((item) => {
+                      return (
+                        <div
+                          className="d-flex align-items-center mb-1"
+                          key={item.id}
+                        >
+                          <input type="radio" name="color" value={item.defination}  onClick={(e)=>colorFilter(e.target.value)}/>
+                          <div className="black ms-2"></div>{" "}
+                          {/*Renk kodu gelecek*/}
+                          <p className="ms-2">{item.defination}</p>
+                        </div>
+                      );
+                    })}
                   </div>
                   <div className="category-price d-flex flex-column px-3 mb-3 pb-3 border-bottom">
                     <p className="fw-semibold mb-3">Fiyat Aralığı</p>
@@ -137,22 +169,14 @@ export default function Category(props) {
                   </div>
                   <div className="category-size px-3 mb-3 pb-3 border-bottom">
                     <p className="fw-semibold mb-3">Beden</p>
-                    <div className="d-flex mb-1">
-                      <input type="checkbox" name="" id="" />
-                      <p className="ms-2">S</p>
-                    </div>
-                    <div className="d-flex mb-1">
-                      <input type="checkbox" name="" id="" />
-                      <p className="ms-2">M</p>
-                    </div>
-                    <div className="d-flex mb-1">
-                      <input type="checkbox" name="" id="" />
-                      <p className="ms-2">L</p>
-                    </div>
-                    <div className="d-flex mb-1">
-                      <input type="checkbox" name="" id="" />
-                      <p className="ms-2">XL</p>
-                    </div>
+                    {listSizes.map((item) => {
+                      return (
+                        <div className="d-flex mb-1" key={item.id}>
+                          <input type="radio" name="size" />
+                          <p className="ms-2">{item.value}</p>
+                        </div>
+                      );
+                    })}
                   </div>
                   <div className="category-search row px-3 mb-4 ">
                     <p className="fw-semibold mb-3">Arama</p>

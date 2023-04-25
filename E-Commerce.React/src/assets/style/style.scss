@@ -954,41 +954,11 @@ body {
         margin: 0;
     }
 
-    input[type=checkbox] {
+    input[type=radio] {
         width: 18px;
         height: 18px;
         cursor: pointer;
         accent-color: $primary;
-    }
-
-    .category-color {
-        .black {
-            width: 15px;
-            height: 15px;
-            border-radius: 100%;
-            background-color: #000;
-        }
-
-        .blue {
-            width: 15px;
-            height: 15px;
-            border-radius: 100%;
-            background-color: #003ce3;
-        }
-
-        .red {
-            width: 15px;
-            height: 15px;
-            border-radius: 100%;
-            background-color: #ea0000;
-        }
-
-        .yellow {
-            width: 15px;
-            height: 15px;
-            border-radius: 100%;
-            background-color: #e2ea00;
-        }
     }
 }
 
