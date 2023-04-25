@@ -2,27 +2,21 @@ import { useEffect, useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import productJson from "../../products.json";
 import Showcase from "../common/Showcase";
-
-const data = productJson;
+import axios from "axios";
 
 export default function HomeProducts() {
-  const [homeProducts, sethomeProducts] = useState([]);
+  const [homeProducts, setHomeProducts] = useState([]);
 
   useEffect(() => {
-    sethomeProducts(data);
+    axios
+      .get("https://e-commercemss.azurewebsites.net/api/SalesProducts/home")
+      .then((response) => {
+        setHomeProducts(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, [homeProducts]);
-
-  useEffect(() => {
-    function shuffleProducts(array) {
-      for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-      }
-      return array;
-    }
-    shuffleProducts(data);
-  }, [data]);
-
 
   return (
     <div className="products-main container mb-5">
@@ -32,16 +26,19 @@ export default function HomeProducts() {
       </div>
       <div className="products-content">
         <div className="row">
-          {homeProducts.slice(0, 12).map((item) => (
-            <Showcase
-              key={item.id}
-              id={item.id}
-              title={item.title}
-              category={item.category}
-              price={item.price}
-              image={item.image}
-            />
-          ))}
+          {homeProducts.slice(0, 8).map((item) => {
+            return (
+              <Showcase
+                key={item.supplierProductId}
+                id={item.supplierProductId}
+                title={item.productTitle}
+                brand={item.brand.defination}
+                price={item.unitPrice}
+                image={item.imageUrls[0]}
+                category={item.category.defination}
+              />
+            );
+          })}
         </div>
       </div>
     </div>

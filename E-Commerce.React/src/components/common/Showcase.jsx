@@ -150,8 +150,8 @@ export default function Showcase(props) {
             </svg>
           </a>
         </div>
-        <div className="showcase-image mb-3 d-flex align-items-center position-relative">
-          <a href={`/${props.category}/${props.id}`}>
+        <div className="showcase-image mb-3 d-flex align-items-center position-relative w-100">
+          <a href={`/${props.category}/${props.id}`} className="w-100">
             <img
               className="w-100"
               src={`https://e-commercemss.azurewebsites.net/api/files/${props.image}`}

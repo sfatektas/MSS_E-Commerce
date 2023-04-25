@@ -322,6 +322,30 @@ body {
 .showcase {
     position: relative;
 
+    .showcase-buttons {
+        z-index: 2;
+        position: absolute;
+        top: 10px;
+        left: 10px;
+
+        a {
+            &:hover {
+                svg {
+                    fill: $primary;
+                }
+            }
+
+            opacity: 0;
+            @include center;
+            width: 50px;
+            height: 50px;
+            border-radius: 100%;
+            box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+            background-color: #fff;
+            transition: $transition
+        }
+    }
+
     &:hover {
         .showcase-buttons {
             a {
@@ -358,28 +382,7 @@ body {
         }
     }
 
-    .showcase-buttons {
-        position: absolute;
-        top: 10px;
-        left: 10px;
 
-        a {
-            &:hover {
-                svg {
-                    fill: $primary;
-                }
-            }
-
-            opacity: 0;
-            @include center;
-            width: 50px;
-            height: 50px;
-            border-radius: 100%;
-            box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-            background-color: #fff;
-            transition: $transition
-        }
-    }
 
 }
 
@@ -906,6 +909,19 @@ body {
     }
 }
 
+.visiters {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    padding: 10px 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+
+    p {
+        font-size: 14px;
+    }
+}
 
 //PRODUCT PAGE
 
@@ -938,41 +954,11 @@ body {
         margin: 0;
     }
 
-    input[type=checkbox] {
+    input[type=radio] {
         width: 18px;
         height: 18px;
         cursor: pointer;
         accent-color: $primary;
-    }
-
-    .category-color {
-        .black {
-            width: 15px;
-            height: 15px;
-            border-radius: 100%;
-            background-color: #000;
-        }
-
-        .blue {
-            width: 15px;
-            height: 15px;
-            border-radius: 100%;
-            background-color: #003ce3;
-        }
-
-        .red {
-            width: 15px;
-            height: 15px;
-            border-radius: 100%;
-            background-color: #ea0000;
-        }
-
-        .yellow {
-            width: 15px;
-            height: 15px;
-            border-radius: 100%;
-            background-color: #e2ea00;
-        }
     }
 }
 

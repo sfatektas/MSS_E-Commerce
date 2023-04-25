@@ -107,7 +107,7 @@ export default function Footer() {
                       <li key={index} className="mb-1">
                         <a
                           className="text-decoration-none text-muted"
-                          href={`/category/${item.defination}`}
+                          href={`/${item.defination}`}
                         >
                           {item.defination}
                         </a>

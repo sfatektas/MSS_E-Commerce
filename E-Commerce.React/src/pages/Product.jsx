@@ -5,6 +5,8 @@ import { generalStore, loaderStore } from "../store/generalStore";
 import Showcase from "../components/common/Showcase";
 import axios from "axios";
 import { Navigate } from "react-router-dom";
+import { HubConnection, HubConnectionBuilder } from "@microsoft/signalr";
+import * as signalR from "@microsoft/signalr";
 
 // Ürünler API'den çekildiği zaman title sorgulanıp true dönerse sayfa görüntülenecek.
 export default function Product() {
@@ -20,12 +22,36 @@ export default function Product() {
   const [favoritesModal, setFavoritesModal] = useState(false);
   const [carouselPosition, setCarouselPosition] = useState(0);
   const [bigImage, setBigImage] = useState("");
+  const [hubConnection, setHubConnection] = useState();
+  const [liveVisiters, setLiveVisiters] = useState();
 
-  // if(product.length==0){
-  //   setLoader(true)
-  // }else if(product.length!=0){
-  //   setLoader(false)
-  // }
+  const createHubConnection = async () => {
+    const connection = new signalR.HubConnectionBuilder()
+      .withUrl(
+        `https://e-commercemss.azurewebsites.net/visit?productId=${name}`,
+        {
+          transport: signalR.HttpTransportType.WebSockets,
+          skipNegotiation: true,
+        }
+      )
+      .build();
+    try {
+      await connection.start();
+      setHubConnection(connection);
+      connection.onclose(async () => {
+        await start();
+      });
+      connection.on("ReceiveMessage", (visiters) => {
+        setLiveVisiters(visiters);
+      });
+    } catch (e) {
+      console.log("Error : ", e);
+    }
+  };
+
+  useEffect(() => {
+    createHubConnection();
+  }, []);
 
   useEffect(() => {
     axios
@@ -158,6 +184,9 @@ export default function Product() {
   if (product != undefined && product != "Hata") {
     return (
       <>
+        <div className="visiters">
+          <p>Bu ürünü şu anda {liveVisiters} kişi görüntülüyor</p>
+        </div>
         <div className="container">
           <div className="row my-5">
             <div className="col-12 col-lg-6">
@@ -178,7 +207,7 @@ export default function Product() {
                       (item) => {
                         return (
                           <a
-                          key={item.id}
+                            key={item.id}
                             onClick={() =>
                               setBigImage(
                                 `https://e-commercemss.azurewebsites.net/api/files/${item.imageUrl}`
@@ -301,20 +330,24 @@ export default function Product() {
                       </p>
                       {product.avaiableColors.map((item) => {
                         return (
-                          <button
+                          <a
+                            href={`/${product.productInStock.supplierProduct.product.category.defination}/${item.supplierProductId}`}
                             key={item.color.id}
-                            className={`black border rounded-3 px-3 py-1 btn btn-outline-dark me-2 mb-2 ${
-                              colorVariant == item.color.defination
-                                ? "active"
-                                : ""
-                            }`}
-                            value={item.color.defination}
-                            onClick={() =>
-                              setColorVariant(item.color.defination)
-                            }
                           >
-                            {item.color.defination}
-                          </button>
+                            <button
+                              className={`black border rounded-3 px-3 py-1 btn btn-outline-dark me-2 mb-2 ${
+                                colorVariant == item.color.defination
+                                  ? "active"
+                                  : ""
+                              }`}
+                              value={item.color.defination}
+                              onClick={() =>
+                                setColorVariant(item.color.defination)
+                              }
+                            >
+                              {item.color.defination}
+                            </button>
+                          </a>
                         );
                       })}
                     </div>
@@ -327,16 +360,20 @@ export default function Product() {
                       </p>
                       {product.avaiableSizes.map((item) => {
                         return (
-                          <button
+                          <a
+                            href={`/${product.productInStock.supplierProduct.product.category.defination}/${item.supplierProductId}`}
                             key={item.size.id}
-                            className={`size btn btn-outline-dark border rounded-3 p-2 py-1 me-2 mb-2 ${
-                              sizeVariant == item.size.value ? "active" : ""
-                            }`}
-                            value={item.size.value}
-                            onClick={() => setSizeVariant(item.size.value)}
                           >
-                            {item.size.value}
-                          </button>
+                            <button
+                              className={`size btn btn-outline-dark border rounded-3 p-2 py-1 me-2 mb-2 ${
+                                sizeVariant == item.size.value ? "active" : ""
+                              }`}
+                              value={item.size.value}
+                              onClick={() => setSizeVariant(item.size.value)}
+                            >
+                              {item.size.value}
+                            </button>
+                          </a>
                         );
                       })}
                     </div>
@@ -496,52 +533,44 @@ export default function Product() {
                     </a>
                   </div>
                 </div>
-                <div className="product-sellers d-flex flex-column mb-4">
-                  <p className="fs-5 fw-semibold mb-2">Diğer Satıcılar</p>
-                  <div className="sellers-container">
-                    <div className="sellers d-flex flex-column rounded-3 border overflow-hidden">
-                      <a
-                        href="#!"
-                        className="supplier d-flex justify-content-between p-4 text-decoration-none text-black"
-                      >
-                        <div className="d-flex align-items-center">
-                          <span className="seller-rating border px-3 rounded-3">
-                            9.7
-                          </span>
-                          <p className="ms-3 fw-semibold text-muted">
-                            sefatektas
-                          </p>
-                        </div>
-                        <div className="d-flex align-items-center">
-                          <p className="fw-semibold">{product.price} TL</p>
-                          <button className="btn btn-primary text-white rounded-3 px-4 ms-3">
-                            Satın Al
-                          </button>
-                        </div>
-                      </a>
-                      <a
-                        href="#!"
-                        className="supplier d-flex justify-content-between p-4 text-decoration-none text-black"
-                      >
-                        <div className="d-flex align-items-center">
-                          <span className="seller-rating border px-3 rounded-3">
-                            7.5
-                          </span>
-                          <p className="ms-3 fw-semibold text-muted">
-                            muratbaran
-                          </p>
-                        </div>
-                        <div className="d-flex align-items-center">
-                          <p className="fw-semibold">{product.price} TL</p>
-                          <button className="btn btn-primary text-white rounded-3 px-4 ms-3">
-                            Satın Al
-                          </button>
-                        </div>
-                      </a>
+                {product.supplierProductsFromOtherSupplier.length != 0 ? (
+                  <div className="product-sellers d-flex flex-column mb-4">
+                    <p className="fs-5 fw-semibold mb-2">Diğer Satıcılar</p>
+                    <div className="sellers-container">
+                      <div className="sellers d-flex flex-column rounded-3 border overflow-hidden">
+                        {product.supplierProductsFromOtherSupplier.map(
+                          (item, index) => {
+                            return (
+                              <a
+                                key={index}
+                                href={`/${item.supplierProduct.product.category.defination}/${item.supplierProduct.id}`}
+                                className="supplier d-flex justify-content-between p-4 text-decoration-none text-black"
+                              >
+                                <div className="d-flex align-items-center">
+                                  <span className="seller-rating border px-3 rounded-3">
+                                    {item.supplierProduct.supplier.companyPoint}
+                                  </span>
+                                  <p className="ms-3 fw-semibold text-muted">
+                                    {item.supplierProduct.supplier.companyName}
+                                  </p>
+                                </div>
+                                <div className="d-flex align-items-center">
+                                  <p className="fw-semibold">
+                                    {item.supplierProduct.unitPrice} TL
+                                  </p>
+                                  <button className="btn btn-primary text-white rounded-3 px-4 ms-3">
+                                    Satın Al
+                                  </button>
+                                </div>
+                              </a>
+                            );
+                          }
+                        )}
+                      </div>
+                      <div className="sellers"></div>
                     </div>
-                    <div className="sellers"></div>
                   </div>
-                </div>
+                ) : null}
                 <div className="product-sub-buttons d-flex justify-content-around pb-4">
                   <a
                     href="#!"
