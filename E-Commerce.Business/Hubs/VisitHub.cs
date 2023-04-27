@@ -27,12 +27,12 @@ namespace E_Commerce.Business.Hubs
 
             await Groups.AddToGroupAsync(this.Context.ConnectionId, productInStockId);
 
-            await SendMessage(productInStockId, $"Toplamda {GetClientCountInGroup(productInStockId)} kişi şuanda bu ürünü ziyaret ediyor.");
+            await SendMessage(productInStockId, GetClientCountInGroup(productInStockId));
         }
 
-        public async Task SendMessage(string groupname, string message)
+        public async Task SendMessage(string groupname, int connectionCounter)
         {
-            await Clients.Group(groupname).SendAsync("ReceiveMessage", message);
+            await Clients.Group(groupname).SendAsync("ReceiveMessage", connectionCounter);
         }
 
         private int GetClientCountInGroup(string groupname) => 
@@ -44,7 +44,7 @@ namespace E_Commerce.Business.Hubs
 
             ClientsGroupDictionary.Remove(Context.ConnectionId);
 
-            await SendMessage(groupname, $"Toplamda {GetClientCountInGroup(groupname)} kişi şuanda bu ürünü ziyaret ediyor.");
+            await SendMessage(groupname, GetClientCountInGroup(groupname));
             
             await base.OnDisconnectedAsync(exception);
         }

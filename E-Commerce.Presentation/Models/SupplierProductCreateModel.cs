@@ -18,6 +18,8 @@ namespace E_Commerce.Presentation.Models
         public string CustomProductTitle { get; init; }
         public string CustomProductDefination { get; init; }
         public List<IFormFile> Files { get; set; }
+
+        public List<object> Deneme { get; set; }
     }
 
 }

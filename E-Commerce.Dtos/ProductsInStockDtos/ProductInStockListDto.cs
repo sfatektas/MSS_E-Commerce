@@ -15,5 +15,7 @@ namespace E_Commerce.Dtos.ProductsInStockDtos
         public SupplierProductListDto SupplierProduct { get; set; }             
         public double UnitPrice { get; init; }
         public double Amount { get; init; }
+        public bool IsFavoriteProduct { get; init; }
+
     }
 }

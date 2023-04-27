@@ -9,6 +9,11 @@ namespace E_Commerce.Entities.RequestFeatures
 {
     public class SalesProductRequestParameter : RequestParameter
     {
+        private string _category;
+
+
+        private string _brand;
+
         private string _color;
 
         private string _size;
@@ -16,6 +21,29 @@ namespace E_Commerce.Entities.RequestFeatures
         private int _minPrice;
 
         private string _search;
+
+        public string Category
+        {
+            get
+            {
+                return _category;
+            }
+            set
+            {
+                _category = value.ToString();
+            }
+        }
+        public string Brand
+        {
+            get 
+            { 
+                return _brand;
+            }
+            set 
+            {
+                _brand = value.ToLower();
+            }
+        }
 
         public string Color
         {

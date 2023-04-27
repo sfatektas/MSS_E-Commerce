@@ -11,6 +11,6 @@ namespace E_Commerce.Business.Interfaces
     public interface IColorService
     {
         Task<Response<List<ColorListDto>>> GetAllColor();
-
+        Task<ColorListDto> GetOneColor(string defination);
     }
 }

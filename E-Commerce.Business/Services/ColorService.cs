@@ -6,6 +6,7 @@ using E_Commerce.Dtos.ColorDtos;
 using E_Commerce.Entities.EFCore;
 using E_Commerce.Entities.Exceptions;
 using Microsoft.EntityFrameworkCore;
+using Org.BouncyCastle.Crypto;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -29,11 +30,16 @@ namespace E_Commerce.Business.Services
         public async Task<Response<List<ColorListDto>>> GetAllColor()
         {
             var colors = await _uow.GetRepository<Entities.EFCore.Color>().GetAllAsync().ToListAsync();
-            if (!colors.Any())
-                throw new ColorNotFoundException();
+
             return new Response<List<ColorListDto>>(Common.Enums.ResponseType.Success, _mapper.Map<List<ColorListDto>>(colors));
         }
+        public async Task<ColorListDto> GetOneColor(string defination)
+        {
+            var color = await _uow.GetRepository<Entities.EFCore.Color>().GetByFilterAsync(x => x.Defination == defination.ToLower());
+            if (color == null)
+                throw new ColorNotFoundException();
+            return _mapper.Map<ColorListDto>(color);
+        }
 
-        
     }
 }

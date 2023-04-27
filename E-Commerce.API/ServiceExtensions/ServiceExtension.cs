@@ -54,7 +54,7 @@ namespace E_Commerce.API.ServiceExtensions
             services.AddDbContext<E_CommerceDbContext>(x =>
             {
                 //"RemoteDb"
-                x.UseMySQL(configuration.GetConnectionString("AzureMySql"));
+                x.UseMySQL(configuration.GetConnectionString("CPanel"));
                 //x.UseSqlServer(configuration.GetConnectionString("RemoteDb"));
             });
             services.AddIdentity<AppUser, AppRole>(opt =>
