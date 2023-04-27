@@ -39,14 +39,13 @@ namespace E_Commerce.Business.Services
             
         }
 
-        public Task<List<SliderItemListDto>> GetAllSliderItemAsync(Expression<Func<Product, bool>> filter)
+        public async Task<SliderItemListDto> GetSliderItemById(int id)
         {
-            throw new NotImplementedException();
+            var response = await base.GetByIdAsync(id);
+            if (response.Data == null)
+                throw new SliderItemNotFoundException();
+            return response.Data;
         }
-
-        public Task<SliderItemListDto> GetSliderById(int id)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

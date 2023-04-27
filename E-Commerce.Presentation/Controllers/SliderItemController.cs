@@ -50,5 +50,15 @@ namespace E_Commerce.Presentation.Controllers
 
             return StatusCode(201);
         }
+
+        [HttpDelete("{sliderItemId}")]
+        public async Task<IActionResult> DeleteSliderItem([FromRoute] int sliderItemId)
+        {
+            var recort = await _sliderItemService.GetSliderItemById(sliderItemId);
+            await _sliderItemService.RemoveAsync(recort);
+
+            _storage.RemoveFile(recort.ImageUrl);
+            return NoContent();
+        }
     }
 }

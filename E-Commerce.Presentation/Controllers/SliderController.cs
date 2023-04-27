@@ -36,14 +36,6 @@ namespace E_Commerce.Presentation.Controllers
             return Ok(response);
         }
 
-        [ServiceFilter(typeof(ValidateFilterAttiribute<SliderCreateModel>))]
-        [HttpPost]
-        public async Task<IActionResult> CreateSliderAsync([FromForm] SliderCreateModel model)
-        {
-            var dto = _mapper.Map<SliderCreateDto>(model);
-            await _sliderService.CreateAsync(dto);
-            return StatusCode(201);
-        }
 
 
         [HttpDelete("{id}")]
@@ -52,6 +44,8 @@ namespace E_Commerce.Presentation.Controllers
             await _sliderService.DeleteSliderAsync(id);
             return StatusCode(201);
         }
+
+
 
 
     }
