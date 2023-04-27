@@ -5,23 +5,24 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import { authStore } from "../../store/authStore";
-import { generalStore, cartSidebarStore } from "../../store/generalStore";
+import { generalStore } from "../../store/generalStore";
+import { basketStore, cartSidebarStore } from "../../store/basketStore";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CartSidebar from "../common/CartSidebar";
 import { Base64 } from "js-base64";
-
 
 function Header() {
   let navigate = useNavigate();
   const { logout, logoutStatus } = authStore();
   const { setSidebarActive } = cartSidebarStore();
   const { options, getOptions, categories, getCategories } = generalStore();
-
+  const { basketItems, getBasketItems } = basketStore();
 
   useEffect(() => {
     getOptions();
     getCategories();
+    getBasketItems();
   }, []);
 
   useEffect(() => {
@@ -68,7 +69,7 @@ function Header() {
 
   return (
     <>
-      <CartSidebar/>
+      <CartSidebar />
       <div className="bg-black">
         <div className="container">
           <div className="header-top row d-flex align-items-center py-2">
@@ -191,7 +192,6 @@ function Header() {
             </a>
           </div>
 
-          
           <Navbar.Offcanvas
             id={`offcanvasNavbar-expand-lg`}
             aria-labelledby={`offcanvasNavbarLabel-expand-lg`}
@@ -254,7 +254,10 @@ function Header() {
             </Offcanvas.Body>
           </Navbar.Offcanvas>
           <Nav className="d-flex flex-row col-lg-3 justify-content-end">
-          <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-lg`} className="mx- mx-lg-0"/>
+            <Navbar.Toggle
+              aria-controls={`offcanvasNavbar-expand-lg`}
+              className="mx- mx-lg-0"
+            />
             {localStorage.getItem("user_token") ? (
               <Nav.Link onClick={handleLogout} className="mx-2 mx-lg-0">
                 <div className="logout mx-3">
@@ -364,7 +367,7 @@ function Header() {
                   </g>
                 </svg>
                 <div className="cart-amount" data-selector="cart-count">
-                  0
+                  {basketItems ? basketItems.length : 0}
                 </div>
               </div>
             </Nav.Link>

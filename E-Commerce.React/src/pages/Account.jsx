@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Navigation from "../components/common/Navigation";
 import { generalStore } from "../store/generalStore";
 import SupplierAccount from "../components/supplier/SupplierAccount";
 import CustomerAccount from "../components/customer/CustomerAccount";

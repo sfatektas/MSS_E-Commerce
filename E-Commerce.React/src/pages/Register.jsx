@@ -1,6 +1,5 @@
 import { Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import Navigation from "../components/common/Navigation";
 
 export default function Register() {
   let navigate = useNavigate();
@@ -13,7 +12,9 @@ export default function Register() {
     } else {
       return (
         <>
-          <Navigation link="Kayıt Ol" />
+          <div className="d-flex flex-column my-4 text-center">
+            <p className="fs-1 text-secondary fw-bold">Kayıt Ol</p>
+          </div>
           <Container className="login-page align-items-center align-items-lg-start d-flex flex-column flex-lg-row justify-content-around mb-5">
             <div className="register-form p-5 bg-light shadow rounded-3">
               <form className="d-flex flex-column">
@@ -37,7 +38,13 @@ export default function Register() {
                   <label className="mb-2">
                     Ad <span className="text-primary">*</span>
                   </label>
-                  <input placeholder="Ad" type="text" name="name" required className="border rounded-3" />
+                  <input
+                    placeholder="Ad"
+                    type="text"
+                    name="name"
+                    required
+                    className="border rounded-3"
+                  />
                 </div>
                 <div className="input-container d-flex flex-column mb-3">
                   <label className="mb-2">

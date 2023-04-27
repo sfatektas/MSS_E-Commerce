@@ -2,8 +2,6 @@ import { useState, useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import { authStore } from "../store/authStore";
 import { useNavigate } from "react-router-dom";
-import Navigation from "../components/common/Navigation";
-
 
 export default function Login() {
   let navigate = useNavigate();
@@ -20,8 +18,7 @@ export default function Login() {
         navigate("/");
       }, 2000);
     }
-  }, [loginStatus,navigate]);
-
+  }, [loginStatus, navigate]);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -37,7 +34,7 @@ export default function Login() {
   function handleUname(e) {
     setUname(e.target.value);
     if (e.target.value.length <= 5) {
-      setUnameError("* Şifreniz 6 karakterden kısa olamaz");
+      setUnameError("* Kullanıcı adınız 6 karakterden kısa olamaz");
     } else {
       if (password.length >= 5) {
         setButtonStatus(false);
@@ -59,7 +56,9 @@ export default function Login() {
   }
   return (
     <>
-      <Navigation link="Hesabım" />
+      <div className="d-flex flex-column my-4 text-center">
+        <p className="fs-1 text-secondary fw-bold">Üye Girişi</p>
+      </div>
       <Container className="login-page align-items-center d-flex flex-column mb-5">
         <div className="login-form d-flex flex-column p-5 shadow m-5 m-lg-0 rounded-3">
           <form>
@@ -106,7 +105,10 @@ export default function Login() {
             </div>
           </form>
           <a className="text-decoration-none text-white" href="/register">
-            <button type="submit" className="btn bg-dark w-100 text-white py-2 rounded-3">
+            <button
+              type="submit"
+              className="btn bg-dark w-100 text-white py-2 rounded-3"
+            >
               Kayıt Ol
             </button>
           </a>
