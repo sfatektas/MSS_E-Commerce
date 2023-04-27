@@ -17,35 +17,44 @@ export default function Category(props) {
   const [listColors, setListColors] = useState();
   const [filterColor, setFilterColor] = useState("");
   const [filterSearch, setFilterSearch] = useState("");
+  const [filterMin, setFilterMin] = useState("");
+  const [filterMax, setFilterMax] = useState("");
   const [productsLink, setProductsLink] = useState(
-    `https://e-commercemss.azurewebsites.net/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${filterColor}&size=${filterSize}&brand=${filterBrand}&search=${filterSearch}`
+    `https://e-commercemss.azurewebsites.net/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${filterColor}&size=${filterSize}&brand=${filterBrand}&minprice=${filterMin}&maxprice=${filterMax}&search=${filterSearch}`
   );
 
   function colorFilter(color) {
     setFilterColor(color);
     setProductsLink(
-      `https://e-commercemss.azurewebsites.net/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${color}&size=${filterSize}&brand=${filterBrand}&search=${filterSearch}`
+      `https://e-commercemss.azurewebsites.net/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${color}&size=${filterSize}&brand=${filterBrand}&minprice=${filterMin}&maxprice=${filterMax}&search=${filterSearch}`
     );
   }
 
   function brandFilter(brand) {
     setFilterBrand(brand);
     setProductsLink(
-      `https://e-commercemss.azurewebsites.net/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${filterColor}&size=${filterSize}&brand=${brand}&search=${filterSearch}`
+      `https://e-commercemss.azurewebsites.net/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${filterColor}&size=${filterSize}&brand=${brand}&minprice=${filterMin}&maxprice=${filterMax}&search=${filterSearch}`
     );
   }
 
   function sizeFilter(size) {
     setFilterSize(size);
     setProductsLink(
-      `https://e-commercemss.azurewebsites.net/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${filterColor}&size=${size}&brand=${filterBrand}&search=${filterSearch}`
+      `https://e-commercemss.azurewebsites.net/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${filterColor}&size=${size}&brand=${filterBrand}&minprice=${filterMin}&maxprice=${filterMax}&search=${filterSearch}`
     );
   }
 
   function searchFilter(e) {
     e.preventDefault();
     setProductsLink(
-      `https://e-commercemss.azurewebsites.net/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${filterColor}&size=${filterSize}&brand=${filterBrand}&search=${filterSearch}`
+      `https://e-commercemss.azurewebsites.net/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${filterColor}&size=${filterSize}&brand=${filterBrand}&minprice=${filterMin}&maxprice=${filterMax}&search=${filterSearch}`
+    );
+  }
+
+  function priceFilter(e) {
+    e.preventDefault();
+    setProductsLink(
+      `https://e-commercemss.azurewebsites.net/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${filterColor}&size=${filterSize}&brand=${filterBrand}&minprice=${filterMin}&maxprice=${filterMax}&search=${filterSearch}`
     );
   }
 
@@ -106,7 +115,6 @@ export default function Category(props) {
       event.preventDefault();
     }
   }
-
   try {
     let definationList = categories.map((item) => {
       return item.defination;
@@ -182,19 +190,24 @@ export default function Category(props) {
                     <form action="" className="d-flex">
                       <input
                         type="number"
-                        name=""
+                        name="minPrice"
                         id=""
                         className="price-min col-4 rounded-3 px-1"
                         placeholder="En az"
+                        onChange={(e) => setFilterMin(e.target.value)}
                       />
                       <input
                         type="number"
-                        name=""
+                        name="maxPrice"
                         id=""
                         className="price-max col-4 ms-2 rounded-3 px-1"
                         placeholder="En çok"
+                        onChange={(e) => setFilterMax(e.target.value)}
                       />
-                      <a className="btn btn-outline-dark rounded-3 ms-2 py-0 px-1">
+                      <a
+                        className="btn btn-outline-dark rounded-3 ms-2 py-0 px-1"
+                        onClick={priceFilter}
+                      >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="18"

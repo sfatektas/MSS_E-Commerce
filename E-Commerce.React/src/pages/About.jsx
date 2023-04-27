@@ -1,12 +1,13 @@
 import Container from "react-bootstrap/Container";
 import BrandsShowcase from "../components/common/BrandsShowcase";
-import Navigation from "../components/common/Navigation";
 
 export default function About() {
   return (
     <>
-      <Navigation link="Hakkımızda" />
       <Container>
+        <div className="d-flex flex-column my-4 text-center">
+          <p className="fs-1 text-secondary fw-bold">Hakkımızda</p>
+        </div>
         <div className="row about mb-5 pb-5">
           <div className="col-12 col-lg-6">
             <img
@@ -31,9 +32,8 @@ export default function About() {
               <p className="display-1 text-primary">"</p>
               <div className="pt-3 ms-3">
                 <p className=" fs-5 mb-3">
-                Temel ve Yaratıcı mod seçenekleri sayesinde
-                istediğiniz kadar çok veya az kontrolle çarpıcı görüntüler oluşturun.
-                   
+                  Temel ve Yaratıcı mod seçenekleri sayesinde istediğiniz kadar
+                  çok veya az kontrolle çarpıcı görüntüler oluşturun.
                 </p>
                 <p className="fw-bold">SELİM GÜNAYDIN</p>
                 <p className="text-muted">Developer</p>

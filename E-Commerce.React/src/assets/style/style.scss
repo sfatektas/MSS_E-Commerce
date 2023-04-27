@@ -37,7 +37,7 @@ body {
 
 .logo {
     .logo-text {
-        &:first-letter{
+        &:first-letter {
             color: $primary;
         }
     }
@@ -551,6 +551,9 @@ body {
     z-index: 2001;
     overflow-y: scroll;
     transition: $transition;
+    img{
+        object-fit: contain;
+    }
 }
 
 .cart-sidebar.active {
@@ -965,3 +968,31 @@ body {
 }
 
 //CATEGORY
+
+// CART
+
+.cart-products {
+    .cart-product{
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+
+        .cart-product-image {
+            img {
+                height: 100px;
+                object-fit: contain;
+            }
+        }
+
+        .cart-product-content {
+            height: 100px;
+            font-size: 14px;
+        }
+    }
+}
+.cart-end{
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+    .cart-end-sub{
+        font-size:13px
+    }
+}
+
+// CART

@@ -1,33 +1,22 @@
-import { cartSidebarStore } from "../../store/generalStore";
-
-const data = [
-  {
-    id: 1,
-    brand: "Nike",
-    title: "Nike React Metcon AMP",
-    price: 180.22,
-    image:
-      "https://www.pngall.com/wp-content/uploads/13/Nike-Shoes-Jordan-PNG-Pic.png",
-  },
-  {
-    id: 2,
-    brand: "Adidas",
-    title: "Adidas React Metcon AMP",
-    price: 180.22,
-    image:
-      "https://www.pngall.com/wp-content/uploads/13/Nike-Shoes-PNG-Clipart.png",
-  },
-];
+import { useEffect } from "react";
+import { basketStore, cartSidebarStore } from "../../store/basketStore";
+import { generalStore } from "../../store/generalStore";
 
 function CartProduct(props) {
   return (
     <div className="product d-flex border-top position-relative">
       <div className="product-image d-flex align-items-center p-2">
-        <img width="100px" src={props.image} alt="" />
+        <img
+          height="100px"
+          width="100px"
+          src={`https://e-commercemss.azurewebsites.net/api/files/${props.image}`}
+          alt=""
+        />
       </div>
       <div className="product-content p-2">
-        <p className="mb-2">{props.brand}</p>
+        <a href="#!" className="mb-2 fw-semibold text-decoration-none text-black">{props.brand}</a>
         <p className="mb-3">{props.title}</p>
+        <p className="mb-3 position-absolute end-0">{props.amount} Adet</p>
         <div className="d-flex align-items-center">
           <a href="#!" className="cart-delete-button">
             <svg
@@ -45,7 +34,7 @@ function CartProduct(props) {
               />
             </svg>
           </a>
-          <p className="fw-semibold">${props.price}</p>
+          <p className="fw-semibold">{props.price} TL</p>
         </div>
       </div>
     </div>
@@ -53,59 +42,143 @@ function CartProduct(props) {
 }
 
 export default function CartSidebar() {
-  let totalPrice = 0;
-  data.map((item) => {
-    totalPrice += item.price;
-    return null; // Boş bir değer döndür, çünkü map fonksiyonu bir dizi döndürmelidir
-  });
+  const { basketItems } = basketStore();
+  const { options } = generalStore();
   const { sidebarActive, setSidebarActive } = cartSidebarStore();
-  return (
-    <>
-      <div
-        onClick={() => {
-          setSidebarActive(false);
-        }}
-        className={`sidebar ${sidebarActive ? "active" : ""}`}
-      ></div>
-      <div className={`cart-sidebar bg-light ${sidebarActive ? "active" : ""}`}>
-        <div className="">
-          <div className="d-flex flex-column p-5">
-            <div className="cart-title mb-5">
-              <p className="fs-2 fw-semibold mb-2">Alışveriş Sepeti</p>
-              <span className="fs-5">
-                Sepetinizde <u className="underline">{data.length} ürün</u>{" "}
-                bulunmaktadır.
-              </span>
-            </div>
-            <div className="cart-items">
-              {data.map((item,index) => (
-                <CartProduct
-                  key={item.id}
-                  image={item.image}
-                  brand={item.brand}
-                  title={item.title}
-                  price={item.price}
-                />
-              ))}
-              <div className="cart-total border-top mb-4 pt-4">
-                <p className="fs-4">Sepet Toplamı</p>
-                <span className="fs-5 fw-bold">${totalPrice}</span>
+  console.log(basketItems)
+
+  let totalPrice = 0;
+  basketItems &&
+    basketItems.map((item) => {
+      totalPrice += item.unitPrice * item.amount;
+      return null;
+    });
+
+  if (localStorage.getItem("user_token") != null) {
+    if (basketItems != null) {
+      return (
+        <>
+          <div
+            onClick={() => {
+              setSidebarActive(false);
+            }}
+            className={`sidebar ${sidebarActive ? "active" : ""}`}
+          ></div>
+          <div
+            className={`cart-sidebar bg-light ${sidebarActive ? "active" : ""}`}
+          >
+            <div className="">
+              <div className="d-flex flex-column p-5">
+                <div className="cart-title mb-5">
+                  <p className="fs-2 fw-semibold mb-2">Alışveriş Sepeti</p>
+                  <span className="fs-5">
+                    Sepetinizde{" "}
+                    <u className="underline">{basketItems.length} ürün</u>{" "}
+                    bulunmaktadır.
+                  </span>
+                </div>
+                <div className="cart-items">
+                  {basketItems.map((item, index) => (
+                    <CartProduct
+                      key={item.id}
+                      image={item.imageUrl}
+                      brand={item.productName}
+                      title={item.customProductTitle}
+                      price={item.unitPrice}
+                      amount={item.amount}
+                    />
+                  ))}
+                  <div className="cart-total border-top mb-4 pt-4">
+                    <p className="fs-4">Sepet Toplamı</p>
+                    <span className="fs-5 fw-bold">{totalPrice} TL</span>
+                  </div>
+                </div>
+                <div className="cart-buttons d-flex flex-column">
+                  <a href="/cart" className="btn btn-dark mb-3 p-3">
+                    Sepete Git
+                  </a>
+                  <button
+                    className="btn btn-outline-dark p-3"
+                    onClick={() => {
+                      setSidebarActive(false);
+                    }}
+                  >
+                    Alışverişe Devam Et
+                  </button>
+                </div>
               </div>
             </div>
-            <div className="cart-buttons d-flex flex-column">
-              <a href="/cart" className="btn btn-dark mb-3 p-3">Sepete Git</a>
-              <button
-                className="btn btn-outline-dark p-3"
-                onClick={() => {
-                  setSidebarActive(false);
-                }}
-              >
-                Alışverişe Devam Et
-              </button>
+          </div>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <div
+            onClick={() => {
+              setSidebarActive(false);
+            }}
+            className={`sidebar ${sidebarActive ? "active" : ""}`}
+          ></div>
+          <div
+            className={`cart-sidebar bg-light ${sidebarActive ? "active" : ""}`}
+          >
+            <div className="">
+              <div className="d-flex flex-column p-5">
+                <div className="cart-title mb-5">
+                  <p className="fs-2 fw-semibold mb-2">Alışveriş Sepeti</p>
+                  <span className="fs-5">
+                    Sepetinizde ürün bulunmamaktadır.
+                  </span>
+                </div>
+                <div className="cart-buttons d-flex flex-column">
+                  <a href="/" className="btn btn-dark mb-3 p-3">
+                    Alışverişe Başla
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      );
+    }
+  } else {
+    return (
+      <>
+        <div
+          onClick={() => {
+            setSidebarActive(false);
+          }}
+          className={`sidebar ${sidebarActive ? "active" : ""}`}
+        ></div>
+        <div
+          className={`cart-sidebar bg-light ${sidebarActive ? "active" : ""}`}
+        >
+          <div className="">
+            <div className="d-flex flex-column p-5">
+              <div className="logo d-flex justify-content-center mb-4">
+                <a
+                  href="/"
+                  className="logo-text text-decoration-none text-black display-5 fw-bold"
+                >
+                  {options && options.logo}
+                </a>
+              </div>
+              <div className="cart-title mb-5">
+                <p className="fs-2 fw-semibold mb-2">Lütfen Giriş Yapın</p>
+              </div>
+              <div className="cart-buttons d-flex flex-column">
+                <a href="/login" className="btn btn-dark mb-3 p-3">
+                  Giriş Yap
+                </a>
+                <a href="/register" className="btn btn-outline-dark mb-3 p-3">
+                  Kayıt Ol
+                </a>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </>
-  );
+      </>
+    );
+  }
 }
