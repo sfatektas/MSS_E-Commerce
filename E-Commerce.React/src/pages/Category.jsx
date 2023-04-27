@@ -16,28 +16,36 @@ export default function Category(props) {
   const [filterSize, setFilterSize] = useState("");
   const [listColors, setListColors] = useState();
   const [filterColor, setFilterColor] = useState("");
+  const [filterSearch, setFilterSearch] = useState("");
   const [productsLink, setProductsLink] = useState(
-    `https://e-commercemss.azurewebsites.net/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${filterColor}&size=${filterSize}&brand=${filterBrand}`
+    `https://e-commercemss.azurewebsites.net/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${filterColor}&size=${filterSize}&brand=${filterBrand}&search=${filterSearch}`
   );
 
   function colorFilter(color) {
     setFilterColor(color);
     setProductsLink(
-      `https://e-commercemss.azurewebsites.net/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${color}&size=${filterSize}&brand=${filterBrand}`
+      `https://e-commercemss.azurewebsites.net/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${color}&size=${filterSize}&brand=${filterBrand}&search=${filterSearch}`
     );
   }
 
   function brandFilter(brand) {
     setFilterBrand(brand);
     setProductsLink(
-      `https://e-commercemss.azurewebsites.net/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${filterColor}&size=${filterSize}&brand=${brand}`
+      `https://e-commercemss.azurewebsites.net/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${filterColor}&size=${filterSize}&brand=${brand}&search=${filterSearch}`
     );
   }
 
   function sizeFilter(size) {
     setFilterSize(size);
     setProductsLink(
-      `https://e-commercemss.azurewebsites.net/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${filterColor}&size=${size}&brand=${filterBrand}`
+      `https://e-commercemss.azurewebsites.net/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${filterColor}&size=${size}&brand=${filterBrand}&search=${filterSearch}`
+    );
+  }
+
+  function searchFilter(e) {
+    e.preventDefault();
+    setProductsLink(
+      `https://e-commercemss.azurewebsites.net/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${filterColor}&size=${filterSize}&brand=${filterBrand}&search=${filterSearch}`
     );
   }
 
@@ -46,6 +54,7 @@ export default function Category(props) {
     axios
       .get(productsLink)
       .then((response) => {
+        console.log(response);
         setProducts(response.data);
         console.log(productsLink);
       })
@@ -53,6 +62,10 @@ export default function Category(props) {
         console.log(error.response.data.Error);
         alert(error.response.data.Error);
       });
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   }, [productsLink, filterColor]);
 
   useEffect(() => {
@@ -81,11 +94,17 @@ export default function Category(props) {
       })
       .catch((error) => [console.log(error)]);
   }, []);
-
   function handleFilterShow() {
     filtersShow == "d-none"
       ? setFiltersShow("d-block")
       : setFiltersShow("d-none");
+  }
+
+  function handleKeyDown(event) {
+    //Input alanı enter keypress disable işlemi
+    if (event.key === "Enter") {
+      event.preventDefault();
+    }
   }
 
   try {
@@ -217,8 +236,13 @@ export default function Category(props) {
                         id=""
                         placeholder="Ara"
                         className="category-search-box col-9 rounded-3 px-2"
+                        onChange={(e) => setFilterSearch(e.target.value)}
+                        onKeyDown={handleKeyDown}
                       />
-                      <a className="btn btn-outline-dark col-43 ms-2 py-0 px-1 rounded-3">
+                      <a
+                        className="btn btn-outline-dark col-43 ms-2 py-0 px-1 rounded-3"
+                        onClick={searchFilter}
+                      >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="18"
