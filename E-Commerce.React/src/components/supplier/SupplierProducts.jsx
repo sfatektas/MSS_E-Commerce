@@ -109,7 +109,6 @@ export default function SupplierProducts() {
       for (let i = 0; i < productFile.length; i++) {
         formData.append("files", productFile[i]);
       }
-
       formData.append("ProductId", productId);
       formData.append("SizeId", productSize);
       formData.append("ColorId", productColor);

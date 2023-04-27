@@ -16,7 +16,7 @@ export default function HomeProducts() {
       .catch((error) => {
         console.log(error);
       });
-  }, [homeProducts]);
+  }, []);
 
   return (
     <div className="products-main container mb-5">

@@ -52,11 +52,11 @@ export default function Product() {
   useEffect(() => {
     createHubConnection();
   }, []);
-
+console.log(name)
   useEffect(() => {
     axios
       .get(
-        `https://e-commercemss.azurewebsites.net/api/suppliers/4/products/${name}`
+        `https://e-commercemss.azurewebsites.net/api/suppliers/${"4"}/products/${name}`
       )
       .then((response) => {
         console.log(response.data);
@@ -102,17 +102,6 @@ export default function Product() {
       }
     }
   }
-
-  // useEffect(() => {
-  //   function shuffleProducts(array) {
-  //     for (let i = array.length - 1; i > 0; i--) {
-  //       const j = Math.floor(Math.random() * (i + 1));
-  //       [array[i], array[j]] = [array[j], array[i]];
-  //     }
-  //     return array;
-  //   }
-  //   shuffleProducts(data);
-  // }, [data]);
 
   function AddedCartModal(props) {
     return (
