@@ -55,7 +55,6 @@ app.UseMiddleware<TokenMiddleware>();
 app.UseSwagger();
 app.UseSwaggerUI();
 
-
 app.UseForwardedHeaders();
 app.UseStaticFiles();
 

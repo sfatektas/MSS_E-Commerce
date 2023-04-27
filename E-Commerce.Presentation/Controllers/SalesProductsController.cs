@@ -25,18 +25,25 @@ namespace E_Commerce.Presentation.Controllers
             _salesProductService = salesProductService;
         }
 
-        //[HttpGet]
-        //public async Task<IActionResult> Get([FromQuery] string category)
-        //{
-        //    var data = await _productInStockService.GetProductsAsync(category);
-        //    return Ok(data);
-        //}
-
         [HttpGet]
         public async Task<IActionResult> GetFromFilter([FromQuery] SalesProductRequestParameter parameter)
         {
             var data = await _salesProductService.GetProductFromParameter(parameter);
             HttpContext.Response.AppendMetada(data.MetaData);
+            return Ok(data);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetBasketPreviewSalesProducts([FromBody] List<int> ProductInStockIds)
+        {
+            var data = await _salesProductService.GetPreviewBasketProducts(ProductInStockIds);
+            return Ok(data);
+        }
+
+        [HttpGet("home")]
+        public async Task<IActionResult> GetHomeProducts()
+        {
+            var data = await _salesProductService.GetHomeProducts();
             return Ok(data);
         }
     }

@@ -93,9 +93,9 @@ namespace E_Commerce.Presentation.Controllers
             await _supplierProductService.AddImageUrls(productImageList);
             return NoContent();
         }
-        [HttpGet("{supplierid:int}/products/{supplierproductid:int}")]
+        [HttpGet("products/{supplierproductid:int}")]
         // Eğer azure patlıyorsa ip adresini white list olarak ekle .
-        public async Task<IActionResult> GetOneSupplierProductForSale([FromRoute] int supplierId , [FromRoute] int supplierProductId)
+        public async Task<IActionResult> GetOneSupplierProductForSale([FromRoute] int supplierProductId)
         {
             return Ok(await _supplierProductService.GetCustomSupplierProductAsync(supplierProductId));
         }

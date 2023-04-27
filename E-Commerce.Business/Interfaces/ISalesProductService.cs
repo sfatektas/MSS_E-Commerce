@@ -1,4 +1,5 @@
-﻿using E_Commerce.Dtos.ProductsInStockDtos;
+﻿using E_Commerce.Dtos.BasketDtos;
+using E_Commerce.Dtos.ProductsInStockDtos;
 using E_Commerce.Entities.RequestFeatures;
 using System;
 using System.Collections.Generic;
@@ -11,5 +12,9 @@ namespace E_Commerce.Business.Interfaces
     public interface ISalesProductService
     {
         Task<PagedList<CustomPreviewProductInStockListDto>> GetProductFromParameter(SalesProductRequestParameter parameter);
+
+        Task<List<CustomPreviewProductInStockListDto>> GetHomeProducts();
+
+        Task<List<CustomPreviewBasketListModel>> GetPreviewBasketProducts(List<int> SalesProductIds);
     }
 }

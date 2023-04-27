@@ -26,5 +26,13 @@ namespace E_Commerce.Presentation.Controllers
             var response = await _colorService.GetAllColor();
             return Ok(response.Data);
         }
+
+        [HttpGet("{defination}")]
+        public async Task<IActionResult> GetOneProduct(string defination)
+        {
+            var data = await _colorService.GetOneColor(defination);
+            return Ok(data);
+        }
+
     }
 }
