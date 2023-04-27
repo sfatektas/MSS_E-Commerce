@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { generalStore } from "../../store/generalStore";
 
-export default function Loader(props) {
+export default function Loaer(props) {
   const { getOptions } = generalStore();
   useEffect(() => {
     getOptions();
