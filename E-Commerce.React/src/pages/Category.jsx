@@ -58,6 +58,33 @@ export default function Category(props) {
     );
   }
 
+  function cleanPrice() {
+    setFilterMax("");
+    setFilterMin("");
+    setProductsLink(
+      `https://e-commercemss.azurewebsites.net/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${filterColor}&size=${filterSize}&brand=${filterBrand}&minprice=${""}&maxprice=${""}&search=${filterSearch}`
+    );
+  }
+
+  function cleanSearch() {
+    setFilterSearch("");
+    setProductsLink(
+      `https://e-commercemss.azurewebsites.net/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${filterColor}&size=${filterSize}&brand=${filterBrand}&minprice=${filterMin}&maxprice=${filterMax}&search=${""}`
+    );
+  }
+
+  function cleanAllFilters(){
+    setFilterBrand("")
+    setFilterColor("")
+    setFilterMax("")
+    setFilterMin("")
+    setFilterSearch("")
+    setFilterSize("")
+    setProductsLink(
+      `https://e-commercemss.azurewebsites.net/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${""}&size=${""}&brand=${""}&minprice=${""}&maxprice=${""}&search=${""}`
+    );
+  }
+
   useEffect(() => {
     console.log(productsLink);
     axios
@@ -124,10 +151,52 @@ export default function Category(props) {
       return (
         <>
           <div className="container mb-5">
-            <p className="my-4 ">
-              HOME | Category | <span className="fw-bold">{defination}</span>
-            </p>
-
+            <div className="d-flex align-items-center">
+              <p className="my-4">
+                HOME | Category | <span className="fw-bold">{defination}</span>
+              </p>
+              {filterBrand ? (
+                <a
+                  className="ms-4 filter-modal"
+                  onClick={(e) => brandFilter("")}
+                  href="#"
+                >
+                  Marka: <span className="fw-semibold">{filterBrand}</span>
+                </a>
+              ) : null}
+              {filterColor ? (
+                <a
+                  className="ms-4 filter-modal"
+                  onClick={(e) => colorFilter("")}
+                  href="#"
+                >
+                  Renk: <span className="fw-semibold">{filterColor}</span>
+                </a>
+              ) : null}
+              {filterSize ? (
+                <a
+                  className="ms-4 filter-modal"
+                  onClick={(e) => sizeFilter("")}
+                  href="#"
+                >
+                  Beden: <span className="fw-semibold">{filterSize}</span>
+                </a>
+              ) : null}
+              {filterMax || filterMax ? (
+                <a className="ms-4 filter-modal" onClick={cleanPrice} href="#">
+                  Fiyat Aralığı:{" "}
+                  <span className="fw-semibold">
+                    {filterMin}-{filterMax} TL
+                  </span>
+                </a>
+              ) : null}
+              {filterSearch ? (
+                <a className="ms-4 filter-modal" onClick={cleanSearch} href="#">
+                  Filtre kelimesi:{" "}
+                  <span className="fw-semibold">{filterSearch}</span>
+                </a>
+              ) : null}
+            </div>
             <div className="row">
               <button
                 onClick={handleFilterShow}
@@ -141,12 +210,18 @@ export default function Category(props) {
               >
                 <div className="d-flex flex-column border rounded-3">
                   <div className="border-bottom p-3 mb-3">
-                    <p>
+                    <p className="mb-2">
                       <span className="fw-semibold">
                         {products.length} Ürün
                       </span>{" "}
                       listeleniyor
                     </p>
+                    {productsLink !=
+                    `https://e-commercemss.azurewebsites.net/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${""}&size=${""}&brand=${""}&minprice=${""}&maxprice=${""}&search=${""}` ? (
+                      <button className="btn btn-outline-dark rounded-3" onClick={cleanAllFilters}>
+                        Filtreleri Temizle
+                      </button>
+                    ) : null}
                   </div>
                   <div className="category-brand px-3 mb-3 pb-3 border-bottom">
                     <p className="fw-semibold mb-3">Marka</p>
