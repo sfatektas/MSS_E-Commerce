@@ -15,7 +15,6 @@ namespace E_Commerce.Business.Interfaces
     public interface ISliderItemService : IService<SliderItemCreateDto,SliderItemListDto,SliderItemUpdateDto, SliderItem>
     {
         Task<List<SliderItemListDto>> GetAllSliderItemAsync();
-        Task<List<SliderItemListDto>> GetAllSliderItemAsync(Expression<Func<Product, bool>> filter);
-        Task<SliderItemListDto> GetSliderById(int id);
+        Task<SliderItemListDto> GetSliderItemById(int id);
     }
 }

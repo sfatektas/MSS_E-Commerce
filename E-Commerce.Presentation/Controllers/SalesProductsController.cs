@@ -33,7 +33,7 @@ namespace E_Commerce.Presentation.Controllers
             return Ok(data);
         }
 
-        [HttpGet("basket")]
+        [HttpGet("baskets")]
         public async Task<IActionResult> GetBasketPreviewSalesProducts([FromBody] List<int> ProductInStockIds)
         {
             var data = await _salesProductService.GetPreviewBasketProducts(ProductInStockIds);

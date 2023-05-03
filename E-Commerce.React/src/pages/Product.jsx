@@ -7,14 +7,14 @@ import axios from "axios";
 import { Navigate } from "react-router-dom";
 import { HubConnection, HubConnectionBuilder } from "@microsoft/signalr";
 import * as signalR from "@microsoft/signalr";
+import { Base64 } from "js-base64";
 
 // Ürünler API'den çekildiği zaman title sorgulanıp true dönerse sayfa görüntülenecek.
 export default function Product() {
   const { name } = useParams();
   const [product, setProduct] = useState();
   const { options } = generalStore();
-  const { loader, setLoader } = loaderStore();
-  const [productPiece, setProductPiece] = useState(0);
+  const [productPiece, setProductPiece] = useState(1);
   const [colorVariant, setColorVariant] = useState();
   const [sizeVariant, setSizeVariant] = useState();
   const [productDetails, setDroductDetails] = useState("details");
@@ -24,6 +24,24 @@ export default function Product() {
   const [bigImage, setBigImage] = useState("");
   const [hubConnection, setHubConnection] = useState();
   const [liveVisiters, setLiveVisiters] = useState();
+  const [userName, setUserName] = useState(null);
+
+  useEffect(() => {
+    if (localStorage.getItem("user_token")) {
+      const token = localStorage.getItem("user_token");
+      const startIndex = token.indexOf(".");
+      const endIndex = token.lastIndexOf(".");
+      const filteredToken = token.slice(startIndex, endIndex + 1);
+      const trimmedPayload = filteredToken.substring(
+        1,
+        filteredToken.length - 1
+      );
+      const decodedPayload = Base64.decode(trimmedPayload);
+
+      let tokenUserName = JSON.parse(decodedPayload).nameid;
+      setUserName(tokenUserName);
+    }
+  }, [userName]);
 
   const createHubConnection = async () => {
     const connection = new signalR.HubConnectionBuilder()
@@ -52,11 +70,11 @@ export default function Product() {
   useEffect(() => {
     createHubConnection();
   }, []);
-console.log(name)
+
   useEffect(() => {
     axios
       .get(
-        `https://e-commercemss.azurewebsites.net/api/suppliers/${"4"}/products/${name}`
+        `https://e-commercemss.azurewebsites.net/api/suppliers/products/${name}`
       )
       .then((response) => {
         console.log(response.data);
@@ -69,7 +87,26 @@ console.log(name)
   }, []);
 
   function addBasket() {
-    setBasketModal(true);
+    const basketItem = {
+      username: userName,
+      productInStockId: name,
+      amount: productPiece,
+    };
+    console.log(userName);
+    if (userName != null) {
+      axios
+        .post(
+          `https://e-commercemss.azurewebsites.net/api/baskets/${userName}`,
+          basketItem
+        )
+        .then((response) => {
+          console.log(response);
+          setBasketModal(true);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   }
   function addFavorites() {
     setFavoritesModal(true);

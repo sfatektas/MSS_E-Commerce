@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Base64 } from "js-base64";
 import { create } from "zustand";
 
 export const loaderStore = create((set) => ({
@@ -35,12 +36,5 @@ export const generalStore = create((set) => ({
       console.error(error);
       throw error;
     }
-  },
-}));
-
-export const cartSidebarStore = create((set) => ({
-  sidebarActive: false,
-  setSidebarActive: (prop) => {
-    set({ sidebarActive: prop });
   },
 }));

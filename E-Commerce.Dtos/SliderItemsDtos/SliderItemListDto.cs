@@ -12,7 +12,7 @@ namespace E_Commerce.Dtos.SliderItemsDtos
     {
         public int Id { get; init; }
         //public Slider Slider { get; set; }
-        //public int SliderId { get; init; }
+        public int SliderId { get; init; }
         public string ImageUrl { get; init; }
         public string Title { get; init; }
         public string SubTitle { get; init; }
