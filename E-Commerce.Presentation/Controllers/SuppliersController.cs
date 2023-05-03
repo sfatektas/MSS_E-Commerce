@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using E_Commerce.Business.Interfaces;
 using E_Commerce.Business.Interfaces.Storage;
+using E_Commerce.Business.Models;
 using E_Commerce.Dtos.ProductImageDtos;
 using E_Commerce.Dtos.SupplierDtos;
 using E_Commerce.Dtos.SupplierProductDtos;
@@ -99,6 +100,25 @@ namespace E_Commerce.Presentation.Controllers
         {
             return Ok(await _supplierProductService.GetCustomSupplierProductAsync(supplierProductId));
         }
+        [HttpDelete("products/{supplierproductid:int}")]
+        public async Task<IActionResult> DeleteSupplierProduct([FromRoute] int supplierproductid)
+        {
+            await _supplierProductService.DeleteSupplierProduct(supplierproductid);
+            return NoContent();
+        }
+        [HttpPut("products/{supplierproductid:int}")]
+        [ServiceFilter(typeof(ValidateFilterAttiribute<SupplierProductUpdateModel>))]
+        public async Task<IActionResult> UpdateSupplierProduct([FromForm] SupplierProductUpdateModel model)
+        {
+            await _supplierProductService.UpdateSupplierProduct(model);
+            return StatusCode(201);
+        }
 
+        [HttpDelete("products/{supplierproductid:int}/images/{imageurl}")]
+        public async Task<IActionResult> RemoveSupplierProductImage(int supplierproductid,string ImageUrl)
+        {
+            await _supplierProductService.RemoveSupplierProductImage(supplierproductid,ImageUrl);
+            return NoContent();
+        }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using E_Commerce.Business.Interfaces;
+using E_Commerce.Business.Interfaces.Storage;
+using E_Commerce.Business.Models;
 using E_Commerce.Common.Interfaces;
 using E_Commerce.DataAccess.Interfaces;
 using E_Commerce.Dtos.ColorDtos;
@@ -14,9 +16,11 @@ using E_Commerce.Entities.Exceptions;
 using E_Commerce.Entities.RequestFeatures;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Net.NetworkInformation;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -28,10 +32,78 @@ namespace E_Commerce.Business.Services
     {
         readonly IUow _uow;
         readonly IMapper _mapper;
-        public SupplierProductService(IUow uow, IMapper mapper, IValidator<SupplierProductCreateDto> createValidator) : base(uow, mapper, createValidator)
+        readonly IStorage _storage;
+        public SupplierProductService(IUow uow, IMapper mapper, IValidator<SupplierProductCreateDto> createValidator, IStorage storage) : base(uow, mapper, createValidator)
         {
             _uow = uow;
             _mapper = mapper;
+            _storage = storage;
+        }
+        public async Task RemoveSupplierProductImage(int supplierProductId, string imageUrl)
+        {
+            var datas = await _uow.GetRepository<ProductImage>().GetAllAsync(x => x.SupplierProductId == supplierProductId).ToListAsync();
+            if (datas.Count() == 1)
+                throw new Exception("Ürün en az bir resime sahip olmalıdır.");
+
+            var row =  datas.FirstOrDefault(x => x.SupplierProductId == supplierProductId && x.ImageUrl == imageUrl);
+            if (row == null)
+                throw new Exception($"{supplierProductId} id ile eşleşen bu {imageUrl} e sahip bir kayıt bulunmamaktadır");
+
+            if (_storage.RemoveFile(imageUrl)) // removed from db when image removed from server
+            {
+                _uow.GetRepository<ProductImage>().Remove(row);
+                await _uow.SaveChangesAsync();
+            }
+        }
+        public async Task UpdateSupplierProduct(SupplierProductUpdateModel model)
+        {
+            var product = await _uow.GetRepository<SupplierProduct>().GetByFilterAsync(x => x.Id == model.Id);
+
+            product.SizeId = model.SizeId;
+            product.UnitPrice = model.UnitPrice;
+            product.ColorId = model.ColorId;
+            product.CustomProductDefination = model.CustomProductDefination;
+            product.CustomProductTitle = model.CustomProductTitle;
+            product.IsActive = model.IsActive;
+
+            if (model.Files.Count() > 0)
+            {
+                var list = model.Files.Select(x => new 
+                {
+                    SupplierProductId = product.Id,
+                    ImageUrl = Guid.NewGuid().ToString(),
+                    File = x
+                }).ToList();
+
+                foreach (var item in list)
+                {
+                    await _storage.UploadFile(item.ImageUrl, item.File);
+                    await _uow.GetRepository<ProductImage>().CreateAsync(new()
+                    {
+                        SupplierProductId = item.SupplierProductId,
+                        ImageUrl = item.ImageUrl + Path.GetExtension(item.File.FileName),
+                    });
+                    await _uow.SaveChangesAsync();
+                }
+            }
+            await base.UpdateAsync(_mapper.Map<SupplierProductUpdateDto>(product)); // herhangi bir fotoğraf güncellemesi olmasa bile diğer datalar güncelleniyor.
+        }
+
+        public async Task DeleteSupplierProduct(int id)
+        {
+            var supplierProduct = await base.GetByFilterAsync(x => x.Id == id);
+            if (supplierProduct.ResponseType == Common.Enums.ResponseType.NotFound)
+                throw new SupplierProductNotFoundException($"{id} değerine sahip silinecek bir ürün mevcut değil");
+
+            var updatedto = _mapper.Map<SupplierProductUpdateDto>(supplierProduct.Data);
+            updatedto.IsActive = false;
+            await base.UpdateAsync(updatedto);
+
+            var data = await this.GetSupplierProduct(supplierProduct.Data.Id);
+            data.IsActive = false;
+
+            _uow.GetRepository<ProductsInStock>().Update(data);
+            await _uow.SaveChangesAsync();
         }
         private async Task<SupplierProduct> IndexDataIsExistAsync(SupplierProductCreateDto supplierProduct)
         {
@@ -42,7 +114,7 @@ namespace E_Commerce.Business.Services
                                     && s.SizeId == supplierProduct.SizeId);
 
         }
-        public async Task AddProductToStock(int supplierProductId, int amount , double unitprice)
+        public async Task AddProductToStock(int supplierProductId, int amount, double unitprice)
         {
             var data = await _uow.GetRepository<ProductsInStock>().GetByFilterAsync(x => x.SupplierProductId == supplierProductId);
             if (data == null)
@@ -72,7 +144,7 @@ namespace E_Commerce.Business.Services
 
             var data = await IndexDataIsExistAsync(supplierProduct);
 
-            await this.AddProductToStock(data.Id, supplierProduct.Amount,supplierProduct.UnitPrice);
+            await this.AddProductToStock(data.Id, supplierProduct.Amount, supplierProduct.UnitPrice);
             return data.Id;
         }
         public async Task AddImageUrls(List<ProductImageCreateDto> dtos)
@@ -148,22 +220,22 @@ namespace E_Commerce.Business.Services
 
             avaiableColors.ForEach(x =>
                 difcollorList.Add(new DifferentColorAvaibleProductListDto
-                    {
-                        Color = _mapper.Map<ColorListDto>(x.color),
-                        SupplierProductId = x.ProductInStock,
-                    }));
-            avaiableSizes.ForEach(x => 
+                {
+                    Color = _mapper.Map<ColorListDto>(x.color),
+                    SupplierProductId = x.ProductInStock,
+                }));
+            avaiableSizes.ForEach(x =>
                 difsizeList.Add(new DifferentSizeAvaibleProductListDto
-                    {
-                        Size = _mapper.Map<SizeListDto>(x.size),
-                        SupplierProductId = x.ProductInStock,
-                    }));
+                {
+                    Size = _mapper.Map<SizeListDto>(x.size),
+                    SupplierProductId = x.ProductInStock,
+                }));
 
             return new()
             {
                 AvaiableColors = difcollorList,
                 AvaiableSizes = difsizeList,
-                ProductInStock= _mapper.Map<ProductInStockListDto>(productInStock),
+                ProductInStock = _mapper.Map<ProductInStockListDto>(productInStock),
                 SupplierProductsFromOtherSupplier = _mapper.Map<List<ProductInStockListDto>>(otherSuppliers)
             };
         }
@@ -192,11 +264,14 @@ namespace E_Commerce.Business.Services
                 .Include(x => x.SupplierProduct)
                 .Where(x => x.SupplierProduct.ProductId == productId
                             && x.SupplierProduct.SupplierId != supplierid)
+
                 .Include(x => x.SupplierProduct.Supplier)
+                .GroupBy(x => x.SupplierProduct.SupplierId)
+                .Select(x => x.FirstOrDefault())
                 .ToListAsync();
             return othersuppliers;
         }
-        private async Task<List<(Color color, int ProductInStockId)>> GetAvaiableColors(int supplierid, int productId, int currentColorId,int sizeId)
+        private async Task<List<(Color color, int ProductInStockId)>> GetAvaiableColors(int supplierid, int productId, int currentColorId, int sizeId)
         {
             var avaiableColors = await GetQueryableRepository<ProductsInStock>()
                 .Include(x => x.SupplierProduct)
@@ -217,7 +292,7 @@ namespace E_Commerce.Business.Services
                 tuple.Add(new(item.Color, item.SupplierProductId)));
             return tuple;
         }
-        private async Task<List<(Size Size, int ProductInStockId)>> GetAvaiableSizes(int supplierId, int productId, int currentSize,int colorId)
+        private async Task<List<(Size Size, int ProductInStockId)>> GetAvaiableSizes(int supplierId, int productId, int currentSize, int colorId)
         {
             var avaiableColors = await GetQueryableRepository<ProductsInStock>()
                 .Include(x => x.SupplierProduct)

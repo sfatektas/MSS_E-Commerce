@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using E_Commerce.Business.Models;
 using E_Commerce.Dtos.SupplierProductDtos;
 using E_Commerce.Entities.EFCore;
 using E_Commerce.Entities.EFCore.Identities;
@@ -16,6 +17,9 @@ namespace E_Commerce.Business.Mapper.AutoMapper
         {
             CreateMap<SupplierProductCreateDto, SupplierProduct>();
             CreateMap<SupplierProduct,SupplierProductListDto>().ReverseMap();
+            CreateMap<SupplierProductUpdateDto,SupplierProductListDto>().ReverseMap();
+            CreateMap<SupplierProductUpdateDto,SupplierProduct>().ReverseMap();
+            CreateMap<SupplierProductUpdateModel,SupplierProduct>().ReverseMap();
         }
     }
 }

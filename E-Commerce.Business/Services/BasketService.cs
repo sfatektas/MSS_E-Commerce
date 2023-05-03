@@ -97,7 +97,7 @@ namespace E_Commerce.Business.Services
         {
             foreach (var item in dto.BasketItems)
             {
-                dto.BasketItemsWithInclude = await _uow.GetRepository<ProductsInStock>()
+                dto.BasketItemsWithInclude.Add(await _uow.GetRepository<ProductsInStock>()
                 .GetQueryable()
                 .Where(x => x.Id == item.ProductInStockId)
                 .Include(x => x.SupplierProduct)
@@ -111,7 +111,7 @@ namespace E_Commerce.Business.Services
                     UnitPrice = o.UnitPrice,
                     ProductName = o.SupplierProduct.Product.Name
                 })
-                .ToListAsync();
+                .FirstOrDefaultAsync());
             }
             return dto;
         }
