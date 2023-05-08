@@ -2,6 +2,7 @@
 using E_Commerce.Dtos.BasketDtos;
 using E_Commerce.Presentation.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;

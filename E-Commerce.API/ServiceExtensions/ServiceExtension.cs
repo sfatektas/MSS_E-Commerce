@@ -4,6 +4,7 @@ using E_Commerce.Business.Consts;
 using E_Commerce.Business.Interfaces;
 using E_Commerce.Business.Interfaces.Storage;
 using E_Commerce.Business.Mapper.AutoMapper;
+using E_Commerce.Business.Models;
 using E_Commerce.Business.Services;
 using E_Commerce.Business.Services.Storage;
 using E_Commerce.Business.Validations.FluentValidations;
@@ -154,8 +155,7 @@ namespace E_Commerce.API.ServiceExtensions
             services.AddTransient<IValidator<SupplierProductUpdateDto>, SupplierProductUpdateDtoValidator>();
             services.AddTransient<IValidator<ProductInStockUpdateDto>,ProductInStockUpdateDtoValidator>();
             services.AddTransient<IValidator<ProductsInStockCreateDto>,ProductInStockCreateValidator>();
-
-
+            services.AddTransient<IValidator<SupplierProductUpdateModel>, SupplierProductUpdateModelValidator>();
         }
         public static void ConfigureCors(this IServiceCollection services)
         {
@@ -212,6 +212,7 @@ namespace E_Commerce.API.ServiceExtensions
             services.AddScoped<ValidateFilterAttiribute<SupplierCreateModel>>();
             services.AddScoped<ValidateFilterAttiribute<SliderItemCreateModel>>();
             services.AddScoped<ValidateFilterAttiribute<SupplierProductCreateModel>>();
+            services.AddScoped<ValidateFilterAttiribute<SupplierProductUpdateModel>>();
         }
         public static void ConfigureRedis(this IServiceCollection services, IConfiguration configuration)
         {

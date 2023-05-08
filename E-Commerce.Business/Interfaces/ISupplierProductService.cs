@@ -1,4 +1,5 @@
-﻿using E_Commerce.Dtos.ProductImageDtos;
+﻿using E_Commerce.Business.Models;
+using E_Commerce.Dtos.ProductImageDtos;
 using E_Commerce.Dtos.ProductsInStockDtos;
 using E_Commerce.Dtos.SupplierDtos;
 using E_Commerce.Dtos.SupplierProductDtos;
@@ -20,5 +21,8 @@ namespace E_Commerce.Business.Interfaces
         Task<int> CreateSupplierProduct(SupplierProductCreateDto dto);
         Task AddImageUrls(List<ProductImageCreateDto> dtos);
         Task AddProductToStock(int supplierProductId, int amount , double unitprice);
+        Task DeleteSupplierProduct(int id);
+        Task UpdateSupplierProduct(SupplierProductUpdateModel model);
+        Task RemoveSupplierProductImage(int supplierProductId, string imageUrl);
     }
 }

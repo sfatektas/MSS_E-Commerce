@@ -101,6 +101,7 @@ namespace E_Commerce.Business.Services
                      || x.SupplierProduct.Product.Brand.Defination.Contains(parameter.Brand))
                      && (string.IsNullOrEmpty(parameter.Category)
                      || x.SupplierProduct.Product.Category.Defination.Contains(parameter.Category, StringComparison.CurrentCultureIgnoreCase))
+                     && x.IsActive == true
                      )
 
                  .Where(x => x.UnitPrice >= parameter.MinPrice &&
