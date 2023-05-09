@@ -22,7 +22,7 @@ namespace E_Commerce.Business.Services
         private readonly UserManager<AppUser> _userManager;
         private readonly IConfiguration _configuration;
         private readonly IUow _uow;
-        public BasketService(RedisService redisService, UserManager<AppUser> userManager, IConfiguration configuration,  IUow uow)
+        public BasketService(RedisService redisService, UserManager<AppUser> userManager, IConfiguration configuration, IUow uow)
         {
             _redisService = redisService;
             _userManager = userManager;
@@ -76,7 +76,7 @@ namespace E_Commerce.Business.Services
             var item = basket.BasketItems
                 .FirstOrDefault(x => x.ProductInStockId == dto.ProductInStockId);
 
-            if(item != null )
+            if (item != null)
                 basket.BasketItems.Find(x => x.ProductInStockId == item.ProductInStockId).Amount += dto.Amount;
             else
                 basket.BasketItems.Add(dto);
@@ -102,14 +102,28 @@ namespace E_Commerce.Business.Services
                 .Where(x => x.Id == item.ProductInStockId)
                 .Include(x => x.SupplierProduct)
                     .Include(x => x.SupplierProduct.Product)
+                        .Include(x => x.SupplierProduct.Product.Brand)
+                        .Include(x => x.SupplierProduct.Product.Category)
+                    .Include(x => x.SupplierProduct.Size)
+                    .Include(x => x.SupplierProduct.Supplier)
+                    .Include(x => x.SupplierProduct.ProductImages)
                 .Select(o => new CustomPreviewProductInStockInBasketListDto()
                 {
                     Amount = item.Amount,
                     CustomProductTitle = o.SupplierProduct.CustomProductTitle,
                     Id = o.Id,
-                    ImageUrl = o.SupplierProduct.Product.ImageUrl,
+                    ImageUrl = o.SupplierProduct.ProductImages.First().ImageUrl,
                     UnitPrice = o.UnitPrice,
-                    ProductName = o.SupplierProduct.Product.Name
+                    ProductName = o.SupplierProduct.Product.Name,
+                    SupplierProductId = o.SupplierProductId,
+                    Brand = o.SupplierProduct.Product.Brand.Defination,
+                    Category = o.SupplierProduct.Product.Category.Defination,
+                    SizeName = o.SupplierProduct.Size.Value,
+                    Supplier = new SupplierPreview
+                    {
+                        Id = o.SupplierProduct.SupplierId,
+                        Name = o.SupplierProduct.Supplier.UserName
+                    }
                 })
                 .FirstOrDefaultAsync());
             }

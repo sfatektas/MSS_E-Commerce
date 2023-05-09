@@ -179,7 +179,7 @@ namespace E_Commerce.Business.Services
             var data = await _uow.GetRepository<ProductsInStock>()
                 .GetQueryable()
                 .Include(x => x.SupplierProduct)
-                .Where(x => x.SupplierProduct.SupplierId == supplierid)
+                .Where(x => x.SupplierProduct.SupplierId == supplierid && x.IsActive == true)
                 .Include(x => x.SupplierProduct.Size)
                 .Include(x => x.SupplierProduct.Color)
                 .Include(x => x.SupplierProduct.Product)

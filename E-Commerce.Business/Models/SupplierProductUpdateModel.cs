@@ -17,6 +17,6 @@ namespace E_Commerce.Business.Models
         public string CustomProductTitle { get; init; }
         public string CustomProductDefination { get; init; }
         public List<IFormFile> Files { get; set; } = new();
-        public bool IsActive { get; set; }
+        public bool IsActive { get; set; } = true;
     }
 }

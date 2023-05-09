@@ -23,7 +23,8 @@ namespace E_Commerce.Presentation.Controllers
             _basketService = basketService;
         }
         [HttpGet("{customername}")]
-        [Authorize(Roles = "customer")]
+        //[Authorize(Roles = "customer")]
+        [Authorize]
         public async Task<IActionResult> GetBasket([FromRoute] string customername)
         {
             var dto = await _basketService.GetBasket(customername);
