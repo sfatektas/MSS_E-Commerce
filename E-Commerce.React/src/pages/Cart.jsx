@@ -10,7 +10,7 @@ export default function Cart() {
       totalPrice += item.unitPrice * item.amount;
       return null;
     });
-
+  console.log(basketItems);
   return (
     <>
       <div className="d-flex flex-column my-4 text-center">
@@ -27,7 +27,7 @@ export default function Cart() {
                       <div className="product-seller d-flex">
                         <p>Satıcı Adı :</p>
                         <span className="ms-1 fw-semibold text-primary">
-                          Chekko
+                          {item.supplier.name}
                         </span>
                       </div>
                       <div className="product-campaign">
@@ -38,6 +38,10 @@ export default function Cart() {
                         </div>
                       </div>
                     </div>
+                    <p className="mb-3 my-2">
+                      Tahmini <span className="fw-semibold">20 Mayıs'ta</span>{" "}
+                      kapında!
+                    </p>
                     <div className="d-flex align-items-center">
                       <div className="cart-product-image d-flex">
                         <img
@@ -49,12 +53,12 @@ export default function Cart() {
                       <div className="w-100 ms-4">
                         <div className="cart-product-content">
                           <a
-                            href="#!"
+                            href={`/${item.category}/${item.supplierProductId}`}
                             className="mb-2 fw-semibold text-black text-decoration-none"
                           >
                             {item.customProductTitle}
                           </a>
-                          <p className="mb-2">Marka //API'ye bağlanacak</p>
+                          <p className="mb-2">{item.brand}</p>
                           <div className="d-flex w-100 justify-content-between align-items-end">
                             {item.amount == 1 ? (
                               <div className="product-piece d-flex justify-content-center">
