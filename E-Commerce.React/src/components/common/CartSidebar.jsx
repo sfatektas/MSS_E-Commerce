@@ -14,8 +14,8 @@ function CartProduct(props) {
         />
       </div>
       <div className="product-content p-2">
-        <a href="#!" className="mb-2 fw-semibold text-decoration-none text-black">{props.brand}</a>
-        <p className="mb-3">{props.title}</p>
+        <a href={`/${props.category}/${props.supplierId}`} className="mb-2 fw-semibold text-decoration-none text-black">{props.title}</a>
+        <p className="mb-3">{props.brand}</p>
         <p className="mb-3 position-absolute end-0">{props.amount} Adet</p>
         <div className="d-flex align-items-center">
           <a href="#!" className="cart-delete-button">
@@ -45,7 +45,7 @@ export default function CartSidebar() {
   const { basketItems } = basketStore();
   const { options } = generalStore();
   const { sidebarActive, setSidebarActive } = cartSidebarStore();
-  console.log(basketItems)
+  // console.log(basketItems)
 
   let totalPrice = 0;
   basketItems &&
@@ -82,10 +82,12 @@ export default function CartSidebar() {
                     <CartProduct
                       key={item.id}
                       image={item.imageUrl}
-                      brand={item.productName}
+                      brand={item.brand}
                       title={item.customProductTitle}
                       price={item.unitPrice}
                       amount={item.amount}
+                      category={item.category}
+                      supplierId={item.supplierProductId}
                     />
                   ))}
                   <div className="cart-total border-top mb-4 pt-4">

@@ -17,9 +17,11 @@ export const basketStore = create((set) => ({
       const decodedPayload = Base64.decode(trimmedPayload);
 
       let tokenUserName = JSON.parse(decodedPayload).nameid;
+      let tokenRole = JSON.parse(decodedPayload).role;
+      let role=tokenRole;
       let userName = tokenUserName;
 
-      if (userName) {
+      if (userName && role=="customer") {
         axios
           .get(
             `https://e-commercemss.azurewebsites.net/api/baskets/${userName}`,
