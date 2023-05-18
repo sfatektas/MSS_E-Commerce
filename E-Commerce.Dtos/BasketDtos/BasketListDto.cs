@@ -11,7 +11,7 @@ namespace E_Commerce.Dtos.BasketDtos
     {
         public string CustomerUsername { get; init; }
 
-        public List<BasketItemListDto> BasketItems { get; init; }
+        public List<BasketItemListDto> BasketItems { get; set; }
         public List<CustomPreviewProductInStockInBasketListDto> BasketItemsWithInclude { get; set; } = new();
     }
 }

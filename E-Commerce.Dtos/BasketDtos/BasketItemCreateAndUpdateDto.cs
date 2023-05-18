@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.Dtos.BasketDtos
 {
-    public class BasketItemCreateDto
+    public class BasketItemCreateAndUpdateDto
     {
         public int ProductInStockId { get; set; }
 

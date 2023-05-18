@@ -29,8 +29,6 @@ namespace E_Commerce.Business.Services
         readonly IValidator<CreateDto> _createValidator;
         //Update Validator eklenecek
 
-
-
         public Service(IUow uow, IMapper mapper, IValidator<CreateDto> createValidator)
         {
             _uow = uow;
