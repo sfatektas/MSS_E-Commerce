@@ -103,6 +103,7 @@ namespace E_Commerce.API.ServiceExtensions
                     new ProductInStockProfile(),
                     new BasketProfile(),
                     new OtherProfile(),
+                    new ProductCommentProfile()
             };
 
             services.AddAutoMapper(opt =>

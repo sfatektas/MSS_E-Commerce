@@ -11,8 +11,8 @@ namespace E_Commerce.Dtos.ProductCommentDtos
 {
     public record ProductCommentCreateDto : ICreateDto
     {
-        public int SupplierProductId { get; set; }
-        public int CustomerId { get; set; }
+        public int SupplierProductId { get; init; }
+        public int CustomerId { get; init; }
         public string Content { get; init; }
         public int Point { get; init; }
         public DateTime CreatedDate { get; init; } = DateTime.UtcNow.AddHours(UtcTimeConstant.TurkeyUTC);
