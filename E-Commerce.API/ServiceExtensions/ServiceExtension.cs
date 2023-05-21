@@ -34,6 +34,8 @@ using E_Commerce.Presentation;
 using E_Commerce.Presentation.ActionFilters;
 using E_Commerce.Presentation.Models;
 using E_Commerce.Presentation.Validators;
+using E_Commerce.RabbitMQProducer.Interfaces;
+using E_Commerce.RabbitMQPublisher;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Cors.Infrastructure;
@@ -55,7 +57,7 @@ namespace E_Commerce.API.ServiceExtensions
             services.AddDbContext<E_CommerceDbContext>(x =>
             {
                 //"RemoteDb"
-                x.UseMySQL(configuration.GetConnectionString("CPanel"));
+                x.UseMySQL(configuration.GetConnectionString("SefaMySql"));
                 //x.UseSqlServer(configuration.GetConnectionString("RemoteDb"));
             });
             services.AddIdentity<AppUser, AppRole>(opt =>
@@ -137,7 +139,7 @@ namespace E_Commerce.API.ServiceExtensions
             services.AddScoped<IProductInStockService , ProductInStockService>();
             services.AddScoped<IBasketService , BasketService>();
             services.AddScoped<ISalesProductService , SalesProductService>();
-
+            services.AddScoped<IProductCommentService , ProductCommentService>();
         }
         public static void ConfigureValidations(this IServiceCollection services)
         {
@@ -270,6 +272,10 @@ namespace E_Commerce.API.ServiceExtensions
             services.AddSingleton<IIpPolicyStore, MemoryCacheIpPolicyStore>();
             services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
             services.AddSingleton<IProcessingStrategy, AsyncKeyLockProcessingStrategy>();
+        }
+        public static void ConfigureRabbitMQ(this IServiceCollection services)
+        {
+            services.AddSingleton<IMailProducer, MailProducer>();
         }
     }
 }

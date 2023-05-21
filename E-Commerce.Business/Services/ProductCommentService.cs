@@ -34,8 +34,9 @@ namespace E_Commerce.Business.Services
         public async Task<List<ProductCommentListDto>> GetCommnets(int ProductInStockId)
         {
             var data = await _uow.GetRepository<ProductComment>()
-                .GetAllAsync(x => x.SupplierProductId == ProductInStockId)
-                .Include(x=>x.Customer)
+                .GetAllAsync(x => x.ProductsInStockId == ProductInStockId)
+                .Include(x => x.Customer)
+                .OrderByDescending(x => x.CreatedDate)
                 .ToListAsync();
             if (data.Count > 0)
             {

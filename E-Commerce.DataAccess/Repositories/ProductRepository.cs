@@ -2,6 +2,7 @@
 using E_Commerce.DataAccess.Repositories.Abstract;
 using E_Commerce.Entities.EFCore;
 using E_Commerce.Entities.RequestFeatures;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace E_Commerce.DataAccess.Repositories
 
         public async Task<PagedList<Product>> GetAllProduct(ProductRequestParameter requestParameter)
         {
-            var data = base.GetAllAsync();
+            var data = await base.GetAllAsync().ToListAsync();
             return PagedList<Product>.ToPagedList(data, requestParameter.PageSize, requestParameter.PageNumber);
         }
     }

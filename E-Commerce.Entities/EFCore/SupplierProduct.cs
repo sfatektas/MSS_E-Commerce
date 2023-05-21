@@ -33,7 +33,6 @@ namespace E_Commerce.Entities.EFCore
         public List<PriceHistory> PriceHistories { get; set; }
         public List<SupplierAddingProduct> SupplierAddingProducts { get; set; }
         public List<OrderDetail> OrderDetails { get; set; }
-        public List<ProductComment> ProductComments { get; set; }
         public List<ProductsVisitor> ProductsVisitors { get; set; }
         public List<ProductImage> ProductImages { get; set; }
         public List<FavoriteProduct> FavoriteProducts { get; set; }

@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_Commerce.DataAccess.Migrations
 {
     [DbContext(typeof(E_CommerceDbContext))]
-    [Migration("20230425142805_IsFavoriteProduct")]
-    partial class IsFavoriteProduct
+    [Migration("20230521074457_initialMigration")]
+    partial class initialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -324,19 +324,19 @@ namespace E_Commerce.DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "e2e67de1-03cb-4bc9-a637-ff9c077a738b",
+                            ConcurrencyStamp = "38056479-58ea-4800-b731-cf4cdc53b495",
                             Name = "Admin"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "42d6d6db-efc3-49af-bb49-27e945de33b7",
+                            ConcurrencyStamp = "78a6e0d5-a0b6-4794-840d-306209de7106",
                             Name = "Customer"
                         },
                         new
                         {
                             Id = 3,
-                            ConcurrencyStamp = "35e62da6-7cc0-4381-87a6-df2a9dc5410d",
+                            ConcurrencyStamp = "f61bef4b-20f0-4102-ad54-d8b36300cf12",
                             Name = "Supplier"
                         });
                 });
@@ -611,16 +611,16 @@ namespace E_Commerce.DataAccess.Migrations
                     b.Property<int>("Point")
                         .HasColumnType("int");
 
-                    b.Property<int>("SupplierProductId")
+                    b.Property<int>("ProductsInStockId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CustomerId");
 
-                    b.HasIndex("SupplierProductId");
+                    b.HasIndex("ProductsInStockId");
 
-                    b.ToTable("ProductComment");
+                    b.ToTable("ProductComments");
                 });
 
             modelBuilder.Entity("E_Commerce.Entities.EFCore.ProductImage", b =>
@@ -1430,15 +1430,15 @@ namespace E_Commerce.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("E_Commerce.Entities.EFCore.SupplierProduct", "SupplierProduct")
+                    b.HasOne("E_Commerce.Entities.EFCore.ProductsInStock", "ProductsInStock")
                         .WithMany("ProductComments")
-                        .HasForeignKey("SupplierProductId")
+                        .HasForeignKey("ProductsInStockId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Customer");
 
-                    b.Navigation("SupplierProduct");
+                    b.Navigation("ProductsInStock");
                 });
 
             modelBuilder.Entity("E_Commerce.Entities.EFCore.ProductImage", b =>
@@ -1647,6 +1647,11 @@ namespace E_Commerce.DataAccess.Migrations
                     b.Navigation("SupplierProducts");
                 });
 
+            modelBuilder.Entity("E_Commerce.Entities.EFCore.ProductsInStock", b =>
+                {
+                    b.Navigation("ProductComments");
+                });
+
             modelBuilder.Entity("E_Commerce.Entities.EFCore.Size", b =>
                 {
                     b.Navigation("SupplierProducts");
@@ -1669,8 +1674,6 @@ namespace E_Commerce.DataAccess.Migrations
                     b.Navigation("OrderDetails");
 
                     b.Navigation("PriceHistories");
-
-                    b.Navigation("ProductComments");
 
                     b.Navigation("ProductImages");
 

@@ -20,16 +20,19 @@ namespace E_Commerce.DataAccess.Configurations
                 {
                     Id= 1,
                     Name = "Admin",
+                    NormalizedName = "ADMIN"
                 },
                  new()
                 {
                     Id= 2,
                     Name = "Customer",
+                    NormalizedName = "CUSTOMER"
                 },
                  new()
                 {
                     Id= 3,
                     Name = "Supplier",
+                    NormalizedName = "SUPPLIER"
                 }
             }); 
         }

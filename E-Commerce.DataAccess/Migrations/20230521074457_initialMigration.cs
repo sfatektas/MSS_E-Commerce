@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using MySql.EntityFrameworkCore.Metadata;
 
@@ -7,7 +6,7 @@ using MySql.EntityFrameworkCore.Metadata;
 
 namespace E_Commerce.DataAccess.Migrations
 {
-    public partial class InitilMigrationMysql : Migration
+    public partial class initialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -19,7 +18,7 @@ namespace E_Commerce.DataAccess.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "longtext", nullable: true)
@@ -613,37 +612,6 @@ namespace E_Commerce.DataAccess.Migrations
                 .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "ProductComment",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    CustomerId = table.Column<int>(type: "int", nullable: false),
-                    SupplierProductId = table.Column<int>(type: "int", nullable: false),
-                    Content = table.Column<string>(type: "varchar(400)", maxLength: 400, nullable: false),
-                    Point = table.Column<int>(type: "int", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    IsActive = table.Column<bool>(type: "tinyint(1)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ProductComment", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ProductComment_AspNetUsers_CustomerId",
-                        column: x => x.CustomerId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ProductComment_SuppliersProducts_SupplierProductId",
-                        column: x => x.SupplierProductId,
-                        principalTable: "SuppliersProducts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySQL:Charset", "utf8mb4");
-
-            migrationBuilder.CreateTable(
                 name: "ProductImages",
                 columns: table => new
                 {
@@ -674,6 +642,7 @@ namespace E_Commerce.DataAccess.Migrations
                     SupplierProductId = table.Column<int>(type: "int", nullable: false),
                     UnitPrice = table.Column<double>(type: "double", nullable: false),
                     Amount = table.Column<double>(type: "double", nullable: false),
+                    IsFavoriteProduct = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     IsActive = table.Column<bool>(type: "tinyint(1)", nullable: false, defaultValue: true)
                 },
                 constraints: table =>
@@ -741,14 +710,45 @@ namespace E_Commerce.DataAccess.Migrations
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
 
+            migrationBuilder.CreateTable(
+                name: "ProductComments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    CustomerId = table.Column<int>(type: "int", nullable: false),
+                    ProductsInStockId = table.Column<int>(type: "int", nullable: false),
+                    Content = table.Column<string>(type: "varchar(400)", maxLength: 400, nullable: false),
+                    Point = table.Column<int>(type: "int", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    IsActive = table.Column<bool>(type: "tinyint(1)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductComments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ProductComments_AspNetUsers_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProductComments_ProductsInStocks_ProductsInStockId",
+                        column: x => x.ProductsInStockId,
+                        principalTable: "ProductsInStocks",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
+
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { 1, "082253dc-be30-4b9d-8daf-aa7ec8c6b428", "Admin", null },
-                    { 2, "fa585b37-c1ed-4198-a343-78480f75309f", "Customer", null },
-                    { 3, "81d05851-1bd7-464e-8ca1-759eb0f002ac", "Supplier", null }
+                    { 1, "38056479-58ea-4800-b731-cf4cdc53b495", "Admin", null },
+                    { 2, "78a6e0d5-a0b6-4794-840d-306209de7106", "Customer", null },
+                    { 3, "f61bef4b-20f0-4102-ad54-d8b36300cf12", "Supplier", null }
                 });
 
             migrationBuilder.InsertData(
@@ -932,14 +932,14 @@ namespace E_Commerce.DataAccess.Migrations
                 column: "SupplierProductsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductComment_CustomerId",
-                table: "ProductComment",
+                name: "IX_ProductComments_CustomerId",
+                table: "ProductComments",
                 column: "CustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductComment_SupplierProductId",
-                table: "ProductComment",
-                column: "SupplierProductId");
+                name: "IX_ProductComments_ProductsInStockId",
+                table: "ProductComments",
+                column: "ProductsInStockId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProductImages_SupplierProductId",
@@ -1044,13 +1044,10 @@ namespace E_Commerce.DataAccess.Migrations
                 name: "PriceHistory");
 
             migrationBuilder.DropTable(
-                name: "ProductComment");
+                name: "ProductComments");
 
             migrationBuilder.DropTable(
                 name: "ProductImages");
-
-            migrationBuilder.DropTable(
-                name: "ProductsInStocks");
 
             migrationBuilder.DropTable(
                 name: "ProductsVisitors");
@@ -1071,13 +1068,16 @@ namespace E_Commerce.DataAccess.Migrations
                 name: "Orders");
 
             migrationBuilder.DropTable(
+                name: "ProductsInStocks");
+
+            migrationBuilder.DropTable(
                 name: "Sliders");
 
             migrationBuilder.DropTable(
-                name: "SuppliersProducts");
+                name: "OrderStatusTypes");
 
             migrationBuilder.DropTable(
-                name: "OrderStatusTypes");
+                name: "SuppliersProducts");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

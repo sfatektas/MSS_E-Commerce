@@ -26,6 +26,7 @@
     <ProjectReference Include="..\E-Commerce.Business\E-Commerce.Business.csproj" />
     <ProjectReference Include="..\E-Commerce.DataAccess\E-Commerce.DataAccess.csproj" />
     <ProjectReference Include="..\E-Commerce.Presentation\E-Commerce.Presentation.csproj" />
+    <ProjectReference Include="..\E-Commerce.RabbitMQProducer\E-Commerce.RabbitMQPublisher.csproj" />
   </ItemGroup>
 
 </Project>

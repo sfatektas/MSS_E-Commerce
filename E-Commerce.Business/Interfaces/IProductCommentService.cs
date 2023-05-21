@@ -11,9 +11,7 @@ namespace E_Commerce.Business.Interfaces
     {
         Task AddComment(ProductCommentCreateDto dto);
 
-        Task<List<ProductCommentListDto>> GetCommnets(int ProductInStockId);
-
-
+        Task<List<ProductCommentListDto>> GetCommnets(int supplierProductId);
 
     }
 }

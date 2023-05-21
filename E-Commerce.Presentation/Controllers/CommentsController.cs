@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace E_Commerce.Presentation.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/productınstocks/{productInStockId:int}/[controller]")]
     public class CommentsController : ControllerBase
     {
         readonly IProductCommentService _productCommentService;
@@ -20,14 +20,16 @@ namespace E_Commerce.Presentation.Controllers
             _productCommentService = productCommentService;
         }
 
-        [HttpGet("{productInStockId:int}")]
+        //[HttpGet("{productInStockId:int}")]
+        [HttpGet]
         public async Task<IActionResult> GetComments([FromRoute] int productInStockId)
         {
             var comments =await _productCommentService.GetCommnets(productInStockId);
-            return Ok();
+            return Ok(comments);
         }
 
-        [HttpPost("{productInStockId:int}")]
+        //[HttpPost("{productInStockId:int}")]
+        [HttpPost]
 
         // Todo : validator yazılacak.
         public async Task<IActionResult> AddCommnet([FromBody] ProductCommentCreateDto dto)
