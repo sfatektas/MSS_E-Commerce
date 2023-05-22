@@ -6,7 +6,7 @@ using MySql.EntityFrameworkCore.Metadata;
 
 namespace E_Commerce.DataAccess.Migrations
 {
-    public partial class initialMigration : Migration
+    public partial class favoriteProductFixxed : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -529,34 +529,6 @@ namespace E_Commerce.DataAccess.Migrations
                 .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "FavoriteProducts",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    SupplierProdcutsId = table.Column<int>(type: "int", nullable: false),
-                    SupplierProductsId = table.Column<int>(type: "int", nullable: true),
-                    CustomerId = table.Column<int>(type: "int", nullable: false),
-                    IsActive = table.Column<bool>(type: "tinyint(1)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_FavoriteProducts", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_FavoriteProducts_AspNetUsers_CustomerId",
-                        column: x => x.CustomerId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_FavoriteProducts_SuppliersProducts_SupplierProductsId",
-                        column: x => x.SupplierProductsId,
-                        principalTable: "SuppliersProducts",
-                        principalColumn: "Id");
-                })
-                .Annotation("MySQL:Charset", "utf8mb4");
-
-            migrationBuilder.CreateTable(
                 name: "OrderDetails",
                 columns: table => new
                 {
@@ -711,6 +683,34 @@ namespace E_Commerce.DataAccess.Migrations
                 .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "FavoriteProducts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    ProductsInStockId = table.Column<int>(type: "int", nullable: false),
+                    CustomerId = table.Column<int>(type: "int", nullable: false),
+                    IsActive = table.Column<bool>(type: "tinyint(1)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FavoriteProducts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_FavoriteProducts_AspNetUsers_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_FavoriteProducts_ProductsInStocks_ProductsInStockId",
+                        column: x => x.ProductsInStockId,
+                        principalTable: "ProductsInStocks",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "ProductComments",
                 columns: table => new
                 {
@@ -746,9 +746,9 @@ namespace E_Commerce.DataAccess.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { 1, "38056479-58ea-4800-b731-cf4cdc53b495", "Admin", null },
-                    { 2, "78a6e0d5-a0b6-4794-840d-306209de7106", "Customer", null },
-                    { 3, "f61bef4b-20f0-4102-ad54-d8b36300cf12", "Supplier", null }
+                    { 1, "7c6245aa-e525-45ff-a131-53a3ed7c49a7", "Admin", "ADMIN" },
+                    { 2, "85c00ced-30b6-40c5-a4d4-b01e2ca52498", "Customer", "CUSTOMER" },
+                    { 3, "6b3a376a-ca82-4f0d-a6c9-892431a17c59", "Supplier", "SUPPLIER" }
                 });
 
             migrationBuilder.InsertData(
@@ -902,9 +902,9 @@ namespace E_Commerce.DataAccess.Migrations
                 column: "CustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_FavoriteProducts_SupplierProductsId",
+                name: "IX_FavoriteProducts_ProductsInStockId",
                 table: "FavoriteProducts",
-                column: "SupplierProductsId");
+                column: "ProductsInStockId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderDetails_OrderId_SupplierProductId",

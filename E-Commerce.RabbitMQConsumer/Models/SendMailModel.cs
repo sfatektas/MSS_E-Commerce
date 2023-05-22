@@ -8,7 +8,7 @@ namespace E_Commerce.RabbitMQConsumer.Models
 {
     public class SendMailModel
     {
-        public string To { get; set; }
+        public List<string> To { get; set; }
         public string Message { get; set; }
     }
 }

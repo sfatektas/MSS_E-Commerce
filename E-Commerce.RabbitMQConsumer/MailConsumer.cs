@@ -24,7 +24,7 @@ namespace E_Commerce.RabbitMQConsumer
             factory.Uri = new("amqps://xamohava:spM7OwkS3NfNFbE9e8K5naFn_UW3fPWq@shrimp.rmq.cloudamqp.com/xamohava");
             connection = factory.CreateConnection();
             channel = connection.CreateModel();
-            channel.QueueDeclare(queue: "example-messageQueue", exclusive: false);
+            channel.QueueDeclare(queue: "sendmail-queue", durable: true, exclusive: false );
             consumer = new(channel);
 
             //mail Service configuration 
@@ -39,7 +39,7 @@ namespace E_Commerce.RabbitMQConsumer
                 var mailModel = JsonConvert.DeserializeObject<SendMailModel>(Encoding.UTF8.GetString(message));
                 await _mailService.SendMessage(mailModel);
 
-                Console.WriteLine($"{Encoding.UTF8.GetString(e.Body.Span.ToArray())}");
+                Console.WriteLine($"{Encoding.UTF8.GetString(message)}");
             };
             Console.Read();
         }

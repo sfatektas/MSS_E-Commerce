@@ -26,7 +26,7 @@ namespace E_Commerce.RabbitMQConsumer
             using (MailMessage message = new MailMessage())
             {
                 message.From = new MailAddress(FromMail);
-                message.To.Add(model.To);
+                model.To.ForEach((to) => message.To.Add(to));
                 message.Subject = subject;
                 message.Body = model.Message;
                 message.IsBodyHtml = false;

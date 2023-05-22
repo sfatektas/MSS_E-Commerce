@@ -20,7 +20,7 @@ namespace E_Commerce.RabbitMQPublisher
             _channel = _connection.CreateModel();
 
             //Queue oluşturma 
-            _channel.QueueDeclare("sendmail-queue", exclusive: false,durable:true);
+            _channel.QueueDeclare("sendmail-queue",durable:true,exclusive:false);
         }
 
         public void SendToMailQueue(SendMailModel model)

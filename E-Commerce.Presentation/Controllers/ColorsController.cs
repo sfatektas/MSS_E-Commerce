@@ -27,11 +27,11 @@ namespace E_Commerce.Presentation.Controllers
         public async Task<IActionResult> GetAllColors()
         {
             var response = await _colorService.GetAllColor();
-            _mailProducer.SendToMailQueue(new()
-            {
-                To = "mrtbrn911@gmail.com",
-                Message = "Ekip bu bir deneme mailidir korkmayınız"
-            });
+            //_mailProducer.SendToMailQueue(new()
+            //{
+            //    To = new List<string>() { "sfatektas55@gmail.com","sfatektas@gmail.com"},
+            //    Message = "Ekip bu bir deneme mailidir korkmayınız"
+            //});
             return Ok(response.Data);
         }
 

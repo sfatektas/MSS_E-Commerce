@@ -238,17 +238,14 @@ namespace E_Commerce.DataAccess.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<int>("SupplierProdcutsId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("SupplierProductsId")
+                    b.Property<int>("ProductsInStockId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CustomerId");
 
-                    b.HasIndex("SupplierProductsId");
+                    b.HasIndex("ProductsInStockId");
 
                     b.ToTable("FavoriteProducts");
                 });
@@ -322,20 +319,23 @@ namespace E_Commerce.DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "38056479-58ea-4800-b731-cf4cdc53b495",
-                            Name = "Admin"
+                            ConcurrencyStamp = "7c6245aa-e525-45ff-a131-53a3ed7c49a7",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "78a6e0d5-a0b6-4794-840d-306209de7106",
-                            Name = "Customer"
+                            ConcurrencyStamp = "85c00ced-30b6-40c5-a4d4-b01e2ca52498",
+                            Name = "Customer",
+                            NormalizedName = "CUSTOMER"
                         },
                         new
                         {
                             Id = 3,
-                            ConcurrencyStamp = "f61bef4b-20f0-4102-ad54-d8b36300cf12",
-                            Name = "Supplier"
+                            ConcurrencyStamp = "6b3a376a-ca82-4f0d-a6c9-892431a17c59",
+                            Name = "Supplier",
+                            NormalizedName = "SUPPLIER"
                         });
                 });
 
@@ -1324,13 +1324,15 @@ namespace E_Commerce.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("E_Commerce.Entities.EFCore.SupplierProduct", "SupplierProducts")
+                    b.HasOne("E_Commerce.Entities.EFCore.ProductsInStock", "ProductsInStock")
                         .WithMany("FavoriteProducts")
-                        .HasForeignKey("SupplierProductsId");
+                        .HasForeignKey("ProductsInStockId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Customer");
 
-                    b.Navigation("SupplierProducts");
+                    b.Navigation("ProductsInStock");
                 });
 
             modelBuilder.Entity("E_Commerce.Entities.EFCore.Identities.AppUser", b =>
@@ -1647,6 +1649,8 @@ namespace E_Commerce.DataAccess.Migrations
 
             modelBuilder.Entity("E_Commerce.Entities.EFCore.ProductsInStock", b =>
                 {
+                    b.Navigation("FavoriteProducts");
+
                     b.Navigation("ProductComments");
                 });
 
@@ -1667,8 +1671,6 @@ namespace E_Commerce.DataAccess.Migrations
 
             modelBuilder.Entity("E_Commerce.Entities.EFCore.SupplierProduct", b =>
                 {
-                    b.Navigation("FavoriteProducts");
-
                     b.Navigation("OrderDetails");
 
                     b.Navigation("PriceHistories");

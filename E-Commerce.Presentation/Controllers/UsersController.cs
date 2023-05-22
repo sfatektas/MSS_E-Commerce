@@ -18,12 +18,14 @@ namespace E_Commerce.Presentation.Controllers
         readonly ISupplierService _supplierService;
         readonly ICustomerService _customerService;
         readonly IAppUserService _appUserService;
+        readonly IFavoriteProductService _favoriteProductService;
 
-        public UsersController(ISupplierService supplierService, ICustomerService customerService, IAppUserService appUserService)
+        public UsersController(ISupplierService supplierService, ICustomerService customerService, IAppUserService appUserService, IFavoriteProductService favoriteProductService)
         {
             _supplierService = supplierService;
             _customerService = customerService;
             _appUserService = appUserService;
+            _favoriteProductService = favoriteProductService;
         }
 
         [HttpGet]
@@ -51,6 +53,17 @@ namespace E_Commerce.Presentation.Controllers
         {
             await _appUserService.ChangeStatusUser(id, status);
             return NoContent();
+        }
+        [HttpGet("{userId:int}/favoriteproducts")]
+        public async Task<IActionResult> GetFavoriteProductsFromUserId(int userid)
+        {
+            return Ok();
+        } 
+        [HttpPost("{userId:int}/favoriteproducts/{productInStockId:int}")]
+        public async Task<IActionResult> AddFavoriteProduct(int userid , int productInStockId)
+        {
+            await _favoriteProductService.AddFavoriteProduct(userid, productInStockId);
+            return StatusCode(201);
         }
     }
 }

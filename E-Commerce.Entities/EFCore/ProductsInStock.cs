@@ -13,6 +13,7 @@ namespace E_Commerce.Entities.EFCore
         public double UnitPrice{ get; set; }
         public double Amount { get; set; }
         public bool IsFavoriteProduct { get; set; }
+        public List<FavoriteProduct> FavoriteProducts { get; set; }
         public List<ProductComment> ProductComments { get; set; }
     }
 }

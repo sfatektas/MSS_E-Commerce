@@ -33,6 +33,7 @@ namespace E_Commerce.Business.Services
         readonly IUow _uow;
         readonly IMapper _mapper;
         readonly IStorage _storage;
+        
         public SupplierProductService(IUow uow, IMapper mapper, IValidator<SupplierProductCreateDto> createValidator, IStorage storage) : base(uow, mapper, createValidator)
         {
             _uow = uow;
@@ -114,8 +115,9 @@ namespace E_Commerce.Business.Services
                                     && s.SizeId == supplierProduct.SizeId);
 
         }
-        public async Task AddProductToStock(int supplierProductId, int amount, double unitprice)
+        public async Task<bool> AddProductToStock(int supplierProductId, int amount, double unitprice)
         {
+            bool isexist = false; // returns true if exist product otherwise false 
             var data = await _uow.GetRepository<ProductsInStock>().GetByFilterAsync(x => x.SupplierProductId == supplierProductId);
             if (data == null)
                 await _uow.GetRepository<ProductsInStock>().CreateAsync(new()
@@ -131,6 +133,7 @@ namespace E_Commerce.Business.Services
                 _uow.GetRepository<ProductsInStock>().Update(data);
                 await _uow.SaveChangesAsync();
             }
+            return isexist;
         }
         public async Task<int> CreateSupplierProduct(SupplierProductCreateDto supplierProduct)
         {

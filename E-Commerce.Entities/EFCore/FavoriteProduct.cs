@@ -9,8 +9,9 @@ namespace E_Commerce.Entities.EFCore
 {
     public class FavoriteProduct : BaseEntity
     {
-        public int SupplierProdcutsId { get; set; }
-        public SupplierProduct SupplierProducts { get; set; }
+        public int ProductsInStockId { get; set; }
+        public ProductsInStock ProductsInStock { get; set; }
+
         [ForeignKey("Customer")]
         public int CustomerId { get; set; }
         public Entities.EFCore.Identities.Customer Customer { get; set; }

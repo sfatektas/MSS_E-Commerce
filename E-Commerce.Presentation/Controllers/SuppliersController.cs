@@ -24,15 +24,19 @@ namespace E_Commerce.Presentation.Controllers
     {
         readonly ISupplierService _supplierService;
         readonly ISupplierProductService _supplierProductService;
+        readonly IFavoriteProductService _favoriteProductService;
+        readonly IProductInStockService _productInStockService;
         readonly IMapper _mapper;
         readonly IStorage _storage;
 
-        public SuppliersController(ISupplierService supplierService, IMapper mapper, IStorage storage, ISupplierProductService supplierProductService)
+        public SuppliersController(ISupplierService supplierService, IMapper mapper, IStorage storage, ISupplierProductService supplierProductService, IFavoriteProductService favoriteProductService, IProductInStockService productInStockService)
         {
             _supplierService = supplierService;
             _mapper = mapper;
             _storage = storage;
             _supplierProductService = supplierProductService;
+            _favoriteProductService = favoriteProductService;
+            _productInStockService = productInStockService;
         }
 
         [HttpGet]
@@ -92,6 +96,11 @@ namespace E_Commerce.Presentation.Controllers
                 });
             }
             await _supplierProductService.AddImageUrls(productImageList);
+
+            // bu ürünü favorilerine ekleyen kullanıcılara bildirim gönderilecek
+            var response = await _productInStockService.GetByFilterAsync(x=>x.SupplierProductId == supplierProductId);
+            await _favoriteProductService.SendMailToUsersOfFavoriteProducts(response.Data.Id);
+
             return NoContent();
         }
         [HttpGet("products/{supplierproductid:int}")]

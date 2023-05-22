@@ -105,7 +105,8 @@ namespace E_Commerce.API.ServiceExtensions
                     new ProductInStockProfile(),
                     new BasketProfile(),
                     new OtherProfile(),
-                    new ProductCommentProfile()
+                    new ProductCommentProfile(),
+                    new FavoriteProductsProfile()
             };
 
             services.AddAutoMapper(opt =>
@@ -140,6 +141,7 @@ namespace E_Commerce.API.ServiceExtensions
             services.AddScoped<IBasketService , BasketService>();
             services.AddScoped<ISalesProductService , SalesProductService>();
             services.AddScoped<IProductCommentService , ProductCommentService>();
+            services.AddScoped<IFavoriteProductService , FavoriteProductsService>();
         }
         public static void ConfigureValidations(this IServiceCollection services)
         {
