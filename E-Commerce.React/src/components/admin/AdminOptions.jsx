@@ -58,7 +58,7 @@ export default function AdminOptions() {
     console.log(setOptions);
     axios
       .put(
-        "https://e-commercemss.azurewebsites.net/api/siteoption",
+        "https://msse-commerce.azurewebsites.net/api/siteoption",
         setOptions ,
         {
           headers: {

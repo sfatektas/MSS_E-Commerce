@@ -19,7 +19,7 @@ export default function AdminProducts() {
 
   useEffect(() => {
     axios
-      .get("https://e-commercemss.azurewebsites.net/api/Products", {
+      .get("https://msse-commerce.azurewebsites.net/api/Products", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("user_token")}`,
         },
@@ -34,7 +34,7 @@ export default function AdminProducts() {
 
   useEffect(() => {
     axios
-      .get("https://e-commercemss.azurewebsites.net/api/Categories", {
+      .get("https://msse-commerce.azurewebsites.net/api/Categories", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("user_token")}`,
         },
@@ -49,7 +49,7 @@ export default function AdminProducts() {
 
   useEffect(() => {
     axios
-      .get("https://e-commercemss.azurewebsites.net/api/Brands", {
+      .get("https://msse-commerce.azurewebsites.net/api/Brands", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("user_token")}`,
         },
@@ -62,7 +62,7 @@ export default function AdminProducts() {
 
   useEffect(() => {
     axios
-      .get("https://e-commercemss.azurewebsites.net/api/sizetypes", {
+      .get("https://msse-commerce.azurewebsites.net/api/sizetypes", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("user_token")}`,
         },
@@ -79,7 +79,7 @@ export default function AdminProducts() {
     if (window.confirm("Bu ürünü silmek istediğinize emin misiniz?")) {
       axios
         .delete(
-          `https://e-commercemss.azurewebsites.net/api/Products/${productId}`,
+          `https://msse-commerce.azurewebsites.net/api/Products/${productId}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("user_token")}`,
@@ -123,7 +123,7 @@ export default function AdminProducts() {
       };
       axios
         .post(
-          "https://e-commercemss.azurewebsites.net/api/Products",
+          "https://msse-commerce.azurewebsites.net/api/Products",
           createProduct,
           {
             headers: {
@@ -298,7 +298,7 @@ export default function AdminProducts() {
                   <td>
                     <img
                       height="50px"
-                      src={`https://e-commercemss.azurewebsites.net/api/files/${item.imageUrl}`}
+                      src={`https://msse-commerce.azurewebsites.net/api/files/${item.imageUrl}`}
                       alt={item.name}
                     />
                   </td>

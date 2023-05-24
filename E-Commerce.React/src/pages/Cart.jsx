@@ -45,7 +45,7 @@ export default function Cart() {
                     <div className="d-flex align-items-center">
                       <div className="cart-product-image d-flex">
                         <img
-                          src={`https://e-commercemss.azurewebsites.net/api/files/${item.imageUrl}`}
+                          src={`https://msse-commerce.azurewebsites.net/api/files/${item.imageUrl}`}
                           alt=""
                           className="border rounded-3"
                         />

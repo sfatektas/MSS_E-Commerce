@@ -154,7 +154,7 @@ export default function Showcase(props) {
           <a href={`/${props.category}/${props.id}`} className="w-100">
             <img
               className="w-100"
-              src={`https://e-commercemss.azurewebsites.net/api/files/${props.image}`}
+              src={`https://msse-commerce.azurewebsites.net/api/files/${props.image}`}
               alt={props.title + " Image"}
             />
           </a>
@@ -168,7 +168,7 @@ export default function Showcase(props) {
             {props.price} TL
           </p>
           <a
-            className="btn w-100 rounded-3"
+            className="showcase-button btn rounded-3"
             href={`/${props.category}/${props.id}`}
           >
             Satın Al

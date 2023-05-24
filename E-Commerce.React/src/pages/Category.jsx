@@ -20,41 +20,41 @@ export default function Category(props) {
   const [filterMin, setFilterMin] = useState("");
   const [filterMax, setFilterMax] = useState("");
   const [productsLink, setProductsLink] = useState(
-    `https://e-commercemss.azurewebsites.net/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${filterColor}&size=${filterSize}&brand=${filterBrand}&minprice=${filterMin}&maxprice=${filterMax}&search=${filterSearch}`
+    `https://msse-commerce.azurewebsites.net/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${filterColor}&size=${filterSize}&brand=${filterBrand}&minprice=${filterMin}&maxprice=${filterMax}&search=${filterSearch}`
   );
 
   function colorFilter(color) {
     setFilterColor(color);
     setProductsLink(
-      `https://e-commercemss.azurewebsites.net/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${color}&size=${filterSize}&brand=${filterBrand}&minprice=${filterMin}&maxprice=${filterMax}&search=${filterSearch}`
+      `https://msse-commerce.azurewebsites.net/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${color}&size=${filterSize}&brand=${filterBrand}&minprice=${filterMin}&maxprice=${filterMax}&search=${filterSearch}`
     );
   }
 
   function brandFilter(brand) {
     setFilterBrand(brand);
     setProductsLink(
-      `https://e-commercemss.azurewebsites.net/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${filterColor}&size=${filterSize}&brand=${brand}&minprice=${filterMin}&maxprice=${filterMax}&search=${filterSearch}`
+      `https://msse-commerce.azurewebsites.net/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${filterColor}&size=${filterSize}&brand=${brand}&minprice=${filterMin}&maxprice=${filterMax}&search=${filterSearch}`
     );
   }
 
   function sizeFilter(size) {
     setFilterSize(size);
     setProductsLink(
-      `https://e-commercemss.azurewebsites.net/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${filterColor}&size=${size}&brand=${filterBrand}&minprice=${filterMin}&maxprice=${filterMax}&search=${filterSearch}`
+      `https://msse-commerce.azurewebsites.net/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${filterColor}&size=${size}&brand=${filterBrand}&minprice=${filterMin}&maxprice=${filterMax}&search=${filterSearch}`
     );
   }
 
   function searchFilter(e) {
     e.preventDefault();
     setProductsLink(
-      `https://e-commercemss.azurewebsites.net/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${filterColor}&size=${filterSize}&brand=${filterBrand}&minprice=${filterMin}&maxprice=${filterMax}&search=${filterSearch}`
+      `https://msse-commerce.azurewebsites.net/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${filterColor}&size=${filterSize}&brand=${filterBrand}&minprice=${filterMin}&maxprice=${filterMax}&search=${filterSearch}`
     );
   }
 
   function priceFilter(e) {
     e.preventDefault();
     setProductsLink(
-      `https://e-commercemss.azurewebsites.net/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${filterColor}&size=${filterSize}&brand=${filterBrand}&minprice=${filterMin}&maxprice=${filterMax}&search=${filterSearch}`
+      `https://msse-commerce.azurewebsites.net/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${filterColor}&size=${filterSize}&brand=${filterBrand}&minprice=${filterMin}&maxprice=${filterMax}&search=${filterSearch}`
     );
   }
 
@@ -62,14 +62,14 @@ export default function Category(props) {
     setFilterMax("");
     setFilterMin("");
     setProductsLink(
-      `https://e-commercemss.azurewebsites.net/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${filterColor}&size=${filterSize}&brand=${filterBrand}&minprice=${""}&maxprice=${""}&search=${filterSearch}`
+      `https://msse-commerce.azurewebsites.net/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${filterColor}&size=${filterSize}&brand=${filterBrand}&minprice=${""}&maxprice=${""}&search=${filterSearch}`
     );
   }
 
   function cleanSearch() {
     setFilterSearch("");
     setProductsLink(
-      `https://e-commercemss.azurewebsites.net/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${filterColor}&size=${filterSize}&brand=${filterBrand}&minprice=${filterMin}&maxprice=${filterMax}&search=${""}`
+      `https://msse-commerce.azurewebsites.net/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${filterColor}&size=${filterSize}&brand=${filterBrand}&minprice=${filterMin}&maxprice=${filterMax}&search=${""}`
     );
   }
 
@@ -81,7 +81,7 @@ export default function Category(props) {
     setFilterSearch("")
     setFilterSize("")
     setProductsLink(
-      `https://e-commercemss.azurewebsites.net/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${""}&size=${""}&brand=${""}&minprice=${""}&maxprice=${""}&search=${""}`
+      `https://msse-commerce.azurewebsites.net/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${""}&size=${""}&brand=${""}&minprice=${""}&maxprice=${""}&search=${""}`
     );
   }
 
@@ -106,7 +106,7 @@ export default function Category(props) {
 
   useEffect(() => {
     axios
-      .get("https://e-commercemss.azurewebsites.net/api/brands")
+      .get("https://msse-commerce.azurewebsites.net/api/brands")
       .then((response) => {
         setListBrands(response.data);
       })
@@ -115,7 +115,7 @@ export default function Category(props) {
 
   useEffect(() => {
     axios
-      .get("https://e-commercemss.azurewebsites.net/api/colors")
+      .get("https://msse-commerce.azurewebsites.net/api/colors")
       .then((response) => {
         setListColors(response.data);
       })
@@ -124,7 +124,7 @@ export default function Category(props) {
 
   useEffect(() => {
     axios
-      .get("https://e-commercemss.azurewebsites.net/api/sizes")
+      .get("https://msse-commerce.azurewebsites.net/api/sizes")
       .then((response) => {
         setListSizes(response.data);
       })
@@ -217,7 +217,7 @@ export default function Category(props) {
                       listeleniyor
                     </p>
                     {productsLink !=
-                    `https://e-commercemss.azurewebsites.net/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${""}&size=${""}&brand=${""}&minprice=${""}&maxprice=${""}&search=${""}` ? (
+                    `https://msse-commerce.azurewebsites.net/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${""}&size=${""}&brand=${""}&minprice=${""}&maxprice=${""}&search=${""}` ? (
                       <button className="btn btn-outline-dark rounded-3" onClick={cleanAllFilters}>
                         Filtreleri Temizle
                       </button>

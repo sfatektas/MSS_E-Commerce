@@ -46,7 +46,7 @@ export default function Product() {
   const createHubConnection = async () => {
     const connection = new signalR.HubConnectionBuilder()
       .withUrl(
-        `https://e-commercemss.azurewebsites.net/visit?productId=${name}`,
+        `https://msse-commerce.azurewebsites.net/visit?productId=${name}`,
         {
           transport: signalR.HttpTransportType.WebSockets,
           skipNegotiation: true,
@@ -74,7 +74,7 @@ export default function Product() {
   useEffect(() => {
     axios
       .get(
-        `https://e-commercemss.azurewebsites.net/api/suppliers/products/${name}`
+        `https://msse-commerce.azurewebsites.net/api/suppliers/products/${name}`
       )
       .then((response) => {
         console.log(response.data);
@@ -96,7 +96,7 @@ export default function Product() {
     if (userName != null) {
       axios
         .post(
-          `https://e-commercemss.azurewebsites.net/api/baskets/${userName}`,
+          `https://msse-commerce.azurewebsites.net/api/baskets/${userName}`,
           basketItem
         )
         .then((response) => {
@@ -223,7 +223,7 @@ export default function Product() {
                       src={
                         bigImage
                           ? bigImage
-                          : `https://e-commercemss.azurewebsites.net/api/files/${product.productInStock.supplierProduct.productImages[0].imageUrl}`
+                          : `https://msse-commerce.azurewebsites.net/api/files/${product.productInStock.supplierProduct.productImages[0].imageUrl}`
                       }
                       alt=""
                     />
@@ -236,14 +236,14 @@ export default function Product() {
                             key={item.id}
                             onClick={() =>
                               setBigImage(
-                                `https://e-commercemss.azurewebsites.net/api/files/${item.imageUrl}`
+                                `https://msse-commerce.azurewebsites.net/api/files/${item.imageUrl}`
                               )
                             }
                             href="#!"
                             className="mb-2 d-flex justify-content-center"
                           >
                             <img
-                              src={`https://e-commercemss.azurewebsites.net/api/files/${item.imageUrl}`}
+                              src={`https://msse-commerce.azurewebsites.net/api/files/${item.imageUrl}`}
                               alt=""
                             />
                           </a>

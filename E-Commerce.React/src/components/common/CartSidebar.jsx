@@ -9,7 +9,7 @@ function CartProduct(props) {
         <img
           height="100px"
           width="100px"
-          src={`https://e-commercemss.azurewebsites.net/api/files/${props.image}`}
+          src={`https://msse-commerce.azurewebsites.net/api/files/${props.image}`}
           alt=""
         />
       </div>

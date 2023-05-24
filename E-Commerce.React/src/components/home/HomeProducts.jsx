@@ -9,7 +9,7 @@ export default function HomeProducts() {
 
   useEffect(() => {
     axios
-      .get("https://e-commercemss.azurewebsites.net/api/SalesProducts/home")
+      .get("https://msse-commerce.azurewebsites.net/api/SalesProducts/home")
       .then((response) => {
         setHomeProducts(response.data);
       })
