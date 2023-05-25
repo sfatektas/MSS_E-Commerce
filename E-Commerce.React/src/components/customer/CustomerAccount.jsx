@@ -16,11 +16,11 @@ export default function CustomerAccount() {
   useEffect(() => {
     if (logoutStatus === 204) {
       setTimeout(() => {
-        alert("Başarıyla çıkış yapıldı, yönlendiriliyorsunuz.");
+        // alert("Başarıyla çıkış yapıldı, yönlendiriliyorsunuz.");
         navigate("/");
       }, 1000);
     } else if (logoutStatus === "ERR_NETWORK") {
-      alert("Hatalı çıkış yapıldı, lütfen destek birimimize ulaşın.");
+      // alert("Hatalı çıkış yapıldı, lütfen destek birimimize ulaşın.");
       setTimeout(() => {
         navigate("/");
       }, 1000);
@@ -37,7 +37,7 @@ export default function CustomerAccount() {
           <div className="customer-header col-12 col-lg-2 d-flex flex-row flex-lg-column p-0">
             <div className="d-flex flex-column p-4 w-100">
               <p className="display-4 fw-bold text-center mb-3 user-select-none">
-                {options.logo}
+                {options && options.logo}
               </p>
               <a
                 className={`btn d-flex align-items-center mb-2 rounded-3 text-start ${

@@ -5,26 +5,62 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import { authStore } from "../../store/authStore";
-import { generalStore } from "../../store/generalStore";
+import { generalStore, loaderStore } from "../../store/generalStore";
 import { basketStore, cartSidebarStore } from "../../store/basketStore";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CartSidebar from "../common/CartSidebar";
 import { Base64 } from "js-base64";
+import axios from "axios";
 
 function Header() {
   let navigate = useNavigate();
   const { logout, logoutStatus } = authStore();
+  const { loader, setLoader } = loaderStore();
   const { setSidebarActive } = cartSidebarStore();
   const { options, getOptions, categories, getCategories } = generalStore();
   const { basketItems, getBasketItems } = basketStore();
-
   useEffect(() => {
     getOptions();
     getCategories();
     getBasketItems();
   }, []);
+  //Axios istekleri bitene kadar loader aktif oluyor
+  let requestCount = 0;
 
+  const incrementRequestCount = () => {
+    requestCount++;
+  };
+
+  const decrementRequestCount = () => {
+    requestCount--;
+
+    if (requestCount === 0) {
+      setLoader(false);
+      window.scrollTo(0, 0);
+    }
+  };
+  axios.interceptors.request.use(
+    (config) => {
+      incrementRequestCount();
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
+
+  axios.interceptors.response.use(
+    (response) => {
+      decrementRequestCount();
+      return response;
+    },
+    (error) => {
+      // decrementRequestCount();
+      return Promise.reject(error);
+    }
+  );
+  //İstekler bitince loader pasif hale getiriliyor
   useEffect(() => {
     try {
       const token = localStorage.getItem("user_token");
@@ -52,11 +88,11 @@ function Header() {
   useEffect(() => {
     if (logoutStatus === 204) {
       setTimeout(() => {
-        alert("Başarıyla çıkış yapıldı, yönlendiriliyorsunuz.");
+        // alert("Başarıyla çıkış yapıldı, yönlendiriliyorsunuz.");
         navigate("/");
       }, 1000);
     } else if (logoutStatus === "ERR_NETWORK") {
-      alert("Hatalı çıkış yapıldı, lütfen destek birimimize ulaşın.");
+      // alert("Hatalı çıkış yapıldı, lütfen destek birimimize ulaşın.");
       setTimeout(() => {
         navigate("/");
       }, 1000);
