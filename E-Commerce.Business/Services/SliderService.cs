@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace E_Commerce.Business.Services
 {
@@ -29,6 +30,11 @@ namespace E_Commerce.Business.Services
             _mapper = mapper;
         }
 
+        public Task DeleteSliderAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<List<SliderListDto>> GetAllSliderAsync()
         {
             var sliders = await _uow.GetRepository<Slider>().GetQueryable().
@@ -39,16 +45,22 @@ namespace E_Commerce.Business.Services
             return _mapper.Map<List<SliderListDto>>(sliders);
         }
 
-
-        public async Task DeleteSliderAsync(int id)
+        public async Task<SliderListDto> GetSliderById(int id)
         {
-            var slider = await _uow.GetRepository<Slider>().GetByFilterAsync(x => x.Id == id);
+            var query = _uow.GetRepository<Slider>().GetQueryable().Include(x => x.SliderItems);
+            var slider = await query.SingleOrDefaultAsync(x => x.Id == id);
+            return _mapper.Map<SliderListDto>(slider);
+        }
 
-            if (slider != null)
-                await base.RemoveAsync(_mapper.Map<SliderListDto>(slider));
-            else
-                throw new SliderNotFoundException("Böyle bir slider bulunamadı");
-
+        public async Task updateSlider(SliderUpdateDto dto)
+        {
+            var slider = await _uow.GetRepository<Slider>().GetByFilterAsync(x=>x.Id == dto.Id);
+            if(slider == null)
+                throw new SliderNotFoundException();
+            slider.Name = dto.Name;
+            slider.IsActive = dto.isActive;
+            _uow.GetRepository<Slider>().Update(slider);
+            await _uow.SaveChangesAsync();
         }
 
     }

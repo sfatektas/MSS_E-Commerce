@@ -117,6 +117,8 @@ namespace E_Commerce.API.ServiceExtensions
                 opt.CreateMap<ProductCreateModel, ProductCreateDto>();
                 opt.CreateMap<SupplierCreateModel, SupplierCreateDto>();
                 opt.CreateMap<SupplierProductCreateModel, SupplierProductCreateDto>();
+                opt.CreateMap<SliderItemUpdateModel, SliderItemUpdateDto>().ReverseMap();
+                opt.CreateMap<SliderUpdateModel, SliderUpdateDto>().ReverseMap();
             });
         }
         public static void ConfigureServices(this IServiceCollection services)

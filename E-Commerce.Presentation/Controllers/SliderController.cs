@@ -2,6 +2,7 @@
 using E_Commerce.Business.Interfaces;
 using E_Commerce.Common.Interfaces;
 using E_Commerce.Dtos.SliderDtos;
+using E_Commerce.Dtos.SliderItemsDtos;
 using E_Commerce.Presentation.ActionFilters;
 using E_Commerce.Presentation.Models;
 using Microsoft.AspNetCore.Cors;
@@ -37,15 +38,20 @@ namespace E_Commerce.Presentation.Controllers
         }
 
 
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteSliderAsync([FromRoute] int id)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetSliderById([FromRoute] int id)
         {
-            await _sliderService.DeleteSliderAsync(id);
-            return StatusCode(201);
+            var response = await _sliderService.GetSliderById(id);
+            return Ok(response);
         }
 
-
+        [HttpPut]
+        public async Task<IActionResult> UpdateSlider([FromBody]SliderUpdateModel model)
+        {
+            var dto = _mapper.Map<SliderUpdateDto>(model);
+            await _sliderService.updateSlider(dto);
+            return Ok(dto);
+        }
 
 
     }
