@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { generalStore} from "../store/generalStore";
+import { generalStore } from "../store/generalStore";
 import { Navigate } from "react-router-dom";
 import Showcase from "../components/common/Showcase";
 import { useEffect, useState } from "react";
@@ -73,30 +73,26 @@ export default function Category(props) {
     );
   }
 
-  function cleanAllFilters(){
-    setFilterBrand("")
-    setFilterColor("")
-    setFilterMax("")
-    setFilterMin("")
-    setFilterSearch("")
-    setFilterSize("")
+  function cleanAllFilters() {
+    setFilterBrand("");
+    setFilterColor("");
+    setFilterMax("");
+    setFilterMin("");
+    setFilterSearch("");
+    setFilterSize("");
     setProductsLink(
       `https://msse-commerce.azurewebsites.net/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${""}&size=${""}&brand=${""}&minprice=${""}&maxprice=${""}&search=${""}`
     );
   }
 
   useEffect(() => {
-    console.log(productsLink);
     axios
       .get(productsLink)
       .then((response) => {
-        console.log(response);
         setProducts(response.data);
-        console.log(productsLink);
       })
       .catch((error) => {
         console.log(error.response.data.Error);
-        alert(error.response.data.Error);
       });
     window.scrollTo({
       top: 0,
@@ -218,7 +214,10 @@ export default function Category(props) {
                     </p>
                     {productsLink !=
                     `https://msse-commerce.azurewebsites.net/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${""}&size=${""}&brand=${""}&minprice=${""}&maxprice=${""}&search=${""}` ? (
-                      <button className="btn btn-outline-dark rounded-3" onClick={cleanAllFilters}>
+                      <button
+                        className="btn btn-outline-dark rounded-3"
+                        onClick={cleanAllFilters}
+                      >
                         Filtreleri Temizle
                       </button>
                     ) : null}
@@ -234,7 +233,12 @@ export default function Category(props) {
                             value={item.defination}
                             onClick={(e) => brandFilter(e.target.value)}
                           />
-                          <p className="ms-2">{item.defination}</p>
+                          <p
+                            style={{ textTransform: "uppercase" }}
+                            className="ms-2"
+                          >
+                            {item.defination}
+                          </p>
                         </div>
                       );
                     })}
@@ -373,7 +377,7 @@ export default function Category(props) {
                       );
                     }
                   })}
-                </div>  
+                </div>
               </div>
             </div>
           </div>

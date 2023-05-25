@@ -2,13 +2,57 @@ import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
+import { cartSidebarStore } from "../../store/basketStore";
+import { Base64 } from "js-base64";
+import axios from "axios";
+
 
 export default function Showcase(props) {
   const [basketModal, setBasketModal] = useState(false);
   const [favoritesModal, setFavoritesModal] = useState(false);
+  const [userName, setUserName] = useState(null);
+  const { setSidebarActive } = cartSidebarStore();
 
-  function addBasket() {
-    setBasketModal(true);
+  useEffect(() => {
+    if (localStorage.getItem("user_token")) {
+      const token = localStorage.getItem("user_token");
+      const startIndex = token.indexOf(".");
+      const endIndex = token.lastIndexOf(".");
+      const filteredToken = token.slice(startIndex, endIndex + 1);
+      const trimmedPayload = filteredToken.substring(
+        1,
+        filteredToken.length - 1
+      );
+      const decodedPayload = Base64.decode(trimmedPayload);
+
+      let tokenUserName = JSON.parse(decodedPayload).nameid;
+      setUserName(tokenUserName);
+    }
+  }, [userName]);
+
+  function addBasket(id) {
+    const basketItem = {
+      username: userName,
+      productInStockId: id,
+      amount: 1,
+    };
+    console.log(basketItem);
+    if (userName != null) {
+      axios
+      .post(
+        `https://msse-commerce.azurewebsites.net/api/baskets/${userName}`,
+        basketItem
+      )
+      .then((response) => {
+        console.log(response);
+        setBasketModal(true);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    }else{
+      setSidebarActive(true)
+    }
   }
   function addFavorites() {
     setFavoritesModal(true);
@@ -112,7 +156,7 @@ export default function Showcase(props) {
               />
             </svg>
           </a>
-          <a onClick={addBasket} className="btn text- mb-2">
+          <a onClick={()=>addBasket(props.id)} className="btn text- mb-2">
             <svg
               width="24"
               height="24"

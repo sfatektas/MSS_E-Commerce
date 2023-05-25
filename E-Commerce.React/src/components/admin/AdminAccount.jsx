@@ -29,7 +29,7 @@ export default function AdminAccount() {
               <div className="admin-header col-12 col-lg-2 d-flex flex-row flex-lg-column p-0">
                 <div className="d-flex flex-column p-4 w-100">
                   <p className="display-4 fw-bold text-center mb-3 user-select-none">
-                    {options.logo}
+                    {options && options.logo}
                   </p>
                   <a
                     className={`btn d-flex align-items-center mb-2 rounded-3 text-start ${

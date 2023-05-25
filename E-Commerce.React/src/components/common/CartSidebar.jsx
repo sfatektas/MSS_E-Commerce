@@ -215,7 +215,7 @@ export default function CartSidebar() {
                   {options && options.logo}
                 </a>
               </div>
-              <div className="cart-title mb-5">
+              <div className="cart-title mb-5 text-center">
                 <p className="fs-2 fw-semibold mb-2">Lütfen Giriş Yapın</p>
               </div>
               <div className="cart-buttons d-flex flex-column">

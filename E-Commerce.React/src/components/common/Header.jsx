@@ -25,7 +25,7 @@ function Header() {
     getCategories();
     getBasketItems();
   }, []);
-
+  //Axios istekleri bitene kadar loader aktif oluyor
   let requestCount = 0;
 
   const incrementRequestCount = () => {
@@ -37,6 +37,7 @@ function Header() {
 
     if (requestCount === 0) {
       setLoader(false);
+      window.scrollTo(0, 0);
     }
   };
   axios.interceptors.request.use(
@@ -55,11 +56,11 @@ function Header() {
       return response;
     },
     (error) => {
-      decrementRequestCount();
+      // decrementRequestCount();
       return Promise.reject(error);
     }
   );
-
+  //İstekler bitince loader pasif hale getiriliyor
   useEffect(() => {
     try {
       const token = localStorage.getItem("user_token");
@@ -87,11 +88,11 @@ function Header() {
   useEffect(() => {
     if (logoutStatus === 204) {
       setTimeout(() => {
-        alert("Başarıyla çıkış yapıldı, yönlendiriliyorsunuz.");
+        // alert("Başarıyla çıkış yapıldı, yönlendiriliyorsunuz.");
         navigate("/");
       }, 1000);
     } else if (logoutStatus === "ERR_NETWORK") {
-      alert("Hatalı çıkış yapıldı, lütfen destek birimimize ulaşın.");
+      // alert("Hatalı çıkış yapıldı, lütfen destek birimimize ulaşın.");
       setTimeout(() => {
         navigate("/");
       }, 1000);

@@ -8,7 +8,6 @@ function CarouselFade() {
     axios
       .get(`https://msse-commerce.azurewebsites.net/api/Slider/1`)
       .then((response) => {
-        console.log(response.data.sliderItems);
         setSliders(response.data.sliderItems);
       })
       .catch((error) => {

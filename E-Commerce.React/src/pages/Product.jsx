@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import { generalStore } from "../store/generalStore";
+import { cartSidebarStore } from "../store/basketStore";
 import Showcase from "../components/common/Showcase";
 import axios from "axios";
 import { Navigate } from "react-router-dom";
@@ -14,6 +15,7 @@ export default function Product() {
   const { name } = useParams();
   const [product, setProduct] = useState();
   const { options } = generalStore();
+  const { setSidebarActive } = cartSidebarStore();
   const [productPiece, setProductPiece] = useState(1);
   const [colorVariant, setColorVariant] = useState();
   const [sizeVariant, setSizeVariant] = useState();
@@ -77,7 +79,6 @@ export default function Product() {
         `https://msse-commerce.azurewebsites.net/api/suppliers/products/${name}`
       )
       .then((response) => {
-        console.log(response.data);
         setProduct(response.data);
       })
       .catch((error) => {
@@ -106,6 +107,8 @@ export default function Product() {
         .catch((error) => {
           console.log(error);
         });
+    }else{
+      setSidebarActive(true)
     }
   }
   function addFavorites() {
