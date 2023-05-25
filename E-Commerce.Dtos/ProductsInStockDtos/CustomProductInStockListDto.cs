@@ -20,12 +20,12 @@ namespace E_Commerce.Dtos.ProductsInStockDtos
     }
     public class DifferentSizeAvaibleProductListDto
     {
-        public int SupplierProductId { get; set; }
+        public int Id { get; set; }
         public SizeListDto Size { get; set; }
     }
     public class DifferentColorAvaibleProductListDto
     {
-        public int SupplierProductId { get; set; }
+        public int Id { get; set; }
         public ColorListDto Color { get; set; }
     }
 }

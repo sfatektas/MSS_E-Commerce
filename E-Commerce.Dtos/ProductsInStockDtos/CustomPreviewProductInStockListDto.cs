@@ -12,6 +12,7 @@ namespace E_Commerce.Dtos.ProductsInStockDtos
 {
     public class CustomPreviewProductInStockListDto
     {
+        public int Id { get; set; }
         public int SupplierProductId { get; set; }
 
         public IEnumerable<string> ImageUrls { get; set; }

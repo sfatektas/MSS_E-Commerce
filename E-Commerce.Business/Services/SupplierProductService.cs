@@ -67,6 +67,8 @@ namespace E_Commerce.Business.Services
             product.CustomProductTitle = model.CustomProductTitle;
             product.IsActive = model.IsActive;
 
+            //TODO : Product In Stock Güncellenecek
+
             if (model.Files.Count() > 0)
             {
                 var list = model.Files.Select(x => new 
@@ -196,26 +198,26 @@ namespace E_Commerce.Business.Services
             return _mapper.Map<List<ProductInStockListDto>>(data);
         }
 
-        public async Task<CustomProductInStockListDto> GetCustomSupplierProductAsync(int supplierProductId)
+        public async Task<CustomProductInStockListDto> GetCustomSupplierProductAsync(int productinstockid)
         {
             List<DifferentColorAvaibleProductListDto> difcollorList = new();
             List<DifferentSizeAvaibleProductListDto> difsizeList = new();
             // TODO - Uygun olan rekler , uygun olan bedenler ayrı bir model içerisinde ilerlesin.
-            var productInStock = await GetSupplierProduct(supplierProductId);
+            var productInStock = await GetSupplierProduct(productinstockid);
             if (productInStock == null)
-                throw new ProductInStockNotFoundException(supplierProductId); // eğer bu ürüne ait bir kayıt yok ise hata döndür.
+                throw new ProductInStockNotFoundException(productinstockid); // eğer bu ürüne ait bir kayıt yok ise hata döndür.
 
             List<ProductsInStock> otherSuppliers = await GetOtherSuppliersProduct(
                 productInStock.SupplierProduct.ProductId,
                 productInStock.SupplierProduct.SupplierId);
 
-            List<(Color color, int ProductInStock)> avaiableColors = await GetAvaiableColors(
+            List<(Color color, int Id)> avaiableColors = await GetAvaiableColors(
                 productInStock.SupplierProduct.SupplierId,
                 productInStock.SupplierProduct.ProductId,
                 productInStock.SupplierProduct.ColorId,
                 productInStock.SupplierProduct.SizeId);
 
-            List<(Size size, int ProductInStock)> avaiableSizes = await GetAvaiableSizes(
+            List<(Size size, int Id)> avaiableSizes = await GetAvaiableSizes(
                 productInStock.SupplierProduct.SupplierId,
                 productInStock.SupplierProduct.ProductId,
                 productInStock.SupplierProduct.SizeId,
@@ -225,13 +227,13 @@ namespace E_Commerce.Business.Services
                 difcollorList.Add(new DifferentColorAvaibleProductListDto
                 {
                     Color = _mapper.Map<ColorListDto>(x.color),
-                    SupplierProductId = x.ProductInStock,
+                    Id = x.Id,
                 }));
             avaiableSizes.ForEach(x =>
                 difsizeList.Add(new DifferentSizeAvaibleProductListDto
                 {
                     Size = _mapper.Map<SizeListDto>(x.size),
-                    SupplierProductId = x.ProductInStock,
+                    Id = x.Id,
                 }));
 
             return new()
@@ -242,10 +244,10 @@ namespace E_Commerce.Business.Services
                 SupplierProductsFromOtherSupplier = _mapper.Map<List<ProductInStockListDto>>(otherSuppliers)
             };
         }
-        private async Task<ProductsInStock> GetSupplierProduct(int supplierProductId)
+        private async Task<ProductsInStock> GetSupplierProduct(int productinstockid)
         {
             var product = await GetQueryableRepository<ProductsInStock>()
-                .Where(x => x.SupplierProductId == supplierProductId)
+                .Where(x => x.Id == productinstockid)
                 .Include(x => x.SupplierProduct)
                     .ThenInclude(x => x.Product)
                 .Include(x => x.SupplierProduct)
@@ -274,7 +276,7 @@ namespace E_Commerce.Business.Services
                 .ToListAsync();
             return othersuppliers;
         }
-        private async Task<List<(Color color, int ProductInStockId)>> GetAvaiableColors(int supplierid, int productId, int currentColorId, int sizeId)
+        private async Task<List<(Color color, int Id)>> GetAvaiableColors(int supplierid, int productId, int currentColorId, int sizeId)
         {
             var avaiableColors = await GetQueryableRepository<ProductsInStock>()
                 .Include(x => x.SupplierProduct)
@@ -286,16 +288,16 @@ namespace E_Commerce.Business.Services
                 .Select(x => new
                 {
                     Color = x.SupplierProduct.Color,
-                    SupplierProductId = x.SupplierProductId
+                    Id = x.Id
                 })
                 .ToListAsync();
-            List<(Color color, int SupplierProductId)> tuple = new();
+            List<(Color color, int Id)> tuple = new();
 
             avaiableColors.ForEach(item =>
-                tuple.Add(new(item.Color, item.SupplierProductId)));
+                tuple.Add(new(item.Color, item.Id)));
             return tuple;
         }
-        private async Task<List<(Size Size, int ProductInStockId)>> GetAvaiableSizes(int supplierId, int productId, int currentSize, int colorId)
+        private async Task<List<(Size Size, int Id)>> GetAvaiableSizes(int supplierId, int productId, int currentSize, int colorId)
         {
             var avaiableColors = await GetQueryableRepository<ProductsInStock>()
                 .Include(x => x.SupplierProduct)
@@ -307,13 +309,13 @@ namespace E_Commerce.Business.Services
                 .Select(x => new
                 {
                     Size = x.SupplierProduct.Size,
-                    SupplierProductId = x.SupplierProductId
+                    Id = x.Id
                 })
                 .ToListAsync();
-            List<(Size Size, int SupplierProductId)> tuple = new();
+            List<(Size Size, int Id)> tuple = new();
 
             avaiableColors.ForEach(item =>
-                tuple.Add(new(item.Size, item.SupplierProductId)));
+                tuple.Add(new(item.Size, item.Id)));
             return tuple;
         }
         private IQueryable<T> GetQueryableRepository<T>() where T : BaseEntity, new() => _uow.GetRepository<T>().GetQueryable();

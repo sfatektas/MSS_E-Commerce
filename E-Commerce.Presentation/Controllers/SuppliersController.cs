@@ -103,11 +103,12 @@ namespace E_Commerce.Presentation.Controllers
 
             return NoContent();
         }
-        [HttpGet("products/{supplierproductid:int}")]
+        // Product ınstock id sine çevrilecek.
+        [HttpGet("products/{productinstockid:int}")]
         // Eğer azure patlıyorsa ip adresini white list olarak ekle .
-        public async Task<IActionResult> GetOneSupplierProductForSale([FromRoute] int supplierProductId)
+        public async Task<IActionResult> GetOneSupplierProductForSale([FromRoute] int productinstockid)
         {
-            return Ok(await _supplierProductService.GetCustomSupplierProductAsync(supplierProductId));
+            return Ok(await _supplierProductService.GetCustomSupplierProductAsync(productinstockid));
         }
         [HttpDelete("products/{supplierproductid:int}")]
         public async Task<IActionResult> DeleteSupplierProduct([FromRoute] int supplierproductid)

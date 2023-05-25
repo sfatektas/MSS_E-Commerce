@@ -29,7 +29,7 @@ namespace E_Commerce.Presentation.Controllers
             var response = await _colorService.GetAllColor();
             //_mailProducer.SendToMailQueue(new()
             //{
-            //    To = new List<string>() { "sfatektas55@gmail.com","sfatektas@gmail.com"},
+            //    To = new List<string>() { "sfatektas55@gmail.com", "sfatektas@gmail.com" },
             //    Message = "Ekip bu bir deneme mailidir korkmayınız"
             //});
             return Ok(response.Data);

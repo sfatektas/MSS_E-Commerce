@@ -114,6 +114,7 @@ namespace E_Commerce.Business.Services
                  .OrderBy(x => x.UnitPrice)
                   .Select(x => new CustomPreviewProductInStockListDto
                   {
+                      Id = x.Id,
                       Brand = _mapper.Map<BrandListDto>(x.SupplierProduct.Product.Brand),
                       Category = _mapper.Map<CategoryListDto>(x.SupplierProduct.Product.Category),
                       ProductTitle = x.SupplierProduct.CustomProductTitle,
