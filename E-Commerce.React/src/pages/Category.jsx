@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { generalStore } from "../store/generalStore";
+import { generalStore} from "../store/generalStore";
 import { Navigate } from "react-router-dom";
 import Showcase from "../components/common/Showcase";
 import { useEffect, useState } from "react";
@@ -363,7 +363,7 @@ export default function Category(props) {
                       return (
                         <Showcase
                           key={item.supplierProductId}
-                          id={item.supplierProductId}
+                          id={item.id}
                           title={item.productTitle}
                           brand={item.brand.defination}
                           price={item.unitPrice}
@@ -373,7 +373,7 @@ export default function Category(props) {
                       );
                     }
                   })}
-                </div>
+                </div>  
               </div>
             </div>
           </div>

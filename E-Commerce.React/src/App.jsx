@@ -24,59 +24,52 @@ function App() {
 
   return (
     <>
-      {loader ? (
-        <>
-          <Loader />
-        </>
-      ) : (
-        <>
-          <Header />
-          <Routes>
-            <Route
-              path="/admin"
-              element={
-                <ProtectedRoute>
-                  <Admin />
-                </ProtectedRoute>
-              }
-            />
-            <Route path="/" element={<Home />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route
-              path="/account"
-              element={
-                <ProtectedRoute>
-                  <Account />
-                </ProtectedRoute>
-              }
-            />
-            <Route path="/:defination" element={<Category />} />
-            <Route path="/:defination/:name" element={<Product />} />
-            <Route path="/NotFound" element={<NotFound />} />
-            <Route path="/Forbidden" element={<Forbidden />} />
-            <Route
-              path="cart"
-              element={
-                <ProtectedRoute>
-                  <Cart />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/favorites"
-              element={
-                <ProtectedRoute>
-                  <Favorites />
-                </ProtectedRoute>
-              }
-            />
-          </Routes>
-          <Footer />
-        </>
-      )}
+      {loader?<Loader />:null}
+      <Header />
+      <Routes>
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute>
+              <Admin />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/" element={<Home />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route
+          path="/account"
+          element={
+            <ProtectedRoute>
+              <Account />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/:defination" element={<Category />} />
+        <Route path="/:defination/:name" element={<Product />} />
+        <Route path="/NotFound" element={<NotFound />} />
+        <Route path="/Forbidden" element={<Forbidden />} />
+        <Route
+          path="cart"
+          element={
+            <ProtectedRoute>
+              <Cart />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/favorites"
+          element={
+            <ProtectedRoute>
+              <Favorites />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+      <Footer />
     </>
   );
 }

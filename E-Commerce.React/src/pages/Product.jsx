@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Modal from "react-bootstrap/Modal";
-import { generalStore, loaderStore } from "../store/generalStore";
+import { generalStore } from "../store/generalStore";
 import Showcase from "../components/common/Showcase";
 import axios from "axios";
 import { Navigate } from "react-router-dom";
@@ -92,7 +92,7 @@ export default function Product() {
       productInStockId: name,
       amount: productPiece,
     };
-    console.log(userName);
+    console.log(basketItem);
     if (userName != null) {
       axios
         .post(
@@ -357,7 +357,7 @@ export default function Product() {
                       {product.avaiableColors.map((item) => {
                         return (
                           <a
-                            href={`/${product.productInStock.supplierProduct.product.category.defination}/${item.supplierProductId}`}
+                            href={`/${product.productInStock.supplierProduct.product.category.defination}/${item.id}`}
                             key={item.color.id}
                           >
                             <button
@@ -387,7 +387,7 @@ export default function Product() {
                       {product.avaiableSizes.map((item) => {
                         return (
                           <a
-                            href={`/${product.productInStock.supplierProduct.product.category.defination}/${item.supplierProductId}`}
+                            href={`/${product.productInStock.supplierProduct.product.category.defination}/${item.id}`}
                             key={item.size.id}
                           >
                             <button

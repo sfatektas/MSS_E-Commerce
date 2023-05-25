@@ -30,7 +30,7 @@ export const generalStore = create((set) => ({
         "https://msse-commerce.azurewebsites.net/api/siteoption"
       );
       set({ options: response.data });
-      loaderStore.getState().setLoader(false);
+      // loaderStore.getState().setLoader(false);
       return response.data;
     } catch (error) {
       console.error(error);

@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import { basketStore } from "../store/basketStore";
+import { Base64 } from "js-base64";
+import axios from "axios";
 
 export default function Cart() {
   const { basketItems } = basketStore();
+  const [userName, setUserName] = useState(null);
   console.log(basketItems);
   let totalPrice = 0;
   basketItems &&
@@ -10,7 +13,40 @@ export default function Cart() {
       totalPrice += item.unitPrice * item.amount;
       return null;
     });
-  console.log(basketItems);
+  useEffect(() => {
+    if (localStorage.getItem("user_token")) {
+      const token = localStorage.getItem("user_token");
+      const startIndex = token.indexOf(".");
+      const endIndex = token.lastIndexOf(".");
+      const filteredToken = token.slice(startIndex, endIndex + 1);
+      const trimmedPayload = filteredToken.substring(
+        1,
+        filteredToken.length - 1
+      );
+      const decodedPayload = Base64.decode(trimmedPayload);
+
+      let tokenUserName = JSON.parse(decodedPayload).nameid;
+      setUserName(tokenUserName);
+    }
+  }, [userName]);
+
+  function basketProductDelete(productInStockId) {
+    axios
+      .delete(
+        `https://msse-commerce.azurewebsites.net/api/Baskets/${userName}/${productInStockId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("user_token")}`,
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
   return (
     <>
       <div className="d-flex flex-column my-4 text-center">
@@ -65,7 +101,7 @@ export default function Cart() {
                                 <div className="piece-box border d-flex align-items-center bg-white rounded-3">
                                   <a
                                     className="btn btn-white fs-5 h-100 rounded-3 d-flex align-items-center"
-                                    // onClick={() => calcPiece(-1)}
+                                    onClick={() => basketProductDelete(item.id)}
                                   >
                                     <svg
                                       xmlns="http://www.w3.org/2000/svg"
@@ -96,15 +132,12 @@ export default function Cart() {
                                 <div className="piece-box border d-flex align-items-center bg-white rounded-3">
                                   <a
                                     className="btn btn-white fs-5 h-100 rounded-3"
-                                    // onClick={() => calcPiece(-1)}
+                                    onClick={() => basketProductDelete(item.id)}
                                   >
                                     -
                                   </a>
                                   <p className="px-3">{item.amount}</p>
-                                  <a
-                                    className="btn btn-white fs-5 h-100 rounded-3"
-                                    // onClick={() => calcPiece(+1)}
-                                  >
+                                  <a className="btn btn-white fs-5 h-100 rounded-3">
                                     +
                                   </a>
                                 </div>

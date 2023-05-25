@@ -1,8 +1,47 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { basketStore, cartSidebarStore } from "../../store/basketStore";
 import { generalStore } from "../../store/generalStore";
+import axios from "axios";
+import { Base64 } from "js-base64";
 
 function CartProduct(props) {
+  const [userName, setUserName] = useState(null);
+
+  useEffect(() => {
+    if (localStorage.getItem("user_token")) {
+      const token = localStorage.getItem("user_token");
+      const startIndex = token.indexOf(".");
+      const endIndex = token.lastIndexOf(".");
+      const filteredToken = token.slice(startIndex, endIndex + 1);
+      const trimmedPayload = filteredToken.substring(
+        1,
+        filteredToken.length - 1
+      );
+      const decodedPayload = Base64.decode(trimmedPayload);
+
+      let tokenUserName = JSON.parse(decodedPayload).nameid;
+      setUserName(tokenUserName);
+    }
+  }, [userName]);
+
+  function basketProductDelete() {
+    console.log(props);
+    axios
+      .delete(
+        `https://msse-commerce.azurewebsites.net/api/Baskets/${userName}/${props.productInStockId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("user_token")}`,
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
   return (
     <div className="product d-flex border-top position-relative">
       <div className="product-image d-flex align-items-center p-2">
@@ -14,11 +53,20 @@ function CartProduct(props) {
         />
       </div>
       <div className="product-content p-2">
-        <a href={`/${props.category}/${props.supplierId}`} className="mb-2 fw-semibold text-decoration-none text-black">{props.title}</a>
+        <a
+          href={`/${props.category}/${props.supplierId}`}
+          className="mb-2 fw-semibold text-decoration-none text-black"
+        >
+          {props.title}
+        </a>
         <p className="mb-3">{props.brand}</p>
         <p className="mb-3 position-absolute end-0">{props.amount} Adet</p>
         <div className="d-flex align-items-center">
-          <a href="#!" className="cart-delete-button">
+          <a
+            href="#!"
+            onClick={(e) => basketProductDelete()}
+            className="cart-delete-button"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="25"
@@ -88,6 +136,7 @@ export default function CartSidebar() {
                       amount={item.amount}
                       category={item.category}
                       supplierId={item.supplierProductId}
+                      productInStockId={item.id}
                     />
                   ))}
                   <div className="cart-total border-top mb-4 pt-4">
