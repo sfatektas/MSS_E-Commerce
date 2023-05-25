@@ -14,7 +14,6 @@ namespace E_Commerce.DataAccess.Configurations
     {
         public void Configure(EntityTypeBuilder<SliderItem> builder)
         {
-            builder.Property(x=>x.ImageUrl).IsRequired().HasMaxLength(250);
             builder.Property(x => x.Title).IsRequired().HasMaxLength(300);
             builder.Property(x => x.SubTitle).IsRequired().HasMaxLength(300);
             builder.Property(x => x.ButtonText).IsRequired().HasMaxLength(300);

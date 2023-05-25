@@ -38,6 +38,7 @@ builder.Services.ConfigureStorage();
 builder.Services.ConfigureRateLimit(builder.Configuration);
 builder.Services.AddSignalR();
 builder.Services.AddHttpContextAccessor();
+builder.Services.ConfigureRabbitMQ();
 
 
 
@@ -73,7 +74,7 @@ app.MapHub<VisitHub>("/visit");
 
 app.MapControllers();
 
-//await app.SeedData(); //Seed Data added.
+await app.SeedData(); //Seed Data added.
 
 app.Run();
 //mrt feature added

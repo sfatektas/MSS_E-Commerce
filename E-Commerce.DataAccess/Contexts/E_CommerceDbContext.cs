@@ -31,6 +31,7 @@ namespace E_Commerce.DataAccess.Contexts
         public DbSet<PriceHistory> PriceHistory { get; set; }
         public DbSet<ProductImage> ProductImages { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<ProductComment> ProductComments { get; set; }
         public DbSet<ProductsInStock> ProductsInStocks { get; set; }
         public DbSet<ProductsVisitor> ProductsVisitors { get; set; }
         public DbSet<Size> Sizes { get; set; }

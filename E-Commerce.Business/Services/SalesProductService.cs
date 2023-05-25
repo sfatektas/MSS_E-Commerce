@@ -62,7 +62,7 @@ namespace E_Commerce.Business.Services
                     .Include(x => x.SupplierProduct.Product.Brand)
                     .Include(x => x.SupplierProduct.Product.Category)
                 .Include(x => x.SupplierProduct.ProductImages)
-                .Where(x => x.IsFavoriteProduct)
+                .Where(x => x.IsFavoriteProduct && x.IsActive == true)
                 .Select(x => new CustomPreviewProductInStockListDto
                 {
                     Brand = _mapper.Map<BrandListDto>(x.SupplierProduct.Product.Brand),
@@ -114,6 +114,7 @@ namespace E_Commerce.Business.Services
                  .OrderBy(x => x.UnitPrice)
                   .Select(x => new CustomPreviewProductInStockListDto
                   {
+                      Id = x.Id,
                       Brand = _mapper.Map<BrandListDto>(x.SupplierProduct.Product.Brand),
                       Category = _mapper.Map<CategoryListDto>(x.SupplierProduct.Product.Category),
                       ProductTitle = x.SupplierProduct.CustomProductTitle,

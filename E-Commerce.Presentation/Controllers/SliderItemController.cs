@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -37,7 +38,15 @@ namespace E_Commerce.Presentation.Controllers
             return Ok(response);
         }
 
-        [HttpPost]
+        [HttpGet("{sliderItemId}")]
+        public async Task<IActionResult> GetSliderItemsByFilter([FromRoute] int sliderItemId)
+        {
+            var response = await _sliderItemService.GetByIdAsync(sliderItemId);
+            return Ok(response.Data);
+        }
+
+        
+        [HttpPost("create")]
         [ServiceFilter(typeof(ValidateFilterAttiribute<SliderItemCreateModel>))]
         public async Task<IActionResult> CreateSliderItem([FromForm]SliderItemCreateModel model)
         {
@@ -51,14 +60,27 @@ namespace E_Commerce.Presentation.Controllers
             return StatusCode(201);
         }
 
-        [HttpDelete("{sliderItemId}")]
-        public async Task<IActionResult> DeleteSliderItem([FromRoute] int sliderItemId)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> deleteSliderItemById([FromRoute]int id)
         {
-            var recort = await _sliderItemService.GetSliderItemById(sliderItemId);
-            await _sliderItemService.RemoveAsync(recort);
-
-            _storage.RemoveFile(recort.ImageUrl);
-            return NoContent();
+            await _sliderItemService.deleteSliderItemById(id);
+            return Ok(201);
         }
+
+
+        [HttpPost]
+        public async Task<IActionResult> updateSliderItem([FromForm] SliderItemUpdateModel model)
+        {
+            var dto = _mapper.Map<SliderItemUpdateDto>(model);
+            var imageUrlGuid = Guid.NewGuid().ToString();
+            dto.ImageUrl = imageUrlGuid;
+
+            await _sliderItemService.updateSliderItem(dto);
+            await _storage.UploadFile(imageUrlGuid, model.File);
+            return StatusCode(201);
+        }
+
+
+
     }
 }

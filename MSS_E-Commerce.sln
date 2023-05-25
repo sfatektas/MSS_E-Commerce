@@ -3,19 +3,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E-Commerce.API", "E-Commerce.API\E-Commerce.API.csproj", "{CB78445E-5547-443B-AC32-06EF462BD9A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "E-Commerce.API", "E-Commerce.API\E-Commerce.API.csproj", "{CB78445E-5547-443B-AC32-06EF462BD9A9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E-Commerce.DataAccess", "E-Commerce.DataAccess\E-Commerce.DataAccess.csproj", "{46FAD4E6-39AF-4BA8-B023-99E4AE56B495}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "E-Commerce.DataAccess", "E-Commerce.DataAccess\E-Commerce.DataAccess.csproj", "{46FAD4E6-39AF-4BA8-B023-99E4AE56B495}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E-Commerce.Entities", "E-Commerce.Entities\E-Commerce.Entities.csproj", "{9EE53154-E1A0-4BAE-BB24-0B0297044A62}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "E-Commerce.Entities", "E-Commerce.Entities\E-Commerce.Entities.csproj", "{9EE53154-E1A0-4BAE-BB24-0B0297044A62}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E-Commerce.Business", "E-Commerce.Business\E-Commerce.Business.csproj", "{51E7AC42-8B79-408B-9610-53E491C2DA38}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "E-Commerce.Business", "E-Commerce.Business\E-Commerce.Business.csproj", "{51E7AC42-8B79-408B-9610-53E491C2DA38}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E-Commerce.Dtos", "E-Commerce.Dtos\E-Commerce.Dtos.csproj", "{52BD9B02-8B35-47CD-8021-0B19E67B1D8E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "E-Commerce.Dtos", "E-Commerce.Dtos\E-Commerce.Dtos.csproj", "{52BD9B02-8B35-47CD-8021-0B19E67B1D8E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E-Commerce.Common", "E-Commerce.Common\E-Commerce.Common.csproj", "{C59BA802-C5BB-42E8-8965-B6AD927462F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "E-Commerce.Common", "E-Commerce.Common\E-Commerce.Common.csproj", "{C59BA802-C5BB-42E8-8965-B6AD927462F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E-Commerce.Presentation", "E-Commerce.Presentation\E-Commerce.Presentation.csproj", "{2493760C-0BE9-45AE-AE77-2855092251C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "E-Commerce.Presentation", "E-Commerce.Presentation\E-Commerce.Presentation.csproj", "{2493760C-0BE9-45AE-AE77-2855092251C9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E-Commerce.RabbitMQPublisher", "E-Commerce.RabbitMQProducer\E-Commerce.RabbitMQPublisher.csproj", "{8A03FA3A-FB18-4693-8AB6-6B7A9F951000}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E-Commerce.RabbitMQConsumer", "E-Commerce.RabbitMQConsumer\E-Commerce.RabbitMQConsumer.csproj", "{D6915A9B-FC30-489F-9CDE-3E069D8E116A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +55,14 @@ Global
 		{2493760C-0BE9-45AE-AE77-2855092251C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2493760C-0BE9-45AE-AE77-2855092251C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2493760C-0BE9-45AE-AE77-2855092251C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A03FA3A-FB18-4693-8AB6-6B7A9F951000}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A03FA3A-FB18-4693-8AB6-6B7A9F951000}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A03FA3A-FB18-4693-8AB6-6B7A9F951000}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A03FA3A-FB18-4693-8AB6-6B7A9F951000}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6915A9B-FC30-489F-9CDE-3E069D8E116A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6915A9B-FC30-489F-9CDE-3E069D8E116A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6915A9B-FC30-489F-9CDE-3E069D8E116A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6915A9B-FC30-489F-9CDE-3E069D8E116A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

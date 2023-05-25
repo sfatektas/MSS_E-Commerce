@@ -10,11 +10,11 @@ namespace E_Commerce.Dtos.SliderItemsDtos
     public record SliderItemUpdateDto : IUpdateDto
     {
         public int Id { get; init; }
-        public int SliderId { get; init; }
-        public string ImageUrl { get; init; }
-        public string Title { get; init; }
-        public string SubTitle { get; init; }
-        public string ButtonText { get; init; }
-        public string ButtonLink { get; init; }
+        public int SliderId { get; set; }
+        public string ImageUrl { get; set; }
+        public string Title { get; set; }
+        public string SubTitle { get; set; }
+        public string ButtonText { get; set; }
+        public string ButtonLink { get; set; }
     }
 }

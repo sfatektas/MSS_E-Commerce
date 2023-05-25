@@ -11,7 +11,7 @@ namespace E_Commerce.Dtos.ProductCommentDtos
     public record ProductCommentUpdateDto : IUpdateDto
     {
         public int Id { get; init; }
-        public int SupplierProductId { get; set; }
+        public int ProductInStockId { get; set; }
         public int CustomerId { get; set; }
         public string Content { get; init; }
         public int Point { get; init; }

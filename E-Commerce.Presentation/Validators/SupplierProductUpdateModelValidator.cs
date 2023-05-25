@@ -12,11 +12,11 @@ namespace E_Commerce.Presentation.Validators
     {
         public SupplierProductUpdateModelValidator()
         {
-            RuleFor(x=>x.CustomProductTitle).NotEmpty();
+            RuleFor(x => x.CustomProductTitle).NotEmpty();
             RuleFor(x => x.UnitPrice).NotEqual(0);
-            RuleFor(x=>x.SizeId).NotEqual(0);
-            RuleFor(x=>x.CustomProductDefination).NotEmpty();
-            RuleFor(x=>x.ColorId).NotEqual(0);
+            RuleFor(x => x.SizeId).NotEqual(0);
+            RuleFor(x => x.CustomProductDefination).NotEmpty();
+            RuleFor(x => x.ColorId).NotEqual(0);
         }
     }
 }

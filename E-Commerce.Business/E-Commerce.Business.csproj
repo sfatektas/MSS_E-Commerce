@@ -12,6 +12,7 @@
     <ProjectReference Include="..\E-Commerce.DataAccess\E-Commerce.DataAccess.csproj" />
     <ProjectReference Include="..\E-Commerce.Dtos\E-Commerce.Dtos.csproj" />
     <ProjectReference Include="..\E-Commerce.Entities\E-Commerce.Entities.csproj" />
+    <ProjectReference Include="..\E-Commerce.RabbitMQProducer\E-Commerce.RabbitMQPublisher.csproj" />
   </ItemGroup>
 
   <ItemGroup>

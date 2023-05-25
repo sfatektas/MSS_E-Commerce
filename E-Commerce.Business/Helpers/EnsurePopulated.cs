@@ -24,6 +24,7 @@ namespace E_Commerce.Business.Helpers
 
 
             UserManager<AppUser> userManager = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
+            RoleManager<AppRole> roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<AppRole>>();
             //UserManager<Admin> _adminService = scope.ServiceProvider.GetRequiredService<UserManager<Admin>>();
             //UserManager<Customer> _customerManager = scope.ServiceProvider.GetRequiredService<UserManager<Customer>>();
 
@@ -222,6 +223,7 @@ namespace E_Commerce.Business.Helpers
                 foreach (var admin in adminList)
                 {
                     var result = await userManager.CreateAsync(admin, "Admin123");
+                    var identityResult = await userManager.AddToRoleAsync(admin, "Admin");
                 }
             }
             if (!context.Customers.Any())
@@ -238,21 +240,22 @@ namespace E_Commerce.Business.Helpers
                         UserTypeId = (int)AppUserType.Customer,
 
                     },
-                    //new Customer
-                    //{
-                    //    FirstName = "Murat",
-                    //    LastName = "Baran",
-                    //    UserName = "mrtbrn",
-                    //    Email = "mrtbrn@gmail.com",
-                    //    GenderId = (int)GenderType.Men,
-                    //    UserTypeId = (int)AppUserType.Customer,
+                    new Customer
+                    {
+                        FirstName = "Murat",
+                        LastName = "Baran",
+                        UserName = "mrtbrn",
+                        Email = "mrtbrn@gmail.com",
+                        GenderId = (int)GenderType.Men,
+                        UserTypeId = (int)AppUserType.Customer,
 
-                    //},
+                    },
 
                 };
                 foreach (var customer in CustomerList)
                 {
                     var result = await userManager.CreateAsync(customer, "Customer123");
+                    var identityResult = await userManager.AddToRoleAsync(customer, "Customer");
                 }
                 await context.SaveChangesAsync();
             }
@@ -269,11 +272,23 @@ namespace E_Commerce.Business.Helpers
                         CompanyUserName = "chekkonargile2",
                         CompanyDetail = "Yer Fıstığı kabuklu nargile kömürü",
                         UserTypeId = (int)AppUserType.Supplier,
+                    },
+                    new Supplier()
+                    {
+                        UserName = "Mavi",
+                        Email = "info@mavi.com",
+                        PhoneNumber = "054987498456",
+                        CompanyName = "Mavi LTD. ŞTI",
+                        CompanyUserName = "MAVİ",
+                        CompanyDetail = "Mavi giyim",
+                        UserTypeId = (int)AppUserType.Supplier,
                     }
                 };
                 foreach (var supplier in supplierList)
                 {
                     var result = await userManager.CreateAsync(supplier, "Supplier123");
+                    var identityResult = await userManager.AddToRoleAsync(supplier, "Supplier");
+
                 }
                 await context.SaveChangesAsync();
             }

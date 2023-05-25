@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.Presentation.Validators
 {
-    public class SliderCreateModelValidator : AbstractValidator<SliderCreateModel>
+    public class SliderCreateModelValidator : AbstractValidator<SliderUpdateModel>
     {
         public SliderCreateModelValidator()
         {

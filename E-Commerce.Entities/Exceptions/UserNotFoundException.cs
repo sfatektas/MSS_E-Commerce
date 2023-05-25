@@ -13,6 +13,10 @@ namespace E_Commerce.Entities.Exceptions
         {
 
         }
+        public UserNotFoundException(int userid):base($"{userid} id değerine sahip bir müşteri bulunamadı.")
+        {
+            
+        }
 
     }
 }

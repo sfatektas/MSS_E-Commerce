@@ -20,7 +20,7 @@ namespace E_Commerce.Business.Interfaces
         Task<CustomProductInStockListDto> GetCustomSupplierProductAsync(int supplierProductId);
         Task<int> CreateSupplierProduct(SupplierProductCreateDto dto);
         Task AddImageUrls(List<ProductImageCreateDto> dtos);
-        Task AddProductToStock(int supplierProductId, int amount , double unitprice);
+        Task<bool> AddProductToStock(int supplierProductId, int amount, double unitprice); // returns true if exist product otherwise false 
         Task DeleteSupplierProduct(int id);
         Task UpdateSupplierProduct(SupplierProductUpdateModel model);
         Task RemoveSupplierProductImage(int supplierProductId, string imageUrl);

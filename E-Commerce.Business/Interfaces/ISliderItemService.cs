@@ -16,5 +16,9 @@ namespace E_Commerce.Business.Interfaces
     {
         Task<List<SliderItemListDto>> GetAllSliderItemAsync();
         Task<SliderItemListDto> GetSliderItemById(int id);
+        //Task<List<SliderItemListDto>> GetSliderItemsByFilter(int id);
+        Task updateSliderItem(SliderItemUpdateDto dto);
+        Task deleteSliderItemById(int id);
+
     }
 }

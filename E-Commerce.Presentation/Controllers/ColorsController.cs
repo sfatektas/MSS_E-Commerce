@@ -1,4 +1,5 @@
 ﻿using E_Commerce.Business.Interfaces;
+using E_Commerce.RabbitMQProducer.Interfaces;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -15,15 +16,22 @@ namespace E_Commerce.Presentation.Controllers
     public class ColorsController : ControllerBase
     {
         private readonly IColorService _colorService;
-        public ColorsController(IColorService colorService)
+        private readonly IMailProducer _mailProducer;
+        public ColorsController(IColorService colorService, IMailProducer mailProducer)
         {
             _colorService = colorService;
+            _mailProducer = mailProducer;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllColors()
         {
             var response = await _colorService.GetAllColor();
+            //_mailProducer.SendToMailQueue(new()
+            //{
+            //    To = new List<string>() { "sfatektas55@gmail.com", "sfatektas@gmail.com" },
+            //    Message = "Ekip bu bir deneme mailidir korkmayınız"
+            //});
             return Ok(response.Data);
         }
 

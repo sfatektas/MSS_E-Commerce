@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.Presentation.Controllers
 {
+    [EnableCors("DefaultPolicy")]
     [ApiController]
     [Route("api/[controller]")]
     public class BasketsController : ControllerBase
@@ -24,9 +25,10 @@ namespace E_Commerce.Presentation.Controllers
         }
         [HttpGet("{customername}")]
         [Authorize(Roles = "customer")]
+        //[Authorize]
         public async Task<IActionResult> GetBasket([FromRoute] string customername)
         {
-            var dto = await _basketService.GetBasket(customername);
+            var dto = await _basketService.GetBasket(customername,true);
             return Ok(dto);
         }
         [HttpPost("{customername}")]
@@ -38,6 +40,13 @@ namespace E_Commerce.Presentation.Controllers
                     ProductInStockId = model.ProductInStockId
                 });
             return StatusCode(201);
+        }
+        [Authorize(Roles = "customer")]
+        [HttpDelete("{customerName}/{productInStockId:int}")]
+        public async Task<IActionResult> DecrementItem([FromRoute] string customerName, int productInStockId)
+        {
+            await _basketService.DecrementItemFromBasket(customerName, productInStockId);
+            return StatusCode(204);
         }
     }
 }

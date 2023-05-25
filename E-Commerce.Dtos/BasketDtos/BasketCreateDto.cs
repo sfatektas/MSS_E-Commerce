@@ -10,6 +10,6 @@ namespace E_Commerce.Dtos.BasketDtos
     {
         public string CustomerUsername { get; set; }
 
-        public List<BasketItemCreateDto> BasketItems { get; set; }
+        public List<BasketItemCreateAndUpdateDto> BasketItems { get; set; }
     }
 }
