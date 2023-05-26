@@ -9,7 +9,7 @@ export const authStore = create((set) => ({
   loginFetch: async (uname, password) => {
     try {
       const response = await axios.post(
-        "https://msse-commerce.azurewebsites.net/api/Auth/Login",
+        "http://api.mssdev.online/api/Auth/Login",
         {
           username: uname,
           password: password,
@@ -33,7 +33,7 @@ export const authStore = create((set) => ({
     try {
       const token = localStorage.getItem("user_token");
       const response = await axios.get(
-        `https://msse-commerce.azurewebsites.net/api/Auth/Logout/${token}`,
+        `http://api.mssdev.online/api/Auth/Logout/${token}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }

@@ -40,7 +40,7 @@ export default function Showcase(props) {
     if (userName != null) {
       axios
       .post(
-        `https://msse-commerce.azurewebsites.net/api/baskets/${userName}`,
+        `http://api.mssdev.online/api/baskets/${userName}`,
         basketItem
       )
       .then((response) => {
@@ -198,7 +198,7 @@ export default function Showcase(props) {
           <a href={`/${props.category}/${props.id}`} className="w-100">
             <img
               className="w-100"
-              src={`https://msse-commerce.azurewebsites.net/api/files/${props.image}`}
+              src={`http://api.mssdev.online/api/files/${props.image}`}
               alt={props.title + " Image"}
             />
           </a>

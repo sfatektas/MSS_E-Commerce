@@ -20,7 +20,7 @@ export default function SupplierProducts() {
 
   useEffect(() => {
     axios
-      .get("https://msse-commerce.azurewebsites.net/api/Products", {
+      .get("http://api.mssdev.online/api/Products", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("user_token")}`,
         },
@@ -43,7 +43,7 @@ export default function SupplierProducts() {
     let supplierId = JSON.parse(decodedPayload).Id;
     axios
       .get(
-        `https://msse-commerce.azurewebsites.net/api/suppliers/${supplierId}/products/`
+        `http://api.mssdev.online/api/suppliers/${supplierId}/products/`
       )
       .then((response) => {
         setProducts(response.data);
@@ -54,7 +54,7 @@ export default function SupplierProducts() {
   }, []);
   useEffect(() => {
     axios
-      .get("https://msse-commerce.azurewebsites.net/api/Colors", {
+      .get("http://api.mssdev.online/api/Colors", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("user_token")}`,
         },
@@ -68,7 +68,7 @@ export default function SupplierProducts() {
   }, []);
   useEffect(() => {
     axios
-      .get("https://msse-commerce.azurewebsites.net/api/Sizes", {
+      .get("http://api.mssdev.online/api/Sizes", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("user_token")}`,
         },
@@ -84,7 +84,7 @@ export default function SupplierProducts() {
   function deleteProduct(supplierProductId) {
     axios
       .delete(
-        `https://msse-commerce.azurewebsites.net/api/Suppliers/products/${supplierProductId}`
+        `http://api.mssdev.online/api/Suppliers/products/${supplierProductId}`
       )
       .then((response) => {
         setInfo("Ürün Başarıyla Silindi");
@@ -140,7 +140,7 @@ export default function SupplierProducts() {
       formData.append("CustomProductDefination", productInfo);
       axios
         .post(
-          `https://msse-commerce.azurewebsites.net/api/suppliers/${supplierId}/products/`,
+          `http://api.mssdev.online/api/suppliers/${supplierId}/products/`,
           formData,
           {
             headers: {
@@ -374,7 +374,7 @@ export default function SupplierProducts() {
       console.log(json);
       axios
         .put(
-          `https://msse-commerce.azurewebsites.net/api/Suppliers/products/${
+          `http://api.mssdev.online/api/Suppliers/products/${
             products && products[changeProductId].supplierProductId
           }`,
           formData,
@@ -406,7 +406,7 @@ export default function SupplierProducts() {
     function deleteProductImage(imageUrl) {
       axios
         .delete(
-          `https://msse-commerce.azurewebsites.net/api/Suppliers/products/${
+          `http://api.mssdev.online/api/Suppliers/products/${
             products && products[changeProductId].supplierProductId
           }/images/${imageUrl}`
         )
@@ -565,7 +565,7 @@ export default function SupplierProducts() {
                       >
                         <img
                           className="mini-img"
-                          src={`https://msse-commerce.azurewebsites.net/api/files/${item.imageUrl}`}
+                          src={`http://api.mssdev.online/api/files/${item.imageUrl}`}
                           alt=""
                         />
                         <button
@@ -659,7 +659,7 @@ export default function SupplierProducts() {
                     <td>
                       <img
                         height="50px"
-                        src={`https://msse-commerce.azurewebsites.net/api/files/${item.supplierProduct.productImages[0].imageUrl}`}
+                        src={`http://api.mssdev.online/api/files/${item.supplierProduct.productImages[0].imageUrl}`}
                         alt={item.supplierProduct.customProductTitle}
                       />
                     </td>

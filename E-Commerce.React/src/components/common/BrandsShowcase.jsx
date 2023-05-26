@@ -6,7 +6,7 @@ export default function BrandsShowcase() {
 
   useEffect(() => {
     axios
-      .get("https://msse-commerce.azurewebsites.net/api/Brands")
+      .get("http://api.mssdev.online/api/Brands")
       .then((response) => {
         setBrands(response.data);
       })
@@ -27,7 +27,7 @@ export default function BrandsShowcase() {
               >
                 <a href="#!">
                   <img
-                    src={`https://msse-commerce.azurewebsites.net/api/files/${item.imageUrl}`}
+                    src={`http://api.mssdev.online/api/files/${item.imageUrl}`}
                     alt={item.defination}
                   />
                 </a>

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 export default function AdminContents() {
   useEffect(() => {
     axios
-      .get(`https://msse-commerce.azurewebsites.net/api/Slider`)
+      .get(`http://api.mssdev.online/api/Slider`)
       .then((response) => {
         console.log(response.data);
       })

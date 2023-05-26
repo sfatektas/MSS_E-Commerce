@@ -6,7 +6,7 @@ function CarouselFade() {
   const [sliders, setSliders] = useState([]);
   useEffect(() => {
     axios
-      .get(`https://msse-commerce.azurewebsites.net/api/Slider/1`)
+      .get(`http://api.mssdev.online/api/Slider/1`)
       .then((response) => {
         setSliders(response.data.sliderItems);
       })
@@ -21,7 +21,7 @@ function CarouselFade() {
           <Carousel.Item key={index}>
             <img
               className="d-block w-100"
-              src={`https://msse-commerce.azurewebsites.net/api/files/${item.imageUrl}`}
+              src={`http://api.mssdev.online/api/files/${item.imageUrl}`}
               alt={item.title}
             />
             <Carousel.Caption>
