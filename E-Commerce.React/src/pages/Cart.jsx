@@ -33,7 +33,7 @@ export default function Cart() {
   function basketProductDelete(productInStockId) {
     axios
       .delete(
-        `https://msse-commerce.azurewebsites.net/api/Baskets/${userName}/${productInStockId}`,
+        `http://api.mssdev.online/api/Baskets/${userName}/${productInStockId}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("user_token")}`,
@@ -81,7 +81,7 @@ export default function Cart() {
                     <div className="d-flex align-items-center">
                       <div className="cart-product-image d-flex">
                         <img
-                          src={`https://msse-commerce.azurewebsites.net/api/files/${item.imageUrl}`}
+                          src={`http://api.mssdev.online/api/files/${item.imageUrl}`}
                           alt=""
                           className="border rounded-3"
                         />

@@ -56,7 +56,7 @@ function Header() {
       return response;
     },
     (error) => {
-      // decrementRequestCount();
+      decrementRequestCount();
       return Promise.reject(error);
     }
   );

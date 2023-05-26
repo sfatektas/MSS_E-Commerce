@@ -14,7 +14,7 @@ export default function AdminBrands() {
 
   useEffect(() => {
     axios
-      .get("https://msse-commerce.azurewebsites.net/api/Brands", {
+      .get("http://api.mssdev.online/api/Brands", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("user_token")}`,
         },
@@ -30,7 +30,7 @@ export default function AdminBrands() {
   function deleteBrand(brand) {
     if (window.confirm("Bu markayı silmek istediğinize emin misiniz?")) {
       axios
-        .delete(`https://msse-commerce.azurewebsites.net/api/brands/${brand}`, {
+        .delete(`http://api.mssdev.online/api/brands/${brand}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("user_token")}`,
           },
@@ -63,7 +63,7 @@ export default function AdminBrands() {
       event.preventDefault();
       axios
         .post(
-          "https://msse-commerce.azurewebsites.net/api/Brands",
+          "http://api.mssdev.online/api/Brands",
           brandCreateModel,
           {
             headers: {
@@ -179,7 +179,7 @@ export default function AdminBrands() {
                   <td>
                     <img
                       height="50px"
-                      src={`https://msse-commerce.azurewebsites.net/api/files/${item.imageUrl}`}
+                      src={`http://api.mssdev.online/api/files/${item.imageUrl}`}
                       alt={item.defination}
                     />
                   </td>

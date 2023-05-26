@@ -16,7 +16,7 @@ export default function AdminUserManagement() {
   useEffect(() => {
     axios
       .get(
-        "https://msse-commerce.azurewebsites.net/api/users?usertype=customer",
+        "http://api.mssdev.online/api/users?usertype=customer",
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("user_token")}`,
@@ -34,7 +34,7 @@ export default function AdminUserManagement() {
   useEffect(() => {
     axios
       .get(
-        "https://msse-commerce.azurewebsites.net/api/users?usertype=supplier",
+        "http://api.mssdev.online/api/users?usertype=supplier",
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("user_token")}`,
@@ -60,7 +60,7 @@ export default function AdminUserManagement() {
       ) {
         axios
           .put(
-            `https://msse-commerce.azurewebsites.net/api/users/${id}?status=${
+            `http://api.mssdev.online/api/users/${id}?status=${
               status ? false : true
             }`,
             {
@@ -138,7 +138,7 @@ export default function AdminUserManagement() {
       ) {
         axios
           .put(
-            `https://msse-commerce.azurewebsites.net/api/users/${id}?status=${
+            `http://api.mssdev.online/api/users/${id}?status=${
               status ? false : true
             }`
           )
@@ -179,7 +179,7 @@ export default function AdminUserManagement() {
         };
         axios
           .post(
-            "https://msse-commerce.azurewebsites.net/api/suppliers",
+            "http://api.mssdev.online/api/suppliers",
             createSupplier,
             {
               headers: {

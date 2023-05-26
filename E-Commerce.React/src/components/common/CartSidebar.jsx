@@ -28,7 +28,7 @@ function CartProduct(props) {
     console.log(props);
     axios
       .delete(
-        `https://msse-commerce.azurewebsites.net/api/Baskets/${userName}/${props.productInStockId}`,
+        `http://api.mssdev.online/api/Baskets/${userName}/${props.productInStockId}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("user_token")}`,
@@ -48,7 +48,7 @@ function CartProduct(props) {
         <img
           height="100px"
           width="100px"
-          src={`https://msse-commerce.azurewebsites.net/api/files/${props.image}`}
+          src={`http://api.mssdev.online/api/files/${props.image}`}
           alt=""
         />
       </div>
