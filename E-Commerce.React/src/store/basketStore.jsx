@@ -24,7 +24,7 @@ export const basketStore = create((set) => ({
       if (userName && role=="customer") {
         axios
           .get(
-            `https://e-commercemss.azurewebsites.net/api/baskets/${userName}`,
+            `http://api.mssdev.online/api/baskets/${userName}`,
             {
               headers: {
                 Authorization: `Bearer ${localStorage.getItem("user_token")}`,
@@ -32,6 +32,7 @@ export const basketStore = create((set) => ({
             }
           )
           .then((response) => {
+            console.log(response.data)
             set({ basketItems: response.data.basketItemsWithInclude });
           })
           .catch((error) => {

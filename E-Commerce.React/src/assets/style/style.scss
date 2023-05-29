@@ -12,7 +12,6 @@ $transition: all .2s linear;
 
 body {
     font-family: $font-family;
-
     p {
         margin: 0;
     }
@@ -256,8 +255,12 @@ body {
 //BRANDS
 
 .brands {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     .brand-image {
         img {
+            width: 100px;
             transition: $transition
         }
 
@@ -373,6 +376,9 @@ body {
     }
 
     .showcase-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         a {
             border: #000 1px solid;
             background-color: transparent;
@@ -382,10 +388,12 @@ body {
                 background-color: $secondary;
             }
         }
+        .showcase-button{
+            position: absolute;
+            bottom: 20px;
+            width: 200px;
+        }
     }
-
-
-
 }
 
 //HOME PRODUCT
@@ -428,7 +436,7 @@ body {
 
 //LODAER
 .loader-main {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -546,7 +554,7 @@ body {
     position: fixed;
     top: 0;
     right: -500px;
-    // width: 450px;
+    width: 425px;
     height: 100vh;
     z-index: 2001;
     overflow-y: scroll;

@@ -19,7 +19,7 @@ export default function AdminProducts() {
 
   useEffect(() => {
     axios
-      .get("https://e-commercemss.azurewebsites.net/api/Products", {
+      .get("http://api.mssdev.online/api/Products", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("user_token")}`,
         },
@@ -34,7 +34,7 @@ export default function AdminProducts() {
 
   useEffect(() => {
     axios
-      .get("https://e-commercemss.azurewebsites.net/api/Categories", {
+      .get("http://api.mssdev.online/api/Categories", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("user_token")}`,
         },
@@ -49,7 +49,7 @@ export default function AdminProducts() {
 
   useEffect(() => {
     axios
-      .get("https://e-commercemss.azurewebsites.net/api/Brands", {
+      .get("http://api.mssdev.online/api/Brands", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("user_token")}`,
         },
@@ -62,7 +62,7 @@ export default function AdminProducts() {
 
   useEffect(() => {
     axios
-      .get("https://e-commercemss.azurewebsites.net/api/sizetypes", {
+      .get("http://api.mssdev.online/api/sizetypes", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("user_token")}`,
         },
@@ -79,7 +79,7 @@ export default function AdminProducts() {
     if (window.confirm("Bu ürünü silmek istediğinize emin misiniz?")) {
       axios
         .delete(
-          `https://e-commercemss.azurewebsites.net/api/Products/${productId}`,
+          `http://api.mssdev.online/api/Products/${productId}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("user_token")}`,
@@ -123,7 +123,7 @@ export default function AdminProducts() {
       };
       axios
         .post(
-          "https://e-commercemss.azurewebsites.net/api/Products",
+          "http://api.mssdev.online/api/Products",
           createProduct,
           {
             headers: {
@@ -298,7 +298,7 @@ export default function AdminProducts() {
                   <td>
                     <img
                       height="50px"
-                      src={`https://e-commercemss.azurewebsites.net/api/files/${item.imageUrl}`}
+                      src={`http://api.mssdev.online/api/files/${item.imageUrl}`}
                       alt={item.name}
                     />
                   </td>

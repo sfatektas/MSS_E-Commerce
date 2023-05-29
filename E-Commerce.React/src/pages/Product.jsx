@@ -1,7 +1,8 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Modal from "react-bootstrap/Modal";
-import { generalStore, loaderStore } from "../store/generalStore";
+import { generalStore } from "../store/generalStore";
+import { cartSidebarStore } from "../store/basketStore";
 import Showcase from "../components/common/Showcase";
 import axios from "axios";
 import { Navigate } from "react-router-dom";
@@ -14,6 +15,7 @@ export default function Product() {
   const { name } = useParams();
   const [product, setProduct] = useState();
   const { options } = generalStore();
+  const { setSidebarActive } = cartSidebarStore();
   const [productPiece, setProductPiece] = useState(1);
   const [colorVariant, setColorVariant] = useState();
   const [sizeVariant, setSizeVariant] = useState();
@@ -46,7 +48,7 @@ export default function Product() {
   const createHubConnection = async () => {
     const connection = new signalR.HubConnectionBuilder()
       .withUrl(
-        `https://e-commercemss.azurewebsites.net/visit?productId=${name}`,
+        `http://api.mssdev.online/visit?productId=${name}`,
         {
           transport: signalR.HttpTransportType.WebSockets,
           skipNegotiation: true,
@@ -74,10 +76,9 @@ export default function Product() {
   useEffect(() => {
     axios
       .get(
-        `https://e-commercemss.azurewebsites.net/api/suppliers/products/${name}`
+        `http://api.mssdev.online/api/suppliers/products/${name}`
       )
       .then((response) => {
-        console.log(response.data);
         setProduct(response.data);
       })
       .catch((error) => {
@@ -92,11 +93,11 @@ export default function Product() {
       productInStockId: name,
       amount: productPiece,
     };
-    console.log(userName);
+    console.log(basketItem);
     if (userName != null) {
       axios
         .post(
-          `https://e-commercemss.azurewebsites.net/api/baskets/${userName}`,
+          `http://api.mssdev.online/api/baskets/${userName}`,
           basketItem
         )
         .then((response) => {
@@ -106,6 +107,8 @@ export default function Product() {
         .catch((error) => {
           console.log(error);
         });
+    }else{
+      setSidebarActive(true)
     }
   }
   function addFavorites() {
@@ -223,7 +226,7 @@ export default function Product() {
                       src={
                         bigImage
                           ? bigImage
-                          : `https://e-commercemss.azurewebsites.net/api/files/${product.productInStock.supplierProduct.productImages[0].imageUrl}`
+                          : `http://api.mssdev.online/api/files/${product.productInStock.supplierProduct.productImages[0].imageUrl}`
                       }
                       alt=""
                     />
@@ -236,14 +239,14 @@ export default function Product() {
                             key={item.id}
                             onClick={() =>
                               setBigImage(
-                                `https://e-commercemss.azurewebsites.net/api/files/${item.imageUrl}`
+                                `http://api.mssdev.online/api/files/${item.imageUrl}`
                               )
                             }
                             href="#!"
                             className="mb-2 d-flex justify-content-center"
                           >
                             <img
-                              src={`https://e-commercemss.azurewebsites.net/api/files/${item.imageUrl}`}
+                              src={`http://api.mssdev.online/api/files/${item.imageUrl}`}
                               alt=""
                             />
                           </a>
@@ -357,7 +360,7 @@ export default function Product() {
                       {product.avaiableColors.map((item) => {
                         return (
                           <a
-                            href={`/${product.productInStock.supplierProduct.product.category.defination}/${item.supplierProductId}`}
+                            href={`/${product.productInStock.supplierProduct.product.category.defination}/${item.id}`}
                             key={item.color.id}
                           >
                             <button
@@ -387,7 +390,7 @@ export default function Product() {
                       {product.avaiableSizes.map((item) => {
                         return (
                           <a
-                            href={`/${product.productInStock.supplierProduct.product.category.defination}/${item.supplierProductId}`}
+                            href={`/${product.productInStock.supplierProduct.product.category.defination}/${item.id}`}
                             key={item.size.id}
                           >
                             <button
