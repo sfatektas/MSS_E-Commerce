@@ -553,9 +553,9 @@ body {
 .cart-sidebar {
     position: fixed;
     top: 0;
-    right: -500px;
-    // width: 425px;
-    height: 100vh;
+    right: -600px;
+    // width: 450px;
+    height: 100%;
     z-index: 2001;
     overflow-y: scroll;
     transition: $transition;
