@@ -1,9 +1,11 @@
-﻿using E_Commerce.Business.Consts;
+﻿using AutoMapper;
+using E_Commerce.Business.Consts;
 using E_Commerce.Business.Helpers;
 using E_Commerce.Business.Interfaces;
 using E_Commerce.Business.Models;
 using E_Commerce.Common;
 using E_Commerce.Dtos;
+using E_Commerce.Dtos.CustomerDtos;
 using E_Commerce.Entities.EFCore.Identities;
 using E_Commerce.Entities.Exceptions;
 using Microsoft.AspNetCore.Identity;
@@ -24,13 +26,14 @@ namespace E_Commerce.Business.Services
         readonly UserManager<AppUser> _userManager;
         readonly SignInManager<AppUser> _signInManager;
         readonly ITokenManager _tokenManger;
-
-        public AuthenticationService(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IConfiguration configuration, ITokenManager tokenManger)
+        readonly IMapper _mapper;
+        public AuthenticationService(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IConfiguration configuration, ITokenManager tokenManger, IMapper mapper)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _configuration = configuration;
             _tokenManger = tokenManger;
+            _mapper = mapper;
         }
         public async Task<TokenModel> CheckLogin(UserLoginModel model)
         {
@@ -80,5 +83,24 @@ namespace E_Commerce.Business.Services
             await _signInManager.SignOutAsync();
         }
 
+        public async Task Register(CustomerCreateDto dto)
+        {
+            var mappedData = _mapper.Map<Customer>(dto);
+            var result = await _userManager.CreateAsync(mappedData , dto.Password);
+            if (result.Succeeded)
+            {
+                var user = await _userManager.FindByNameAsync(mappedData.UserName);
+                var roleResult = await _userManager.AddToRoleAsync(user, "customer");
+            }
+            else
+            {
+                string errors = "";
+                foreach (var error in result.Errors)
+                {
+                    errors += "\n" + error.Description;
+                }
+                throw new UserRegisterBadRequestException(errors);
+            }
+        }
     }
 }

@@ -45,13 +45,13 @@ namespace E_Commerce.Presentation.Middlewares
             }
             catch (Exception e)
             {
-                _loggerService.Error($"Hata mesajı : {e.Message} ,\n Hata Detayı : {e.InnerException}");
+                _loggerService.Error($"Hata mesajı : {e.Message} Kaynak:{e.Source} Veri:{e.Data} ,\n Hata Detayı : {e.InnerException}");
                 //Will Create custom response model
                 context.Response.ContentType = "application/json";
                 context.Response.StatusCode = (int)StatusCodes.Status400BadRequest;
                 await context.Response.WriteAsync(new ErrorModel()
                 {
-                    Error = $"Hata mesajı : {e.Message} ,\n Hata Detayı : {e.InnerException}",
+                    Error = $"Hata mesajı : {e.Message} Kaynak:{e.Source} Veri:{e.Data} ,\n Hata Detayı : {e.InnerException}",
                 }.ToString());
             }
         }

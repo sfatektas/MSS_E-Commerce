@@ -8,6 +8,7 @@ using E_Commerce.Business.Models;
 using E_Commerce.Business.Services;
 using E_Commerce.Business.Services.Storage;
 using E_Commerce.Business.Validations.FluentValidations;
+using E_Commerce.Business.Validations.FluentValidations.CustomerValidation;
 using E_Commerce.Business.Validations.FluentValidations.ProductsInStockValidation;
 using E_Commerce.Business.Validations.FluentValidations.ProductValidation;
 using E_Commerce.Business.Validations.FluentValidations.SiteOptionValidation;
@@ -21,6 +22,7 @@ using E_Commerce.DataAccess.Interfaces;
 using E_Commerce.DataAccess.UnitOfWorks;
 using E_Commerce.Dtos;
 using E_Commerce.Dtos.BrandDtos;
+using E_Commerce.Dtos.CustomerDtos;
 using E_Commerce.Dtos.ProductDtos;
 using E_Commerce.Dtos.ProductsInStockDtos;
 using E_Commerce.Dtos.SiteOptionDtos;
@@ -57,7 +59,8 @@ namespace E_Commerce.API.ServiceExtensions
             services.AddDbContext<E_CommerceDbContext>(x =>
             {
                 //"RemoteDb"
-                x.UseMySQL(configuration.GetConnectionString("SefaMySql"));
+                //x.UseMySQL(configuration.GetConnectionString("PleskLocalDB"));
+                x.UseMySQL(configuration.GetConnectionString("PleskDB"));
                 //x.UseSqlServer(configuration.GetConnectionString("RemoteDb"));
             });
             services.AddIdentity<AppUser, AppRole>(opt =>
@@ -163,6 +166,7 @@ namespace E_Commerce.API.ServiceExtensions
             services.AddTransient<IValidator<ProductInStockUpdateDto>,ProductInStockUpdateDtoValidator>();
             services.AddTransient<IValidator<ProductsInStockCreateDto>,ProductInStockCreateValidator>();
             services.AddTransient<IValidator<SupplierProductUpdateModel>, SupplierProductUpdateModelValidator>();
+            services.AddTransient<IValidator<CustomerCreateDto>,CustomerCreateDtoValidator>();
         }
         public static void ConfigureCors(this IServiceCollection services)
         {
@@ -220,6 +224,7 @@ namespace E_Commerce.API.ServiceExtensions
             services.AddScoped<ValidateFilterAttiribute<SliderItemCreateModel>>();
             services.AddScoped<ValidateFilterAttiribute<SupplierProductCreateModel>>();
             services.AddScoped<ValidateFilterAttiribute<SupplierProductUpdateModel>>();
+            services.AddScoped<ValidateFilterAttiribute<CustomerCreateDto>>();
         }
         public static void ConfigureRedis(this IServiceCollection services, IConfiguration configuration)
         {

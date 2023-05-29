@@ -11,7 +11,7 @@ namespace E_Commerce.Dtos.ProductCommentDtos
 {
     public record ProductCommentCreateDto : ICreateDto
     {
-        public int ProductInStockId { get; init; }
+        public int ProductsInStockId { get; init; }
         public int CustomerId { get; init; }
         public string Content { get; init; }
         public int Point { get; init; }

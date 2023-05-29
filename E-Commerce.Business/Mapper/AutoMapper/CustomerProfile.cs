@@ -14,6 +14,7 @@ namespace E_Commerce.Business.Mapper.AutoMapper
         public CustomerProfile()
         {
             CreateMap<Customer, CustomerListDto>().ReverseMap();
+            CreateMap<Customer, CustomerCreateDto>().ReverseMap();
         }
     }
 }

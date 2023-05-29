@@ -1,6 +1,7 @@
 ﻿using E_Commerce.Business.Interfaces;
 using E_Commerce.Business.Services;
 using E_Commerce.Dtos;
+using E_Commerce.Dtos.CustomerDtos;
 using E_Commerce.Presentation.ActionFilters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
@@ -35,6 +36,13 @@ namespace E_Commerce.Presentation.Controllers
             _tokenManager = tokenManager;
             _redisService = redisService;
             _configuration = configuration;
+        }
+        [HttpPost("[action]")]
+        [ServiceFilter(typeof(ValidateFilterAttiribute<CustomerCreateDto>))]
+        public async Task<IActionResult> Register(CustomerCreateDto model)
+        {
+            await _authenticationService.Register(model);
+            return NoContent();
         }
 
         [HttpPost("[action]")]

@@ -14,7 +14,7 @@ namespace E_Commerce.Business.Mapper.AutoMapper
     {
         public ProductCommentProfile()
         {
-            CreateMap<ProductCreateDto, ProductComment>();
+            CreateMap<ProductCommentCreateDto, ProductComment>().ReverseMap();
             CreateMap<ProductComment, ProductCommentListDto>();
         }
     }
