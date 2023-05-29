@@ -9,10 +9,13 @@ import { Navigate } from "react-router-dom";
 import { HubConnection, HubConnectionBuilder } from "@microsoft/signalr";
 import * as signalR from "@microsoft/signalr";
 import { Base64 } from "js-base64";
+import Alert from "react-bootstrap/Alert";
+import Button from "react-bootstrap/Button";
 
 // Ürünler API'den çekildiği zaman title sorgulanıp true dönerse sayfa görüntülenecek.
 export default function Product() {
   const { name } = useParams();
+  const { defination } = useParams();
   const [product, setProduct] = useState();
   const { options } = generalStore();
   const { setSidebarActive } = cartSidebarStore();
@@ -27,6 +30,14 @@ export default function Product() {
   const [hubConnection, setHubConnection] = useState();
   const [liveVisiters, setLiveVisiters] = useState();
   const [userName, setUserName] = useState(null);
+  const [comments, setComments] = useState();
+  const [commentContent, setcommentContent] = useState();
+  const [commentStar, setCommentStar] = useState();
+  const [featuredProducts, setFeaturedProducts] = useState();
+  const [info, setInfo] = useState("");
+  const [infoModal, setInfoModal] = useState(false);
+  const [variant, setVariant] = useState("");
+  let productRate = 0;
 
   useEffect(() => {
     if (localStorage.getItem("user_token")) {
@@ -47,13 +58,10 @@ export default function Product() {
 
   const createHubConnection = async () => {
     const connection = new signalR.HubConnectionBuilder()
-      .withUrl(
-        `http://api.mssdev.online/visit?productId=${name}`,
-        {
-          transport: signalR.HttpTransportType.WebSockets,
-          skipNegotiation: true,
-        }
-      )
+      .withUrl(`http://api.mssdev.online/visit?productId=${name}`, {
+        transport: signalR.HttpTransportType.WebSockets,
+        skipNegotiation: true,
+      })
       .build();
     try {
       await connection.start();
@@ -75,9 +83,7 @@ export default function Product() {
 
   useEffect(() => {
     axios
-      .get(
-        `http://api.mssdev.online/api/suppliers/products/${name}`
-      )
+      .get(`http://api.mssdev.online/api/suppliers/products/${name}`)
       .then((response) => {
         setProduct(response.data);
       })
@@ -86,6 +92,93 @@ export default function Product() {
         setProduct("Hata");
       });
   }, []);
+
+  useEffect(() => {
+    axios
+      .get(
+        `http://api.mssdev.online/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${""}&size=${""}&brand=${""}&minprice=${""}&maxprice=${""}&search=${""}`
+      )
+      .then((response) => {
+        console.log(response.data);
+        setFeaturedProducts(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get(`http://api.mssdev.online/api/productınstocks/${name}/Comments`)
+      .then((response) => {
+        setComments(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  function addComment(event) {
+    event.preventDefault;
+    if (localStorage.getItem("user_token") != null) {
+      const token = localStorage.getItem("user_token");
+      const startIndex = token.indexOf(".");
+      const endIndex = token.lastIndexOf(".");
+      const filteredToken = token.slice(startIndex, endIndex + 1);
+      const trimmedPayload = filteredToken.substring(
+        1,
+        filteredToken.length - 1
+      );
+      const decodedPayload = Base64.decode(trimmedPayload);
+
+      let tokenUserId = JSON.parse(decodedPayload).Id;
+      let tokenRole = JSON.parse(decodedPayload).role;
+      let role = tokenRole;
+      let userId = tokenUserId;
+
+      const comment = {
+        productsInStockId: name,
+        customerId: userId,
+        content: commentContent,
+        point: commentStar,
+        // createdDate: null,
+      };
+      console.log(comment);
+
+      if (role == "customer") {
+        if (commentContent == null || commentStar == null) {
+          setInfo("Yorum ve puan bilgisi eksik olamaz!");
+          setVariant("danger");
+          setInfoModal(true);
+        } else {
+          axios
+            .post(
+              `http://api.mssdev.online/api/productınstocks/${name}/Comments`,
+              comment
+            )
+            .then((response) => {
+              setInfo("Yorum başarıyla eklendi");
+              setVariant("success");
+              setInfoModal(true);
+              setTimeout(() => {
+                window.location.reload(true);
+              }, 1500);
+            })
+            .catch((error) => {
+              setInfo(error.response.data);
+              setVariant("success");
+              setInfoModal(true);
+            });
+        }
+      } else {
+        setInfo("Yorum yapma yetkiniz bulunmuyor!");
+        setVariant("danger");
+        setInfoModal(true);
+      }
+    } else {
+      setSidebarActive(true);
+    }
+  }
 
   function addBasket() {
     const basketItem = {
@@ -96,10 +189,7 @@ export default function Product() {
     console.log(basketItem);
     if (userName != null) {
       axios
-        .post(
-          `http://api.mssdev.online/api/baskets/${userName}`,
-          basketItem
-        )
+        .post(`http://api.mssdev.online/api/baskets/${userName}`, basketItem)
         .then((response) => {
           console.log(response);
           setBasketModal(true);
@@ -107,8 +197,8 @@ export default function Product() {
         .catch((error) => {
           console.log(error);
         });
-    }else{
-      setSidebarActive(true)
+    } else {
+      setSidebarActive(true);
     }
   }
   function addFavorites() {
@@ -294,54 +384,73 @@ export default function Product() {
                   <div className="product-rating d-flex flex-column align-items-end">
                     <p style={{ fontSize: "14px" }}>Değerlendirme</p>
                     <div className="d-flex align-items-center">
-                      <span className="pt-1">4,7</span>
-                      <div className="stars ms-2">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 47.94 47.94"
-                          width="15px"
-                          height="15px"
-                          fill="#ffc107"
-                        >
-                          <path d="M26.285,2.486l5.407,10.956c0.376,0.762,1.103,1.29,1.944,1.412l12.091,1.757 c2.118,0.308,2.963,2.91,1.431,4.403l-8.749,8.528c-0.608,0.593-0.886,1.448-0.742,2.285l2.065,12.042 c0.362,2.109-1.852,3.717-3.746,2.722l-10.814-5.685c-0.752-0.395-1.651-0.395-2.403,0l-10.814,5.685 c-1.894,0.996-4.108-0.613-3.746-2.722l2.065-12.042c0.144-0.837-0.134-1.692-0.742-2.285l-8.749-8.528 c-1.532-1.494-0.687-4.096,1.431-4.403l12.091-1.757c0.841-0.122,1.568-0.65,1.944-1.412l5.407-10.956 C22.602,0.567,25.338,0.567,26.285,2.486z"></path>
-                        </svg>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 47.94 47.94"
-                          width="15px"
-                          height="15px"
-                          fill="#ffc107"
-                        >
-                          <path d="M26.285,2.486l5.407,10.956c0.376,0.762,1.103,1.29,1.944,1.412l12.091,1.757 c2.118,0.308,2.963,2.91,1.431,4.403l-8.749,8.528c-0.608,0.593-0.886,1.448-0.742,2.285l2.065,12.042 c0.362,2.109-1.852,3.717-3.746,2.722l-10.814-5.685c-0.752-0.395-1.651-0.395-2.403,0l-10.814,5.685 c-1.894,0.996-4.108-0.613-3.746-2.722l2.065-12.042c0.144-0.837-0.134-1.692-0.742-2.285l-8.749-8.528 c-1.532-1.494-0.687-4.096,1.431-4.403l12.091-1.757c0.841-0.122,1.568-0.65,1.944-1.412l5.407-10.956 C22.602,0.567,25.338,0.567,26.285,2.486z"></path>
-                        </svg>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 47.94 47.94"
-                          width="15px"
-                          height="15px"
-                          fill="#ffc107"
-                        >
-                          <path d="M26.285,2.486l5.407,10.956c0.376,0.762,1.103,1.29,1.944,1.412l12.091,1.757 c2.118,0.308,2.963,2.91,1.431,4.403l-8.749,8.528c-0.608,0.593-0.886,1.448-0.742,2.285l2.065,12.042 c0.362,2.109-1.852,3.717-3.746,2.722l-10.814-5.685c-0.752-0.395-1.651-0.395-2.403,0l-10.814,5.685 c-1.894,0.996-4.108-0.613-3.746-2.722l2.065-12.042c0.144-0.837-0.134-1.692-0.742-2.285l-8.749-8.528 c-1.532-1.494-0.687-4.096,1.431-4.403l12.091-1.757c0.841-0.122,1.568-0.65,1.944-1.412l5.407-10.956 C22.602,0.567,25.338,0.567,26.285,2.486z"></path>
-                        </svg>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 47.94 47.94"
-                          width="15px"
-                          height="15px"
-                          fill="#ffc107"
-                        >
-                          <path d="M26.285,2.486l5.407,10.956c0.376,0.762,1.103,1.29,1.944,1.412l12.091,1.757 c2.118,0.308,2.963,2.91,1.431,4.403l-8.749,8.528c-0.608,0.593-0.886,1.448-0.742,2.285l2.065,12.042 c0.362,2.109-1.852,3.717-3.746,2.722l-10.814-5.685c-0.752-0.395-1.651-0.395-2.403,0l-10.814,5.685 c-1.894,0.996-4.108-0.613-3.746-2.722l2.065-12.042c0.144-0.837-0.134-1.692-0.742-2.285l-8.749-8.528 c-1.532-1.494-0.687-4.096,1.431-4.403l12.091-1.757c0.841-0.122,1.568-0.65,1.944-1.412l5.407-10.956 C22.602,0.567,25.338,0.567,26.285,2.486z"></path>
-                        </svg>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 47.94 47.94"
-                          width="15px"
-                          height="15px"
-                          fill="#dddddd"
-                        >
-                          <path d="M26.285,2.486l5.407,10.956c0.376,0.762,1.103,1.29,1.944,1.412l12.091,1.757 c2.118,0.308,2.963,2.91,1.431,4.403l-8.749,8.528c-0.608,0.593-0.886,1.448-0.742,2.285l2.065,12.042 c0.362,2.109-1.852,3.717-3.746,2.722l-10.814-5.685c-0.752-0.395-1.651-0.395-2.403,0l-10.814,5.685 c-1.894,0.996-4.108-0.613-3.746-2.722l2.065-12.042c0.144-0.837-0.134-1.692-0.742-2.285l-8.749-8.528 c-1.532-1.494-0.687-4.096,1.431-4.403l12.091-1.757c0.841-0.122,1.568-0.65,1.944-1.412l5.407-10.956 C22.602,0.567,25.338,0.567,26.285,2.486z"></path>
-                        </svg>
-                      </div>
+                      <span className="pt-1">
+                        {comments &&
+                          comments.forEach((item, index) => {
+                            productRate += item.point;
+                          })}
+                        {(comments && productRate / comments.length)+",0"}
+                      </span>
+
+                      {comments ? (
+                        <div className="stars d-flex ms-2">
+                          {" "}
+                          {comments &&
+                            Array.from(
+                              { length: productRate / comments.length },
+                              (_, index) => (
+                                <div key={index}>
+                                  {" "}
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 47.94 47.94"
+                                    width="15px"
+                                    height="15px"
+                                    fill="#ffc107"
+                                  >
+                                    <path d="M26.285,2.486l5.407,10.956c0.376,0.762,1.103,1.29,1.944,1.412l12.091,1.757 c2.118,0.308,2.963,2.91,1.431,4.403l-8.749,8.528c-0.608,0.593-0.886,1.448-0.742,2.285l2.065,12.042 c0.362,2.109-1.852,3.717-3.746,2.722l-10.814-5.685c-0.752-0.395-1.651-0.395-2.403,0l-10.814,5.685 c-1.894,0.996-4.108-0.613-3.746-2.722l2.065-12.042c0.144-0.837-0.134-1.692-0.742-2.285l-8.749-8.528 c-1.532-1.494-0.687-4.096,1.431-4.403l12.091-1.757c0.841-0.122,1.568-0.65,1.944-1.412l5.407-10.956 C22.602,0.567,25.338,0.567,26.285,2.486z"></path>
+                                  </svg>
+                                </div>
+                              )
+                            )}
+                          {comments &&
+                            Array.from(
+                              { length: 5 - productRate / comments.length },
+                              (_, index) => (
+                                <div key={index}>
+                                  {" "}
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 47.94 47.94"
+                                    width="15px"
+                                    height="15px"
+                                    fill="#dddddd"
+                                  >
+                                    <path d="M26.285,2.486l5.407,10.956c0.376,0.762,1.103,1.29,1.944,1.412l12.091,1.757 c2.118,0.308,2.963,2.91,1.431,4.403l-8.749,8.528c-0.608,0.593-0.886,1.448-0.742,2.285l2.065,12.042 c0.362,2.109-1.852,3.717-3.746,2.722l-10.814-5.685c-0.752-0.395-1.651-0.395-2.403,0l-10.814,5.685 c-1.894,0.996-4.108-0.613-3.746-2.722l2.065-12.042c0.144-0.837-0.134-1.692-0.742-2.285l-8.749-8.528 c-1.532-1.494-0.687-4.096,1.431-4.403l12.091-1.757c0.841-0.122,1.568-0.65,1.944-1.412l5.407-10.956 C22.602,0.567,25.338,0.567,26.285,2.486z"></path>
+                                  </svg>
+                                </div>
+                              )
+                            )}
+                        </div>
+                      ) : (
+                        <div className="stars d-flex ms-2">
+                          {" "}
+                          {Array.from({ length: 5 }, (_, index) => (
+                            <div key={index}>
+                              {" "}
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 47.94 47.94"
+                                width="15px"
+                                height="15px"
+                                fill="#dddddd"
+                              >
+                                <path d="M26.285,2.486l5.407,10.956c0.376,0.762,1.103,1.29,1.944,1.412l12.091,1.757 c2.118,0.308,2.963,2.91,1.431,4.403l-8.749,8.528c-0.608,0.593-0.886,1.448-0.742,2.285l2.065,12.042 c0.362,2.109-1.852,3.717-3.746,2.722l-10.814-5.685c-0.752-0.395-1.651-0.395-2.403,0l-10.814,5.685 c-1.894,0.996-4.108-0.613-3.746-2.722l2.065-12.042c0.144-0.837-0.134-1.692-0.742-2.285l-8.749-8.528 c-1.532-1.494-0.687-4.096,1.431-4.403l12.091-1.757c0.841-0.122,1.568-0.65,1.944-1.412l5.407-10.956 C22.602,0.567,25.338,0.567,26.285,2.486z"></path>
+                              </svg>
+                            </div>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -666,97 +775,260 @@ export default function Product() {
                 </div>
               </div>
             </div>
-          </div>
-          <div className="product-bottom">
-            <AddedCartModal
-              show={basketModal}
-              onHide={() => setBasketModal(false)}
-            />
-            <AddedFavoritesModal
-              show={favoritesModal}
-              onHide={() => setFavoritesModal(false)}
-            />
-            <div className="specs-header d-flex flex-column flex-lg-row justify-content-center mb-4">
-              <a
-                href="#!"
-                className={`text-decoration-none btn p-3 mx-3 mb-2 mb-lg-0 ${
-                  productDetails == "details" ? "active" : ""
-                }`}
-                onClick={() => setDroductDetails("details")}
-              >
-                Ürün Özellikleri
-              </a>
-              <a
-                href="#!"
-                className={`text-decoration-none btn p-3 mx-3 mb-2 mb-lg-0  ${
-                  productDetails == "campaigns" ? "active" : ""
-                }`}
-                onClick={() => setDroductDetails("campaigns")}
-              >
-                Kampanyalar
-              </a>
-              <a
-                href="#!"
-                className={`text-decoration-none btn p-3 mx-3 mb-2 mb-lg-0  ${
-                  productDetails == "comments" ? "active" : ""
-                }`}
-                onClick={() => setDroductDetails("comments")}
-              >
-                Yorumlar
-              </a>
-              <a
-                href="#!"
-                className={`text-decoration-none btn p-3 mx-3 ${
-                  productDetails == "credit-card" ? "active" : ""
-                }`}
-                onClick={() => setDroductDetails("credit-card")}
-              >
-                Taksit Seçenekleri
-              </a>
+            <div className="product-bottom">
+              <AddedCartModal
+                show={basketModal}
+                onHide={() => setBasketModal(false)}
+              />
+              <AddedFavoritesModal
+                show={favoritesModal}
+                onHide={() => setFavoritesModal(false)}
+              />
+              <div className="specs-header d-flex flex-column flex-lg-row justify-content-center mb-4">
+                <a
+                  href="#!"
+                  className={`text-decoration-none btn p-3 mx-3 mb-2 mb-lg-0 ${
+                    productDetails == "details" ? "active" : ""
+                  }`}
+                  onClick={() => setDroductDetails("details")}
+                >
+                  Ürün Özellikleri
+                </a>
+                <a
+                  href="#!"
+                  className={`text-decoration-none btn p-3 mx-3 mb-2 mb-lg-0  ${
+                    productDetails == "campaigns" ? "active" : ""
+                  }`}
+                  onClick={() => setDroductDetails("campaigns")}
+                >
+                  Kampanyalar
+                </a>
+                <a
+                  href="#!"
+                  className={`text-decoration-none btn p-3 mx-3 mb-2 mb-lg-0  ${
+                    productDetails == "comments" ? "active" : ""
+                  }`}
+                  onClick={() => setDroductDetails("comments")}
+                >
+                  Yorumlar
+                </a>
+                <a
+                  href="#!"
+                  className={`text-decoration-none btn p-3 mx-3 ${
+                    productDetails == "credit-card" ? "active" : ""
+                  }`}
+                  onClick={() => setDroductDetails("credit-card")}
+                >
+                  Taksit Seçenekleri
+                </a>
+              </div>
+              <div className="specs-content mb-4 p-4">
+                {productDetails == "details" && (
+                  <div className="details active">
+                    <div className="detail-item d-flex">
+                      <p className="fw-semibold">Özellik :</p>
+                      <span className="ms-2">
+                        {product.productInStock.supplierProduct.product.detail}
+                      </span>
+                    </div>
+                  </div>
+                )}
+                {productDetails == "campaigns" && (
+                  <div className="campaigns active">
+                    <div className="campaign-item d-flex">
+                      <p className="fw-semibold">Kampanya :</p>
+                      <span className="ms-2">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                      </span>
+                    </div>
+                  </div>
+                )}
+                {productDetails == "comments" && (
+                  <div className="comments active">
+                    <div className="mb-5">
+                      <p className="fs-2 mb-2">Yeni yorum</p>
+                      <Alert show={infoModal} variant={variant}>
+                        <Alert.Heading>{info}</Alert.Heading>
+                        <div className="d-flex justify-content-end">
+                          <Button
+                            onClick={() => setInfoModal(false)}
+                            variant={variant}
+                          >
+                            Kapat
+                          </Button>
+                        </div>
+                      </Alert>
+                      <div className="d-flex flex-column">
+                        <p className="fs-4 mb-2">Ürün ile ilgili :</p>
+                        <textarea
+                          name="new-comment"
+                          id="new-comment"
+                          rows="5"
+                          className="w-100 p-2 mb-2 rounded-3"
+                          onChange={(e) => setcommentContent(e.target.value)}
+                        ></textarea>
+                        <div className="d-flex flex-column mb-2">
+                          <p className="fs-4">
+                            Bu üründen ne kadar memnun kaldınız?
+                          </p>
+                          <div className="rate">
+                            <button
+                              className={`btn me-2 ${
+                                commentStar == 1
+                                  ? "btn-dark"
+                                  : "btn-outline-dark"
+                              }`}
+                              value="1"
+                              onClick={(e) => setCommentStar(e.target.value)}
+                            >
+                              1
+                            </button>
+                            <button
+                              className={`btn me-2 ${
+                                commentStar == 2
+                                  ? "btn-dark"
+                                  : "btn-outline-dark"
+                              }`}
+                              value="2"
+                              onClick={(e) => setCommentStar(e.target.value)}
+                            >
+                              2
+                            </button>
+                            <button
+                              className={`btn me-2 ${
+                                commentStar == 3
+                                  ? "btn-dark"
+                                  : "btn-outline-dark"
+                              }`}
+                              value="3"
+                              onClick={(e) => setCommentStar(e.target.value)}
+                            >
+                              3
+                            </button>
+                            <button
+                              className={`btn me-2 ${
+                                commentStar == 4
+                                  ? "btn-dark"
+                                  : "btn-outline-dark"
+                              }`}
+                              value="4"
+                              onClick={(e) => setCommentStar(e.target.value)}
+                            >
+                              4
+                            </button>
+                            <button
+                              className={`btn me-2 ${
+                                commentStar == 5
+                                  ? "btn-dark"
+                                  : "btn-outline-dark"
+                              }`}
+                              value="5"
+                              onClick={(e) => setCommentStar(e.target.value)}
+                            >
+                              5
+                            </button>
+                          </div>
+                        </div>
+                        <a
+                          className="btn btn-dark px-5 py-2 rounded-3"
+                          onClick={(e) => addComment(e)}
+                        >
+                          Gönder
+                        </a>
+                      </div>
+                    </div>
+                    <div className="comment-item d-flex">
+                      <div className="w-100">
+                        {comments &&
+                          comments.map((item, index) => {
+                            return (
+                              <div
+                                key={index}
+                                className="d-flex flex-row mb-5 col-6"
+                              >
+                                <div id="left-side">
+                                  <div
+                                    style={{ width: "100px", height: "100px" }}
+                                    className="bg-light p-4 rounded-circle d-flex justify-content-center align-items-center"
+                                  >
+                                    <p className="fs-4">
+                                      {item.customer.firstName.charAt(0)}
+                                      {item.customer.lastName.charAt(0)}
+                                    </p>
+                                  </div>
+                                </div>
+                                <div id="right-side" className="ms-4 w-100">
+                                  <div className="d-flex mb-3">
+                                    {Array.from(
+                                      { length: item.point },
+                                      (_, index) => (
+                                        <div key={index}>
+                                          {" "}
+                                          <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 47.94 47.94"
+                                            width="15px"
+                                            height="15px"
+                                            fill="#ffc107"
+                                          >
+                                            <path d="M26.285,2.486l5.407,10.956c0.376,0.762,1.103,1.29,1.944,1.412l12.091,1.757 c2.118,0.308,2.963,2.91,1.431,4.403l-8.749,8.528c-0.608,0.593-0.886,1.448-0.742,2.285l2.065,12.042 c0.362,2.109-1.852,3.717-3.746,2.722l-10.814-5.685c-0.752-0.395-1.651-0.395-2.403,0l-10.814,5.685 c-1.894,0.996-4.108-0.613-3.746-2.722l2.065-12.042c0.144-0.837-0.134-1.692-0.742-2.285l-8.749-8.528 c-1.532-1.494-0.687-4.096,1.431-4.403l12.091-1.757c0.841-0.122,1.568-0.65,1.944-1.412l5.407-10.956 C22.602,0.567,25.338,0.567,26.285,2.486z"></path>
+                                          </svg>
+                                        </div>
+                                      )
+                                    )}
+                                    {Array.from(
+                                      { length: 5 - item.point },
+                                      (_, index) => (
+                                        <div key={index}>
+                                          {" "}
+                                          <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 47.94 47.94"
+                                            width="15px"
+                                            height="15px"
+                                            fill="#dddddd"
+                                          >
+                                            <path d="M26.285,2.486l5.407,10.956c0.376,0.762,1.103,1.29,1.944,1.412l12.091,1.757 c2.118,0.308,2.963,2.91,1.431,4.403l-8.749,8.528c-0.608,0.593-0.886,1.448-0.742,2.285l2.065,12.042 c0.362,2.109-1.852,3.717-3.746,2.722l-10.814-5.685c-0.752-0.395-1.651-0.395-2.403,0l-10.814,5.685 c-1.894,0.996-4.108-0.613-3.746-2.722l2.065-12.042c0.144-0.837-0.134-1.692-0.742-2.285l-8.749-8.528 c-1.532-1.494-0.687-4.096,1.431-4.403l12.091-1.757c0.841-0.122,1.568-0.65,1.944-1.412l5.407-10.956 C22.602,0.567,25.338,0.567,26.285,2.486z"></path>
+                                          </svg>
+                                        </div>
+                                      )
+                                    )}
+                                    <p className="ms-4 text-muted">
+                                      {item.createdDate}
+                                    </p>
+                                    <span className="ms-2">|</span>
+                                    <p className="ms-2 text-muted">
+                                      {item.customer.firstName.charAt(0)}****
+                                    </p>
+                                    <p className="ms-1 text-muted">
+                                      {item.customer.lastName.charAt(0)}****
+                                    </p>
+                                  </div>
+                                  <div className="bg-light px-2 py-3 rounded-5">
+                                    <p className="ms-3">{item.content}</p>
+                                  </div>
+                                </div>
+                              </div>
+                            );
+                          })}
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {productDetails == "credit-card" && (
+                  <div className="credit-card active">
+                    <div className="credit-card-item d-flex">
+                      <p className="fw-semibold">Taksit Seçenekleri :</p>
+                      <span className="ms-2">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                      </span>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
-            <div className="specs-content mb-4 p-4">
-              {productDetails == "details" && (
-                <div className="details active">
-                  <div className="detail-item d-flex">
-                    <p className="fw-semibold">Özellik :</p>
-                    <span className="ms-2">
-                      {product.productInStock.supplierProduct.product.detail}
-                    </span>
-                  </div>
-                </div>
-              )}
-              {productDetails == "campaigns" && (
-                <div className="campaigns active">
-                  <div className="campaign-item d-flex">
-                    <p className="fw-semibold">Kampanya :</p>
-                    <span className="ms-2">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    </span>
-                  </div>
-                </div>
-              )}
-              {productDetails == "comments" && (
-                <div className="comments active">
-                  <div className="comment-item d-flex">
-                    <p className="fw-semibold">Yorumlar :</p>
-                    <span className="ms-2">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    </span>
-                  </div>
-                </div>
-              )}
-              {productDetails == "credit-card" && (
-                <div className="credit-card active">
-                  <div className="credit-card-item d-flex">
-                    <p className="fw-semibold">Taksit Seçenekleri :</p>
-                    <span className="ms-2">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    </span>
-                  </div>
-                </div>
-              )}
-            </div>
           </div>
+
           <div className="product-showcase">
             <p className="text-center fw-semibold fs-3 mb-4">
               Beğenebileceğiniz Ürünler
@@ -834,18 +1106,20 @@ export default function Product() {
                 className="row product-showcase-page d-flex position-relative"
                 style={{ left: carouselPosition }}
               >
-                {/* {data.slice(0, 12).map((item) => {
-                      return (
-                        <Showcase
-                          key={item.id}
-                          id={item.id}
-                          title={item.title}
-                          category={item.category}
-                          price={item.price}
-                          image={item.image}
-                        />
-                      );
-                    })} */}
+                {featuredProducts &&
+                  featuredProducts.slice(0, 12).map((item) => {
+                    return (
+                      <Showcase
+                        key={item.supplierProductId}
+                        id={item.id}
+                        title={item.productTitle}
+                        brand={item.brand.defination}
+                        price={item.unitPrice}
+                        image={item.imageUrls[0]}
+                        category={item.category.defination}
+                      />
+                    );
+                  })}
               </div>
             </div>
           </div>
