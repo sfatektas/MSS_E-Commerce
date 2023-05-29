@@ -389,7 +389,7 @@ export default function Product() {
                           comments.forEach((item, index) => {
                             productRate += item.point;
                           })}
-                        {(comments && productRate / comments.length)+",0"}
+                        {comments?(comments && productRate / comments.length)+",0":""}
                       </span>
 
                       {comments ? (
