@@ -3,7 +3,7 @@ import { Base64 } from "js-base64";
 import { create } from "zustand";
 
 export const loaderStore = create((set) => ({
-  loader: true,
+  loader: false,
   setLoader: (status) => {
     set({ loader: status });
   },

@@ -25,42 +25,6 @@ function Header() {
     getCategories();
     getBasketItems();
   }, []);
-  //Axios istekleri bitene kadar loader aktif oluyor
-  let requestCount = 0;
-
-  const incrementRequestCount = () => {
-    requestCount++;
-  };
-
-  const decrementRequestCount = () => {
-    requestCount--;
-
-    if (requestCount === 0) {
-      setLoader(false);
-      window.scrollTo(0, 0);
-    }
-  };
-  axios.interceptors.request.use(
-    (config) => {
-      incrementRequestCount();
-      return config;
-    },
-    (error) => {
-      return Promise.reject(error);
-    }
-  );
-
-  axios.interceptors.response.use(
-    (response) => {
-      decrementRequestCount();
-      return response;
-    },
-    (error) => {
-      decrementRequestCount();
-      return Promise.reject(error);
-    }
-  );
-  //İstekler bitince loader pasif hale getiriliyor
   useEffect(() => {
     try {
       const token = localStorage.getItem("user_token");
