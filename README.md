@@ -5,7 +5,7 @@
     <a href="http://e-commerce.mssdev.online/">View Live</a>
     ·
     <a href="https://github.com/sfatektas/MSS_E-Commerce/issues/new">Report Bug</a>
-    .
+    ·
     <a href="http://api.mssdev.online/swagger/index.html">Swagger API</a>
   </p>
 </div>

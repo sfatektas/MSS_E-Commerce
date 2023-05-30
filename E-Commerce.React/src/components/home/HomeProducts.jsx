@@ -29,13 +29,13 @@ export default function HomeProducts() {
           {homeProducts.slice(0, 8).map((item) => {
             return (
               <Showcase
-                key={item.supplierProductId}
-                id={item.supplierProductId}
-                title={item.productTitle}
-                brand={item.brand.defination}
-                price={item.unitPrice}
-                image={item.imageUrls[0]}
-                category={item.category.defination}
+              key={item.supplierProductId}
+              id={item.id}
+              title={item.productTitle}
+              brand={item.brand.defination}
+              price={item.unitPrice}
+              image={item.imageUrls[0]}
+              category={item.category.defination}
               />
             );
           })}
