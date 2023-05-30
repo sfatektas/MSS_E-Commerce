@@ -2,16 +2,16 @@ import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
-import { cartSidebarStore } from "../../store/basketStore";
+import { cartSidebarStore, basketStore } from "../../store/basketStore";
 import { Base64 } from "js-base64";
 import axios from "axios";
-
 
 export default function Showcase(props) {
   const [basketModal, setBasketModal] = useState(false);
   const [favoritesModal, setFavoritesModal] = useState(false);
   const [userName, setUserName] = useState(null);
   const { setSidebarActive } = cartSidebarStore();
+  const { getBasketItems } = basketStore();
 
   useEffect(() => {
     if (localStorage.getItem("user_token")) {
@@ -39,19 +39,17 @@ export default function Showcase(props) {
     console.log(basketItem);
     if (userName != null) {
       axios
-      .post(
-        `http://api.mssdev.online/api/baskets/${userName}`,
-        basketItem
-      )
-      .then((response) => {
-        console.log(response);
-        setBasketModal(true);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    }else{
-      setSidebarActive(true)
+        .post(`http://api.mssdev.online/api/baskets/${userName}`, basketItem)
+        .then((response) => {
+          console.log(response);
+          setBasketModal(true);
+          getBasketItems()
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      setSidebarActive(true);
     }
   }
   function addFavorites() {
@@ -156,7 +154,7 @@ export default function Showcase(props) {
               />
             </svg>
           </a>
-          <a onClick={()=>addBasket(props.id)} className="btn text- mb-2">
+          <a onClick={() => addBasket(props.id)} className="btn text- mb-2">
             <svg
               width="24"
               height="24"
