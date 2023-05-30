@@ -3,7 +3,7 @@ import { Base64 } from "js-base64";
 import { create } from "zustand";
 
 export const loaderStore = create((set) => ({
-  loader: false,
+  loader: true,
   setLoader: (status) => {
     set({ loader: status });
   },
@@ -30,7 +30,7 @@ export const generalStore = create((set) => ({
         "http://api.mssdev.online/api/siteoption"
       );
       set({ options: response.data });
-      // loaderStore.getState().setLoader(false);
+      loaderStore.getState().setLoader(false);
       return response.data;
     } catch (error) {
       console.error(error);
