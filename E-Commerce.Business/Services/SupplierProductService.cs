@@ -14,6 +14,7 @@ using E_Commerce.Entities.EFCore;
 using E_Commerce.Entities.EFCore.Identities;
 using E_Commerce.Entities.Exceptions;
 using E_Commerce.Entities.RequestFeatures;
+using E_Commerce.RabbitMQProducer.Interfaces;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
@@ -33,12 +34,14 @@ namespace E_Commerce.Business.Services
         readonly IUow _uow;
         readonly IMapper _mapper;
         readonly IStorage _storage;
-        
-        public SupplierProductService(IUow uow, IMapper mapper, IValidator<SupplierProductCreateDto> createValidator, IStorage storage) : base(uow, mapper, createValidator)
+        readonly IFavoriteProductService _favoreiteProductService;
+
+        public SupplierProductService(IUow uow, IMapper mapper, IValidator<SupplierProductCreateDto> createValidator, IStorage storage, IFavoriteProductService favoreiteProductService) : base(uow, mapper, createValidator)
         {
             _uow = uow;
             _mapper = mapper;
             _storage = storage;
+            _favoreiteProductService = favoreiteProductService;
         }
         public async Task RemoveSupplierProductImage(int supplierProductId, string imageUrl)
         {
@@ -58,6 +61,7 @@ namespace E_Commerce.Business.Services
         }
         public async Task UpdateSupplierProduct(SupplierProductUpdateModel model)
         {
+            bool sendMail = false;
             var product = await _uow.GetRepository<SupplierProduct>().GetByFilterAsync(x => x.Id == model.Id);
 
             product.SizeId = model.SizeId;
@@ -66,7 +70,20 @@ namespace E_Commerce.Business.Services
             product.CustomProductDefination = model.CustomProductDefination;
             product.CustomProductTitle = model.CustomProductTitle;
             product.IsActive = model.IsActive;
-
+            
+            // PRoductInStock Updated.
+            var stockProduct = await _uow.GetRepository<ProductsInStock>().GetByFilterAsync(x=>x.SupplierProductId == model.Id);
+            if (stockProduct.Amount != model.Amount)
+            {
+                stockProduct.Amount = model.Amount;
+                sendMail = true;
+            }
+            stockProduct.UnitPrice = model.UnitPrice;
+             _uow.GetRepository<ProductsInStock>().Update(stockProduct);
+            await _uow.SaveChangesAsync();
+            // Send Mail 
+            if (sendMail)
+                await _favoreiteProductService.SendMailToUsersOfFavoriteProducts(stockProduct.Id);
             //TODO : Product In Stock Güncellenecek
 
             if (model.Files.Count() > 0)

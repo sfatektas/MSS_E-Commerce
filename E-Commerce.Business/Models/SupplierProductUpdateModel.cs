@@ -14,6 +14,7 @@ namespace E_Commerce.Business.Models
         public int SizeId { get; init; }
         public double UnitPrice { get; init; }
         public int ColorId { get; init; }
+        public int Amount { get; set; }
         public string CustomProductTitle { get; init; }
         public string CustomProductDefination { get; init; }
         public List<IFormFile> Files { get; set; } = new();

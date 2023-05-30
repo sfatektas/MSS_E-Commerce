@@ -101,8 +101,7 @@ namespace E_Commerce.Business.Services
                      || x.SupplierProduct.Product.Brand.Defination.Contains(parameter.Brand))
                      && (string.IsNullOrEmpty(parameter.Category)
                      || x.SupplierProduct.Product.Category.Defination.Contains(parameter.Category, StringComparison.CurrentCultureIgnoreCase))
-                     && x.IsActive == true
-                     )
+                     && x.IsActive == true)
 
                  .Where(x => x.UnitPrice >= parameter.MinPrice &&
                            x.UnitPrice <= parameter.MaxPrice)
@@ -112,22 +111,23 @@ namespace E_Commerce.Business.Services
                  .Include(x => x.SupplierProduct.Supplier)
                  .Include(x => x.SupplierProduct.ProductImages)
                  .OrderBy(x => x.UnitPrice)
-                  .Select(x => new CustomPreviewProductInStockListDto
-                  {
-                      Id = x.Id,
-                      Brand = _mapper.Map<BrandListDto>(x.SupplierProduct.Product.Brand),
-                      Category = _mapper.Map<CategoryListDto>(x.SupplierProduct.Product.Category),
-                      ProductTitle = x.SupplierProduct.CustomProductTitle,
-                      SupplierProductId = x.SupplierProductId,
-                      UnitPrice = x.UnitPrice,
-                      ImageUrls = x.SupplierProduct.ProductImages.Select(x => x.ImageUrl)
-                  })
                  .ToListAsync();
-            data = string.IsNullOrEmpty(parameter.OrderBy) || parameter.OrderBy.Equals("asc") ? data.OrderBy(x => x.UnitPrice).ToList() : data.OrderByDescending(x => x.UnitPrice).ToList();
 
+            var newdata = data.DistinctBy(x => new {x.SupplierProduct.ProductId , x.SupplierProduct.SupplierId});
+            var model = newdata.Select(x => new CustomPreviewProductInStockListDto
+            {
+                Id = x.Id,
+                Brand = _mapper.Map<BrandListDto>(x.SupplierProduct.Product.Brand),
+                Category = _mapper.Map<CategoryListDto>(x.SupplierProduct.Product.Category),
+                ProductTitle = x.SupplierProduct.CustomProductTitle,
+                SupplierProductId = x.SupplierProductId,
+                UnitPrice = x.UnitPrice,
+                ImageUrls = x.SupplierProduct.ProductImages.Select(x => x.ImageUrl)
+            });
+            model = string.IsNullOrEmpty(parameter.OrderBy) || parameter.OrderBy.Equals("asc") ? model.OrderBy(x => x.UnitPrice).ToList() : model.OrderByDescending(x => x.UnitPrice).ToList();
 
             return data.Count > 0 ?
-                PagedList<CustomPreviewProductInStockListDto>.ToPagedList(data, parameter.PageSize, parameter.PageNumber)
+                PagedList<CustomPreviewProductInStockListDto>.ToPagedList(model, parameter.PageSize, parameter.PageNumber)
                 : throw new SalesProductNotFoundException();
 
         }

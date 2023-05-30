@@ -44,6 +44,10 @@ builder.Services.ConfigureRabbitMQ();
 
 var app = builder.Build();
 
+var host = new WebHostBuilder();
+host.CaptureStartupErrors(true)
+    .UseSetting("detailedErrors", "true");
+
 // Configure the HTTP request pipeline.
 app.UseMiddleware<CustomExceptionHandlerMiddleware>();
 app.UseMiddleware<RequestResponseMiddleware>(); 

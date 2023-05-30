@@ -11,7 +11,6 @@ namespace E_Commerce.Entities.RequestFeatures
     {
         private string _category;
 
-
         private string _brand;
 
         private string _color;
@@ -30,7 +29,8 @@ namespace E_Commerce.Entities.RequestFeatures
             }
             set
             {
-                _category = value.ToString();
+                if (!string.IsNullOrEmpty(value)) 
+                    _category = value.ToString();
             }
         }
         public string Brand
@@ -41,7 +41,8 @@ namespace E_Commerce.Entities.RequestFeatures
             }
             set 
             {
-                _brand = value.ToLower();
+                if (!string.IsNullOrEmpty(value))
+                    _brand = value.ToLower();
             }
         }
 
@@ -53,7 +54,8 @@ namespace E_Commerce.Entities.RequestFeatures
             }
             set
             {
-                _color = value.ToLower();
+                 if (!string.IsNullOrEmpty(value)) 
+                    _color = value.ToLower();
             }
         }
         public string Size
@@ -64,7 +66,8 @@ namespace E_Commerce.Entities.RequestFeatures
             }
             set
             {
-                _size = value.ToLower();
+                if (!string.IsNullOrEmpty(value))
+                    _size = value.ToLower();
             }
         }
 
@@ -76,7 +79,7 @@ namespace E_Commerce.Entities.RequestFeatures
             }
             set
             {
-                _minPrice = value < 0 ? 0 : value;
+                    _minPrice = value < 0 ? 0 : value;
             }
         }
         public int MaxPrice { get; set; } = int.MaxValue;
@@ -90,7 +93,8 @@ namespace E_Commerce.Entities.RequestFeatures
             }
             set
             {
-                _search = value.ToLower();
+                if (!string.IsNullOrEmpty(value))
+                    _search = value.ToLower();
             }
         }
 

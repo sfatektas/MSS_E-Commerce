@@ -17,6 +17,6 @@ namespace E_Commerce.Dtos.ProductCommentDtos
         public CustomerListDto Customer{ get; set; }
         public string Content { get; init; }
         public int Point { get; init; }
-        public DateTime CreatedDate { get; init; } = DateTime.UtcNow.AddHours(UtcTimeConstant.TurkeyUTC);
+        public string CreatedDate { get; init; } = DateTime.UtcNow.AddHours(UtcTimeConstant.TurkeyUTC).ToString("MM/dd/yyyy HH:mm");
     }
 }
