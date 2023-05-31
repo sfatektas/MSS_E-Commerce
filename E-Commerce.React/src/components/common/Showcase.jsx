@@ -202,7 +202,7 @@ export default function Showcase(props) {
           </a>
         </div>
         <div className="showcase-content mb-5 text-center">
-          <p className="showcase-brand text-muted fw-light mb-3">
+          <p className="showcase-brand text-muted fw-light mb-3 text-uppercase">
             {props.brand}
           </p>
           <p className="showcase-title fw-semibold mb-3">{props.title}</p>

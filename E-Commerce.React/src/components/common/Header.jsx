@@ -20,6 +20,7 @@ function Header() {
   const { setSidebarActive } = cartSidebarStore();
   const { options, getOptions, categories, getCategories } = generalStore();
   const { basketItems, getBasketItems } = basketStore();
+  const [searchDork, setSearchDork] = useState("");
   useEffect(() => {
     getOptions();
     getCategories();
@@ -66,7 +67,11 @@ function Header() {
   function handleLogout() {
     logout();
   }
-
+  const handleKeyDown = event => {
+    if (event.key === 'Enter') {
+      navigate(`/search/${searchDork}`)
+    }
+  };
   return (
     <>
       <CartSidebar />
@@ -212,9 +217,14 @@ function Header() {
                       placeholder="Nasıl bir ürün arıyorsunuz?"
                       aria-describedby="button-addon1"
                       className="form-control border-0 bg-light rounded-pill"
+                      onChange={(e) => setSearchDork(e.target.value)}
+                      onKeyDown={handleKeyDown}
                     />
                     <div className="input-group-append">
-                      <a href="#!" className="btn btn-link text-primary">
+                      <a
+                        href={`/search/${searchDork}`}
+                        className="btn btn-link text-primary"
+                      >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="24"
