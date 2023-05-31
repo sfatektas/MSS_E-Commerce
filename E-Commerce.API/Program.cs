@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.OpenApi.Models;
 using NLog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,7 +19,7 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
     options.SuppressModelStateInvalidFilter = true;
 });
 builder.Services.ConfigureController();
-builder.Services.Configure<ForwardedHeadersOptions>(options => // Kullanýcý ip bilgisini almak için gerekli configuraiton
+builder.Services.Configure<ForwardedHeadersOptions>(options => // Kullanï¿½cï¿½ ip bilgisini almak iï¿½in gerekli configuraiton
 {
     options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
 });
@@ -29,7 +30,34 @@ builder.Services.ConfigureValidations();
 builder.Services.ConfigureServices();
 builder.Services.ConfigureCors();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(
+    option => 
+    {
+option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Header,
+        Description = "Please enter a valid token",
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        BearerFormat = "JWT",
+        Scheme = "Bearer"
+    });
+    option.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type=ReferenceType.SecurityScheme,
+                    Id="Bearer"
+                }
+            },
+            new string[]{}
+        }
+    });
+    }
+);
 builder.Services.ConfigureLogger();
 builder.Services.ConfigureActionFilters();
 builder.Services.ConfigureJWTBearer(builder.Configuration);
@@ -78,7 +106,7 @@ app.MapHub<VisitHub>("/visit");
 
 app.MapControllers();
 
-await app.SeedData(); //Seed Data added.
+// await app.SeedData(); //Seed Data added.
 
 app.Run();
 //mrt feature added
