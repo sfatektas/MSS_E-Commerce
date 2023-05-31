@@ -127,6 +127,7 @@ namespace E_Commerce.API.ServiceExtensions
                 opt.CreateMap<SupplierProductCreateModel, SupplierProductCreateDto>();
                 opt.CreateMap<SliderItemUpdateModel, SliderItemUpdateDto>().ReverseMap();
                 opt.CreateMap<SliderUpdateModel, SliderUpdateDto>().ReverseMap();
+                opt.CreateMap<SliderCreateModel, SliderCreateDto>().ReverseMap();
             });
         }
         public static void ConfigureServices(this IServiceCollection services)
@@ -161,10 +162,11 @@ namespace E_Commerce.API.ServiceExtensions
             services.AddTransient<IValidator<BrandCreateModel>, BrandCreateModelValidator>();
             services.AddTransient<IValidator<SliderItemCreateModel>, SliderItemCreateModelValidator>();
             services.AddTransient<IValidator<SliderItemCreateDto>,SliderItemCreateDtoValidator>();
+            services.AddTransient<IValidator<SliderCreateModel>, SliderCreateModelValidator>();
+            services.AddTransient<IValidator<SliderCreateDto>, SliderCreateDtoValidator>();
             services.AddTransient<IValidator<ProductCreateModel>, ProductCreateModelValidator>();
             services.AddTransient<IValidator<ProductCreateDto>, ProductCreateDtoValidator>();
             services.AddTransient<IValidator<SupplierCreateModel>,SupplierCreateModelValidator>();
-            services.AddTransient<IValidator<SliderCreateDto>,SliderCreateDtoValidator>();
             services.AddTransient<IValidator<SupplierCreateModel>,SupplierCreateModelValidator>();
             services.AddTransient<IValidator<SupplierProductCreateModel>, SupplierProductCreateModelValidator>();
             services.AddTransient<IValidator<SupplierProductCreateDto>, SupplierProductCreateDtoValidator>();
@@ -232,6 +234,7 @@ namespace E_Commerce.API.ServiceExtensions
             services.AddScoped<ValidateFilterAttiribute<SupplierProductCreateModel>>();
             services.AddScoped<ValidateFilterAttiribute<SupplierProductUpdateModel>>();
             services.AddScoped<ValidateFilterAttiribute<CustomerCreateDto>>();
+            services.AddScoped<ValidateFilterAttiribute<SliderCreateModel>>();
         }
         public static void ConfigureRedis(this IServiceCollection services, IConfiguration configuration)
         {

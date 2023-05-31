@@ -53,6 +53,16 @@ namespace E_Commerce.Presentation.Controllers
             return Ok(dto);
         }
 
+        [HttpPost]
+        [ServiceFilter(typeof(ValidateFilterAttiribute<SliderCreateModel>))]
+        public async Task<IActionResult> CreateSlider([FromBody] SliderCreateModel model)
+        {
+            var dto = _mapper.Map<SliderCreateDto>(model);
+            await _sliderService.CreateAsync(dto);
+            return Ok(dto);
+        }
+            
+
 
     }
 }

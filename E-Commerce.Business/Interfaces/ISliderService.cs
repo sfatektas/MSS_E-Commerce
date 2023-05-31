@@ -18,6 +18,7 @@ namespace E_Commerce.Business.Interfaces
         Task DeleteSliderAsync(int id);
         Task<SliderListDto> GetSliderById(int id);
         Task updateSlider(SliderUpdateDto dto);
+        Task CreateAsyncSlider(SliderCreateDto dto);
 
     }
 }
