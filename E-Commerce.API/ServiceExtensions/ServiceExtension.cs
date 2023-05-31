@@ -9,6 +9,7 @@ using E_Commerce.Business.Services;
 using E_Commerce.Business.Services.Storage;
 using E_Commerce.Business.Validations.FluentValidations;
 using E_Commerce.Business.Validations.FluentValidations.CustomerValidation;
+using E_Commerce.Business.Validations.FluentValidations.OrderValidation;
 using E_Commerce.Business.Validations.FluentValidations.ProductsInStockValidation;
 using E_Commerce.Business.Validations.FluentValidations.ProductValidation;
 using E_Commerce.Business.Validations.FluentValidations.SiteOptionValidation;
@@ -23,6 +24,7 @@ using E_Commerce.DataAccess.UnitOfWorks;
 using E_Commerce.Dtos;
 using E_Commerce.Dtos.BrandDtos;
 using E_Commerce.Dtos.CustomerDtos;
+using E_Commerce.Dtos.OrderDtos;
 using E_Commerce.Dtos.ProductDtos;
 using E_Commerce.Dtos.ProductsInStockDtos;
 using E_Commerce.Dtos.SiteOptionDtos;
@@ -109,7 +111,10 @@ namespace E_Commerce.API.ServiceExtensions
                     new BasketProfile(),
                     new OtherProfile(),
                     new ProductCommentProfile(),
-                    new FavoriteProductsProfile()
+                    new FavoriteProductsProfile(),
+                    new OrderProfile(),
+                    new OrderDetailProfile(),
+                    new OrderStatusTypeProfile(),
             };
 
             services.AddAutoMapper(opt =>
@@ -147,6 +152,7 @@ namespace E_Commerce.API.ServiceExtensions
             services.AddScoped<ISalesProductService , SalesProductService>();
             services.AddScoped<IProductCommentService , ProductCommentService>();
             services.AddScoped<IFavoriteProductService , FavoriteProductsService>();
+            services.AddScoped<IOrderService, OrderService>();
         }
         public static void ConfigureValidations(this IServiceCollection services)
         {
@@ -167,6 +173,7 @@ namespace E_Commerce.API.ServiceExtensions
             services.AddTransient<IValidator<ProductsInStockCreateDto>,ProductInStockCreateValidator>();
             services.AddTransient<IValidator<SupplierProductUpdateModel>, SupplierProductUpdateModelValidator>();
             services.AddTransient<IValidator<CustomerCreateDto>,CustomerCreateDtoValidator>();
+            services.AddTransient<IValidator<OrderCreateDto>, OrderCreateDtoValidator>();
         }
         public static void ConfigureCors(this IServiceCollection services)
         {
