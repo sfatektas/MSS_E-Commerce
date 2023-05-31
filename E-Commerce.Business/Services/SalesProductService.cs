@@ -65,6 +65,7 @@ namespace E_Commerce.Business.Services
                 .Where(x => x.IsFavoriteProduct && x.IsActive == true)
                 .Select(x => new CustomPreviewProductInStockListDto
                 {
+                    Id = x.Id,
                     Brand = _mapper.Map<BrandListDto>(x.SupplierProduct.Product.Brand),
                     Category = _mapper.Map<CategoryListDto>(x.SupplierProduct.Product.Category),
                     ProductTitle = x.SupplierProduct.CustomProductTitle,
