@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using E_Commerce.Business.Interfaces;
 using E_Commerce.Business.Interfaces.Storage;
+using E_Commerce.Common.Enums;
 using E_Commerce.Dtos.SliderItemsDtos;
 using E_Commerce.Presentation.ActionFilters;
 using E_Commerce.Presentation.Models;
@@ -45,38 +46,40 @@ namespace E_Commerce.Presentation.Controllers
             return Ok(response.Data);
         }
 
-        
+
         [HttpPost("create")]
         [ServiceFilter(typeof(ValidateFilterAttiribute<SliderItemCreateModel>))]
-        public async Task<IActionResult> CreateSliderItem([FromForm]SliderItemCreateModel model)
+        public async Task<IActionResult> CreateSliderItem([FromForm] SliderItemCreateModel model)
         {
             var dto = _mapper.Map<SliderItemCreateDto>(model);
             var imageUrlGuid = Guid.NewGuid().ToString();
             dto.ImageUrl = imageUrlGuid + Path.GetExtension(model.File.FileName);
 
-            await _sliderItemService.CreateAsync(dto);
-            await _storage.UploadFile(imageUrlGuid, model.File);
+            var response = await _sliderItemService.CreateAsync(dto);
+            if (response.ResponseType == ResponseType.Success)
+                await _storage.UploadFile(imageUrlGuid, model.File);
 
             return StatusCode(201);
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> deleteSliderItemById([FromRoute]int id)
+        public async Task<IActionResult> deleteSliderItemById([FromRoute] int id)
         {
             await _sliderItemService.deleteSliderItemById(id);
             return Ok(201);
         }
 
 
-        [HttpPost]
+        [HttpPut]
         public async Task<IActionResult> updateSliderItem([FromForm] SliderItemUpdateModel model)
         {
             var dto = _mapper.Map<SliderItemUpdateDto>(model);
             var imageUrlGuid = Guid.NewGuid().ToString();
-            dto.ImageUrl = imageUrlGuid;
+            dto.ImageUrl = imageUrlGuid + Path.GetExtension(model.File.FileName);
 
-            await _sliderItemService.updateSliderItem(dto);
-            await _storage.UploadFile(imageUrlGuid, model.File);
+            var response = await _storage.UploadFile(imageUrlGuid, model.File);
+            if (response == true)
+                await _sliderItemService.updateSliderItem(dto);
             return StatusCode(201);
         }
 

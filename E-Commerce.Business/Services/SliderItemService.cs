@@ -58,9 +58,13 @@ namespace E_Commerce.Business.Services
             var sliderItem = await _uow.GetRepository<SliderItem>().GetByFilterAsync(x => x.Id == id);
             if (sliderItem == null)
                 throw new SliderItemNotFoundException();
-            _storage.RemoveFile(sliderItem.ImageUrl);
-            _uow.GetRepository<SliderItem>().Remove(_mapper.Map<SliderItem>(sliderItem));
-            await _uow.SaveChangesAsync();
+
+            var response = _storage.RemoveFile(sliderItem.ImageUrl);
+            if (response == true)
+            {
+                _uow.GetRepository<SliderItem>().Remove(_mapper.Map<SliderItem>(sliderItem));
+                await _uow.SaveChangesAsync();
+            }
         }
 
         /*
@@ -87,7 +91,7 @@ namespace E_Commerce.Business.Services
                 throw new SliderItemNotFoundException();
             _storage.RemoveFile(sliderItem.ImageUrl);
             sliderItem.Title = dto.Title;
-            sliderItem.SliderId = dto.SliderId ;
+            sliderItem.SliderId = dto.SliderId;
             sliderItem.SubTitle = dto.SubTitle;
             sliderItem.ImageUrl = dto.ImageUrl;
             sliderItem.ButtonLink = dto.ButtonLink;
@@ -97,7 +101,7 @@ namespace E_Commerce.Business.Services
             await _uow.SaveChangesAsync();
         }
 
-        
+
 
 
     }
