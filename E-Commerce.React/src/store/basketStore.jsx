@@ -32,7 +32,7 @@ export const basketStore = create((set) => ({
             }
           )
           .then((response) => {
-            console.log(response.data)
+            // console.log(response.data)
             set({ basketItems: response.data.basketItemsWithInclude });
           })
           .catch((error) => {

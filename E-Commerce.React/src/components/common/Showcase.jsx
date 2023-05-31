@@ -3,32 +3,24 @@ import { useState } from "react";
 import { useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
 import { cartSidebarStore, basketStore } from "../../store/basketStore";
-import { Base64 } from "js-base64";
 import axios from "axios";
+import { tokenStore } from "../../store/generalStore";
 
 export default function Showcase(props) {
   const [basketModal, setBasketModal] = useState(false);
   const [favoritesModal, setFavoritesModal] = useState(false);
   const [userName, setUserName] = useState(null);
+  const [userId, setUserId] = useState(null);
   const { setSidebarActive } = cartSidebarStore();
   const { getBasketItems } = basketStore();
+  const { tokenId, tokenUsername } = tokenStore();
 
   useEffect(() => {
     if (localStorage.getItem("user_token")) {
-      const token = localStorage.getItem("user_token");
-      const startIndex = token.indexOf(".");
-      const endIndex = token.lastIndexOf(".");
-      const filteredToken = token.slice(startIndex, endIndex + 1);
-      const trimmedPayload = filteredToken.substring(
-        1,
-        filteredToken.length - 1
-      );
-      const decodedPayload = Base64.decode(trimmedPayload);
-
-      let tokenUserName = JSON.parse(decodedPayload).nameid;
-      setUserName(tokenUserName);
+      setUserName(tokenUsername);
+      setUserId(tokenId);
     }
-  }, [userName]);
+  }, [tokenUsername, tokenId]);
 
   function addBasket(id) {
     const basketItem = {
@@ -36,14 +28,14 @@ export default function Showcase(props) {
       productInStockId: id,
       amount: 1,
     };
-    console.log(basketItem);
+    // console.log(basketItem);
     if (userName != null) {
       axios
         .post(`http://api.mssdev.online/api/baskets/${userName}`, basketItem)
         .then((response) => {
-          console.log(response);
+          // console.log(response);
           setBasketModal(true);
-          getBasketItems()
+          getBasketItems();
         })
         .catch((error) => {
           console.log(error);
@@ -52,8 +44,22 @@ export default function Showcase(props) {
       setSidebarActive(true);
     }
   }
-  function addFavorites() {
-    setFavoritesModal(true);
+  function addFavorites(id) {
+    if (userName != null) {
+      axios
+        .post(
+          `http://api.mssdev.online/api/Users/${userId}/favoriteproducts/${id}`
+        )
+        .then((response) => {
+          console.log(response);
+          setFavoritesModal(true);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      setSidebarActive(true);
+    }
   }
   useEffect(() => {
     setTimeout(() => {
@@ -138,7 +144,7 @@ export default function Showcase(props) {
       />
       <div className="showcase d-flex flex-column align-items-center shadow-sm p-0 mb-3 rounded-3 w-100 overflow-hidden">
         <div className="showcase-buttons d-flex flex-column">
-          <a onClick={addFavorites} className="btn text- mb-2">
+          <a onClick={() => addFavorites(props.id)} className="btn text- mb-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="26"

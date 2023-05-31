@@ -9,6 +9,40 @@ export const loaderStore = create((set) => ({
   },
 }));
 
+export const tokenStore = create((set) => ({
+  tokenUsername: null,
+  tokenId: null,
+  tokenRole:null,
+  tokenEmail:null,
+  tokenExp:null,
+  getTokenData: () => {
+    if (localStorage.getItem("user_token")) {
+      const token = localStorage.getItem("user_token");
+      const startIndex = token.indexOf(".");
+      const endIndex = token.lastIndexOf(".");
+      const filteredToken = token.slice(startIndex, endIndex + 1);
+      const trimmedPayload = filteredToken.substring(
+        1,
+        filteredToken.length - 1
+      );
+      const decodedPayload = Base64.decode(trimmedPayload);
+
+      let tokenNameId = JSON.parse(decodedPayload).nameid;
+      let tokenUserId = JSON.parse(decodedPayload).Id;
+      let tokenUserRole = JSON.parse(decodedPayload).role;
+      let tokenUserEmail = JSON.parse(decodedPayload).email;
+      let tokenUserExp = JSON.parse(decodedPayload).exp;
+      set({
+        tokenUsername: tokenNameId,
+        tokenId: tokenUserId,
+        tokenRole: tokenUserRole,
+        tokenEmail: tokenUserEmail,
+        tokenExp: tokenUserExp,
+      });
+    }
+  },
+}));
+
 export const generalStore = create((set) => ({
   categories: null,
   options: null,
