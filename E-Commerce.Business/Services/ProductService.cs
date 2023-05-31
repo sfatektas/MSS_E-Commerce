@@ -60,7 +60,7 @@ namespace E_Commerce.Business.Services
                 throw new ProductNotFoundException();
             return response.Data;
         }
-        public async Task<ProductListDto> GetProductById(int id)
+        public async Task<ProductListDto> GetProductById( int id)
         {
             var response = await base.GetByIdAsync(id);
             if (response.Data == null)
