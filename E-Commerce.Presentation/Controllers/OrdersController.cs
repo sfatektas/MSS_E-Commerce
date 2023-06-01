@@ -36,8 +36,11 @@ namespace E_Commerce.Presentation.Controllers
         public async Task<IActionResult> CreateOrderAsync([FromBody]Business.Models.CustomOrderCreateModel model)
         {
             await _orderService.CreateAsyncOrder(model);
-            return Ok();
+            return StatusCode(201);
         }
+
+        //TODO : Sadecce orderStatusType güncellenecek
+        //TODO : GetByFilter yapılabilir
         
 
     }
