@@ -5,6 +5,7 @@ import Modal from "react-bootstrap/Modal";
 import { cartSidebarStore, basketStore } from "../../store/basketStore";
 import axios from "axios";
 import { tokenStore } from "../../store/generalStore";
+import { favoriteStore } from "../../store/favoriteStore";
 
 export default function Showcase(props) {
   const [basketModal, setBasketModal] = useState(false);
@@ -13,7 +14,8 @@ export default function Showcase(props) {
   const [userId, setUserId] = useState(null);
   const { setSidebarActive } = cartSidebarStore();
   const { getBasketItems } = basketStore();
-  const { tokenId, tokenUsername } = tokenStore();
+  const { getFavoriteItems } = favoriteStore();
+  const { tokenId, tokenRole, tokenUsername } = tokenStore();
 
   useEffect(() => {
     if (localStorage.getItem("user_token")) {
@@ -35,7 +37,7 @@ export default function Showcase(props) {
         .then((response) => {
           // console.log(response);
           setBasketModal(true);
-          getBasketItems();
+          getBasketItems(tokenUsername, tokenRole);
         })
         .catch((error) => {
           console.log(error);
@@ -53,6 +55,7 @@ export default function Showcase(props) {
         .then((response) => {
           console.log(response);
           setFavoritesModal(true);
+          getFavoriteItems(tokenId, tokenRole);
         })
         .catch((error) => {
           console.log(error);

@@ -5,7 +5,8 @@ import axios from "axios";
 import { Base64 } from "js-base64";
 
 function CartProduct(props) {
-  const { tokenUsername } = tokenStore();
+  const { tokenUsername, tokenRole } = tokenStore();
+  const { getBasketItems } = basketStore();
 
   function basketProductDelete() {
     console.log(props);
@@ -19,6 +20,7 @@ function CartProduct(props) {
         }
       )
       .then((response) => {
+        getBasketItems(tokenUsername, tokenRole);
         console.log(response);
       })
       .catch((error) => {

@@ -23,7 +23,7 @@ export default function Register() {
   const [passwordConfirmError, setPasswordConfirmError] = useState("");
   const [passwordCheck, setPasswordCheck] = useState(false);
   const [buttonStatus, setButtonStatus] = useState(true);
-  const [registerError, setRegisterError] = useState("")
+  const [registerInfo, setRegisterInfo] = useState("");
 
   useEffect(() => {
     if (Boolean(password.match(/[A-Z]/)) && Boolean(password.match(/[0-9]/))) {
@@ -40,12 +40,12 @@ export default function Register() {
       firstName.length >= 2 &&
       lastName.length >= 2 &&
       phone.length >= 9 &&
-      uname.length >= 5 && 
-      passwordCheck==true
+      uname.length >= 5 &&
+      passwordCheck == true
     ) {
       setButtonStatus(false);
-    }else{
-      setButtonStatus(true)
+    } else {
+      setButtonStatus(true);
     }
   }, [
     uname,
@@ -147,11 +147,19 @@ export default function Register() {
       .post(`http://api.mssdev.online/api/auth/register`, user)
       .then((response) => {
         console.log(response);
+        setRegisterInfo("Başarıyla kayıt olundu, yönlendiriliyorsunuz");
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+        setTimeout(() => {
+          navigate("/login");
+        }, 2000);
       })
       .catch((error) => {
         console.log(error);
-        setRegisterError(error.response.data.Error)
-        console.log(registerError)
+        setRegisterInfo(error.response.data.Error);
+        console.log(registerInfo);
       });
     console.log(user);
   }
@@ -170,7 +178,7 @@ export default function Register() {
           <Container className="login-page align-items-center align-items-lg-start d-flex flex-column flex-lg-row justify-content-around mb-5">
             <div className="register-form p-5 bg-light shadow rounded-3">
               <form className="d-flex flex-column">
-                <p>{registerError}</p>
+                <p className="fw-semibold mb-2 text-center">{registerInfo}</p>
                 <label className="fw-bold h4">Kayıt Ol</label>
                 <small id="emailHelp" className="form-text text-muted mb-2">
                   Bilgilerinizi 3. kişilerle paylaşmıyoruz
