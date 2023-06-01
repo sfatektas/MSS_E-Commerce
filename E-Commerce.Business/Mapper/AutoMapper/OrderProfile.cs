@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using E_Commerce.Business.Models;
 using E_Commerce.Dtos.OrderDtos;
 using E_Commerce.Entities.EFCore;
 using StackExchange.Redis;
@@ -18,7 +19,7 @@ namespace E_Commerce.Business.Mapper.AutoMapper
             CreateMap<Order, OrderListDto>().ReverseMap();
             CreateMap<Order, OrderCreateDto>().ReverseMap();
             CreateMap<Order, OrderUpdateDto>().ReverseMap();
-
+            CreateMap<Order, CustomOrderCreateModel>().ReverseMap();
         }
     }
 }

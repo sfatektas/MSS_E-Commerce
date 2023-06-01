@@ -9,6 +9,7 @@ using E_Commerce.Business.Services;
 using E_Commerce.Business.Services.Storage;
 using E_Commerce.Business.Validations.FluentValidations;
 using E_Commerce.Business.Validations.FluentValidations.CustomerValidation;
+using E_Commerce.Business.Validations.FluentValidations.OrderDetailValidation;
 using E_Commerce.Business.Validations.FluentValidations.OrderValidation;
 using E_Commerce.Business.Validations.FluentValidations.ProductsInStockValidation;
 using E_Commerce.Business.Validations.FluentValidations.ProductValidation;
@@ -24,6 +25,7 @@ using E_Commerce.DataAccess.UnitOfWorks;
 using E_Commerce.Dtos;
 using E_Commerce.Dtos.BrandDtos;
 using E_Commerce.Dtos.CustomerDtos;
+using E_Commerce.Dtos.OrderDetailDtos;
 using E_Commerce.Dtos.OrderDtos;
 using E_Commerce.Dtos.ProductDtos;
 using E_Commerce.Dtos.ProductsInStockDtos;
@@ -127,6 +129,7 @@ namespace E_Commerce.API.ServiceExtensions
                 opt.CreateMap<SupplierProductCreateModel, SupplierProductCreateDto>();
                 opt.CreateMap<SliderItemUpdateModel, SliderItemUpdateDto>().ReverseMap();
                 opt.CreateMap<SliderUpdateModel, SliderUpdateDto>().ReverseMap();
+                opt.CreateMap<SliderCreateModel, SliderCreateDto>().ReverseMap();
             });
         }
         public static void ConfigureServices(this IServiceCollection services)
@@ -161,10 +164,11 @@ namespace E_Commerce.API.ServiceExtensions
             services.AddTransient<IValidator<BrandCreateModel>, BrandCreateModelValidator>();
             services.AddTransient<IValidator<SliderItemCreateModel>, SliderItemCreateModelValidator>();
             services.AddTransient<IValidator<SliderItemCreateDto>,SliderItemCreateDtoValidator>();
+            services.AddTransient<IValidator<SliderCreateModel>, SliderCreateModelValidator>();
+            services.AddTransient<IValidator<SliderCreateDto>, SliderCreateDtoValidator>();
             services.AddTransient<IValidator<ProductCreateModel>, ProductCreateModelValidator>();
             services.AddTransient<IValidator<ProductCreateDto>, ProductCreateDtoValidator>();
             services.AddTransient<IValidator<SupplierCreateModel>,SupplierCreateModelValidator>();
-            services.AddTransient<IValidator<SliderCreateDto>,SliderCreateDtoValidator>();
             services.AddTransient<IValidator<SupplierCreateModel>,SupplierCreateModelValidator>();
             services.AddTransient<IValidator<SupplierProductCreateModel>, SupplierProductCreateModelValidator>();
             services.AddTransient<IValidator<SupplierProductCreateDto>, SupplierProductCreateDtoValidator>();
@@ -174,6 +178,8 @@ namespace E_Commerce.API.ServiceExtensions
             services.AddTransient<IValidator<SupplierProductUpdateModel>, SupplierProductUpdateModelValidator>();
             services.AddTransient<IValidator<CustomerCreateDto>,CustomerCreateDtoValidator>();
             services.AddTransient<IValidator<OrderCreateDto>, OrderCreateDtoValidator>();
+            services.AddTransient<IValidator<OrderDetailsCreateDto>, OrderDetailCreateDtoValidator>();
+            services.AddTransient<IValidator<CustomOrderCreateModel>, CustomOrderCreateModelValidator>();
         }
         public static void ConfigureCors(this IServiceCollection services)
         {
@@ -232,6 +238,8 @@ namespace E_Commerce.API.ServiceExtensions
             services.AddScoped<ValidateFilterAttiribute<SupplierProductCreateModel>>();
             services.AddScoped<ValidateFilterAttiribute<SupplierProductUpdateModel>>();
             services.AddScoped<ValidateFilterAttiribute<CustomerCreateDto>>();
+            services.AddScoped<ValidateFilterAttiribute<SliderCreateModel>>();
+            services.AddScoped<ValidateFilterAttiribute<Business.Models.CustomOrderCreateModel>>();
         }
         public static void ConfigureRedis(this IServiceCollection services, IConfiguration configuration)
         {
