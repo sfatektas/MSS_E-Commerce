@@ -18,7 +18,7 @@ namespace E_Commerce.Business.Mapper.AutoMapper
             CreateMap<OrderDetail, OrderDetailListDto>().ReverseMap();
             CreateMap<OrderDetailsCreateDto, OrderDetail>().ReverseMap();
             CreateMap<OrderDetail, CustomOrderCreateModel>().ReverseMap();
-            CreateMap<OrderDetailsCreateDto, CustomOrderCreateModel>().ForMember(x=>x.OrderDetailss, x=>x.MapFrom(a=>a)).ReverseMap();
+            CreateMap<OrderDetailsCreateDto, CustomOrderCreateModel>()./*.ForMember(x=>x.OrderDetailss, x=>x.MapFrom(a=>a)).*/ReverseMap();
         }
     }
 }

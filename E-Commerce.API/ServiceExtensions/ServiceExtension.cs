@@ -64,7 +64,7 @@ namespace E_Commerce.API.ServiceExtensions
             {
                 //"RemoteDb"
                 //x.UseMySQL(configuration.GetConnectionString("PleskLocalDB"));
-                x.UseMySQL(configuration.GetConnectionString("SefaMySql"));
+                x.UseMySQL(configuration.GetConnectionString("PleskDB"));
                 //x.UseSqlServer(configuration.GetConnectionString("RemoteDb"));
             });
             services.AddIdentity<AppUser, AppRole>(opt =>
