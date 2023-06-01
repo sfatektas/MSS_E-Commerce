@@ -1,4 +1,5 @@
-﻿using E_Commerce.Presentation.Models;
+﻿using E_Commerce.Dtos.SliderDtos;
+using E_Commerce.Presentation.Models;
 using FluentValidation;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.Presentation.Validators
 {
-    public class SliderCreateModelValidator : AbstractValidator<SliderUpdateModel>
+    public class SliderCreateModelValidator : AbstractValidator<SliderCreateModel>
     {
         public SliderCreateModelValidator()
         {

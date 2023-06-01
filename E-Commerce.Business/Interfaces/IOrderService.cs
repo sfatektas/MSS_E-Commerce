@@ -1,4 +1,5 @@
-﻿using E_Commerce.Business.Services;
+﻿using E_Commerce.Business.Models;
+using E_Commerce.Business.Services;
 using E_Commerce.Dtos.OrderDtos;
 using E_Commerce.Entities.EFCore;
 using System;
@@ -12,5 +13,6 @@ namespace E_Commerce.Business.Interfaces
     public interface IOrderService : IService<OrderCreateDto,OrderListDto,OrderUpdateDto,Order>
     {
         Task<List<OrderListDto>> GetAllOrders();
+        Task CreateAsyncOrder(CustomOrderCreateModel model);
     }
 }

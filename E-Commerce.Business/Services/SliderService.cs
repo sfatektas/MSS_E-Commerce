@@ -52,6 +52,13 @@ namespace E_Commerce.Business.Services
             return _mapper.Map<SliderListDto>(slider);
         }
 
+        public async Task CreateAsyncSlider(SliderCreateDto dto)
+        {
+            var mappedData = _mapper.Map<Slider>(dto);
+            await _uow.GetRepository<Slider>().CreateAsync(mappedData);
+            await _uow.SaveChangesAsync();
+        }
+
         public async Task updateSlider(SliderUpdateDto dto)
         {
             var slider = await _uow.GetRepository<Slider>().GetByFilterAsync(x=>x.Id == dto.Id);
