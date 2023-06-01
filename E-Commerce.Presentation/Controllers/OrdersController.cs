@@ -1,4 +1,6 @@
 ﻿using E_Commerce.Business.Interfaces;
+using E_Commerce.Presentation.ActionFilters;
+using E_Commerce.Presentation.Models;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -29,6 +31,13 @@ namespace E_Commerce.Presentation.Controllers
             return Ok(listOrder);
         }
 
+        [HttpPost]
+        [ServiceFilter(typeof(ValidateFilterAttiribute<Business.Models.CustomOrderCreateModel>))]
+        public async Task<IActionResult> CreateOrderAsync([FromBody]Business.Models.CustomOrderCreateModel model)
+        {
+            await _orderService.CreateAsyncOrder(model);
+            return Ok();
+        }
         
 
     }

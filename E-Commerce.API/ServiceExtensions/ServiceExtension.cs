@@ -9,6 +9,7 @@ using E_Commerce.Business.Services;
 using E_Commerce.Business.Services.Storage;
 using E_Commerce.Business.Validations.FluentValidations;
 using E_Commerce.Business.Validations.FluentValidations.CustomerValidation;
+using E_Commerce.Business.Validations.FluentValidations.OrderDetailValidation;
 using E_Commerce.Business.Validations.FluentValidations.OrderValidation;
 using E_Commerce.Business.Validations.FluentValidations.ProductsInStockValidation;
 using E_Commerce.Business.Validations.FluentValidations.ProductValidation;
@@ -24,6 +25,7 @@ using E_Commerce.DataAccess.UnitOfWorks;
 using E_Commerce.Dtos;
 using E_Commerce.Dtos.BrandDtos;
 using E_Commerce.Dtos.CustomerDtos;
+using E_Commerce.Dtos.OrderDetailDtos;
 using E_Commerce.Dtos.OrderDtos;
 using E_Commerce.Dtos.ProductDtos;
 using E_Commerce.Dtos.ProductsInStockDtos;
@@ -62,7 +64,7 @@ namespace E_Commerce.API.ServiceExtensions
             {
                 //"RemoteDb"
                 //x.UseMySQL(configuration.GetConnectionString("PleskLocalDB"));
-                x.UseMySQL(configuration.GetConnectionString("PleskDB"));
+                x.UseMySQL(configuration.GetConnectionString("SefaMySql"));
                 //x.UseSqlServer(configuration.GetConnectionString("RemoteDb"));
             });
             services.AddIdentity<AppUser, AppRole>(opt =>
@@ -176,6 +178,8 @@ namespace E_Commerce.API.ServiceExtensions
             services.AddTransient<IValidator<SupplierProductUpdateModel>, SupplierProductUpdateModelValidator>();
             services.AddTransient<IValidator<CustomerCreateDto>,CustomerCreateDtoValidator>();
             services.AddTransient<IValidator<OrderCreateDto>, OrderCreateDtoValidator>();
+            services.AddTransient<IValidator<OrderDetailsCreateDto>, OrderDetailCreateDtoValidator>();
+            services.AddTransient<IValidator<CustomOrderCreateModel>, CustomOrderCreateModelValidator>();
         }
         public static void ConfigureCors(this IServiceCollection services)
         {
@@ -235,6 +239,7 @@ namespace E_Commerce.API.ServiceExtensions
             services.AddScoped<ValidateFilterAttiribute<SupplierProductUpdateModel>>();
             services.AddScoped<ValidateFilterAttiribute<CustomerCreateDto>>();
             services.AddScoped<ValidateFilterAttiribute<SliderCreateModel>>();
+            services.AddScoped<ValidateFilterAttiribute<Business.Models.CustomOrderCreateModel>>();
         }
         public static void ConfigureRedis(this IServiceCollection services, IConfiguration configuration)
         {

@@ -1,5 +1,6 @@
 ﻿using E_Commerce.Common;
 using E_Commerce.Dtos.Interfaces;
+using E_Commerce.Dtos.OrderDetailDtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,6 @@ namespace E_Commerce.Dtos.OrderDtos
         public string Town { get; init; }
         public string AddressDetail { get; init; }
         public DateTime CreatedDate { get; init; } = DateTime.UtcNow.AddHours(UtcTimeConstant.TurkeyUTC);
-
+        public List<OrderDetailListDto> OrderDetails { get; set; }
     }
 }
