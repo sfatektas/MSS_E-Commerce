@@ -1,14 +1,12 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Modal from "react-bootstrap/Modal";
-import { generalStore } from "../store/generalStore";
+import { generalStore, tokenStore } from "../store/generalStore";
 import { cartSidebarStore } from "../store/basketStore";
 import Showcase from "../components/common/Showcase";
 import axios from "axios";
 import { Navigate } from "react-router-dom";
-import { HubConnection, HubConnectionBuilder } from "@microsoft/signalr";
 import * as signalR from "@microsoft/signalr";
-import { Base64 } from "js-base64";
 import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
 
@@ -37,24 +35,13 @@ export default function Product() {
   const [info, setInfo] = useState("");
   const [infoModal, setInfoModal] = useState(false);
   const [variant, setVariant] = useState("");
+  const { tokenUsername, tokenId, tokenRole } = tokenStore();
+
   let productRate = 0;
 
   useEffect(() => {
-    if (localStorage.getItem("user_token")) {
-      const token = localStorage.getItem("user_token");
-      const startIndex = token.indexOf(".");
-      const endIndex = token.lastIndexOf(".");
-      const filteredToken = token.slice(startIndex, endIndex + 1);
-      const trimmedPayload = filteredToken.substring(
-        1,
-        filteredToken.length - 1
-      );
-      const decodedPayload = Base64.decode(trimmedPayload);
-
-      let tokenUserName = JSON.parse(decodedPayload).nameid;
-      setUserName(tokenUserName);
-    }
-  }, [userName]);
+    setUserName(tokenUsername);
+  }, [tokenUsername]);
 
   const createHubConnection = async () => {
     const connection = new signalR.HubConnectionBuilder()
@@ -121,31 +108,16 @@ export default function Product() {
   function addComment(event) {
     event.preventDefault;
     if (localStorage.getItem("user_token") != null) {
-      const token = localStorage.getItem("user_token");
-      const startIndex = token.indexOf(".");
-      const endIndex = token.lastIndexOf(".");
-      const filteredToken = token.slice(startIndex, endIndex + 1);
-      const trimmedPayload = filteredToken.substring(
-        1,
-        filteredToken.length - 1
-      );
-      const decodedPayload = Base64.decode(trimmedPayload);
-
-      let tokenUserId = JSON.parse(decodedPayload).Id;
-      let tokenRole = JSON.parse(decodedPayload).role;
-      let role = tokenRole;
-      let userId = tokenUserId;
-
       const comment = {
         productsInStockId: name,
-        customerId: userId,
+        customerId: tokenId,
         content: commentContent,
         point: commentStar,
         // createdDate: null,
       };
       console.log(comment);
 
-      if (role == "customer") {
+      if (tokenRole == "customer") {
         if (commentContent == null || commentStar == null) {
           setInfo("Yorum ve puan bilgisi eksik olamaz!");
           setVariant("danger");
@@ -389,7 +361,9 @@ export default function Product() {
                           comments.forEach((item, index) => {
                             productRate += item.point;
                           })}
-                        {comments?(comments && productRate / comments.length)+",0":""}
+                        {comments
+                          ? (comments && productRate / comments.length) + ",0"
+                          : ""}
                       </span>
 
                       {comments ? (

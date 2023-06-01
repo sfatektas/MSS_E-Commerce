@@ -10,5 +10,9 @@ namespace E_Commerce.Business.Validations.FluentValidations.SliderValidation
 {
     public class SliderCreateDtoValidator : AbstractValidator<SliderCreateDto>
     {
+        public SliderCreateDtoValidator()
+        {
+            RuleFor(x => x.Name).NotEmpty();
+        }
     }
 }

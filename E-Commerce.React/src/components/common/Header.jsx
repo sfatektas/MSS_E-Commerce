@@ -5,7 +5,11 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import { authStore } from "../../store/authStore";
-import { generalStore, loaderStore } from "../../store/generalStore";
+import {
+  generalStore,
+  loaderStore,
+  tokenStore,
+} from "../../store/generalStore";
 import { basketStore, cartSidebarStore } from "../../store/basketStore";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -20,25 +24,17 @@ function Header() {
   const { setSidebarActive } = cartSidebarStore();
   const { options, getOptions, categories, getCategories } = generalStore();
   const { basketItems, getBasketItems } = basketStore();
+  const { getTokenData, tokenExp } = tokenStore();
+  const [searchDork, setSearchDork] = useState("");
   useEffect(() => {
     getOptions();
     getCategories();
     getBasketItems();
+    getTokenData();
   }, []);
   useEffect(() => {
     try {
-      const token = localStorage.getItem("user_token");
-      const startIndex = token.indexOf(".");
-      const endIndex = token.lastIndexOf(".");
-      const filteredToken = token.slice(startIndex, endIndex + 1);
-      const trimmedPayload = filteredToken.substring(
-        1,
-        filteredToken.length - 1
-      );
-      const decodedPayload = Base64.decode(trimmedPayload);
-
-      let tokenExpire = JSON.parse(decodedPayload).exp;
-      let tokenString = tokenExpire.toString();
+      let tokenString = tokenExp.toString();
       tokenString += "000";
       let finalExpireToken = parseInt(tokenString) - 10800000;
       const nowDate = new Date().getTime();
@@ -47,7 +43,7 @@ function Header() {
         localStorage.removeItem("user_token");
       }
     } catch {}
-  }, []);
+  }, [tokenExp]);
 
   useEffect(() => {
     if (logoutStatus === 204) {
@@ -66,7 +62,13 @@ function Header() {
   function handleLogout() {
     logout();
   }
-
+  const handleKeyDown = (event) => {
+    if (event.target.value != null) {
+      if (event.key === "Enter") {
+        navigate(`/search/${searchDork}`);
+      }
+    }
+  };
   return (
     <>
       <CartSidebar />
@@ -212,9 +214,14 @@ function Header() {
                       placeholder="Nasıl bir ürün arıyorsunuz?"
                       aria-describedby="button-addon1"
                       className="form-control border-0 bg-light rounded-pill"
+                      onChange={(e) => setSearchDork(e.target.value)}
+                      onKeyDown={handleKeyDown}
                     />
                     <div className="input-group-append">
-                      <a href="#!" className="btn btn-link text-primary">
+                      <a
+                        href={`/search/${searchDork}`}
+                        className="btn btn-link text-primary"
+                      >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="24"

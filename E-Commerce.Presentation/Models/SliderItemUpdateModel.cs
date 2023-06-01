@@ -14,7 +14,6 @@ namespace E_Commerce.Presentation.Models
         public string Title { get; set; }
         public string SubTitle { get; set; }
         public string ButtonText { get; set; }
-        public string ButtonLink { get; set; }
         public IFormFile File { get; set; }
     }
 }

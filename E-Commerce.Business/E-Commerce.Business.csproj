@@ -41,7 +41,6 @@
     <Folder Include="Validations\FluentValidations\ProductImageValidation\" />
     <Folder Include="Validations\FluentValidations\ProductCommentValidation\" />
     <Folder Include="Validations\FluentValidations\OrderStatusTypeValidation\" />
-    <Folder Include="Validations\FluentValidations\OrderDetailValidation\" />
     <Folder Include="Validations\FluentValidations\CategoryValidation\" />
   </ItemGroup>
 

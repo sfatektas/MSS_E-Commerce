@@ -46,10 +46,11 @@ The multi-vendor e-commerce website that we have developed for our university gr
 
 
 ## Team
-
-[Selim Günaydın](https://github.com/selimgunaydin) Front-End Development. </br>
-[Sefa Tektaş](https://github.com/sfatektas) Back-End Development.</br>
-[Murat Baran](https://github.com/muratBarann) Back-End Development.
+### Front-End Team
+[Selim Günaydın](https://github.com/selimgunaydin)</br>
+### Back-End Team
+[Sefa Tektaş](https://github.com/sfatektas)</br>
+[Murat Baran](https://github.com/muratBarann)
 
 <!-- CONTRIBUTING -->
 ## Contributing

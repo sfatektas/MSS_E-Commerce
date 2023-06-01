@@ -4,7 +4,7 @@ import productJson from "../../products.json";
 import Showcase from "../common/Showcase";
 import axios from "axios";
 
-export default function HomeProducts() {
+export default function HomeProducts(props) {
   const [homeProducts, setHomeProducts] = useState([]);
 
   useEffect(() => {
@@ -21,8 +21,8 @@ export default function HomeProducts() {
   return (
     <div className="products-main container mb-5">
       <div className="products-header d-flex flex-column align-items-center mb-4">
-        <span className="title display-6 fw-bold mb-3">KARIŞIK ÜRÜNLER</span>
-        <p className="text-muted">Premium satıcılarımızın ürünleri</p>
+        <span className="title display-6 fw-bold mb-3">{props.title}</span>
+        <p className="text-muted">Premium satıcılarımızdan sizlere özel seçtiklerimiz</p>
       </div>
       <div className="products-content">
         <div className="row">

@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { basketStore } from "../store/basketStore";
-import { Base64 } from "js-base64";
 import axios from "axios";
+import { tokenStore } from "../store/generalStore";
 
 export default function Cart() {
   const { basketItems } = basketStore();
   const [userName, setUserName] = useState(null);
-  console.log(basketItems);
+  const { tokenUsername } = tokenStore();
+
   let totalPrice = 0;
   basketItems &&
     basketItems.map((item) => {
@@ -14,21 +15,8 @@ export default function Cart() {
       return null;
     });
   useEffect(() => {
-    if (localStorage.getItem("user_token")) {
-      const token = localStorage.getItem("user_token");
-      const startIndex = token.indexOf(".");
-      const endIndex = token.lastIndexOf(".");
-      const filteredToken = token.slice(startIndex, endIndex + 1);
-      const trimmedPayload = filteredToken.substring(
-        1,
-        filteredToken.length - 1
-      );
-      const decodedPayload = Base64.decode(trimmedPayload);
-
-      let tokenUserName = JSON.parse(decodedPayload).nameid;
-      setUserName(tokenUserName);
-    }
-  }, [userName]);
+      setUserName(tokenUsername);
+  }, [tokenUsername]);
 
   function basketProductDelete(productInStockId) {
     axios
@@ -75,7 +63,7 @@ export default function Cart() {
                       </div>
                     </div>
                     <p className="mb-3 my-2">
-                      Tahmini <span className="fw-semibold">20 Mayıs'ta</span>{" "}
+                      Tahmini <span className="fw-semibold">20 Haziran'da</span>{" "}
                       kapında!
                     </p>
                     <div className="d-flex align-items-center">

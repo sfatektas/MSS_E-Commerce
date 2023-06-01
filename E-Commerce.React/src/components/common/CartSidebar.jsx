@@ -1,34 +1,17 @@
 import { useEffect, useState } from "react";
 import { basketStore, cartSidebarStore } from "../../store/basketStore";
-import { generalStore } from "../../store/generalStore";
+import { generalStore, tokenStore } from "../../store/generalStore";
 import axios from "axios";
 import { Base64 } from "js-base64";
 
 function CartProduct(props) {
-  const [userName, setUserName] = useState(null);
-
-  useEffect(() => {
-    if (localStorage.getItem("user_token")) {
-      const token = localStorage.getItem("user_token");
-      const startIndex = token.indexOf(".");
-      const endIndex = token.lastIndexOf(".");
-      const filteredToken = token.slice(startIndex, endIndex + 1);
-      const trimmedPayload = filteredToken.substring(
-        1,
-        filteredToken.length - 1
-      );
-      const decodedPayload = Base64.decode(trimmedPayload);
-
-      let tokenUserName = JSON.parse(decodedPayload).nameid;
-      setUserName(tokenUserName);
-    }
-  }, [userName]);
+  const { tokenUsername } = tokenStore();
 
   function basketProductDelete() {
     console.log(props);
     axios
       .delete(
-        `http://api.mssdev.online/api/Baskets/${userName}/${props.productInStockId}`,
+        `http://api.mssdev.online/api/Baskets/${tokenUsername}/${props.productInStockId}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("user_token")}`,
@@ -135,7 +118,7 @@ export default function CartSidebar() {
                       price={item.unitPrice}
                       amount={item.amount}
                       category={item.category}
-                      supplierId={item.supplierProductId}
+                      supplierId={item.id}
                       productInStockId={item.id}
                     />
                   ))}
