@@ -14,8 +14,7 @@ import { basketStore, cartSidebarStore } from "../../store/basketStore";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CartSidebar from "../common/CartSidebar";
-import { Base64 } from "js-base64";
-import axios from "axios";
+import { favoriteStore } from "../../store/favoriteStore";
 
 function Header() {
   let navigate = useNavigate();
@@ -24,14 +23,17 @@ function Header() {
   const { setSidebarActive } = cartSidebarStore();
   const { options, getOptions, categories, getCategories } = generalStore();
   const { basketItems, getBasketItems } = basketStore();
-  const { getTokenData, tokenExp } = tokenStore();
+  const { favoriteItems, getFavoriteItems } = favoriteStore();
+  const { getTokenData, tokenExp, tokenId, tokenRole, tokenUsername } =
+    tokenStore();
   const [searchDork, setSearchDork] = useState("");
   useEffect(() => {
     getOptions();
     getCategories();
-    getBasketItems();
+    getBasketItems(tokenUsername, tokenRole);
     getTokenData();
-  }, []);
+    getFavoriteItems(tokenId, tokenRole);
+  }, [tokenId]);
   useEffect(() => {
     try {
       let tokenString = tokenExp.toString();
@@ -319,7 +321,7 @@ function Header() {
                   className="favorites-amount"
                   data-selector="favorite-count"
                 >
-                  0
+                  {favoriteItems ? favoriteItems.length : 0}
                 </div>
               </div>
             </Nav.Link>
