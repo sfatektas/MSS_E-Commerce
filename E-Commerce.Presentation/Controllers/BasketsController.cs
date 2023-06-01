@@ -1,5 +1,6 @@
 ﻿using E_Commerce.Business.Interfaces;
 using E_Commerce.Dtos.BasketDtos;
+using E_Commerce.Presentation.ActionFilters;
 using E_Commerce.Presentation.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
@@ -32,6 +33,7 @@ namespace E_Commerce.Presentation.Controllers
             return Ok(dto);
         }
         [HttpPost("{customername}")]
+        [ServiceFilter(typeof(ValidateFilterAttiribute<AddBasketCreateModel>))]
         public async Task<IActionResult> AddBasket([FromBody] AddBasketCreateModel model)
         {
             await _basketService.CreateOrUpdateBasket(model.Username , 
