@@ -14,6 +14,7 @@ import Footer from "./components/common/Footer";
 import Category from "./pages/Category";
 import Favorites from "./pages/Favorites";
 import Product from "./pages/Product";
+import Search from "./pages/Search";
 import Cart from "./pages/Cart";
 import { ProtectedRoute } from "./components/common/ProtectedRoute";
 import { loaderStore } from "./store/generalStore";
@@ -50,6 +51,7 @@ function App() {
         />
         <Route path="/:defination" element={<Category />} />
         <Route path="/:defination/:name" element={<Product />} />
+        <Route path="/search/:search" element={<Search/>}/>
         <Route path="/NotFound" element={<NotFound />} />
         <Route path="/Forbidden" element={<Forbidden />} />
         <Route

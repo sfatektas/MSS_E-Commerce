@@ -4,6 +4,8 @@ import { Navigate } from "react-router-dom";
 import Showcase from "../components/common/Showcase";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Alert from "react-bootstrap/Alert";
+import Button from "react-bootstrap/Button";
 
 export default function Category(props) {
   const { defination } = useParams();
@@ -22,6 +24,11 @@ export default function Category(props) {
   const [productsLink, setProductsLink] = useState(
     `http://api.mssdev.online/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${filterColor}&size=${filterSize}&brand=${filterBrand}&minprice=${filterMin}&maxprice=${filterMax}&search=${filterSearch}`
   );
+
+  const [info, setInfo] = useState("");
+  const [infoModal, setInfoModal] = useState(false);
+  const [variant, setVariant] = useState("");
+  const [productAddModal, setProductAddModal] = useState();
 
   function colorFilter(color) {
     setFilterColor(color);
@@ -92,7 +99,9 @@ export default function Category(props) {
         setProducts(response.data);
       })
       .catch((error) => {
-        console.log(error.response.data.Error);
+        setInfo("İstenilen kritere ait ürün bulunamadı");
+        setVariant("light");
+        setInfoModal(true);
       });
     window.scrollTo({
       top: 0,
@@ -362,6 +371,23 @@ export default function Category(props) {
               </div>
               <div className="products col-12 col-lg-10">
                 <div className="row">
+                  <Alert show={infoModal} variant={variant}>
+                    <Alert.Heading className="d-flex justify-content-center">
+                      {info}
+                    </Alert.Heading>
+                    <div className="d-flex justify-content-center">
+                      <Button
+                        className="btn-outline-dark rounded-3"
+                        onClick={() => {
+                          setInfoModal(false);
+                          cleanAllFilters();
+                        }}
+                        variant={variant}
+                      >
+                        Filteleri Temizle
+                      </Button>
+                    </div>
+                  </Alert>
                   {products.map((item) => {
                     if (item.category.defination == defination) {
                       return (

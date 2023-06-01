@@ -10,7 +10,7 @@ export default function Home() {
     <>
       <HomeCarousel />
       <BannerTwoImg />
-      <HomeProducts />
+      <HomeProducts title="SİZLER İÇİN SEÇTİKLERİMİZ" />
       <BannerThreeImg />
       <BrandsShowcase />
       <HomeImageGallery />

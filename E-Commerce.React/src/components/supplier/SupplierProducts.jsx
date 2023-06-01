@@ -3,8 +3,8 @@ import Alert from "react-bootstrap/Alert";
 import Table from "react-bootstrap/Table";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import { Base64 } from "js-base64";
 import axios from "axios";
+import { tokenStore } from "../../store/generalStore";
 
 export default function SupplierProducts() {
   const [products, setProducts] = useState();
@@ -17,6 +17,8 @@ export default function SupplierProducts() {
   const [colors, setColors] = useState([]);
   const [sizes, setSizes] = useState([]);
   const [changeProductId, setChangeProductId] = useState(0);
+  const { tokenId } = tokenStore();
+
 
   useEffect(() => {
     axios
@@ -34,16 +36,9 @@ export default function SupplierProducts() {
   }, []);
 
   useEffect(() => {
-    const token = localStorage.getItem("user_token");
-    const startIndex = token.indexOf(".");
-    const endIndex = token.lastIndexOf(".");
-    const filteredToken = token.slice(startIndex, endIndex + 1);
-    const trimmedPayload = filteredToken.substring(1, filteredToken.length - 1);
-    const decodedPayload = Base64.decode(trimmedPayload);
-    let supplierId = JSON.parse(decodedPayload).Id;
     axios
       .get(
-        `http://api.mssdev.online/api/suppliers/${supplierId}/products/`
+        `http://api.mssdev.online/api/suppliers/${tokenId}/products/`
       )
       .then((response) => {
         setProducts(response.data);
@@ -51,7 +46,7 @@ export default function SupplierProducts() {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [tokenId]);
   useEffect(() => {
     axios
       .get("http://api.mssdev.online/api/Colors", {
@@ -81,10 +76,10 @@ export default function SupplierProducts() {
       });
   }, []);
 
-  function deleteProduct(supplierProductId) {
+  function deleteProduct(id) {
     axios
       .delete(
-        `http://api.mssdev.online/api/Suppliers/products/${supplierProductId}`
+        `http://api.mssdev.online/api/Suppliers/products/${id}`
       )
       .then((response) => {
         setInfo("Ürün Başarıyla Silindi");
@@ -100,13 +95,6 @@ export default function SupplierProducts() {
   }
 
   function AddProductModal(props) {
-    const token = localStorage.getItem("user_token");
-    const startIndex = token.indexOf(".");
-    const endIndex = token.lastIndexOf(".");
-    const filteredToken = token.slice(startIndex, endIndex + 1);
-    const trimmedPayload = filteredToken.substring(1, filteredToken.length - 1);
-    const decodedPayload = Base64.decode(trimmedPayload);
-    let supplierId = JSON.parse(decodedPayload).Id;
     //Post Stateleri
     const [productId, setProductId] = useState();
     const [productTitle, setProductTitle] = useState();
@@ -133,14 +121,14 @@ export default function SupplierProducts() {
       formData.append("ProductId", productId);
       formData.append("SizeId", productSize);
       formData.append("ColorId", productColor);
-      formData.append("SupplierId", supplierId);
+      formData.append("SupplierId", tokenId);
       formData.append("UnitPrice", productPrice);
       formData.append("Amount", productAmount);
       formData.append("CustomProductTitle", productTitle);
       formData.append("CustomProductDefination", productInfo);
       axios
         .post(
-          `http://api.mssdev.online/api/suppliers/${supplierId}/products/`,
+          `http://api.mssdev.online/api/suppliers/${tokenId}/products/`,
           formData,
           {
             headers: {
@@ -292,13 +280,6 @@ export default function SupplierProducts() {
     );
   }
   function ChangeProductModal(props) {
-    const token = localStorage.getItem("user_token");
-    const startIndex = token.indexOf(".");
-    const endIndex = token.lastIndexOf(".");
-    const filteredToken = token.slice(startIndex, endIndex + 1);
-    const trimmedPayload = filteredToken.substring(1, filteredToken.length - 1);
-    const decodedPayload = Base64.decode(trimmedPayload);
-    let supplierId = JSON.parse(decodedPayload).Id;
     //Post Stateleri
     const [productId, setProductId] = useState();
     const [productTitle, setProductTitle] = useState();
@@ -343,8 +324,8 @@ export default function SupplierProducts() {
       );
       formData.append(
         "SupplierId",
-        supplierId
-          ? supplierId
+        tokenId
+          ? tokenId
           : products[changeProductId].supplierProduct.supplierId
       );
       formData.append(
@@ -678,7 +659,7 @@ export default function SupplierProducts() {
                     </td>
                     <td className="p-0">
                       <button
-                        value={item.supplierProductId}
+                        value={item.id}
                         onClick={(e) => deleteProduct(e.target.value)}
                         className="btn btn-light border px-4 rounded-3"
                       >
