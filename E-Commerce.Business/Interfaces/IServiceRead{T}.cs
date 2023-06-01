@@ -14,6 +14,7 @@ namespace E_Commerce.Business.Interfaces
         where T : BaseEntity, new()
     {
         public Task<IEnumerable<IListDto>> GetAllAsync();
+        public IQueryable<T> GetQueryable();
         public Task<IEnumerable<IListDto>> GetAllAsync(Expression<Func<T,bool>> filter);
         public Task<IListDto> GetOneAsync(int id);
         Task<IListDto> GetOneAsync(Expression<Func<T, bool>> filter);

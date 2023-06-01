@@ -32,6 +32,7 @@ using E_Commerce.Dtos.SliderDtos;
 using E_Commerce.Dtos.SliderItemsDtos;
 using E_Commerce.Dtos.SupplierDtos;
 using E_Commerce.Dtos.SupplierProductDtos;
+using E_Commerce.Entities.EFCore;
 using E_Commerce.Entities.EFCore.Identities;
 using E_Commerce.Entities.Exceptions;
 using E_Commerce.Presentation;
@@ -127,7 +128,7 @@ namespace E_Commerce.API.ServiceExtensions
                 opt.CreateMap<SupplierProductCreateModel, SupplierProductCreateDto>();
                 opt.CreateMap<SliderItemUpdateModel, SliderItemUpdateDto>().ReverseMap();
                 opt.CreateMap<SliderUpdateModel, SliderUpdateDto>().ReverseMap();
-            });
+          });
         }
         public static void ConfigureServices(this IServiceCollection services)
         {
