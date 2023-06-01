@@ -11,9 +11,7 @@ namespace E_Commerce.Dtos.OrderDetailDtos
     public record OrderDetailsCreateDto : ICreateDto
     {
         //public int OrderId { get; init; }
-        public int SupplierProductId { get; init; }
+        public int ProductInStockId { get; init; }
         public int Amount { get; init; }
-        public double UnitPrice { get; init; }
-        public double TotalPrice { get; init; }
     }
 }

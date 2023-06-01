@@ -42,7 +42,7 @@ namespace E_Commerce.DataAccess.Migrations
 
                     b.HasIndex("Defination");
 
-                    b.ToTable("Brands");
+                    b.ToTable("Brands", (string)null);
                 });
 
             modelBuilder.Entity("E_Commerce.Entities.EFCore.Category", b =>
@@ -61,7 +61,7 @@ namespace E_Commerce.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
 
                     b.HasData(
                         new
@@ -112,7 +112,7 @@ namespace E_Commerce.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Colors");
+                    b.ToTable("Colors", (string)null);
 
                     b.HasData(
                         new
@@ -223,7 +223,7 @@ namespace E_Commerce.DataAccess.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("CustomersAddresses");
+                    b.ToTable("CustomersAddresses", (string)null);
                 });
 
             modelBuilder.Entity("E_Commerce.Entities.EFCore.FavoriteProduct", b =>
@@ -247,7 +247,7 @@ namespace E_Commerce.DataAccess.Migrations
 
                     b.HasIndex("ProductsInStockId");
 
-                    b.ToTable("FavoriteProducts");
+                    b.ToTable("FavoriteProducts", (string)null);
                 });
 
             modelBuilder.Entity("E_Commerce.Entities.EFCore.Gender", b =>
@@ -266,7 +266,7 @@ namespace E_Commerce.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Genders");
+                    b.ToTable("Genders", (string)null);
 
                     b.HasData(
                         new
@@ -319,21 +319,21 @@ namespace E_Commerce.DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "9dce4912-5a20-4c46-9c9b-c1ed39e7b3cd",
+                            ConcurrencyStamp = "68a4d663-d061-4122-bbd7-8a83bf6df5ad",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "99331cf4-21e9-4f75-8394-702630e6ec7e",
+                            ConcurrencyStamp = "850aad67-9a53-446f-a4cc-65e9514bd262",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
                             Id = 3,
-                            ConcurrencyStamp = "f86e80ea-2937-477c-af44-89ceb001248d",
+                            ConcurrencyStamp = "6f980881-8eff-4fd7-b50c-770d9639e06f",
                             Name = "Supplier",
                             NormalizedName = "SUPPLIER"
                         });
@@ -459,7 +459,7 @@ namespace E_Commerce.DataAccess.Migrations
 
                     b.HasIndex("OrderStatusTypeId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("E_Commerce.Entities.EFCore.OrderDetail", b =>
@@ -492,7 +492,7 @@ namespace E_Commerce.DataAccess.Migrations
 
                     b.HasIndex("OrderId", "SupplierProductId");
 
-                    b.ToTable("OrderDetails");
+                    b.ToTable("OrderDetails", (string)null);
                 });
 
             modelBuilder.Entity("E_Commerce.Entities.EFCore.OrderStatusType", b =>
@@ -511,7 +511,7 @@ namespace E_Commerce.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("OrderStatusTypes");
+                    b.ToTable("OrderStatusTypes", (string)null);
                 });
 
             modelBuilder.Entity("E_Commerce.Entities.EFCore.PriceHistory", b =>
@@ -539,7 +539,7 @@ namespace E_Commerce.DataAccess.Migrations
 
                     b.HasIndex("SupplierProductsId");
 
-                    b.ToTable("PriceHistory");
+                    b.ToTable("PriceHistory", (string)null);
                 });
 
             modelBuilder.Entity("E_Commerce.Entities.EFCore.Product", b =>
@@ -583,7 +583,7 @@ namespace E_Commerce.DataAccess.Migrations
 
                     b.HasIndex("BrandId", "Name");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("E_Commerce.Entities.EFCore.ProductComment", b =>
@@ -618,7 +618,7 @@ namespace E_Commerce.DataAccess.Migrations
 
                     b.HasIndex("ProductsInStockId");
 
-                    b.ToTable("ProductComments");
+                    b.ToTable("ProductComments", (string)null);
                 });
 
             modelBuilder.Entity("E_Commerce.Entities.EFCore.ProductImage", b =>
@@ -642,7 +642,7 @@ namespace E_Commerce.DataAccess.Migrations
 
                     b.HasIndex("SupplierProductId");
 
-                    b.ToTable("ProductImages");
+                    b.ToTable("ProductImages", (string)null);
                 });
 
             modelBuilder.Entity("E_Commerce.Entities.EFCore.ProductsInStock", b =>
@@ -673,7 +673,7 @@ namespace E_Commerce.DataAccess.Migrations
                     b.HasIndex("SupplierProductId")
                         .IsUnique();
 
-                    b.ToTable("ProductsInStocks");
+                    b.ToTable("ProductsInStocks", (string)null);
                 });
 
             modelBuilder.Entity("E_Commerce.Entities.EFCore.ProductsVisitor", b =>
@@ -700,7 +700,7 @@ namespace E_Commerce.DataAccess.Migrations
 
                     b.HasIndex("SupplierProductId");
 
-                    b.ToTable("ProductsVisitors");
+                    b.ToTable("ProductsVisitors", (string)null);
                 });
 
             modelBuilder.Entity("E_Commerce.Entities.EFCore.SiteOption", b =>
@@ -759,7 +759,7 @@ namespace E_Commerce.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SiteOptions");
+                    b.ToTable("SiteOptions", (string)null);
                 });
 
             modelBuilder.Entity("E_Commerce.Entities.EFCore.Size", b =>
@@ -783,7 +783,7 @@ namespace E_Commerce.DataAccess.Migrations
 
                     b.HasIndex("SizeTypeId");
 
-                    b.ToTable("Sizes");
+                    b.ToTable("Sizes", (string)null);
 
                     b.HasData(
                         new
@@ -944,7 +944,7 @@ namespace E_Commerce.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SizeTypes");
+                    b.ToTable("SizeTypes", (string)null);
 
                     b.HasData(
                         new
@@ -983,7 +983,7 @@ namespace E_Commerce.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Sliders");
+                    b.ToTable("Sliders", (string)null);
                 });
 
             modelBuilder.Entity("E_Commerce.Entities.EFCore.SliderItem", b =>
@@ -1025,7 +1025,7 @@ namespace E_Commerce.DataAccess.Migrations
 
                     b.HasIndex("SliderId");
 
-                    b.ToTable("SliderItem");
+                    b.ToTable("SliderItem", (string)null);
                 });
 
             modelBuilder.Entity("E_Commerce.Entities.EFCore.SupplierAddingProduct", b =>
@@ -1053,7 +1053,7 @@ namespace E_Commerce.DataAccess.Migrations
 
                     b.HasIndex("SupplierProductId");
 
-                    b.ToTable("SuppliersAddingProducts");
+                    b.ToTable("SuppliersAddingProducts", (string)null);
                 });
 
             modelBuilder.Entity("E_Commerce.Entities.EFCore.SupplierProduct", b =>
@@ -1105,7 +1105,7 @@ namespace E_Commerce.DataAccess.Migrations
                     b.HasIndex("SupplierId", "ProductId", "SizeId", "ColorId")
                         .IsUnique();
 
-                    b.ToTable("SuppliersProducts");
+                    b.ToTable("SuppliersProducts", (string)null);
                 });
 
             modelBuilder.Entity("E_Commerce.Entities.EFCore.UserType", b =>
@@ -1124,7 +1124,7 @@ namespace E_Commerce.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserTypes");
+                    b.ToTable("UserTypes", (string)null);
 
                     b.HasData(
                         new

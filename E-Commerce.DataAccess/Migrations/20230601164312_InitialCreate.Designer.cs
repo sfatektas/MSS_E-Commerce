@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_Commerce.DataAccess.Migrations
 {
     [DbContext(typeof(E_CommerceDbContext))]
-    [Migration("20230531215347_OrderEntityConfigures")]
-    partial class OrderEntityConfigures
+    [Migration("20230601164312_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -321,21 +321,21 @@ namespace E_Commerce.DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "9dce4912-5a20-4c46-9c9b-c1ed39e7b3cd",
+                            ConcurrencyStamp = "68a4d663-d061-4122-bbd7-8a83bf6df5ad",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "99331cf4-21e9-4f75-8394-702630e6ec7e",
+                            ConcurrencyStamp = "850aad67-9a53-446f-a4cc-65e9514bd262",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
                             Id = 3,
-                            ConcurrencyStamp = "f86e80ea-2937-477c-af44-89ceb001248d",
+                            ConcurrencyStamp = "6f980881-8eff-4fd7-b50c-770d9639e06f",
                             Name = "Supplier",
                             NormalizedName = "SUPPLIER"
                         });

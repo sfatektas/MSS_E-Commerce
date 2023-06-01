@@ -13,9 +13,7 @@ namespace E_Commerce.Business.Validations.FluentValidations.OrderDetailValidatio
         public OrderDetailCreateDtoValidator()
         {
             //RuleFor(x => x.OrderId).NotEqual(0).WithMessage("Order Id alanı bos gecilemez");
-            RuleFor(x => x.SupplierProductId).NotEqual(0).WithMessage("Supplier Product Id alanı bos gecilemez");
-            RuleFor(x => x.UnitPrice).NotEqual(0).WithMessage("Amount alanı bos gecilemez");
-            RuleFor(x => x.TotalPrice).NotEqual(0).WithMessage("Total Price alanı bos gecilemez");
+            RuleFor(x => x.ProductInStockId).NotEqual(0).WithMessage("Product Stock Id alanı bos gecilemez");
             RuleFor(x => x.Amount).NotEqual(0).WithMessage("Amount alanı bos gecilemez");
         }
     }
