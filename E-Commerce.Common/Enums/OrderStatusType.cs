@@ -9,8 +9,8 @@ namespace E_Commerce.Common.Enums
     public enum OrderStatusType
     {
         Tamamlandi = 1,
-        SiparisAlindi = 2,
-        KargoyaVerildi = 3,
-        IptalEdildi = 4,
+        SiparisAlindi = 3,
+        KargoyaVerildi = 4,
+        IptalEdildi = 5,
     }
 }

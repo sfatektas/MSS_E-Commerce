@@ -6,7 +6,7 @@ using MySql.EntityFrameworkCore.Metadata;
 
 namespace E_Commerce.DataAccess.Migrations
 {
-    public partial class favoriteProductFixxed : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -262,7 +262,7 @@ namespace E_Commerce.DataAccess.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     SliderId = table.Column<int>(type: "int", nullable: false),
-                    ImageUrl = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: false),
+                    ImageUrl = table.Column<string>(type: "longtext", nullable: true),
                     Title = table.Column<string>(type: "varchar(300)", maxLength: 300, nullable: false),
                     SubTitle = table.Column<string>(type: "varchar(300)", maxLength: 300, nullable: false),
                     ButtonText = table.Column<string>(type: "varchar(300)", maxLength: 300, nullable: false),
@@ -746,9 +746,9 @@ namespace E_Commerce.DataAccess.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { 1, "7c6245aa-e525-45ff-a131-53a3ed7c49a7", "Admin", "ADMIN" },
-                    { 2, "85c00ced-30b6-40c5-a4d4-b01e2ca52498", "Customer", "CUSTOMER" },
-                    { 3, "6b3a376a-ca82-4f0d-a6c9-892431a17c59", "Supplier", "SUPPLIER" }
+                    { 1, "68a4d663-d061-4122-bbd7-8a83bf6df5ad", "Admin", "ADMIN" },
+                    { 2, "850aad67-9a53-446f-a4cc-65e9514bd262", "Customer", "CUSTOMER" },
+                    { 3, "6f980881-8eff-4fd7-b50c-770d9639e06f", "Supplier", "SUPPLIER" }
                 });
 
             migrationBuilder.InsertData(

@@ -13,12 +13,11 @@ namespace E_Commerce.Business.Models
     public class CustomOrderCreateModel
     {
         public int CustomerId { get; set; }
-        public double TotalPrice { get; set; }
         public string City { get; set; }
         public string Town { get; set; }
         public string AddressDetail { get; set; }
         public DateTime CreatedDate { get; set; } = DateTime.UtcNow.AddHours(UtcTimeConstant.TurkeyUTC);
-        public List<OrderDetailsCreateDto> OrderDetailss { get; set; }
+        public List<OrderDetailsCreateDto> OrderDetails { get; set; }
 
     }
 }
