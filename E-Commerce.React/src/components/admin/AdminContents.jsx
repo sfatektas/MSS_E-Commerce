@@ -11,11 +11,16 @@ export default function AdminContents() {
   const [variant, setVariant] = useState("");
   const [carousel, setCarousel] = useState([]);
   const [sliderAddModal, setSliderAddModal] = useState();
+  const [twoBanner, setTwoBanner] = useState([]);
+  const [threeBanner, setThreeBanner] = useState([]);
+  const [management, setManagement] = useState("carousel");
   useEffect(() => {
     axios
       .get(`http://api.mssdev.online/api/Slider`)
       .then((response) => {
         setCarousel(response.data[0]);
+        setTwoBanner(response.data[1]);
+        setThreeBanner(response.data[2]);
         console.log(response.data[0]);
       })
       .catch((error) => {
@@ -40,6 +45,153 @@ export default function AdminContents() {
           console.log(error.response);
         });
     }
+  }
+  function TwoBanner() {
+    return (
+      <div>
+        <p className="fw-semibold mb-3">2'li Slider Alanı</p>
+        <div className="mb-4">
+          <Table responsive hover borderless>
+            <thead>
+              <tr>
+                <th className="px-0">Sıra</th>
+                <th>Görsel</th>
+                <th>Başlık</th>
+                <th>Alt Başlık</th>
+                <th>Denetim</th>
+              </tr>
+            </thead>
+            <tbody>
+              {twoBanner.sliderItems &&
+                twoBanner.sliderItems.map((item, index) => (
+                  <tr key={index} className="align-middle">
+                    <td>{index + 1}</td>
+                    <td>
+                      <img
+                        height="50px"
+                        src={`http://api.mssdev.online/api/files/${item.imageUrl}`}
+                        alt={item.name}
+                      />
+                    </td>
+                    <td>{item.title}</td>
+                    <td>{item.subTitle}</td>
+                    <td>
+                      <button
+                        value={item.id}
+                        // onClick={(e) => deleteSliderItem(e.target.value)}
+                        className="btn btn-light border px-4 rounded-3"
+                      >
+                        Düzenle
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </Table>
+        </div>
+      </div>
+    );
+  }
+  function ThreeBanner() {
+    return (
+      <div>
+        <p className="fw-semibold mb-3">3'lü Banner Alanı</p>
+        <div className="mb-4">
+          <Table responsive hover borderless>
+            <thead>
+              <tr>
+                <th className="px-0">Sıra</th>
+                <th>Görsel</th>
+                <th>Başlık</th>
+                <th>Alt Başlık</th>
+                <th>Denetim</th>
+              </tr>
+            </thead>
+            <tbody>
+              {threeBanner.sliderItems &&
+                threeBanner.sliderItems.map((item, index) => (
+                  <tr key={index} className="align-middle">
+                    <td>{index + 1}</td>
+                    <td>
+                      <img
+                        height="50px"
+                        src={`http://api.mssdev.online/api/files/${item.imageUrl}`}
+                        alt={item.name}
+                      />
+                    </td>
+                    <td>{item.title}</td>
+                    <td>{item.subTitle}</td>
+                    <td>
+                      <button
+                        value={item.id}
+                        // onClick={(e) => deleteSliderItem(e.target.value)}
+                        className="btn btn-light border px-4 rounded-3"
+                      >
+                        Düzenle
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </Table>
+        </div>
+      </div>
+    );
+  }
+  function CarouselSlider() {
+    return (
+      <div>
+        <div className="d-flex justify-content-between">
+          <p className="fw-semibold mb-3">Ana Sayfa Slider Alanı</p>
+          <button
+            className="btn btn-light rounded-3 border px-5 fw-semibold"
+            onClick={() => setSliderAddModal(true)}
+          >
+            Slider Ekle
+          </button>
+        </div>
+
+        <div className="mb-4">
+          <Table responsive hover borderless>
+            <thead>
+              <tr>
+                <th className="px-0">Sıra</th>
+                <th>Görsel</th>
+                <th>Başlık</th>
+                <th>Alt Başlık</th>
+                <th>Denetim</th>
+              </tr>
+            </thead>
+            <tbody>
+              {carousel.sliderItems &&
+                carousel.sliderItems.map((item, index) => (
+                  <tr key={index} className="align-middle">
+                    <td>{index + 1}</td>
+                    <td>
+                      <img
+                        height="50px"
+                        src={`http://api.mssdev.online/api/files/${item.imageUrl}`}
+                        alt={item.name}
+                      />
+                    </td>
+                    <td>{item.title}</td>
+                    <td>{item.subTitle}</td>
+                    <td>
+                      <button
+                        value={item.id}
+                        onClick={(e) => deleteSliderItem(e.target.value)}
+                        className="btn btn-light border px-4 rounded-3"
+                      >
+                        Kaldır
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </Table>
+        </div>
+      </div>
+    );
   }
   function AddSliderItem(props) {
     //Post Stateleri
@@ -163,7 +315,6 @@ export default function AdminContents() {
       </Modal>
     );
   }
-
   return (
     <>
       <div className="row">
@@ -176,59 +327,33 @@ export default function AdminContents() {
           </div>
         </Alert>
         <div className="contents col-12">
-          <div className="d-flex justify-content-between">
+          <div className="d-flex flex-column justify-content-between">
             <p className="mb-4 fs-4 fw-semibold text-muted">İçerik Ayarları</p>
-            <button
-              className="btn btn-light rounded-3 border px-5 fw-semibold"
-              onClick={() => setSliderAddModal(true)}
-            >
-              Slider Ekle
-            </button>
-          </div>
-
-          <div>
-            <p className="fw-semibold">Ana Sayfa Slider Alanı</p>
-            <div className="mb-4">
-              <Table responsive hover borderless>
-                <thead>
-                  <tr>
-                    <th className="px-0">Sıra</th>
-                    <th>Görsel</th>
-                    <th>Başlık</th>
-                    <th>Alt Başlık</th>
-                    <th>Denetim</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {carousel.sliderItems &&
-                    carousel.sliderItems.map((item, index) => (
-                      <tr key={index} className="align-middle">
-                        <td>{index + 1}</td>
-                        <td>
-                          <img
-                            height="50px"
-                            src={`http://api.mssdev.online/api/files/${item.imageUrl}`}
-                            alt={item.name}
-                          />
-                        </td>
-                        <td>{item.title}</td>
-                        <td>{item.subTitle}</td>
-                        <td>
-                          <button
-                            value={item.id}
-                            onClick={(e) => deleteSliderItem(e.target.value)}
-                            className="btn btn-light border px-4 rounded-3"
-                          >
-                            Kaldır
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                </tbody>
-              </Table>
+            <div className="d-flex w-100 rounded-3 mb-3 border">
+              <button
+                className="btn btn-light col-4 rounded-end rounded-3 fw-semibold py-3"
+                onClick={() => setManagement("carousel")}
+              >
+                Ana Sayfa Slider
+              </button>
+              <button
+                className="btn btn-light col-4 rounded-0 fw-semibold py-3"
+                onClick={() => setManagement("twoBanner")}
+              >
+                2'li Banner Alanı
+              </button>
+              <button
+                className="btn btn-light col-4 rounded-start rounded-3 fw-semibold py-3"
+                onClick={() => setManagement("threeBanner")}
+              >
+                3'lü Banner Alanı
+              </button>
             </div>
           </div>
         </div>
+        {management === "carousel" && <CarouselSlider />}
+        {management === "twoBanner" && <TwoBanner />}
+        {management === "threeBanner" && <ThreeBanner />}
         <AddSliderItem
           show={sliderAddModal}
           onHide={() => setSliderAddModal(false)}
