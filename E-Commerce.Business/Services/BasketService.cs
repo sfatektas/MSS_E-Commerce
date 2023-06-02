@@ -73,11 +73,11 @@ namespace E_Commerce.Business.Services
             {
                 if (!await _redisService.IsExist($"basket:{username}"))
                     await CreateBasket(username);
-               
-                dtos.ForEach(async dto =>
+
+                foreach (var dto in dtos)
                 {
                     await AddItemToBasket(username, dto);
-                });
+                }
             }   
             else
                 throw new CustomerNotFoundException($"{username} kullanıcı adına sahip geçerli bir kullanıcı bulunamadı.");
