@@ -10,8 +10,14 @@ import Button from "react-bootstrap/Button";
 export default function Category(props) {
   const { defination } = useParams();
   const { categories } = generalStore();
+  const [info, setInfo] = useState("");
+  const [infoModal, setInfoModal] = useState(false);
+  const [variant, setVariant] = useState("");
   const [filtersShow, setFiltersShow] = useState("d-none");
   const [products, setProducts] = useState([]);
+  const [categoryTypeId, setCategoryTypeId] = useState();
+  const [filterListableBrands, setFilterListableBrands] = useState([]);
+  const [filterListableColors, setFilterListableColors] = useState([]);
   const [listBrands, setListBrands] = useState();
   const [filterBrand, setFilterBrand] = useState("");
   const [listSizes, setListSizes] = useState();
@@ -24,11 +30,6 @@ export default function Category(props) {
   const [productsLink, setProductsLink] = useState(
     `http://api.mssdev.online/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${filterColor}&size=${filterSize}&brand=${filterBrand}&minprice=${filterMin}&maxprice=${filterMax}&search=${filterSearch}`
   );
-
-  const [info, setInfo] = useState("");
-  const [infoModal, setInfoModal] = useState(false);
-  const [variant, setVariant] = useState("");
-  const [productAddModal, setProductAddModal] = useState();
 
   function colorFilter(color) {
     setFilterColor(color);
@@ -97,6 +98,7 @@ export default function Category(props) {
       .get(productsLink)
       .then((response) => {
         setProducts(response.data);
+        setCategoryTypeId(response.data[0].category.id);
       })
       .catch((error) => {
         setInfo("İstenilen kritere ait ürün bulunamadı");
@@ -108,6 +110,31 @@ export default function Category(props) {
       behavior: "smooth",
     });
   }, [productsLink, filterColor]);
+
+  useEffect(() => {
+    products.forEach((item) => {
+      // console.log(item.brand.defination)
+      // setFilterListableBrands(...filterListableBrands+item.brand.defination)
+      setFilterListableBrands((filterListableBrands) => [
+        ...filterListableBrands,
+        item.brand.defination,
+      ]);
+    });
+  }, [products]);
+  console.log(filterListableBrands);
+
+  // useEffect(() => {
+  //   products.forEach((item) => {
+  //     // console.log(item.brand.defination)
+  //     // setFilterListableBrands(...filterListableBrands+item.brand.defination)
+  //     setFilterListableColors((filterListableColors) => [
+  //       ...filterListableColors,
+  //       item.brand.defination,
+  //     ]);
+  //   });
+  // }, [products]);
+  // console.log(filterListableColors);
+
 
   useEffect(() => {
     axios
@@ -129,12 +156,16 @@ export default function Category(props) {
 
   useEffect(() => {
     axios
-      .get("http://api.mssdev.online/api/sizes")
+      .get(
+        `http://api.mssdev.online/api/sizes/${
+          categoryTypeId ? categoryTypeId : ""
+        }`
+      )
       .then((response) => {
         setListSizes(response.data);
       })
       .catch((error) => [console.log(error)]);
-  }, []);
+  }, [categoryTypeId]);
   function handleFilterShow() {
     filtersShow == "d-none"
       ? setFiltersShow("d-block")
@@ -234,22 +265,24 @@ export default function Category(props) {
                   <div className="category-brand px-3 mb-3 pb-3 border-bottom">
                     <p className="fw-semibold mb-3">Marka</p>
                     {listBrands.map((item) => {
-                      return (
-                        <div key={item.id} className="d-flex mb-1">
-                          <input
-                            type="radio"
-                            name="brand"
-                            value={item.defination}
-                            onClick={(e) => brandFilter(e.target.value)}
-                          />
-                          <p
-                            style={{ textTransform: "uppercase" }}
-                            className="ms-2"
-                          >
-                            {item.defination}
-                          </p>
-                        </div>
-                      );
+                      if (filterListableBrands.includes(item.defination)) {
+                        return (
+                          <div key={item.id} className="d-flex mb-1">
+                            <input
+                              type="radio"
+                              name="brand"
+                              value={item.defination}
+                              onClick={(e) => brandFilter(e.target.value)}
+                            />
+                            <p
+                              style={{ textTransform: "uppercase" }}
+                              className="ms-2"
+                            >
+                              {item.defination}
+                            </p>
+                          </div>
+                        );
+                      }
                     })}
                   </div>
                   <div className="category-color px-3 mb-3 pb-3 border-bottom">
