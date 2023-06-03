@@ -34,6 +34,7 @@ using E_Commerce.Dtos.SliderDtos;
 using E_Commerce.Dtos.SliderItemsDtos;
 using E_Commerce.Dtos.SupplierDtos;
 using E_Commerce.Dtos.SupplierProductDtos;
+using E_Commerce.Entities.EFCore;
 using E_Commerce.Entities.EFCore.Identities;
 using E_Commerce.Entities.Exceptions;
 using E_Commerce.Presentation;
@@ -181,7 +182,8 @@ namespace E_Commerce.API.ServiceExtensions
             services.AddTransient<IValidator<OrderDetailsCreateDto>, OrderDetailCreateDtoValidator>();
             services.AddTransient<IValidator<CustomOrderCreateModel>, CustomOrderCreateModelValidator>();
             services.AddTransient<IValidator<SliderItemUpdateModel>, SliderItemUpdateModelValidator>();
-                    }
+            services.AddTransient<IValidator<AddBasketCreateModel>, AddBasketCreateModelValidator>();
+        }
         public static void ConfigureCors(this IServiceCollection services)
         {
             services.AddCors(opt =>
@@ -241,6 +243,7 @@ namespace E_Commerce.API.ServiceExtensions
             services.AddScoped<ValidateFilterAttiribute<CustomerCreateDto>>();
             services.AddScoped<ValidateFilterAttiribute<SliderCreateModel>>();
             services.AddScoped<ValidateFilterAttiribute<Business.Models.CustomOrderCreateModel>>();
+            services.AddScoped<ValidateFilterAttiribute<AddBasketCreateModel>>();
         }
         public static void ConfigureRedis(this IServiceCollection services, IConfiguration configuration)
         {

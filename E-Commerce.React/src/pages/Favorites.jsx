@@ -1,34 +1,22 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { tokenStore } from "../store/generalStore";
+import { favoriteStore } from "../store/favoriteStore";
 
 export default function Favorites() {
   const [userName, setUserName] = useState(null);
-  const [userId, setUserId] = useState(null);
   const { tokenId, tokenUsername } = tokenStore();
-  const [favoriteProducts, setFavoriteProducts] = useState([]);
+  const { favoriteItems } = favoriteStore();
   let totalPrice = 0;
-  favoriteProducts &&
-    favoriteProducts.map((item) => {
+  favoriteItems &&
+    favoriteItems.map((item) => {
       totalPrice += item.unitPrice;
       return null;
     });
   useEffect(() => {
     setUserName(tokenUsername);
   }, [tokenUsername]);
-  useEffect(() => {
-    if (tokenId != null) {
-      axios
-        .get(`http://api.mssdev.online/api/Users/${tokenId}/favoriteproducts`)
-        .then((response) => {
-          console.log(response.data);
-          setFavoriteProducts(response.data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-  }, [tokenId]);
+
   function favoriteProductDelete(productInStockId) {
     axios
       .delete(
@@ -54,8 +42,8 @@ export default function Favorites() {
       <div className="container mb-5">
         <div className="row">
           <div className="col-9 cart-products">
-            {favoriteProducts &&
-              favoriteProducts.map((item, index) => {
+            {favoriteItems &&
+              favoriteItems.map((item, index) => {
                 return (
                   <div className="cart-product p-3 mb-4" key={index}>
                     <div className="d-flex justify-content-between border-bottom mb-3 pb-2">
@@ -67,9 +55,7 @@ export default function Favorites() {
                       </div>
                       <div className="product-campaign">
                         <div className="cart-seller">
-                          <p className="fw-semibold text-danger">
-                            Yeni
-                          </p>
+                          <p className="fw-semibold text-danger">Yeni</p>
                         </div>
                       </div>
                     </div>
@@ -91,7 +77,7 @@ export default function Favorites() {
                             href={`/${item.category}/${item.supplierProductId}`}
                             className="mb-2 fw-semibold text-black text-decoration-none"
                           >
-                            {item.title?item.title:"Ürün Başlığı"}
+                            {item.title ? item.title : "Ürün Başlığı"}
                           </a>
                           <p className="mb-2">{item.defination}</p>
                           <div className="d-flex align-items-end">
@@ -112,7 +98,7 @@ export default function Favorites() {
           <div className="col-3">
             <div className="cart-end d-flex flex-column align-items-center py-3">
               <p className="text-uppercase text-primary fw-semibold mb-3">
-                Favori ürünler ({favoriteProducts && favoriteProducts.length})
+                Favori ürünler ({favoriteItems && favoriteItems.length})
               </p>
               <p className="fw-semibold display-5 mb-3">
                 {totalPrice} <span className="fs-4">TL</span>

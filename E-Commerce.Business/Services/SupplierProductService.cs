@@ -62,7 +62,7 @@ namespace E_Commerce.Business.Services
         public async Task UpdateSupplierProduct(SupplierProductUpdateModel model)
         {
             bool sendMail = false;
-            var product = await _uow.GetRepository<SupplierProduct>().GetByFilterAsync(x => x.Id == model.Id);
+            var product = await _uow.GetRepository<SupplierProduct>().GetByFilterAsync(x => x.Id == model.Id,true);
 
             product.SizeId = model.SizeId;
             product.UnitPrice = model.UnitPrice;
@@ -70,6 +70,7 @@ namespace E_Commerce.Business.Services
             product.CustomProductDefination = model.CustomProductDefination;
             product.CustomProductTitle = model.CustomProductTitle;
             product.IsActive = model.IsActive;
+            product.UnitPrice = model.UnitPrice;
             
             // PRoductInStock Updated.
             var stockProduct = await _uow.GetRepository<ProductsInStock>().GetByFilterAsync(x=>x.SupplierProductId == model.Id);

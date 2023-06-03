@@ -50,5 +50,10 @@ namespace E_Commerce.Business.Services
             return _mapper.Map<ListDto>(await _uow.GetRepository<T>()
                 .GetByFilterAsync(filter));
         }
+
+        public IQueryable<T> GetQueryable()
+        {
+            return _uow.GetRepository<T>().GetQueryable();
+        }
     }
 }

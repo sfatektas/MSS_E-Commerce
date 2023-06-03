@@ -55,9 +55,10 @@ namespace E_Commerce.Presentation.Controllers
             return NoContent();
         }
         [HttpGet("{userId:int}/favoriteproducts")]
-        public async Task<IActionResult> GetFavoriteProductsFromUserId(int userid)
+        public async Task<IActionResult> GetFavoriteProductsFromUserId([FromRoute]int userid)
         {
-            return Ok();
+            var data = await _favoriteProductService.GetAllFromUserId(userid);
+            return Ok(data);
         } 
         [HttpPost("{userId:int}/favoriteproducts/{productInStockId:int}")]
         public async Task<IActionResult> AddFavoriteProduct(int userid , int productInStockId)

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using E_Commerce.Business.Interfaces;
+using E_Commerce.Business.Models;
 using E_Commerce.Common.Enums;
 using E_Commerce.DataAccess.Interfaces;
 using E_Commerce.Dtos.FavoriteProductDtos;
@@ -21,19 +22,29 @@ namespace E_Commerce.Business.Services
     {
         private readonly IUow _uow;
         private readonly IMailProducer _mailProducer;
+        private readonly IMapper _mapper;
 
         public FavoriteProductsService(IUow uow, IMapper mapper, IMailProducer mailProducer) : base(uow, mapper)
         {
             _uow = uow;
             _mailProducer = mailProducer;
+            _mapper = mapper;
         }
 
-        public async Task<List<FavoriteProductListDto>> GetAllFromUserId(int userId)
+        public async Task<List<UserFavoriteProductListModel>> GetAllFromUserId(int userId)
         {
-            var data = await base.GetAllAsync(x => x.CustomerId == userId);
+            var data = await base.GetQueryable()
+            .Where(x=>x.CustomerId == userId)
+            .Include(x=>x.ProductsInStock)
+                .Include(x=>x.ProductsInStock.SupplierProduct)
+                    .Include(x=>x.ProductsInStock.SupplierProduct.Product)
+                        .Include(x=>x.ProductsInStock.SupplierProduct.Product.Brand)
+                    .Include(x=>x.ProductsInStock.SupplierProduct.ProductImages)
+            .Include(x=>x.Customer)
+            .ToListAsync();
             if (data == null)
                 throw new FavoriteProductsNotFound(userId);
-            return data.ToList();
+            return _mapper.Map<List<UserFavoriteProductListModel>>(data);
         }
         private async Task<List<string>> GetUserEmailsFromFavoriteProductId(int favoriteProductId)
         {

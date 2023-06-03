@@ -14,7 +14,6 @@ namespace E_Commerce.Entities.EFCore
         public Product Product { get; set; }
         public int SizeId { get; set; }
         public Size Size { get; set; }
-
         [ForeignKey("Supplier")]
         public int SupplierId { get; set; }
         public Entities.EFCore.Identities.Supplier Supplier { get; set; }

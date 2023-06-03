@@ -422,7 +422,7 @@ namespace E_Commerce.DataAccess.Migrations
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
-
+            
             migrationBuilder.CreateTable(
                 name: "CustomersAddresses",
                 columns: table => new
