@@ -12,6 +12,7 @@ $transition: all .2s linear;
 
 body {
     font-family: $font-family;
+
     p {
         margin: 0;
     }
@@ -258,6 +259,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+
     .brand-image {
         img {
             width: 100px;
@@ -379,16 +381,8 @@ body {
         display: flex;
         flex-direction: column;
         align-items: center;
-        a {
-            border: #000 1px solid;
-            background-color: transparent;
 
-            &:hover {
-                color: #fff;
-                background-color: $secondary;
-            }
-        }
-        .showcase-button{
+        .showcase-button {
             position: absolute;
             bottom: 20px;
             width: 200px;
@@ -427,9 +421,14 @@ body {
 //FOOTER
 
 .footer {
-
     background-color: $secondary;
 
+    .form-control::placeholder {
+        /* Chrome, Firefox, Opera, Safari 10.1+ */
+        color: #fff;
+        opacity: 1;
+        /* Firefox */
+    }
 }
 
 //FOOTER
@@ -911,38 +910,45 @@ body {
             background-color: transparent;
         }
     }
+
     .rate {
         float: left;
         height: 46px;
     }
-    .rate:not(:checked) > input {
-        position:absolute;
-        top:-9999px;
+
+    .rate:not(:checked)>input {
+        position: absolute;
+        top: -9999px;
     }
-    .rate:not(:checked) > label {
-        float:right;
-        width:1em;
-        overflow:hidden;
-        white-space:nowrap;
-        cursor:pointer;
-        font-size:30px;
-        color:#ccc;
+
+    .rate:not(:checked)>label {
+        float: right;
+        width: 1em;
+        overflow: hidden;
+        white-space: nowrap;
+        cursor: pointer;
+        font-size: 30px;
+        color: #ccc;
     }
-    .rate:not(:checked) > label:before {
+
+    .rate:not(:checked)>label:before {
         content: '★';
     }
-    .rate > input:checked ~ label {
-        color: #ffc107;    
+
+    .rate>input:checked~label {
+        color: #ffc107;
     }
-    .rate:not(:checked) > label:hover,
-    .rate:not(:checked) > label:hover ~ label {
-        color: #ffc107;  
+
+    .rate:not(:checked)>label:hover,
+    .rate:not(:checked)>label:hover~label {
+        color: #ffc107;
     }
-    .rate > input:checked + label:hover,
-    .rate > input:checked + label:hover ~ label,
-    .rate > input:checked ~ label:hover,
-    .rate > input:checked ~ label:hover ~ label,
-    .rate > label:hover ~ input:checked ~ label {
+
+    .rate>input:checked+label:hover,
+    .rate>input:checked+label:hover~label,
+    .rate>input:checked~label:hover,
+    .rate>input:checked~label:hover~label,
+    .rate>label:hover~input:checked~label {
         color: #ffc107;
     }
 }
@@ -994,6 +1000,7 @@ body {
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     z-index: 10001;
+
     p {
         font-size: 14px;
     }
