@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using E_Commerce.Business.Interfaces;
 using E_Commerce.Business.Interfaces.Storage;
+using E_Commerce.Business.Models;
 using E_Commerce.Common.Enums;
 using E_Commerce.Dtos.SliderItemsDtos;
 using E_Commerce.Presentation.ActionFilters;
@@ -73,13 +74,7 @@ namespace E_Commerce.Presentation.Controllers
         [HttpPut]
         public async Task<IActionResult> updateSliderItem([FromForm] SliderItemUpdateModel model)
         {
-            var dto = _mapper.Map<SliderItemUpdateDto>(model);
-            var imageUrlGuid = Guid.NewGuid().ToString();
-            dto.ImageUrl = imageUrlGuid + Path.GetExtension(model.File.FileName);
-
-            var response = await _storage.UploadFile(imageUrlGuid, model.File);
-            if (response == true)
-                await _sliderItemService.updateSliderItem(dto);
+            await _sliderItemService.updateSliderItem(model);
             return StatusCode(201);
         }
 
