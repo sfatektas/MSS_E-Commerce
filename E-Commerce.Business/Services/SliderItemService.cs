@@ -2,6 +2,7 @@
 using Azure;
 using E_Commerce.Business.Interfaces;
 using E_Commerce.Business.Interfaces.Storage;
+using E_Commerce.Business.Models;
 using E_Commerce.Common.Interfaces;
 using E_Commerce.DataAccess.Interfaces;
 using E_Commerce.Dtos.SliderItemsDtos;
@@ -68,22 +69,6 @@ namespace E_Commerce.Business.Services
         }
 
         /*
-        public async Task<List<SliderItemListDto>> GetSliderItemsByFilter(int id)
-        {
-            var response = await base.GetAllAsync(x => x.SliderId == id);
-            if (response.Data != null)
-            {
-                var Data = _mapper.Map<List<SliderItemListDto>>(response.Data);
-                return Data;
-            }
-
-            else
-                throw new SliderItemNotFoundException();
-            
-        }
-
-        */
-
         public async Task updateSliderItem(SliderItemUpdateDto dto)
         {
             var sliderItem = await _uow.GetRepository<SliderItem>().GetQueryable().SingleOrDefaultAsync(x => x.Id == dto.Id);
@@ -97,6 +82,31 @@ namespace E_Commerce.Business.Services
             sliderItem.ButtonLink = dto.ButtonLink;
             sliderItem.ButtonText = dto.ButtonText;
 
+            _uow.GetRepository<SliderItem>().Update(sliderItem);
+            await _uow.SaveChangesAsync();
+        }
+
+        */
+
+        public async Task updateSliderItem(SliderItemUpdateModel model)
+        {
+            var sliderItem = await _uow.GetRepository<SliderItem>().GetByFilterAsync(x=>x.Id == model.Id);
+            if(sliderItem == null)
+                throw new SliderItemNotFoundException();
+
+
+            sliderItem.Title=model.Title;
+            sliderItem.SubTitle=model.SubTitle;
+            sliderItem.ButtonText=model.ButtonText;
+            sliderItem.ButtonLink = model.ButtonLink;
+            sliderItem.SliderId = model.SliderId;
+
+            if(model.File != null)
+            {
+                var imageUrlGuid = Guid.NewGuid().ToString();
+                sliderItem.ImageUrl = imageUrlGuid + Path.GetExtension(model.File.FileName);
+                await _storage.UploadFile(imageUrlGuid, model.File);    
+            }
             _uow.GetRepository<SliderItem>().Update(sliderItem);
             await _uow.SaveChangesAsync();
         }
