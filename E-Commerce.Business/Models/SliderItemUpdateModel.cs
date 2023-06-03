@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace E_Commerce.Presentation.Models
+namespace E_Commerce.Business.Models
 {
     public class SliderItemUpdateModel
     {
@@ -14,6 +14,7 @@ namespace E_Commerce.Presentation.Models
         public string Title { get; set; }
         public string SubTitle { get; set; }
         public string ButtonText { get; set; }
+        public string ButtonLink { get; set; }
         public IFormFile File { get; set; }
     }
 }

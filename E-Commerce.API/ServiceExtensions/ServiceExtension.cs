@@ -181,6 +181,7 @@ namespace E_Commerce.API.ServiceExtensions
             services.AddTransient<IValidator<OrderCreateDto>, OrderCreateDtoValidator>();
             services.AddTransient<IValidator<OrderDetailsCreateDto>, OrderDetailCreateDtoValidator>();
             services.AddTransient<IValidator<CustomOrderCreateModel>, CustomOrderCreateModelValidator>();
+            services.AddTransient<IValidator<SliderItemUpdateModel>, SliderItemUpdateModelValidator>();
             services.AddTransient<IValidator<AddBasketCreateModel>, AddBasketCreateModelValidator>();
         }
         public static void ConfigureCors(this IServiceCollection services)
