@@ -214,12 +214,17 @@ export default function Showcase(props) {
           <p className="showcase-brand text-muted fw-light mb-3 text-uppercase">
             {props.brand}
           </p>
-          <p className="showcase-title fw-semibold mb-3">{props.title}</p>
+          <a
+            href={`/${props.category}/${props.id}`}
+            className="showcase-title fw-semibold mb-3 text-decoration-none border-0 text-dark"
+          >
+            {props.title}
+          </a>
           <p className="showcase-price text-primary fw-bold mb-3">
             {props.price} TL
           </p>
           <a
-            className="showcase-button btn rounded-3"
+            className="showcase-button btn rounded-3 btn-outline-dark"
             href={`/${props.category}/${props.id}`}
           >
             Satın Al

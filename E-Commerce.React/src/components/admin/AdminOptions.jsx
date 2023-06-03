@@ -57,22 +57,16 @@ export default function AdminOptions() {
     };
     console.log(setOptions);
     axios
-      .put(
-        "http://api.mssdev.online/api/siteoption",
-        setOptions ,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("user_token")}`,
-          },
-        }
-      )
+      .put("http://api.mssdev.online/api/siteoption", setOptions, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("user_token")}`,
+        },
+      })
       .then((response) => {
         setInfo("Ayarlar başarıyla güncellendi");
         setVariant("success");
         setModalShow(true);
-        setTimeout(() => {
-          window.location.reload(false);
-        }, 2000);
+        getOptions();
       })
       .catch((error) => {
         setInfo(error.response.data.Error);

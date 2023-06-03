@@ -17,6 +17,21 @@ export default function AdminProducts() {
   const [variant, setVariant] = useState("");
   const [productAddModal, setProductAddModal] = useState();
 
+  function updateData() {
+    axios
+      .get("http://api.mssdev.online/api/Products", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("user_token")}`,
+        },
+      })
+      .then((response) => {
+        setProductList(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   useEffect(() => {
     axios
       .get("http://api.mssdev.online/api/Products", {
@@ -78,18 +93,16 @@ export default function AdminProducts() {
   function deleteProduct(productId) {
     if (window.confirm("Bu ürünü silmek istediğinize emin misiniz?")) {
       axios
-        .delete(
-          `http://api.mssdev.online/api/Products/${productId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("user_token")}`,
-            },
-          }
-        )
+        .delete(`http://api.mssdev.online/api/Products/${productId}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("user_token")}`,
+          },
+        })
         .then((response) => {
           setInfo("Ürün başarıyla silindi");
           setVariant("success");
           setInfoModal(true);
+          updateData();
         })
         .catch((error) => {
           console.log(error.response.data);
@@ -122,23 +135,17 @@ export default function AdminProducts() {
         File: productFile,
       };
       axios
-        .post(
-          "http://api.mssdev.online/api/Products",
-          createProduct,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("user_token")}`,
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        )
+        .post("http://api.mssdev.online/api/Products", createProduct, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("user_token")}`,
+            "Content-Type": "multipart/form-data",
+          },
+        })
         .then((response) => {
           setInfo("Ürün Başarıyla Eklendi");
           setVariant("success");
           setInfoModal(true);
-          setTimeout(() => {
-            window.location.reload(false);
-          }, 2000);
+          updateData();
         })
         .catch((error) => {
           setInfo(error.response.data.Error);
@@ -273,7 +280,7 @@ export default function AdminProducts() {
               Ürün Ekle
             </button>
           </div>
-          <Table responsive hover borderless>
+          <Table responsive hover borderless variant="light">
             <thead>
               <tr>
                 <th className="px-0">Sıra</th>

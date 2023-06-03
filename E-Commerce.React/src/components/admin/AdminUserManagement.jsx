@@ -13,16 +13,40 @@ export default function AdminUserManagement() {
   const [infoModal, setInfoModal] = useState(false);
   const [variant, setVariant] = useState("");
 
+  function updateData() {
+    axios
+      .get("http://api.mssdev.online/api/users?usertype=customer", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("user_token")}`,
+        },
+      })
+      .then((response) => {
+        setCustomer(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    axios
+      .get("http://api.mssdev.online/api/users?usertype=supplier", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("user_token")}`,
+        },
+      })
+      .then((response) => {
+        setSupplier(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   useEffect(() => {
     axios
-      .get(
-        "http://api.mssdev.online/api/users?usertype=customer",
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("user_token")}`,
-          },
-        }
-      )
+      .get("http://api.mssdev.online/api/users?usertype=customer", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("user_token")}`,
+        },
+      })
       .then((response) => {
         setCustomer(response.data);
       })
@@ -33,14 +57,11 @@ export default function AdminUserManagement() {
 
   useEffect(() => {
     axios
-      .get(
-        "http://api.mssdev.online/api/users?usertype=supplier",
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("user_token")}`,
-          },
-        }
-      )
+      .get("http://api.mssdev.online/api/users?usertype=supplier", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("user_token")}`,
+        },
+      })
       .then((response) => {
         setSupplier(response.data);
       })
@@ -70,7 +91,7 @@ export default function AdminUserManagement() {
             }
           )
           .then((response) => {
-            window.location.reload(false);
+            updateData()
           })
           .catch((error) => {
             console.log(error);
@@ -83,7 +104,7 @@ export default function AdminUserManagement() {
         <div className="admin-customer-management-left col-12">
           <p className="mb-4 fs-4 fw-semibold text-muted">Müşteriler</p>
           <div className="mb-4">
-            <Table responsive hover borderless>
+            <Table responsive hover borderless variant="light">
               <thead>
                 <tr>
                   <th className="px-0">Sıra</th>
@@ -143,7 +164,7 @@ export default function AdminUserManagement() {
             }`
           )
           .then((response) => {
-            window.location.reload(false);
+            updateData()
           })
           .catch((error) => {
             console.log(error);
@@ -178,24 +199,17 @@ export default function AdminUserManagement() {
           File: companyImage,
         };
         axios
-          .post(
-            "http://api.mssdev.online/api/suppliers",
-            createSupplier,
-            {
-              headers: {
-                Authorization: `Bearer ${localStorage.getItem("user_token")}`,
-                "Content-Type": "multipart/form-data",
-              },
-            }
-          )
+          .post("http://api.mssdev.online/api/suppliers", createSupplier, {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("user_token")}`,
+              "Content-Type": "multipart/form-data",
+            },
+          })
           .then((response) => {
             setInfo("Satıcı Başarıyla Eklendi");
             setVariant("success");
             setInfoModal(true);
-
-            setTimeout(() => {
-              window.location.reload(false);
-            }, 2000);
+            updateData()
           })
           .catch((error) => {
             setInfo(error.response.data.Error);
@@ -328,7 +342,7 @@ export default function AdminUserManagement() {
             </button>
           </div>
           <div className="mb-4">
-            <Table responsive hover borderless>
+            <Table responsive hover borderless variant="light">
               <thead>
                 <tr>
                   <th className="px-0">Sıra</th>
