@@ -77,6 +77,15 @@ namespace E_Commerce.DataAccess.Repositories.Abstract
                 .SingleOrDefaultAsync(filter);
         }
 
+        public async Task<T> GetByFilterAsyncFirstOrDefault(Expression<Func<T, bool>> filter, bool asNoTracking = false)
+        {
+            return !asNoTracking ?
+                await _context.Set<T>().AsNoTracking()
+                .FirstOrDefaultAsync(filter) :
+                await _context.Set<T>()
+                .FirstOrDefaultAsync(filter);
+        }
+
         public void Remove(T entity)
         {
             _context.Set<T>().Remove(entity);

@@ -12,6 +12,21 @@ export default function AdminBrands() {
   const [brandAddModal, setBrandAddModal] = useState();
   const [variant, setVariant] = useState("");
 
+  function updateData(){
+    axios
+      .get("http://api.mssdev.online/api/Brands", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("user_token")}`,
+        },
+      })
+      .then((response) => {
+        setBrands(response.data);
+      })
+      .catch((error) => {
+        console.log(error.response.data);
+      });
+  }
+
   useEffect(() => {
     axios
       .get("http://api.mssdev.online/api/Brands", {
@@ -40,6 +55,7 @@ export default function AdminBrands() {
           setInfo("Marka başarıyla silindi");
           setVariant("success");
           setInfoModal(true);
+          updateData()
         })
         .catch((error) => {
           console.log(error.response.data);
@@ -76,9 +92,7 @@ export default function AdminBrands() {
           setInfo("Marka Başarıyla Eklendi");
           setVariant("success");
           setInfoModal(true);
-          setTimeout(() => {
-            window.location.reload(false);
-          }, 2000);
+          updateData()
         })
         .catch((error) => {
           setInfo(error.response.data.Error);
@@ -162,7 +176,7 @@ export default function AdminBrands() {
               Marka Ekle
             </button>
           </div>
-          <Table responsive hover borderless>
+          <Table responsive hover borderless variant="light">
             <thead>
               <tr>
                 <th className="px-0">Sıra</th>

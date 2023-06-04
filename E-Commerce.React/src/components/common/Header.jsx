@@ -8,6 +8,7 @@ import { authStore } from "../../store/authStore";
 import {
   generalStore,
   loaderStore,
+  sliderStore,
   tokenStore,
 } from "../../store/generalStore";
 import { basketStore, cartSidebarStore } from "../../store/basketStore";
@@ -23,6 +24,7 @@ function Header() {
   const { setSidebarActive } = cartSidebarStore();
   const { options, getOptions, categories, getCategories } = generalStore();
   const { basketItems, getBasketItems } = basketStore();
+  const { getSliders} = sliderStore();
   const { favoriteItems, getFavoriteItems } = favoriteStore();
   const { getTokenData, tokenExp, tokenId, tokenRole, tokenUsername } =
     tokenStore();
@@ -33,6 +35,7 @@ function Header() {
     getBasketItems(tokenUsername, tokenRole);
     getTokenData();
     getFavoriteItems(tokenId, tokenRole);
+    getSliders();
   }, [tokenId]);
   useEffect(() => {
     try {

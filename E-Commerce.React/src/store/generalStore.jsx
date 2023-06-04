@@ -12,9 +12,9 @@ export const loaderStore = create((set) => ({
 export const tokenStore = create((set) => ({
   tokenUsername: null,
   tokenId: null,
-  tokenRole:null,
-  tokenEmail:null,
-  tokenExp:null,
+  tokenRole: null,
+  tokenEmail: null,
+  tokenExp: null,
   getTokenData: () => {
     if (localStorage.getItem("user_token")) {
       const token = localStorage.getItem("user_token");
@@ -70,5 +70,19 @@ export const generalStore = create((set) => ({
       console.error(error);
       throw error;
     }
+  },
+}));
+
+export const sliderStore = create((set) => ({
+  sliders: null,
+  getSliders: async () => {
+    axios
+      .get(`http://api.mssdev.online/api/Slider`)
+      .then((response) => {
+        set({ sliders: response.data });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   },
 }));

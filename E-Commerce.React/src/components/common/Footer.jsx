@@ -13,7 +13,7 @@ export default function Footer() {
                 <p className="title text-white fw-bold mb-4 text-uppercase">
                   İLETİŞİM
                 </p>
-                <p className="subtitle text-muted mb-4">
+                <p className="subtitle text-light mb-4">
                   Herhangi bir sorunuz varsa lütfen bizimle iletişime geçin.{" "}
                   <a
                     href={`mailto: ${options && options.email}`}
@@ -86,14 +86,14 @@ export default function Footer() {
                 <p className="title text-white fw-bold mb-4 text-uppercase">
                   MAZAĞA ADRESİ
                 </p>
-                <p className="subtitle text-muted mb-4">
+                <p className="subtitle text-light mb-4">
                   {options && options.adress}
                 </p>
-                <p className="text-muted">
+                <p className="text-light">
                   Pazartesi – Cuma:{" "}
                   <span className="text-white">09.00 – 17.00</span>
                 </p>
-                <p className="text-muted">
+                <p className="text-light">
                   Cumartes: <span className="text-white">09.00 – 12.00</span>
                 </p>
               </div>
@@ -101,12 +101,12 @@ export default function Footer() {
                 <p className="title text-white fw-bold mb-4 text-uppercase">
                   KATEGORİLER
                 </p>
-                <ul className="text-muted list-unstyled">
+                <ul className="text-light list-unstyled">
                   {categories &&
                     categories.map((item, index) => (
                       <li key={index} className="mb-1">
                         <a
-                          className="text-decoration-none text-muted"
+                          className="text-decoration-none text-light"
                           href={`/${item.defination}`}
                         >
                           {item.defination}
@@ -119,16 +119,16 @@ export default function Footer() {
                 <p className="title text-white fw-bold mb-4 text-uppercase">
                   Bültene Abone Ol
                 </p>
-                <p className="subtitle text-muted mb-4">
+                <p className="subtitle text-light mb-4">
                   En son güncellemeler için haftalık bültene abone olun.
                 </p>
                 <div className="mb-3 input-group shadow rounded-pill">
                   <input
                     placeholder="E-Posta Adresiniz"
                     aria-label="E-Posta Adresiniz"
-                    className="bg-secondary py-3 form-control border-0 rounded-pill"
+                    className="bg-secondary py-3 form-control rounded-pill text-white deneme"
                   />
-                  <button className="newsletter-button btn btn-primary text-white rounded-pill">
+                  <button className="newsletter-button btn btn-primary text-white rounded-pill ms-1">
                     Abone Ol
                   </button>
                 </div>
@@ -140,7 +140,7 @@ export default function Footer() {
           <div className="container">
             <div className="row d-flex justify-content-between py-5 pb-0 pb-lg-5">
               <div className="copyright col-12 col-lg-4 order-3 order-lg-1 d-flex align-items-center justify-content-center justify-content-lg-start">
-                <p className="text-muted m-0">
+                <p className="text-light m-0">
                   Copyright © 2023
                   <a
                     href="#!"
