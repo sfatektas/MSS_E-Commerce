@@ -207,7 +207,7 @@ export default function Product() {
 
   function calcCarousel(position) {
     let carouselWidth = 330; // Showcase genişliğini gir.
-    let carouselItems = 12; // Carousel'e kaç tane showcase item basılacaksa onun değerini gir.
+    let carouselItems = featuredProducts.length; // Carousel'e kaç tane showcase item basılacaksa onun değerini gir.
     let carouselLimit = carouselWidth * (carouselItems - 4); // Carousel limit hesaplaması
 
     if (position == "next") {
