@@ -42,6 +42,41 @@ namespace E_Commerce.Presentation.Controllers
         //TODO : Sadecce orderStatusType güncellenecek
         //TODO : GetByFilter yapılabilir
         
+        [HttpGet("Customers/{id}")]
+        public async Task<IActionResult> getCustomerOrders([FromRoute] int id)
+        {
+            var orders = await _orderService.GetCustomerOrders(id);
+            return Ok(orders);
+        }
+
+        
+        [HttpGet("ProductInStocks/{ProductInStockId}")]
+        public async Task<IActionResult> getProductInStocks([FromRoute] int ProductInStockId)
+        {
+            var orders = await _orderService.GetProductInStocksOrder(ProductInStockId);
+            return Ok(orders);
+        }
+
+        [HttpPut("Tamamlandi/{orderId}")]
+        public async Task<IActionResult> Tamamlandi([FromRoute] int orderId)
+        {
+            await _orderService.Tamamlandi(orderId);
+            return StatusCode(201);
+        }
+
+        [HttpPut("IptalEdildi/{orderId}")]
+        public async Task<IActionResult> IptalEdildi([FromRoute] int orderId)
+        {
+            await _orderService.IptalEdildi(orderId);
+            return StatusCode(201);
+        }
+
+        [HttpPut("KargoyaVerildi/{orderId}")]
+        public async Task<IActionResult> KargoyaVerildi([FromRoute] int orderId)
+        {
+            await _orderService.KargoyaVerildi(orderId);
+            return StatusCode(201);
+        }
 
     }
 }
