@@ -104,14 +104,14 @@ export default function Cart() {
                         />
                       </div>
                       <div className="w-100 ms-4">
-                        <div className="cart-product-content">
+                        <div className="cart-product-content mb-4 mb-lg-0">
                           <a
                             href={`/${item.category}/${item.supplierProductId}`}
                             className="mb-2 fw-semibold text-black text-decoration-none"
                           >
                             {item.customProductTitle}
                           </a>
-                          <p className="mb-2">{item.brand}</p>
+                          <p className="mb-2 text-uppercase">{item.brand}</p>
                           <div className="d-flex w-100 justify-content-between align-items-end">
                             {item.amount == 1 ? (
                               <div className="product-piece d-flex justify-content-center">

@@ -87,7 +87,7 @@ export default function Contact() {
                 href={`tel:${options && options.phoneNumber}`}
                 className="px-3 text-muted fw-light text-decoration-none"
               >
-                +90 {options && options.phoneNumber}
+                {options && options.phoneNumber}
               </a>
             </div>
             <div className="d-flex align-items-center mb-3">

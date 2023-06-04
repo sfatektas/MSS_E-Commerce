@@ -55,7 +55,7 @@ export default function Favorites() {
         <p className="fs-1 text-secondary fw-bold">Favorilerim</p>
       </div>
       <Alert show={infoModal} variant={variant}>
-        <Alert.Heading className="d-flex justify-content-center">
+        <Alert.Heading className="d-flex justify-content-center text-center">
           {info}
         </Alert.Heading>
         <div className="d-flex justify-content-center">

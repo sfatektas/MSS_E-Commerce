@@ -405,7 +405,7 @@ export default function Category(props) {
               <div className="products col-12 col-lg-10">
                 <div className="row">
                   <Alert show={infoModal} variant={variant}>
-                    <Alert.Heading className="d-flex justify-content-center">
+                    <Alert.Heading className="d-flex justify-content-center text-center">
                       {info}
                     </Alert.Heading>
                     <div className="d-flex justify-content-center">
