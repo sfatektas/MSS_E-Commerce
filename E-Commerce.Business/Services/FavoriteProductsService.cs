@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.Business.Services
 {
-    public class FavoriteProductsService : ServiceRead<FavoriteProductListDto, FavoriteProduct> ,IFavoriteProductService
+    public class FavoriteProductsService : ServiceRead<FavoriteProductListDto, FavoriteProduct>, IFavoriteProductService
     {
         private readonly IUow _uow;
         private readonly IMailProducer _mailProducer;
@@ -34,16 +34,16 @@ namespace E_Commerce.Business.Services
         public async Task<List<UserFavoriteProductListModel>> GetAllFromUserId(int userId)
         {
             var data = await base.GetQueryable()
-            .Where(x=>x.CustomerId == userId)
-            .Include(x=>x.ProductsInStock)
-                .Include(x=>x.ProductsInStock.SupplierProduct)
-                    .Include(x=>x.ProductsInStock.SupplierProduct.Product)
-                        .Include(x=>x.ProductsInStock.SupplierProduct.Product.Brand)
-                    .Include(x=>x.ProductsInStock.SupplierProduct.ProductImages)
-            .Include(x=>x.Customer)
+            .Where(x => x.CustomerId == userId)
+            .Include(x => x.ProductsInStock)
+                .Include(x => x.ProductsInStock.SupplierProduct)
+                    .Include(x => x.ProductsInStock.SupplierProduct.Product)
+                        .Include(x => x.ProductsInStock.SupplierProduct.Product.Brand)
+                    .Include(x => x.ProductsInStock.SupplierProduct.ProductImages)
+            .Include(x => x.Customer)
             .ToListAsync();
             if (data == null)
-                throw new FavoriteProductsNotFound(userId);
+                throw new FavoriteProductsNotFoundException(userId);
             return _mapper.Map<List<UserFavoriteProductListModel>>(data);
         }
         private async Task<List<string>> GetUserEmailsFromFavoriteProductId(int favoriteProductId)
@@ -97,6 +97,17 @@ namespace E_Commerce.Business.Services
                 return;
             }
             throw new ProductInStockNotFoundException(productInStockId);
+        }
+
+        public async Task DeleteFavoriteProduct(int userId, int productInStockId)
+        {
+            var favoriteProduct = await _uow.GetRepository<FavoriteProduct>()
+                 .GetByFilterAsync(x => x.CustomerId == userId
+                 && x.ProductsInStockId == productInStockId);
+            if (favoriteProduct == null)
+                throw new FavoriteProductsNotFoundException("Bu kullanıcıya ait silinecek favori ürün bulunmamıştır.");
+            _uow.GetRepository<FavoriteProduct>().Remove(favoriteProduct);
+            await _uow.SaveChangesAsync();
         }
     }
 }

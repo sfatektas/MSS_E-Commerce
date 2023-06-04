@@ -138,18 +138,22 @@ namespace E_Commerce.Business.Services
         public async Task<bool> AddProductToStock(int supplierProductId, int amount, double unitprice)
         {
             bool isexist = false; // returns true if exist product otherwise false 
+            var supplierProduct = await _uow.GetRepository<SupplierProduct>().GetByFilterAsync(x=>x.Id== supplierProductId,true);
             var data = await _uow.GetRepository<ProductsInStock>().GetByFilterAsync(x => x.SupplierProductId == supplierProductId);
             if (data == null)
+            {
                 await _uow.GetRepository<ProductsInStock>().CreateAsync(new()
                 {
                     SupplierProductId = supplierProductId,
                     Amount = amount,
                     UnitPrice = unitprice
                 });
+            }
             else // daha önceden stokta bulunuyorsa eğer , stoktaki ürünün miktarının arttırıyorum.
             {
                 data.Amount += amount;
                 data.UnitPrice = unitprice;
+                supplierProduct.UnitPrice = unitprice;
                 _uow.GetRepository<ProductsInStock>().Update(data);
                 await _uow.SaveChangesAsync();
             }

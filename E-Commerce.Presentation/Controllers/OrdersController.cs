@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.Presentation.Controllers
 {
-
+    [EnableCors("DefaultPolicy")]
     [ApiController]
     [Route("api/[controller]")]
     public class OrdersController : ControllerBase

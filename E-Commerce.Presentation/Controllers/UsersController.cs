@@ -29,9 +29,9 @@ namespace E_Commerce.Presentation.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery]string userType)
-        { 
-            if(userType == null) 
+        public async Task<IActionResult> Get([FromQuery] string userType)
+        {
+            if (userType == null)
                 throw new ArgumentNullException(nameof(userType) + "Parametresi bulunamadı.");
             else if (userType.ToLower() == "customer")
             {
@@ -55,16 +55,22 @@ namespace E_Commerce.Presentation.Controllers
             return NoContent();
         }
         [HttpGet("{userId:int}/favoriteproducts")]
-        public async Task<IActionResult> GetFavoriteProductsFromUserId([FromRoute]int userid)
+        public async Task<IActionResult> GetFavoriteProductsFromUserId([FromRoute] int userid)
         {
             var data = await _favoriteProductService.GetAllFromUserId(userid);
             return Ok(data);
-        } 
+        }
         [HttpPost("{userId:int}/favoriteproducts/{productInStockId:int}")]
-        public async Task<IActionResult> AddFavoriteProduct(int userid , int productInStockId)
+        public async Task<IActionResult> AddFavoriteProduct(int userid, int productInStockId)
         {
             await _favoriteProductService.AddFavoriteProduct(userid, productInStockId);
             return StatusCode(201);
+        }
+        [HttpDelete("{userId:int}/favoriteproducts/{productInStockId:int}")]
+        public async Task<IActionResult> DeleteFavoriteProduct(int userid , int productInStockId)
+        {
+            await _favoriteProductService.DeleteFavoriteProduct(userid, productInStockId);
+            return NoContent();
         }
     }
 }

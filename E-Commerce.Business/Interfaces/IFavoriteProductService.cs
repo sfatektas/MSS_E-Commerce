@@ -13,5 +13,6 @@ namespace E_Commerce.Business.Interfaces
         Task<List<UserFavoriteProductListModel>> GetAllFromUserId(int userId);
         Task SendMailToUsersOfFavoriteProducts(int favoriteProductId);
         Task AddFavoriteProduct(int userId, int productInStockId);
+        Task DeleteFavoriteProduct(int userId, int productInStockId);
     }
 }
