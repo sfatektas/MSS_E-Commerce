@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 namespace E_Commerce.Presentation.Controllers
 {
     [EnableCors("DefaultPolicy")]
-    [AllowAnonymous] // herhangi bir yetkilendirme işlemi olmayacak
+  //  [AllowAnonymous] // herhangi bir yetkilendirme işlemi olmayacak
     [ApiController]
     [Route("api/[controller]")]
     public class AuthController : ControllerBase
@@ -55,9 +55,8 @@ namespace E_Commerce.Presentation.Controllers
             // Oturumu devam eden token silindiğinde otomatik olarak eski tokenı kontrol etmek için login işleminde atama yapıyorum.
             return Ok(tokenModel);
         }
-
-        [HttpGet("[action]/{token}")]
         [Authorize]
+        [HttpGet("[action]/{token}")]
         public async Task<IActionResult> LogOut([FromRoute]string token) // client tarafından logout actionuna username parametresi gelecek.
         {
             await _authenticationService.Logout();
