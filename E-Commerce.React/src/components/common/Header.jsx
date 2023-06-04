@@ -333,6 +333,14 @@ function Header() {
                 <Nav.Link className="toggle-menu-item" href="/about">
                   Hakkımızda
                 </Nav.Link>
+                <Nav.Link
+                  className="toggle-menu-item d-flex d-lg-none"
+                  href={
+                    localStorage.getItem("user_token") ? "/account" : "/login"
+                  }
+                >
+                  Hesabım
+                </Nav.Link>
               </Nav>
             </Offcanvas.Body>
           </Navbar.Offcanvas>

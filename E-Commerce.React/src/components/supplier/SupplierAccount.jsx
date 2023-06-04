@@ -37,6 +37,7 @@ export default function SupplierAccount() {
         <div className="supplier-panel row flex-column flex-lg-row m-0">
           <div className="supplier-header col-12 col-lg-2 d-flex flex-row flex-lg-column p-0">
             <div className="d-flex flex-column p-4 w-100">
+            <p className="d-block d-lg-none text-center fw-semibold mb-2 text-danger">Daha iyi bir deneyim için lütfen masaüstü cihazdan giriş yapın</p>
               <p className="display-4 fw-bold text-center mb-3 user-select-none">
                 {options && options.logo}
               </p>

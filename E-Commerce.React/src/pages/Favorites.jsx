@@ -72,7 +72,7 @@ export default function Favorites() {
       </Alert>
       <div className="container mb-5">
         <div className="row">
-          <div className="col-9 cart-products">
+          <div className="col-12 col-lg-9 order-2 order-lg-1 cart-products">
             {favoriteItems &&
               favoriteItems.map((item, index) => {
                 return (
@@ -136,7 +136,7 @@ export default function Favorites() {
                 );
               })}
           </div>
-          <div className="col-3">
+          <div className="col-12 col-lg-3 order-1 order-lg-2 mb-4 mb-lg-0">
             <div className="cart-end d-flex flex-column align-items-center py-3">
               <p className="text-uppercase text-primary fw-semibold mb-3">
                 Favori ürünler ({favoriteItems && favoriteItems.length})
@@ -145,7 +145,7 @@ export default function Favorites() {
                 {totalPrice} <span className="fs-4">TL</span>
               </p>
               <button className="btn btn-primary text-white py-3 rounded-3 w-75 mb-3">
-                Alışverişi tamamla
+                Favorileri Sepete Ekle
               </button>
               <div className="cart-end-sub d-flex justify-content-between w-75 mb-1">
                 <p className="text-muted fw-semibold">Kargo :</p>

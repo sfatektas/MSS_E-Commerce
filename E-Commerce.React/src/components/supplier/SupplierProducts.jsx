@@ -609,7 +609,7 @@ export default function SupplierProducts() {
               Ürün Ekle
             </button>
           </div>
-          <Table responsive hover borderless>
+          <Table responsive hover borderless variant="light">
             <thead>
               <tr>
                 <th className="px-0">Sıra</th>

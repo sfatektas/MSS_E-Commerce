@@ -71,7 +71,7 @@ export default function Cart() {
       </Alert>
       <div className="container mb-5">
         <div className="row">
-          <div className="col-9 cart-products">
+          <div className="col-12 col-lg-9 cart-products order-2 order-lg-1">
             {basketItems &&
               basketItems.map((item, index) => {
                 return (
@@ -190,7 +190,7 @@ export default function Cart() {
                 );
               })}
           </div>
-          <div className="col-3">
+          <div className="col-12 col-lg-3 order-1 order-lg-2 mb-4 mb-lg-0">
             <div className="cart-end d-flex flex-column align-items-center py-3">
               <p className="text-uppercase text-primary fw-semibold mb-3">
                 Seçilen ürünler ({basketItems && basketItems.length})
