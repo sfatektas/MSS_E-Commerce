@@ -20,6 +20,8 @@ namespace E_Commerce.Business.Mapper.AutoMapper
             CreateMap<Order, OrderCreateDto>().ReverseMap();
             CreateMap<Order, OrderUpdateDto>().ReverseMap();
             CreateMap<Order, CustomOrderCreateModel>().ReverseMap();
+            CreateMap<Order, CustomerOrderListModel>().ReverseMap();
+
         }
     }
 }
