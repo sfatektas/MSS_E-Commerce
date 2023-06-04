@@ -18,12 +18,12 @@ export default function CustomerAccount() {
       setTimeout(() => {
         // alert("Başarıyla çıkış yapıldı, yönlendiriliyorsunuz.");
         navigate("/");
-      }, 1000);
+      }, 500);
     } else if (logoutStatus === "ERR_NETWORK") {
       // alert("Hatalı çıkış yapıldı, lütfen destek birimimize ulaşın.");
       setTimeout(() => {
         navigate("/");
-      }, 1000);
+      }, 500);
     }
   }, [logoutStatus]);
 

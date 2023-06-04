@@ -122,16 +122,16 @@ export default function Footer() {
                 <p className="subtitle text-light mb-4">
                   En son güncellemeler için haftalık bültene abone olun.
                 </p>
-                <div className="mb-3 input-group shadow rounded-pill">
-                  <input
-                    placeholder="E-Posta Adresiniz"
-                    aria-label="E-Posta Adresiniz"
-                    className="bg-secondary py-3 form-control rounded-pill text-white deneme"
-                  />
-                  <button className="newsletter-button btn btn-primary text-white rounded-pill ms-1">
-                    Abone Ol
-                  </button>
-                </div>
+              </div>
+              <div className="input-group shadow rounded-3">
+                <input
+                  placeholder="E-Posta Adresiniz"
+                  aria-label="E-Posta Adresiniz"
+                  className="bg-secondary py-3 form-control rounded-3 text-white deneme"
+                />
+                <button className="newsletter-button btn btn-primary text-white rounded-3 ms-1">
+                  Abone Ol
+                </button>
               </div>
             </div>
           </div>

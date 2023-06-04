@@ -21,8 +21,8 @@ export default function HomeProducts(props) {
   return (
     <div className="products-main container mb-5">
       <div className="products-header d-flex flex-column align-items-center mb-4">
-        <span className="title display-6 fw-bold mb-3">{props.title}</span>
-        <p className="text-muted">Premium satıcılarımızdan sizlere özel seçtiklerimiz</p>
+        <span className="title display-6 fw-bold mb-3 text-center">{props.title}</span>
+        <p className="text-muted text-center">Premium satıcılarımızdan sizlere özel seçtiklerimiz</p>
       </div>
       <div className="products-content">
         <div className="row">

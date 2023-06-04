@@ -4,6 +4,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Offcanvas from "react-bootstrap/Offcanvas";
+import Modal from "react-bootstrap/Modal";
 import { authStore } from "../../store/authStore";
 import {
   generalStore,
@@ -24,11 +25,12 @@ function Header() {
   const { setSidebarActive } = cartSidebarStore();
   const { options, getOptions, categories, getCategories } = generalStore();
   const { basketItems, getBasketItems } = basketStore();
-  const { getSliders} = sliderStore();
+  const { getSliders } = sliderStore();
   const { favoriteItems, getFavoriteItems } = favoriteStore();
   const { getTokenData, tokenExp, tokenId, tokenRole, tokenUsername } =
     tokenStore();
   const [searchDork, setSearchDork] = useState("");
+  const [logoutModal, setLogoutModal] = useState();
   useEffect(() => {
     getOptions();
     getCategories();
@@ -53,14 +55,17 @@ function Header() {
   useEffect(() => {
     if (logoutStatus === 204) {
       setTimeout(() => {
-        // alert("Başarıyla çıkış yapıldı, yönlendiriliyorsunuz.");
         navigate("/");
-      }, 1000);
+        setLogoutModal(true);
+        setTimeout(() => {
+          setLogoutModal(false);
+        }, 1000);
+      }, 500);
     } else if (logoutStatus === "ERR_NETWORK") {
-      // alert("Hatalı çıkış yapıldı, lütfen destek birimimize ulaşın.");
       setTimeout(() => {
         navigate("/");
-      }, 1000);
+        setLogoutModal(true);
+      }, 500);
     }
   }, [logoutStatus]);
 
@@ -74,9 +79,45 @@ function Header() {
       }
     }
   };
+  function AddedCartModal(props) {
+    return (
+      <Modal
+        {...props}
+        size="md"
+        aria-labelledby="contained-modal-title-vcenter"
+      >
+        <Modal.Body className="overflow-hidden position-relative rounded-3">
+          <div className="basket-left-color bg-success"></div>
+          <div className=" text-center d-flex align-items-center justify-content-center">
+            <div className="basket-modal-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="#000000"
+                width="30"
+                height="30"
+                viewBox="0 0 14 14"
+                role="img"
+                focusable="false"
+                aria-hidden="true"
+              >
+                <path
+                  fill="green"
+                  d="M13 4.1974q0 .3097-.21677.5265L7.17806 10.329l-1.0529 1.0529q-.21677.2168-.52645.2168-.30968 0-.52645-.2168L4.01935 10.329 1.21677 7.5264Q1 7.3097 1 7t.21677-.5265l1.05291-1.0529q.21677-.2167.52645-.2167.30968 0 .52645.2167l2.27613 2.2839 5.07871-5.0864q.21677-.2168.52645-.2168.30968 0 .52645.2168l1.05291 1.0529Q13 3.8877 13 4.1974z"
+                />
+              </svg>
+            </div>
+            <div className="basket-modal-text ps-2">
+              <p>Başarıyla çıkış yapıldı</p>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
+    );
+  }
   return (
     <>
       <CartSidebar />
+      <AddedCartModal show={logoutModal} onHide={() => setLogoutModal(false)} />
       <div className="bg-black">
         <div className="container">
           <div className="header-top row d-flex align-items-center py-2">
@@ -212,13 +253,13 @@ function Header() {
             </Offcanvas.Header>
             <Offcanvas.Body className="d-flex flex-column">
               <Form className="d-flex mt-2">
-                <div className="p-1 bg-light rounded-pill shadow-sm mb-2 w-100">
+                <div className="p-1 bg-light rounded-3 shadow-sm mb-2 w-100">
                   <div className="input-group">
                     <input
                       type="search"
                       placeholder="Nasıl bir ürün arıyorsunuz?"
                       aria-describedby="button-addon1"
-                      className="form-control border-0 bg-light rounded-pill"
+                      className="form-control border-0 bg-light rounded-3"
                       onChange={(e) => setSearchDork(e.target.value)}
                       onKeyDown={handleKeyDown}
                     />
@@ -245,23 +286,53 @@ function Header() {
                   </div>
                 </div>
               </Form>
-              <Nav className="d-flex justify-content-between fw-semibold">
-                <Nav.Link href="/">Ana Sayfa</Nav.Link>
+              <Nav className="d-flex justify-content-between fw-semibold toggle-menu">
+                <Nav.Link className="toggle-menu-item" href="/">
+                  Ana Sayfa
+                </Nav.Link>
                 {/* <Nav.Link href="/admin">Admin</Nav.Link> */}
-                <NavDropdown title="Kategoriler" id="collasible-nav-dropdown">
+                <NavDropdown
+                  className="toggle-menu-item"
+                  title="Kategoriler"
+                  id="collasible-nav-dropdown"
+                >
                   {categories &&
                     categories.map((item, index) => (
                       <NavDropdown.Item
+                        className="toggle-menu-dropdown-item d-flex"
                         key={index}
                         href={`/${item.defination}`}
                       >
+                        {/* <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          xmlnsXlink="http://www.w3.org/1999/xlink"
+                          version="1.1"
+                          id="Layer_1"
+                          x="0px"
+                          y="0px"
+                          width="20px"
+                          height="20px"
+                          viewBox="0 0 122.88 120.19"
+                          xmlSpace="preserve"
+                          className="me-3"
+                        >
+                          <g>
+                            <path
+                              d="M62.95,27.86c2.36-5.34,4.98-10.39,8.11-14.67c6.34-8.7,21.82-19.17,31.29-9.03 c8.48,9.07,1.29,18.98-8.81,23.7h22.85c1.77,0,3.43,0.74,4.57,1.92c1.18,1.18,1.92,2.8,1.92,4.57v12.31c0,1.77-0.74,3.43-1.92,4.57 c-1.07,1.07-2.47,1.77-4.05,1.88v60.08c0,1.92-0.77,3.69-2.06,4.94c-1.25,1.25-3.02,2.06-4.94,2.06H13.12 c-1.92,0-3.69-0.77-4.94-2.06c-1.25-1.25-2.06-3.02-2.06-4.94l0-60.04c-1.62-0.11-3.1-0.81-4.2-1.88C0.74,50.09,0,48.47,0,46.7 V34.39c0-1.77,0.74-3.43,1.92-4.57c1.18-1.18,2.8-1.92,4.57-1.92h23.26c-10.06-4.72-17.25-14.63-8.81-23.7 c9.47-10.17,24.95,0.33,31.29,9.03c3.13,4.31,5.75,9.36,8.11,14.67h2.54L62.95,27.86L62.95,27.86z M83.63,27.86 C106.74,17.62,99.07,0.37,84.44,8.7c-3.43,1.95-6.3,5.6-8.88,9.25c-2.43,3.43-4.61,7.04-6.23,9.91L83.63,27.86L83.63,27.86z M39.69,27.86C16.59,17.62,24.25,0.37,38.88,8.7c3.43,1.95,6.3,5.6,8.88,9.25c2.43,3.43,4.61,7.04,6.23,9.91L39.69,27.86 L39.69,27.86z M111.53,91.07H70.51v23.7h39.44c0.44,0,0.85-0.18,1.14-0.48c0.3-0.3,0.48-0.7,0.48-1.14V91.07H111.53L111.53,91.07z M53.11,91.07H11.5v22.08c0,0.44,0.18,0.85,0.48,1.14c0.3,0.3,0.7,0.48,1.14,0.48h39.99V91.07L53.11,91.07z M11.5,76.66h41.61 V50.57H11.5V76.66L11.5,76.66z M70.47,76.66h41.02V50.57H70.47V76.66L70.47,76.66z"
+                            />
+                          </g>
+                        </svg> */}
                         {item.defination}
                       </NavDropdown.Item>
                     ))}
                   {/* <NavDropdown.Divider /> */}
                 </NavDropdown>
-                <Nav.Link href="/contact">İletişim</Nav.Link>
-                <Nav.Link href="/about">Hakkımızda</Nav.Link>
+                <Nav.Link className="toggle-menu-item" href="/contact">
+                  İletişim
+                </Nav.Link>
+                <Nav.Link className="toggle-menu-item" href="/about">
+                  Hakkımızda
+                </Nav.Link>
               </Nav>
             </Offcanvas.Body>
           </Navbar.Offcanvas>

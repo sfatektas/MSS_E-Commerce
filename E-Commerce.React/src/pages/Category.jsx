@@ -121,7 +121,7 @@ export default function Category(props) {
       ]);
     });
   }, [products]);
-  console.log(filterListableBrands);
+
 
   // useEffect(() => {
   //   products.forEach((item) => {
@@ -246,7 +246,7 @@ export default function Category(props) {
               >
                 <div className="d-flex flex-column border rounded-3">
                   <div className="border-bottom p-3 mb-3">
-                    <p className="mb-2">
+                    <p className="my-2 text-center">
                       <span className="fw-semibold">
                         {products.length} Ürün
                       </span>{" "}

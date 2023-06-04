@@ -4,6 +4,7 @@
 $primary: #EF3636;
 $primary_hover: #D93131;
 $info: #5296d6;
+$light: #F8F9FA;
 $secondary: #252525;
 $transition: all .2s linear;
 
@@ -43,7 +44,44 @@ body {
     }
 }
 
+.toggle-menu {
+
+    // @media screen and (max-width:992px) {
+    //     display: flex;
+    //     flex-direction: column;
+    // }
+    .toggle-menu-item {
+        @media screen and (max-width:992px) {
+            width: auto !important;
+            // text-align: center;
+            padding: 12px;
+            background-color: $light;
+            box-shadow: 0 .125rem .25rem rgba($black, .075);
+            border-radius: .3rem;
+            margin-bottom: 12px;
+            margin-top: 12px;
+        }
+
+        @media screen and (max-width:992px) {
+            .dropdown-menu {
+
+                width: auto !important;
+                border: none;
+                background-color: $light;
+
+
+                .toggle-menu-dropdown-item {
+                    // text-align: center;
+                    font-weight: 500;
+                }
+            }
+        }
+    }
+}
+
 .navbar-nav {
+
+
     .nav-link {
         color: #000;
 
