@@ -32,8 +32,12 @@ export const authStore = create((set) => ({
   logout: async () => {
     try {
       const token = localStorage.getItem("user_token");
-      const response = await axios.get(
-        `http://api.mssdev.online/api/Auth/Logout/${token}`,
+      const tokenData = {
+        tokenString: token,
+      };
+      const response = await axios.post(
+        `http://api.mssdev.online/api/Auth/LogOut`,
+        tokenData,
         {
           headers: { Authorization: `Bearer ${token}` },
         }

@@ -9,6 +9,7 @@ import { Navigate } from "react-router-dom";
 import * as signalR from "@microsoft/signalr";
 import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
+import { favoriteStore } from "../store/favoriteStore";
 
 // Ürünler API'den çekildiği zaman title sorgulanıp true dönerse sayfa görüntülenecek.
 export default function Product() {
@@ -36,7 +37,7 @@ export default function Product() {
   const [infoModal, setInfoModal] = useState(false);
   const [variant, setVariant] = useState("");
   const { tokenUsername, tokenId, tokenRole } = tokenStore();
-
+  const { getFavoriteItems } = favoriteStore();
   let productRate = 0;
 
   useEffect(() => {
@@ -73,6 +74,7 @@ export default function Product() {
       .get(`http://api.mssdev.online/api/suppliers/products/${name}`)
       .then((response) => {
         setProduct(response.data);
+        console.log(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -86,7 +88,6 @@ export default function Product() {
         `http://api.mssdev.online/api/salesproducts?category=${defination}&pagesize=24&pagenumber=1&color=${""}&size=${""}&brand=${""}&minprice=${""}&maxprice=${""}&search=${""}`
       )
       .then((response) => {
-        console.log(response.data);
         setFeaturedProducts(response.data);
       })
       .catch((error) => {
@@ -173,8 +174,23 @@ export default function Product() {
       setSidebarActive(true);
     }
   }
-  function addFavorites() {
-    setFavoritesModal(true);
+  function addFavorites(id) {
+    if (userName != null) {
+      axios
+        .post(
+          `http://api.mssdev.online/api/Users/${tokenId}/favoriteproducts/${id}`
+        )
+        .then((response) => {
+          console.log(response);
+          setFavoritesModal(true);
+          getFavoriteItems(tokenId, tokenRole);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      setSidebarActive(true);
+    }
   }
   useEffect(() => {
     setTimeout(() => {
@@ -191,7 +207,7 @@ export default function Product() {
 
   function calcCarousel(position) {
     let carouselWidth = 330; // Showcase genişliğini gir.
-    let carouselItems = 12; // Carousel'e kaç tane showcase item basılacaksa onun değerini gir.
+    let carouselItems = featuredProducts.length; // Carousel'e kaç tane showcase item basılacaksa onun değerini gir.
     let carouselLimit = carouselWidth * (carouselItems - 4); // Carousel limit hesaplaması
 
     if (position == "next") {
@@ -702,7 +718,12 @@ export default function Product() {
                         strokeLinejoin="round"
                       ></path>
                     </svg>
-                    <p className="ms-2 text-black" onClick={addFavorites}>
+                    <p
+                      className="ms-2 text-black"
+                      onClick={() =>
+                        addFavorites(product && product.productInStock.id)
+                      }
+                    >
                       Favori Ürün
                     </p>
                   </a>
@@ -918,9 +939,12 @@ export default function Product() {
                             return (
                               <div
                                 key={index}
-                                className="d-flex flex-row mb-5 col-6"
+                                className="d-flex flex-column flex-lg-row mb-5"
                               >
-                                <div id="left-side">
+                                <div
+                                  id="left-side"
+                                  className="d-flex justify-content-center mb-2 mb-lg-0"
+                                >
                                   <div
                                     style={{ width: "100px", height: "100px" }}
                                     className="bg-light p-4 rounded-circle d-flex justify-content-center align-items-center"
@@ -931,52 +955,63 @@ export default function Product() {
                                     </p>
                                   </div>
                                 </div>
-                                <div id="right-side" className="ms-4 w-100">
+                                <div
+                                  id="right-side"
+                                  className="ms-lg-4 mt-3 mt-lg-0 w-100"
+                                >
                                   <div className="d-flex mb-3">
-                                    {Array.from(
-                                      { length: item.point },
-                                      (_, index) => (
-                                        <div key={index}>
-                                          {" "}
-                                          <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            viewBox="0 0 47.94 47.94"
-                                            width="15px"
-                                            height="15px"
-                                            fill="#ffc107"
-                                          >
-                                            <path d="M26.285,2.486l5.407,10.956c0.376,0.762,1.103,1.29,1.944,1.412l12.091,1.757 c2.118,0.308,2.963,2.91,1.431,4.403l-8.749,8.528c-0.608,0.593-0.886,1.448-0.742,2.285l2.065,12.042 c0.362,2.109-1.852,3.717-3.746,2.722l-10.814-5.685c-0.752-0.395-1.651-0.395-2.403,0l-10.814,5.685 c-1.894,0.996-4.108-0.613-3.746-2.722l2.065-12.042c0.144-0.837-0.134-1.692-0.742-2.285l-8.749-8.528 c-1.532-1.494-0.687-4.096,1.431-4.403l12.091-1.757c0.841-0.122,1.568-0.65,1.944-1.412l5.407-10.956 C22.602,0.567,25.338,0.567,26.285,2.486z"></path>
-                                          </svg>
-                                        </div>
-                                      )
-                                    )}
-                                    {Array.from(
-                                      { length: 5 - item.point },
-                                      (_, index) => (
-                                        <div key={index}>
-                                          {" "}
-                                          <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            viewBox="0 0 47.94 47.94"
-                                            width="15px"
-                                            height="15px"
-                                            fill="#dddddd"
-                                          >
-                                            <path d="M26.285,2.486l5.407,10.956c0.376,0.762,1.103,1.29,1.944,1.412l12.091,1.757 c2.118,0.308,2.963,2.91,1.431,4.403l-8.749,8.528c-0.608,0.593-0.886,1.448-0.742,2.285l2.065,12.042 c0.362,2.109-1.852,3.717-3.746,2.722l-10.814-5.685c-0.752-0.395-1.651-0.395-2.403,0l-10.814,5.685 c-1.894,0.996-4.108-0.613-3.746-2.722l2.065-12.042c0.144-0.837-0.134-1.692-0.742-2.285l-8.749-8.528 c-1.532-1.494-0.687-4.096,1.431-4.403l12.091-1.757c0.841-0.122,1.568-0.65,1.944-1.412l5.407-10.956 C22.602,0.567,25.338,0.567,26.285,2.486z"></path>
-                                          </svg>
-                                        </div>
-                                      )
-                                    )}
-                                    <p className="ms-4 text-muted">
-                                      {item.createdDate}
-                                    </p>
-                                    <span className="ms-2">|</span>
-                                    <p className="ms-2 text-muted">
+                                    <p className="d-flex align-items-center ms-2 text-muted">
                                       {item.customer.firstName.charAt(0)}****
                                     </p>
-                                    <p className="ms-1 text-muted">
+                                    <p className="d-flex align-items-center ms-1 text-muted border-end pe-2">
                                       {item.customer.lastName.charAt(0)}****
                                     </p>
+                                    {/* <span className="ms-2">|</span> */}
+                                    <p className="d-flex align-items-center ms-2 text-muted border-end pe-2">
+                                      {item.createdDate.substring(0,10)}
+                                    </p>
+                                    <div className="d-flex ms-2">
+                                      {Array.from(
+                                        { length: item.point },
+                                        (_, index) => (
+                                          <div
+                                            className="d-flex align-items-center"
+                                            key={index}
+                                          >
+                                            {" "}
+                                            <svg
+                                              xmlns="http://www.w3.org/2000/svg"
+                                              viewBox="0 0 47.94 47.94"
+                                              width="15px"
+                                              height="15px"
+                                              fill="#ffc107"
+                                            >
+                                              <path d="M26.285,2.486l5.407,10.956c0.376,0.762,1.103,1.29,1.944,1.412l12.091,1.757 c2.118,0.308,2.963,2.91,1.431,4.403l-8.749,8.528c-0.608,0.593-0.886,1.448-0.742,2.285l2.065,12.042 c0.362,2.109-1.852,3.717-3.746,2.722l-10.814-5.685c-0.752-0.395-1.651-0.395-2.403,0l-10.814,5.685 c-1.894,0.996-4.108-0.613-3.746-2.722l2.065-12.042c0.144-0.837-0.134-1.692-0.742-2.285l-8.749-8.528 c-1.532-1.494-0.687-4.096,1.431-4.403l12.091-1.757c0.841-0.122,1.568-0.65,1.944-1.412l5.407-10.956 C22.602,0.567,25.338,0.567,26.285,2.486z"></path>
+                                            </svg>
+                                          </div>
+                                        )
+                                      )}
+                                      {Array.from(
+                                        { length: 5 - item.point },
+                                        (_, index) => (
+                                          <div
+                                            className="d-flex align-items-center"
+                                            key={index}
+                                          >
+                                            {" "}
+                                            <svg
+                                              xmlns="http://www.w3.org/2000/svg"
+                                              viewBox="0 0 47.94 47.94"
+                                              width="15px"
+                                              height="15px"
+                                              fill="#dddddd"
+                                            >
+                                              <path d="M26.285,2.486l5.407,10.956c0.376,0.762,1.103,1.29,1.944,1.412l12.091,1.757 c2.118,0.308,2.963,2.91,1.431,4.403l-8.749,8.528c-0.608,0.593-0.886,1.448-0.742,2.285l2.065,12.042 c0.362,2.109-1.852,3.717-3.746,2.722l-10.814-5.685c-0.752-0.395-1.651-0.395-2.403,0l-10.814,5.685 c-1.894,0.996-4.108-0.613-3.746-2.722l2.065-12.042c0.144-0.837-0.134-1.692-0.742-2.285l-8.749-8.528 c-1.532-1.494-0.687-4.096,1.431-4.403l12.091-1.757c0.841-0.122,1.568-0.65,1.944-1.412l5.407-10.956 C22.602,0.567,25.338,0.567,26.285,2.486z"></path>
+                                            </svg>
+                                          </div>
+                                        )
+                                      )}
+                                    </div>
                                   </div>
                                   <div className="bg-light px-2 py-3 rounded-5">
                                     <p className="ms-3">{item.content}</p>

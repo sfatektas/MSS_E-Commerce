@@ -19,7 +19,6 @@ export default function SupplierProducts() {
   const [changeProductId, setChangeProductId] = useState(0);
   const { tokenId } = tokenStore();
 
-
   useEffect(() => {
     axios
       .get("http://api.mssdev.online/api/Products", {
@@ -37,9 +36,7 @@ export default function SupplierProducts() {
 
   useEffect(() => {
     axios
-      .get(
-        `http://api.mssdev.online/api/suppliers/${tokenId}/products/`
-      )
+      .get(`http://api.mssdev.online/api/suppliers/${tokenId}/products/`)
       .then((response) => {
         setProducts(response.data);
       })
@@ -77,21 +74,21 @@ export default function SupplierProducts() {
   }, []);
 
   function deleteProduct(id) {
-    axios
-      .delete(
-        `http://api.mssdev.online/api/Suppliers/products/${id}`
-      )
-      .then((response) => {
-        setInfo("Ürün Başarıyla Silindi");
-        setVariant("success");
-        setInfoModal(true);
-      })
-      .catch((error) => {
-        setInfo(error.response.data);
-        setVariant("danger");
-        setInfoModal(true);
-        console.log(error);
-      });
+    if (window.confirm("Bu markayı silmek istediğinize emin misiniz?")) {
+      axios
+        .delete(`http://api.mssdev.online/api/Suppliers/products/${id}`)
+        .then((response) => {
+          setInfo("Ürün Başarıyla Silindi");
+          setVariant("success");
+          setInfoModal(true);
+        })
+        .catch((error) => {
+          setInfo(error.response.data);
+          setVariant("danger");
+          setInfoModal(true);
+          console.log(error);
+        });
+    }
   }
 
   function AddProductModal(props) {
@@ -324,9 +321,7 @@ export default function SupplierProducts() {
       );
       formData.append(
         "SupplierId",
-        tokenId
-          ? tokenId
-          : products[changeProductId].supplierProduct.supplierId
+        tokenId ? tokenId : products[changeProductId].supplierProduct.supplierId
       );
       formData.append(
         "UnitPrice",
@@ -614,7 +609,7 @@ export default function SupplierProducts() {
               Ürün Ekle
             </button>
           </div>
-          <Table responsive hover borderless>
+          <Table responsive hover borderless variant="light">
             <thead>
               <tr>
                 <th className="px-0">Sıra</th>

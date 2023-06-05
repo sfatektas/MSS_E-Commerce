@@ -2,11 +2,16 @@ import { useEffect, useState } from "react";
 import { basketStore } from "../store/basketStore";
 import axios from "axios";
 import { tokenStore } from "../store/generalStore";
+import Alert from "react-bootstrap/Alert";
+import Button from "react-bootstrap/Button";
 
 export default function Cart() {
-  const { basketItems } = basketStore();
+  const { basketItems, getBasketItems } = basketStore();
+  const { tokenUsername, tokenRole } = tokenStore();
   const [userName, setUserName] = useState(null);
-  const { tokenUsername } = tokenStore();
+  const [info, setInfo] = useState("");
+  const [infoModal, setInfoModal] = useState(false);
+  const [variant, setVariant] = useState("");
 
   let totalPrice = 0;
   basketItems &&
@@ -15,7 +20,7 @@ export default function Cart() {
       return null;
     });
   useEffect(() => {
-      setUserName(tokenUsername);
+    setUserName(tokenUsername);
   }, [tokenUsername]);
 
   function basketProductDelete(productInStockId) {
@@ -30,6 +35,14 @@ export default function Cart() {
       )
       .then((response) => {
         console.log(response);
+        getBasketItems(tokenUsername, tokenRole);
+        setInfo("Ürün başarıyla silindi");
+        setVariant("light");
+        setInfoModal(true);
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
       })
       .catch((error) => {
         console.log(error);
@@ -40,9 +53,25 @@ export default function Cart() {
       <div className="d-flex flex-column my-4 text-center">
         <p className="fs-1 text-secondary fw-bold">Sepetim</p>
       </div>
+      <Alert show={infoModal} variant={variant}>
+        <Alert.Heading className="d-flex justify-content-center">
+          {info}
+        </Alert.Heading>
+        <div className="d-flex justify-content-center">
+          <Button
+            className="btn-outline-dark rounded-3"
+            onClick={() => {
+              setInfoModal(false);
+            }}
+            variant={variant}
+          >
+            Kapat
+          </Button>
+        </div>
+      </Alert>
       <div className="container mb-5">
         <div className="row">
-          <div className="col-9 cart-products">
+          <div className="col-12 col-lg-9 cart-products order-2 order-lg-1">
             {basketItems &&
               basketItems.map((item, index) => {
                 return (
@@ -75,14 +104,14 @@ export default function Cart() {
                         />
                       </div>
                       <div className="w-100 ms-4">
-                        <div className="cart-product-content">
+                        <div className="cart-product-content mb-4 mb-lg-0">
                           <a
                             href={`/${item.category}/${item.supplierProductId}`}
                             className="mb-2 fw-semibold text-black text-decoration-none"
                           >
                             {item.customProductTitle}
                           </a>
-                          <p className="mb-2">{item.brand}</p>
+                          <p className="mb-2 text-uppercase">{item.brand}</p>
                           <div className="d-flex w-100 justify-content-between align-items-end">
                             {item.amount == 1 ? (
                               <div className="product-piece d-flex justify-content-center">
@@ -129,7 +158,7 @@ export default function Cart() {
                                     +
                                   </a>
                                 </div>
-                                <a
+                                {/* <a
                                   className="btn btn-white fs-5 h-100 rounded-3 d-flex align-items-center"
                                   // onClick={() => calcPiece(-1)}
                                 >
@@ -147,7 +176,7 @@ export default function Cart() {
                                       strokeLinejoin="round"
                                     />
                                   </svg>
-                                </a>
+                                </a> */}
                               </div>
                             )}
                             <p className="fw-semibold fs-5">
@@ -161,7 +190,7 @@ export default function Cart() {
                 );
               })}
           </div>
-          <div className="col-3">
+          <div className="col-12 col-lg-3 order-1 order-lg-2 mb-4 mb-lg-0">
             <div className="cart-end d-flex flex-column align-items-center py-3">
               <p className="text-uppercase text-primary fw-semibold mb-3">
                 Seçilen ürünler ({basketItems && basketItems.length})
@@ -177,7 +206,7 @@ export default function Cart() {
                 <span className="text-success">Bedava</span>
               </div>
               <div className="cart-end-sub d-flex justify-content-between w-75">
-                <p className="text-muted fw-semibold">Ürünler :</p>
+                <p className="text-muted fw-semibold">Toplam :</p>
                 <span>{totalPrice} TL</span>
               </div>
             </div>
