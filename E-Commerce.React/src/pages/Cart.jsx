@@ -179,7 +179,7 @@ export default function Cart() {
                                 </a> */}
                               </div>
                             )}
-                            <p className="fw-semibold fs-5">
+                            <p className="fw-semibold ms-3 fs-5">
                               {item.unitPrice} TL
                             </p>
                           </div>

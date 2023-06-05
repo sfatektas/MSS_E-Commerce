@@ -115,7 +115,7 @@ export default function Favorites() {
                       <div className="w-100 ms-4 align-items-between">
                         <div className="cart-product-content h-100">
                           <a
-                            href={`/${item.category}/${item.supplierProductId}`}
+                            href={`/${item.category}/${item.productsInStockId}`}
                             className="mb-2 fw-semibold text-black text-decoration-none"
                           >
                             {item.title ? item.title : "Ürün Başlığı"}
