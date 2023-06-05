@@ -139,7 +139,7 @@ export default function Product() {
             })
             .catch((error) => {
               setInfo(error.response.data);
-              setVariant("success");
+              setVariant("danger");
               setInfoModal(true);
             });
         }
