@@ -22,6 +22,11 @@ export const basketStore = create((set) => ({
       }
     }
   },
+  clearBasketData: () => {
+    set({
+      basketItems: null,
+    });
+  },
 }));
 
 export const cartSidebarStore = create((set) => ({

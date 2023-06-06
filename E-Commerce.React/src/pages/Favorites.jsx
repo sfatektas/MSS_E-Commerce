@@ -4,6 +4,7 @@ import { tokenStore } from "../store/generalStore";
 import { favoriteStore } from "../store/favoriteStore";
 import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
+import { Link } from "react-router-dom";
 
 export default function Favorites() {
   const [userName, setUserName] = useState(null);
@@ -114,12 +115,12 @@ export default function Favorites() {
                       </div>
                       <div className="w-100 ms-4 align-items-between">
                         <div className="cart-product-content h-100">
-                          <a
-                            href={`/${item.category}/${item.productsInStockId}`}
+                          <Link
+                            to={`/${item.category}/${item.productsInStockId}`}
                             className="mb-2 fw-semibold text-black text-decoration-none"
                           >
                             {item.title ? item.title : "Ürün Başlığı"}
-                          </a>
+                          </Link>
                           <p className="mb-2">{item.defination}</p>
                           <div className="d-flex align-items-end">
                             <p className="text-uppercase">{item.brand}</p>

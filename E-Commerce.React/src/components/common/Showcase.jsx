@@ -6,6 +6,7 @@ import { cartSidebarStore, basketStore } from "../../store/basketStore";
 import axios from "axios";
 import { tokenStore } from "../../store/generalStore";
 import { favoriteStore } from "../../store/favoriteStore";
+import { Link } from "react-router-dom";
 
 export default function Showcase(props) {
   const [basketModal, setBasketModal] = useState(false);
@@ -202,33 +203,33 @@ export default function Showcase(props) {
           </a>
         </div>
         <div className="showcase-image mb-3 d-flex align-items-center position-relative w-100">
-          <a href={`/${props.category}/${props.id}`} className="w-100">
+          <Link to={`/${props.category}/${props.id}`} className="w-100">
             <img
               className="w-100"
               src={`http://api.mssdev.online/api/files/${props.image}`}
               alt={props.title + " Image"}
             />
-          </a>
+          </Link>
         </div>
         <div className="showcase-content mb-5 text-center">
           <p className="showcase-brand text-muted fw-light mb-3 text-uppercase">
             {props.brand}
           </p>
-          <a
-            href={`/${props.category}/${props.id}`}
+          <Link
+            to={`/${props.category}/${props.id}`}
             className="showcase-title fw-semibold mb-3 text-decoration-none border-0 text-dark"
           >
             {props.title}
-          </a>
+          </Link>
           <p className="showcase-price text-primary fw-bold mb-3">
             {props.price} TL
           </p>
-          <a
+          <Link
             className="showcase-button btn rounded-3 btn-outline-dark"
-            href={`/${props.category}/${props.id}`}
+            to={`/${props.category}/${props.id}`}
           >
             Satın Al
-          </a>
+          </Link>
         </div>
       </div>
     </div>
