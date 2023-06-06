@@ -367,6 +367,6 @@ FodyWeavers.xsd
 .DS_Store
 .DS_Store?
 
-# Appsettings #
+# appsettings #
 ######################
 appsettings.json
