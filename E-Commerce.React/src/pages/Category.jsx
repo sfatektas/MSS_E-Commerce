@@ -16,6 +16,7 @@ export default function Category(props) {
   const [filtersShow, setFiltersShow] = useState("d-none");
   const [products, setProducts] = useState([]);
   const [categoryTypeId, setCategoryTypeId] = useState();
+  const [categoryDefination, setCategoryDefination] = useState();
   const [filterListableBrands, setFilterListableBrands] = useState([]);
   const [filterListableColors, setFilterListableColors] = useState([]);
   const [listBrands, setListBrands] = useState();
@@ -94,6 +95,7 @@ export default function Category(props) {
   }
 
   useEffect(() => {
+    cleanAllFilters();
     axios
       .get(productsLink)
       .then((response) => {
@@ -109,11 +111,14 @@ export default function Category(props) {
       top: 0,
       behavior: "smooth",
     });
-  }, [productsLink, filterColor]);
+  }, [productsLink, filterColor, defination]);
 
   useEffect(() => {
+    if (categoryDefination != defination) {
+      setFilterListableBrands([]);
+    }
     products.forEach((item) => {
-      // console.log(item.brand.defination)
+      setCategoryDefination(item.category.defination);
       // setFilterListableBrands(...filterListableBrands+item.brand.defination)
       setFilterListableBrands((filterListableBrands) => [
         ...filterListableBrands,
@@ -121,7 +126,6 @@ export default function Category(props) {
       ]);
     });
   }, [products]);
-
 
   // useEffect(() => {
   //   products.forEach((item) => {
@@ -134,7 +138,6 @@ export default function Category(props) {
   //   });
   // }, [products]);
   // console.log(filterListableColors);
-
 
   useEffect(() => {
     axios

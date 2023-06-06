@@ -4,7 +4,6 @@ import axios from "axios";
 export const authStore = create((set) => ({
   authText: null,
   loginStatus: null,
-  logoutStatus: null,
 
   loginFetch: async (uname, password) => {
     try {
@@ -43,13 +42,17 @@ export const authStore = create((set) => ({
         }
       );
       localStorage.removeItem("user_token");
-      set({ logoutStatus: response.status });
+      set({
+        authText: null,
+        loginStatus: null,
+      });
+      // set({ logoutStatus: response.status });
     } catch (error) {
       //Token localstorage'de kullanıcı eliyle bozulduğu zaman API'den hata dönüyor.
       //Hata olsun ya da olmasın veriler localstorage'den siliniyor.
       localStorage.removeItem("user_token");
       console.log(error);
-      set({ logoutStatus: error.code });
+      // set({ logoutStatus: error.code });
     }
   },
 }));

@@ -14,14 +14,15 @@ import {
 } from "../../store/generalStore";
 import { basketStore, cartSidebarStore } from "../../store/basketStore";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import CartSidebar from "../common/CartSidebar";
 import { favoriteStore } from "../../store/favoriteStore";
 
 function Header() {
   let navigate = useNavigate();
-  const { logout, logoutStatus } = authStore();
-  const { loader, setLoader } = loaderStore();
+  const { pathname } = useLocation();
+  const [isNavbarOpen, setIsNavbarOpen] = useState(false);
+  const { logout } = authStore();
   const { setSidebarActive } = cartSidebarStore();
   const { options, getOptions, categories, getCategories } = generalStore();
   const { basketItems, getBasketItems } = basketStore();
@@ -32,13 +33,20 @@ function Header() {
   const [searchDork, setSearchDork] = useState("");
   const [logoutModal, setLogoutModal] = useState();
   useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, [pathname]);
+
+  useEffect(() => {
     getOptions();
     getCategories();
     getBasketItems(tokenUsername, tokenRole);
     getTokenData();
     getFavoriteItems(tokenId, tokenRole);
     getSliders();
-  }, [tokenId]);
+  }, [tokenId, localStorage.getItem("user_token")]);
   useEffect(() => {
     try {
       let tokenString = tokenExp.toString();
@@ -52,25 +60,18 @@ function Header() {
     } catch {}
   }, [tokenExp]);
 
-  useEffect(() => {
-    if (logoutStatus === 204) {
-      setTimeout(() => {
-        navigate("/");
-        setLogoutModal(true);
-        setTimeout(() => {
-          setLogoutModal(false);
-        }, 1000);
-      }, 500);
-    } else if (logoutStatus === "ERR_NETWORK") {
-      setTimeout(() => {
-        navigate("/");
-        setLogoutModal(true);
-      }, 500);
-    }
-  }, [logoutStatus]);
-
   function handleLogout() {
     logout();
+    setTimeout(() => {
+      navigate("/");
+      setLogoutModal(true);
+      setTimeout(() => {
+        setLogoutModal(false);
+        setTimeout(() => {
+          location.reload();
+        }, 250);
+      }, 500);
+    }, 500);
   }
   const handleKeyDown = (event) => {
     if (event.target.value != null) {
@@ -78,6 +79,9 @@ function Header() {
         navigate(`/search/${searchDork}`);
       }
     }
+  };
+  const handleSearch = () => {
+    navigate(`/search/${searchDork}`);
   };
   function AddedCartModal(props) {
     return (
@@ -131,6 +135,7 @@ function Header() {
               <a
                 href={options && options.facebookLink}
                 className="facebook mx-3"
+                target="_blank"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -147,7 +152,11 @@ function Header() {
                   />
                 </svg>
               </a>
-              <a href={options && options.twitterLink} className="twitter mx-3">
+              <a
+                href={options && options.twitterLink}
+                className="twitter mx-3"
+                target="_blank"
+              >
                 <svg width="24" height="24" viewBox="0 -2 20 20" version="1.1">
                   <g
                     id="Page-1"
@@ -177,6 +186,7 @@ function Header() {
               <a
                 href={options && options.linkedInLink}
                 className="linkedin mx-3"
+                target="_blank"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -193,6 +203,7 @@ function Header() {
               <a
                 href={options && options.instagramLink}
                 className="instagram mx-3"
+                target="_blank"
               >
                 <svg width="24" height="24" viewBox="0 0 20 20" version="1.1">
                   <g
@@ -229,15 +240,16 @@ function Header() {
         key="lg"
         bg="light"
         expand="lg"
+        expanded={isNavbarOpen}
       >
         <Container className="d-flex flex-column flex-lg-row">
           <div className="logo col-lg-3 d-flex align-items-center justify-content-center justify-content-lg-start ">
-            <a
-              href="/"
+            <Link
+              to="/"
               className="logo-text text-decoration-none text-black display-5 fw-bold"
             >
               {options && options.logo}
-            </a>
+            </Link>
           </div>
 
           <Navbar.Offcanvas
@@ -265,7 +277,7 @@ function Header() {
                     />
                     <div className="input-group-append">
                       <a
-                        href={`/search/${searchDork}`}
+                        onClick={handleSearch}
                         className="btn btn-link text-primary"
                       >
                         <svg
@@ -287,9 +299,13 @@ function Header() {
                 </div>
               </Form>
               <Nav className="d-flex justify-content-between fw-semibold toggle-menu">
-                <Nav.Link className="toggle-menu-item" href="/">
+                <Link
+                  className="toggle-menu-item nav-link"
+                  to="/"
+                  onClick={() => setIsNavbarOpen(false)}
+                >
                   Ana Sayfa
-                </Nav.Link>
+                </Link>
                 {/* <Nav.Link href="/admin">Admin</Nav.Link> */}
                 <NavDropdown
                   className="toggle-menu-item"
@@ -298,49 +314,42 @@ function Header() {
                 >
                   {categories &&
                     categories.map((item, index) => (
-                      <NavDropdown.Item
-                        className="toggle-menu-dropdown-item d-flex"
+                      <Link
+                        className="toggle-menu-dropdown-item d-flex dropdown-item"
                         key={index}
-                        href={`/${item.defination}`}
+                        to={`/${item.defination}`}
+                        onClick={() => setIsNavbarOpen(false)}
                       >
-                        {/* <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          xmlnsXlink="http://www.w3.org/1999/xlink"
-                          version="1.1"
-                          id="Layer_1"
-                          x="0px"
-                          y="0px"
-                          width="20px"
-                          height="20px"
-                          viewBox="0 0 122.88 120.19"
-                          xmlSpace="preserve"
-                          className="me-3"
-                        >
-                          <g>
-                            <path
-                              d="M62.95,27.86c2.36-5.34,4.98-10.39,8.11-14.67c6.34-8.7,21.82-19.17,31.29-9.03 c8.48,9.07,1.29,18.98-8.81,23.7h22.85c1.77,0,3.43,0.74,4.57,1.92c1.18,1.18,1.92,2.8,1.92,4.57v12.31c0,1.77-0.74,3.43-1.92,4.57 c-1.07,1.07-2.47,1.77-4.05,1.88v60.08c0,1.92-0.77,3.69-2.06,4.94c-1.25,1.25-3.02,2.06-4.94,2.06H13.12 c-1.92,0-3.69-0.77-4.94-2.06c-1.25-1.25-2.06-3.02-2.06-4.94l0-60.04c-1.62-0.11-3.1-0.81-4.2-1.88C0.74,50.09,0,48.47,0,46.7 V34.39c0-1.77,0.74-3.43,1.92-4.57c1.18-1.18,2.8-1.92,4.57-1.92h23.26c-10.06-4.72-17.25-14.63-8.81-23.7 c9.47-10.17,24.95,0.33,31.29,9.03c3.13,4.31,5.75,9.36,8.11,14.67h2.54L62.95,27.86L62.95,27.86z M83.63,27.86 C106.74,17.62,99.07,0.37,84.44,8.7c-3.43,1.95-6.3,5.6-8.88,9.25c-2.43,3.43-4.61,7.04-6.23,9.91L83.63,27.86L83.63,27.86z M39.69,27.86C16.59,17.62,24.25,0.37,38.88,8.7c3.43,1.95,6.3,5.6,8.88,9.25c2.43,3.43,4.61,7.04,6.23,9.91L39.69,27.86 L39.69,27.86z M111.53,91.07H70.51v23.7h39.44c0.44,0,0.85-0.18,1.14-0.48c0.3-0.3,0.48-0.7,0.48-1.14V91.07H111.53L111.53,91.07z M53.11,91.07H11.5v22.08c0,0.44,0.18,0.85,0.48,1.14c0.3,0.3,0.7,0.48,1.14,0.48h39.99V91.07L53.11,91.07z M11.5,76.66h41.61 V50.57H11.5V76.66L11.5,76.66z M70.47,76.66h41.02V50.57H70.47V76.66L70.47,76.66z"
-                            />
-                          </g>
-                        </svg> */}
                         {item.defination}
-                      </NavDropdown.Item>
+                      </Link>
                     ))}
                   {/* <NavDropdown.Divider /> */}
                 </NavDropdown>
-                <Nav.Link className="toggle-menu-item" href="/contact">
+
+                <Link
+                  className="toggle-menu-item nav-link"
+                  to="/contact"
+                  onClick={() => setIsNavbarOpen(false)}
+                >
                   İletişim
-                </Nav.Link>
-                <Nav.Link className="toggle-menu-item" href="/about">
+                </Link>
+
+                <Link
+                  className="toggle-menu-item nav-link"
+                  to="/about"
+                  onClick={() => setIsNavbarOpen(false)}
+                >
                   Hakkımızda
-                </Nav.Link>
-                <Nav.Link
-                  className="toggle-menu-item d-flex d-lg-none"
-                  href={
+                </Link>
+                <Link
+                  className="toggle-menu-item nav-link d-flex d-lg-none "
+                  to={
                     localStorage.getItem("user_token") ? "/account" : "/login"
                   }
+                  onClick={() => setIsNavbarOpen(false)}
                 >
                   Hesabım
-                </Nav.Link>
+                </Link>
               </Nav>
             </Offcanvas.Body>
           </Navbar.Offcanvas>
@@ -348,9 +357,10 @@ function Header() {
             <Navbar.Toggle
               aria-controls={`offcanvasNavbar-expand-lg`}
               className="mx- mx-lg-0"
+              onClick={() => setIsNavbarOpen(true)}
             />
             {localStorage.getItem("user_token") ? (
-              <Nav.Link onClick={handleLogout} className="mx-2 mx-lg-0">
+              <Link onClick={handleLogout} className="mx-2 mx-lg-0 nav-link">
                 <div className="logout mx-3">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -363,11 +373,11 @@ function Header() {
                     <path d="M3.651 16.989h17.326c0.553 0 1-0.448 1-1s-0.447-1-1-1h-17.264l3.617-3.617c0.391-0.39 0.391-1.024 0-1.414s-1.024-0.39-1.414 0l-5.907 6.062 5.907 6.063c0.196 0.195 0.451 0.293 0.707 0.293s0.511-0.098 0.707-0.293c0.391-0.39 0.391-1.023 0-1.414zM29.989 0h-17c-1.105 0-2 0.895-2 2v9h2.013v-7.78c0-0.668 0.542-1.21 1.21-1.21h14.523c0.669 0 1.21 0.542 1.21 1.21l0.032 25.572c0 0.668-0.541 1.21-1.21 1.21h-14.553c-0.668 0-1.21-0.542-1.21-1.21v-7.824l-2.013 0.003v9.030c0 1.105 0.895 2 2 2h16.999c1.105 0 2.001-0.895 2.001-2v-28c-0-1.105-0.896-2-2-2z" />
                   </svg>
                 </div>
-              </Nav.Link>
+              </Link>
             ) : null}
-            <Nav.Link
-              href={localStorage.getItem("user_token") ? "/account" : "/login"}
-              className="mx-2 mx-lg-0"
+            <Link
+              to={localStorage.getItem("user_token") ? "/account" : "/login"}
+              className="mx-2 mx-lg-0 nav-link"
             >
               <div className="user mx-3">
                 <svg
@@ -382,8 +392,8 @@ function Header() {
                   />
                 </svg>
               </div>
-            </Nav.Link>
-            <Nav.Link href="/favorites" className="mx-2 mx-lg-0">
+            </Link>
+            <Link to="/favorites" className="mx-2 mx-lg-0 nav-link">
               <div className="favorites mx-3">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -406,13 +416,12 @@ function Header() {
                   {favoriteItems ? favoriteItems.length : 0}
                 </div>
               </div>
-            </Nav.Link>
-            <Nav.Link
-              href=""
+            </Link>
+            <Link
               onClick={() => {
                 setSidebarActive(true);
               }}
-              className="mx-2 mx-lg-0"
+              className="mx-2 mx-lg-0 nav-link"
             >
               {" "}
               <div className="cart mx-3">
@@ -461,7 +470,7 @@ function Header() {
                   {basketItems ? basketItems.length : 0}
                 </div>
               </div>
-            </Nav.Link>
+            </Link>
           </Nav>
         </Container>
       </Navbar>

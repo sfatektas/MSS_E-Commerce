@@ -4,6 +4,7 @@ import axios from "axios";
 import { tokenStore } from "../store/generalStore";
 import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
+import { Link } from "react-router-dom";
 
 export default function Cart() {
   const { basketItems, getBasketItems } = basketStore();
@@ -105,12 +106,12 @@ export default function Cart() {
                       </div>
                       <div className="w-100 ms-4">
                         <div className="cart-product-content mb-4 mb-lg-0">
-                          <a
-                            href={`/${item.category}/${item.supplierProductId}`}
+                          <Link
+                            to={`/${item.category}/${item.id}`}
                             className="mb-2 fw-semibold text-black text-decoration-none"
                           >
                             {item.customProductTitle}
-                          </a>
+                          </Link>
                           <p className="mb-2 text-uppercase">{item.brand}</p>
                           <div className="d-flex w-100 justify-content-between align-items-end">
                             {item.amount == 1 ? (

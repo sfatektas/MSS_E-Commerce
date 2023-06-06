@@ -9,26 +9,18 @@ import CustomerSettings from "./CustomerSettings";
 
 export default function CustomerAccount() {
   const [accountPanel, setAccountPanel] = useState("customerHome");
-  const { logout, logoutStatus } = authStore();
+  const { logout } = authStore();
   const { options } = generalStore();
   let navigate = useNavigate();
 
-  useEffect(() => {
-    if (logoutStatus === 204) {
-      setTimeout(() => {
-        // alert("Başarıyla çıkış yapıldı, yönlendiriliyorsunuz.");
-        navigate("/");
-      }, 500);
-    } else if (logoutStatus === "ERR_NETWORK") {
-      // alert("Hatalı çıkış yapıldı, lütfen destek birimimize ulaşın.");
-      setTimeout(() => {
-        navigate("/");
-      }, 500);
-    }
-  }, [logoutStatus]);
-
   function handleLogout() {
     logout();
+    setTimeout(() => {
+      navigate("/");
+      setTimeout(() => {
+        location.reload();
+      }, 500);
+    }, 500);
   }
   return (
     <>

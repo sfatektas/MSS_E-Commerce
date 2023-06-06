@@ -4,6 +4,7 @@ import { generalStore, tokenStore } from "../../store/generalStore";
 import axios from "axios";
 import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
+import { Link } from "react-router-dom";
 
 export default function CartSidebar() {
   const { basketItems } = basketStore();
@@ -53,12 +54,13 @@ export default function CartSidebar() {
           />
         </div>
         <div className="product-content p-2">
-          <a
-            href={`/${props.category}/${props.supplierId}`}
+          <Link
+            to={`/${props.category}/${props.supplierId}`}
             className="mb-2 fw-semibold text-decoration-none text-black"
+            onClick={() => setSidebarActive(false)}
           >
             {props.title}
-          </a>
+          </Link>
           <p className="mb-3">{props.brand}</p>
           <p className="mb-3 position-absolute end-0">{props.amount} Adet</p>
           <div className="d-flex align-items-center">
@@ -154,9 +156,13 @@ export default function CartSidebar() {
                   </div>
                 </div>
                 <div className="cart-buttons d-flex flex-column">
-                  <a href="/cart" className="btn btn-dark mb-3 p-3">
+                  <Link
+                    to="/cart"
+                    className="btn btn-dark mb-3 p-3"
+                    onClick={() => setSidebarActive(false)}
+                  >
                     Sepete Git
-                  </a>
+                  </Link>
                   <button
                     className="btn btn-outline-dark p-3"
                     onClick={() => {
@@ -192,9 +198,15 @@ export default function CartSidebar() {
                   </span>
                 </div>
                 <div className="cart-buttons d-flex flex-column">
-                  <a href="/" className="btn btn-dark mb-3 p-3">
+                  <Link
+                    to="/"
+                    className="btn btn-dark mb-3 p-3"
+                    onClick={() => {
+                      setSidebarActive(false);
+                    }}
+                  >
                     Alışverişe Başla
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -228,12 +240,24 @@ export default function CartSidebar() {
                 <p className="fs-2 fw-semibold mb-2">Lütfen Giriş Yapın</p>
               </div>
               <div className="cart-buttons d-flex flex-column">
-                <a href="/login" className="btn btn-dark mb-3 p-3">
+                <Link
+                  to="/login"
+                  className="btn btn-dark mb-3 p-3"
+                  onClick={() => {
+                    setSidebarActive(false);
+                  }}
+                >
                   Giriş Yap
-                </a>
-                <a href="/register" className="btn btn-outline-dark mb-3 p-3">
+                </Link>
+                <Link
+                  to="/register"
+                  className="btn btn-outline-dark mb-3 p-3"
+                  onClick={() => {
+                    setSidebarActive(false);
+                  }}
+                >
                   Kayıt Ol
-                </a>
+                </Link>
               </div>
             </div>
           </div>

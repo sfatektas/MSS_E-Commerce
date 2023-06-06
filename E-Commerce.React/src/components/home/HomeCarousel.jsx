@@ -1,5 +1,5 @@
 import Carousel from "react-bootstrap/Carousel";
-import axios from "axios";
+import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { sliderStore } from "../../store/generalStore";
 function CarouselFade() {
@@ -27,13 +27,12 @@ function CarouselFade() {
                 <Carousel.Caption>
                   <h3 className="mb-4">{item.title}</h3>
                   <p className="mb-4">{item.subTitle}</p>
-                  <a
+                  <Link
                     className="btn btn-dark text-white px-5 py-2 fw-light rounded-3"
-                    href={item.buttonLink}
-                    target="_blank"
+                    to={item.buttonLink}
                   >
                     {item.buttonText}
-                  </a>
+                  </Link>
                 </Carousel.Caption>
               </Carousel.Item>
             );

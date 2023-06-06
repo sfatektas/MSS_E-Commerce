@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { generalStore } from "../../store/generalStore";
+import { Link } from "react-router-dom";
 
 export default function Footer() {
   const { options, categories } = generalStore();
@@ -241,12 +242,12 @@ export default function Footer() {
                     {categories &&
                       categories.map((item, index) => (
                         <li key={index} className="mb-1">
-                          <a
+                          <Link
                             className="text-decoration-none text-light"
-                            href={`/${item.defination}`}
+                            to={`/${item.defination}`}
                           >
                             {item.defination}
-                          </a>
+                          </Link>
                         </li>
                       ))}
                   </ul>
@@ -310,6 +311,7 @@ export default function Footer() {
                 <a
                   href={options && options.facebookLink}
                   className="facebook mx-3"
+                  target="_blank"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -329,6 +331,7 @@ export default function Footer() {
                 <a
                   href={options && options.twitterLink}
                   className="twitter mx-3"
+                  target="_blank"
                 >
                   <svg
                     width="30"
@@ -364,6 +367,7 @@ export default function Footer() {
                 <a
                   href={options && options.linkedInLink}
                   className="linkedin mx-3"
+                  target="_blank"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -380,6 +384,7 @@ export default function Footer() {
                 <a
                   href={options && options.instagramLink}
                   className="instagram mx-3"
+                  target="_blank"
                 >
                   <svg width="30" height="30" viewBox="0 0 20 20" version="1.1">
                     <g
