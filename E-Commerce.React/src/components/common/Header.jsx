@@ -127,7 +127,7 @@ function Header() {
           <div className="header-top row d-flex align-items-center py-2">
             <div className="slogan col-12 col-lg-8 text-center text-lg-start mb-2 mb-lg-0">
               <p className="text-white fs-5 fw-semibold">
-                <span className="text-primary">Kampanya! </span>
+                {/* <span className="text-primary">Kampanya! </span> */}
                 {options && options.slogan}
               </p>
             </div>
