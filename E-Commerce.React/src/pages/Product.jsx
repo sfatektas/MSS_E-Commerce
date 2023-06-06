@@ -74,7 +74,6 @@ export default function Product() {
       .get(`http://api.mssdev.online/api/suppliers/products/${name}`)
       .then((response) => {
         setProduct(response.data);
-        console.log(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -378,7 +377,8 @@ export default function Product() {
                             productRate += item.point;
                           })}
                         {comments
-                          ? (comments && productRate / comments.length) + ",0"
+                          ? comments &&
+                            (productRate / comments.length).toFixed(1)
                           : ""}
                       </span>
 
@@ -405,7 +405,10 @@ export default function Product() {
                             )}
                           {comments &&
                             Array.from(
-                              { length: 5 - productRate / comments.length },
+                              {
+                                length:
+                                  5 - Math.floor(productRate / comments.length),
+                              },
                               (_, index) => (
                                 <div key={index}>
                                   {" "}
@@ -968,7 +971,7 @@ export default function Product() {
                                     </p>
                                     {/* <span className="ms-2">|</span> */}
                                     <p className="d-flex align-items-center ms-2 text-muted border-end pe-2">
-                                      {item.createdDate.substring(0,10)}
+                                      {item.createdDate.substring(0, 10)}
                                     </p>
                                     <div className="d-flex ms-2">
                                       {Array.from(
