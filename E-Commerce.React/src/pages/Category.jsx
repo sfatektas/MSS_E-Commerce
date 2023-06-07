@@ -95,7 +95,6 @@ export default function Category(props) {
   }
 
   useEffect(() => {
-    cleanAllFilters();
     axios
       .get(productsLink)
       .then((response) => {
@@ -111,7 +110,11 @@ export default function Category(props) {
       top: 0,
       behavior: "smooth",
     });
-  }, [productsLink, filterColor, defination]);
+  }, [productsLink, filterColor]);
+
+  useEffect(() => {
+    cleanAllFilters();
+  }, [defination]);
 
   useEffect(() => {
     if (categoryDefination != defination) {
