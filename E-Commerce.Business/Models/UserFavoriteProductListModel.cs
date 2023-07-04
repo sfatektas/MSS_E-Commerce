@@ -12,6 +12,7 @@ namespace E_Commerce.Business.Models
         public int ProductsInStockId { get; set; }
         public string ImageUrl { get; set; }
         public string Brand { get; set; }
+        public string Category { get; set; }
         public string Title { get; set; }
         public string Defination { get; set; }
         public double UnitPrice { get; set; }

@@ -60,13 +60,13 @@ namespace E_Commerce.Presentation.Controllers
             var data = await _favoriteProductService.GetAllFromUserId(userid);
             return Ok(data);
         }
-        [HttpPost("{userId:int}/favoriteproducts/{productInStockId:int}")]
+        [HttpPost("{userid:int}/favoriteproducts/{productInStockId:int}")]
         public async Task<IActionResult> AddFavoriteProduct(int userid, int productInStockId)
         {
             await _favoriteProductService.AddFavoriteProduct(userid, productInStockId);
             return StatusCode(201);
         }
-        [HttpDelete("{userId:int}/favoriteproducts/{productInStockId:int}")]
+        [HttpDelete("{userid:int}/favoriteproducts/{productInStockId:int}")]
         public async Task<IActionResult> DeleteFavoriteProduct(int userid , int productInStockId)
         {
             await _favoriteProductService.DeleteFavoriteProduct(userid, productInStockId);

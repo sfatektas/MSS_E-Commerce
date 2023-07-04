@@ -39,6 +39,7 @@ namespace E_Commerce.Business.Services
                 .Include(x => x.ProductsInStock.SupplierProduct)
                     .Include(x => x.ProductsInStock.SupplierProduct.Product)
                         .Include(x => x.ProductsInStock.SupplierProduct.Product.Brand)
+                        .Include(x => x.ProductsInStock.SupplierProduct.Product.Category)
                     .Include(x => x.ProductsInStock.SupplierProduct.ProductImages)
             .Include(x => x.Customer)
             .ToListAsync();
@@ -78,7 +79,7 @@ namespace E_Commerce.Business.Services
             var user = await _uow.GetIdentityRepository<Customer>()
                 .GetByFilterAsync(x => x.Id == userId);
 
-            var productInStock = await _uow.GetRepository<ProductsInStock>()
+            ProductsInStock productInStock = await _uow.GetRepository<ProductsInStock>()
                 .GetByFilterAsync(x => x.Id == productInStockId);
 
             if (user != null && user.UserTypeId != (int)AppUserType.Customer)
@@ -86,6 +87,9 @@ namespace E_Commerce.Business.Services
 
             if (productInStock != null)
             {
+                var data = await _uow.GetRepository<FavoriteProduct>().GetByFilterAsync(x=>x.CustomerId == userId && x.ProductsInStockId == productInStockId);
+                if (data != null)
+                    throw new FavoriteProductBadRequestException("Bu ürün zaten kullanıcının favori ürünü aynı ürünü tekrar ekleyemezsiniz.");
                 await _uow.GetRepository<FavoriteProduct>()
                     .CreateAsync(
                     new()

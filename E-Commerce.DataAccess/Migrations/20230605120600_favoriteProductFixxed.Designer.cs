@@ -3,6 +3,7 @@ using System;
 using E_Commerce.DataAccess.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_Commerce.DataAccess.Migrations
 {
     [DbContext(typeof(E_CommerceDbContext))]
-    partial class E_CommerceDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230605120600_favoriteProductFixxed")]
+    partial class favoriteProductFixxed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -245,8 +247,7 @@ namespace E_Commerce.DataAccess.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.HasIndex("ProductsInStockId", "CustomerId")
-                        .IsUnique();
+                    b.HasIndex("ProductsInStockId", "CustomerId");
 
                     b.ToTable("FavoriteProducts");
                 });
@@ -320,21 +321,21 @@ namespace E_Commerce.DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "fad6c111-ff59-4e50-a4e8-93959cd221d4",
+                            ConcurrencyStamp = "c38132ae-b5f6-4eb7-9d97-773280a1fe57",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "f7cc6be7-1b0d-4889-81ca-d724e6606a5b",
+                            ConcurrencyStamp = "2076d41b-b76a-406d-b959-7701e8686d6b",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
                             Id = 3,
-                            ConcurrencyStamp = "1155f032-aa6b-49aa-a0b2-03e5bd78c47e",
+                            ConcurrencyStamp = "7e674d3e-cef5-4c08-a4de-f041d7c73b10",
                             Name = "Supplier",
                             NormalizedName = "SUPPLIER"
                         });

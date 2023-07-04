@@ -20,6 +20,7 @@ namespace E_Commerce.Business.Mapper.AutoMapper
             .ForMember(dest =>dest.Brand , source =>source.MapFrom(x=>x.ProductsInStock.SupplierProduct.Product.Brand.Defination))
             .ForMember(dest =>dest.Defination , source =>source.MapFrom(x=>x.ProductsInStock.SupplierProduct.CustomProductDefination))
             .ForMember(dest =>dest.Title , source =>source.MapFrom(x=>x.ProductsInStock.SupplierProduct.CustomProductTitle))
+            .ForMember(dest =>dest.Category , source =>source.MapFrom(x=>x.ProductsInStock.SupplierProduct.Product.Category.Defination))
             .ForMember(dest =>dest.ImageUrl , source =>source.MapFrom(x=>x.ProductsInStock.SupplierProduct.ProductImages[0].ImageUrl));
         }
     }

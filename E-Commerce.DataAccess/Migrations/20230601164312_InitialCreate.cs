@@ -12,7 +12,6 @@ namespace E_Commerce.DataAccess.Migrations
         {
             migrationBuilder.AlterDatabase()
                 .Annotation("MySQL:Charset", "utf8mb4");
-
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new

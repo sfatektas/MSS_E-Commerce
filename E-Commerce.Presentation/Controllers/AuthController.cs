@@ -3,6 +3,7 @@ using E_Commerce.Business.Services;
 using E_Commerce.Dtos;
 using E_Commerce.Dtos.CustomerDtos;
 using E_Commerce.Presentation.ActionFilters;
+using E_Commerce.Presentation.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
@@ -56,13 +57,13 @@ namespace E_Commerce.Presentation.Controllers
             return Ok(tokenModel);
         }
         [Authorize]
-        [HttpGet("[action]/{token}")]
-        public async Task<IActionResult> LogOut([FromRoute]string token) // client tarafından logout actionuna username parametresi gelecek.
+        [HttpPost("[action]")]
+        public async Task<IActionResult> LogOut([FromBody] E_Commerce.Presentation.Models.Token token) // client tarafından logout actionuna username parametresi gelecek.
         {
             await _authenticationService.Logout();
-            if(!string.IsNullOrEmpty(token)) 
+            if(!string.IsNullOrEmpty(token.TokenString)) 
             {
-                string username = TokenManager.GetUserNameFromToken(token);
+                string username = TokenManager.GetUserNameFromToken(token.TokenString);
                 var isComplated = await _redisService.Remove($"token:{username}");
                 await _redisService.Add($"token:{username}:deactive", token, 60*24);
                 if(isComplated)

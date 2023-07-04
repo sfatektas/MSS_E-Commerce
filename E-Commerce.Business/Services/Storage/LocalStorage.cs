@@ -42,6 +42,16 @@ namespace E_Commerce.Business.Services.Storage
 
         }
 
+        public bool RemoveFile(string fileorContainername)
+        {
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "files", fileorContainername);
+            var isexist = File.Exists(path);
+            if (!isexist)
+                throw new FileNotFoundException("Silinecek dosya sunucuda bulunamdı");
+            File.Delete(path);
+            return true;
+        }
+
         public async Task<bool> UploadFiles(string pathName, List<IFormFile> files)
         {
             throw new NotImplementedException();
@@ -60,14 +70,5 @@ namespace E_Commerce.Business.Services.Storage
             //}
         }
 
-        public bool RemoveFile(string fileorContainername)
-        {
-            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "files", fileorContainername);
-            var isexist = File.Exists(path);
-            if (!isexist)
-                throw new FileNotFoundException("Silinecek dosya sunucuda bulunamdı");
-            File.Delete(path);
-            return true;
-        }
     }
 }

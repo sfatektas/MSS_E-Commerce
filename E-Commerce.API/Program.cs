@@ -1,5 +1,6 @@
 using AspNetCoreRateLimit;
 using E_Commerce.API.ServiceExtensions;
+using E_Commerce.Business.BackgroundServices;
 using E_Commerce.Business.Helpers;
 using E_Commerce.Business.Hubs;
 using E_Commerce.Presentation.Middlewares;
@@ -67,6 +68,7 @@ builder.Services.ConfigureRateLimit(builder.Configuration);
 builder.Services.AddSignalR();
 builder.Services.AddHttpContextAccessor();
 builder.Services.ConfigureRabbitMQ();
+builder.Services.AddHostedService<ForStandByBackgroundService>();
 
 
 
