@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import { authStore } from "../store/authStore";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 export default function Login() {
   let navigate = useNavigate();
@@ -16,7 +16,7 @@ export default function Login() {
     if (loginStatus === 200) {
       setTimeout(() => {
         navigate("/");
-      }, 2000);
+      }, 1000);
     }
   }, [loginStatus, navigate]);
 
@@ -104,14 +104,14 @@ export default function Login() {
               </button>
             </div>
           </form>
-          <a className="text-decoration-none text-white" href="/register">
+          <Link className="text-decoration-none text-white" to="/register">
             <button
               type="submit"
               className="btn bg-dark w-100 text-white py-2 rounded-3"
             >
               Kayıt Ol
             </button>
-          </a>
+          </Link>
         </div>
       </Container>
     </>

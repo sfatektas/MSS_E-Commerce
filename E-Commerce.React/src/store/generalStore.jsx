@@ -41,6 +41,16 @@ export const tokenStore = create((set) => ({
       });
     }
   },
+  clearTokenData: () => {
+    localStorage.removeItem("user_token");
+    set({
+      tokenUsername: null,
+      tokenId: null,
+      tokenRole: null,
+      tokenEmail: null,
+      tokenExp: null,
+    });
+  },
 }));
 
 export const generalStore = create((set) => ({

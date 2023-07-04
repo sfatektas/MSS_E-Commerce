@@ -1,5 +1,6 @@
 import { sliderStore } from "../../store/generalStore";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 export function BannerTwoImg() {
   const { sliders } = sliderStore();
@@ -20,7 +21,7 @@ export function BannerTwoImg() {
                 className="banner-image w-100"
                 src={`http://api.mssdev.online/api/files/${twoImageBanner[0].imageUrl}`}
                 alt=""
-                style={{height:"450px"}}
+                style={{height:"350px"}}
               />
               <div className="banner-content align-items-start ps-5">
                 <p className="title display-4 fw-bold text-white text-uppercase">
@@ -29,12 +30,12 @@ export function BannerTwoImg() {
                 <p className="subtitle fw-light mb-4 fs-6">
                   {twoImageBanner[0].subTitle}
                 </p>
-                <a
-                  href={twoImageBanner[0].buttonLink}
+                <Link
+                  to={twoImageBanner[0].buttonLink}
                   className="btn btn-light px-4 rounded-3"
                 >
                   {twoImageBanner[0].buttonText}
-                </a>
+                </Link>
               </div>
             </div>
             <div className="banner-item h-100">
@@ -42,7 +43,7 @@ export function BannerTwoImg() {
                 className="banner-image w-100"
                 src={`http://api.mssdev.online/api/files/${twoImageBanner[1].imageUrl}`}
                 alt=""
-                style={{height:"450px"}}
+                style={{height:"350px"}}
               />
               <div className="banner-content align-items-start ps-5">
                 <span className="title fs-3 fw-bold text-white text-uppercase">
@@ -51,12 +52,12 @@ export function BannerTwoImg() {
                 <p className="subtitle text-white fw-light mb-4 fs-6">
                   {twoImageBanner[1].subTitle}
                 </p>
-                <a
-                  href={twoImageBanner[1].buttonLink}
+                <Link
+                  to={twoImageBanner[1].buttonLink}
                   className="btn btn-light px-4 rounded-3"
                 >
                   {twoImageBanner[1].buttonText}
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -106,14 +107,14 @@ export function BannerThreeImg() {
   return (
     <>
       {threeImageBanner != null ? (
-        <div className="banner-row mb-5 d-flex">
+        <div className="banner-row mb-5 d-flex pt-5">
           <div className="banner d-flex flex-md-row flex-column w-100 align-items-center justify-content-center">
             <div className="banner-item">
               <img
                 className="banner-image w-100"
                 src={`http://api.mssdev.online/api/files/${threeImageBanner[0].imageUrl}`}
                 alt=""
-                style={{width:"645px",height:"780px"}}
+                style={{height:"620px"}}
               />
               <div className="banner-content text-center">
                 <p className="title display-3 fw-bold text-white">
@@ -122,12 +123,12 @@ export function BannerThreeImg() {
                 <p className="subtitle text-white fw-light mb-4 fs-4">
                   {threeImageBanner[0].subTitle}
                 </p>
-                <a
-                  href={threeImageBanner[1].buttonLink}
+                <Link
+                  to={threeImageBanner[1].buttonLink}
                   className="btn btn-light px-4 rounded-3"
                 >
                   {threeImageBanner[0].buttonText}
-                </a>
+                </Link>
               </div>
             </div>
             <div>
@@ -136,7 +137,7 @@ export function BannerThreeImg() {
                   className="banner-image w-100"
                   src={`http://api.mssdev.online/api/files/${threeImageBanner[1].imageUrl}`}
                   alt=""
-                  style={{width:"645px",height:"390px"}}
+                  style={{height:"310px"}}
                 />
                 <div className="banner-content align-items-end pe-5">
                   <p className="title fs-3 fw-bold text-white text-uppercase">
@@ -145,12 +146,12 @@ export function BannerThreeImg() {
                   <p className="subtitle text-white fw-light mb-4 fs-6">
                     {threeImageBanner[1].subTitle}
                   </p>
-                  <a
-                    href={threeImageBanner[1].buttonLink}
+                  <Link
+                    to={threeImageBanner[1].buttonLink}
                     className="btn btn-light px-4 rounded-3"
                   >
                     {threeImageBanner[1].buttonText}
-                  </a>
+                  </Link>
                 </div>
               </div>
               <div className="banner-item">
@@ -158,7 +159,7 @@ export function BannerThreeImg() {
                   className="banner-image w-100"
                   src={`http://api.mssdev.online/api/files/${threeImageBanner[2].imageUrl}`}
                   alt=""
-                  style={{width:"645px",height:"390px"}}
+                  style={{height:"310px"}}
                 />
                 <div className="banner-content align-items-start ps-5">
                   <p className="title fs-3 fw-bold text-white text-uppercase">
@@ -167,12 +168,12 @@ export function BannerThreeImg() {
                   <p className="subtitle text-white fw-light mb-4 fs-6">
                     {threeImageBanner[2].subTitle}
                   </p>
-                  <a
-                    href={threeImageBanner[1].buttonLink}
+                  <Link
+                    to={threeImageBanner[1].buttonLink}
                     className="btn btn-light px-4 rounded-3"
                   >
                     {threeImageBanner[2].buttonText}
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>

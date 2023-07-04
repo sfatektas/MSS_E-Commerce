@@ -2,25 +2,33 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { tokenStore } from "../store/generalStore";
 import { favoriteStore } from "../store/favoriteStore";
+import Alert from "react-bootstrap/Alert";
+import Button from "react-bootstrap/Button";
+import { Link } from "react-router-dom";
 
 export default function Favorites() {
   const [userName, setUserName] = useState(null);
-  const { tokenId, tokenUsername } = tokenStore();
-  const { favoriteItems } = favoriteStore();
+  const { tokenId, tokenUsername, tokenRole } = tokenStore();
+  const { favoriteItems, getFavoriteItems } = favoriteStore();
+  const [info, setInfo] = useState("");
+  const [infoModal, setInfoModal] = useState(false);
+  const [variant, setVariant] = useState("");
+
   let totalPrice = 0;
   favoriteItems &&
     favoriteItems.map((item) => {
       totalPrice += item.unitPrice;
       return null;
     });
+
   useEffect(() => {
     setUserName(tokenUsername);
   }, [tokenUsername]);
 
-  function favoriteProductDelete(productInStockId) {
+  function favoriteProductDelete(productsInStockId) {
     axios
       .delete(
-        `http://api.mssdev.online/api/Baskets/${userName}/${productInStockId}`,
+        `http://api.mssdev.online/api/Users/${tokenId}/Favoriteproducts/${productsInStockId}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("user_token")}`,
@@ -29,6 +37,14 @@ export default function Favorites() {
       )
       .then((response) => {
         console.log(response);
+        getFavoriteItems(tokenId, tokenRole);
+        setInfo("Ürün başarıyla favorilerden kaldırıldı");
+        setVariant("light");
+        setInfoModal(true);
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
       })
       .catch((error) => {
         console.log(error);
@@ -39,9 +55,25 @@ export default function Favorites() {
       <div className="d-flex flex-column my-4 text-center">
         <p className="fs-1 text-secondary fw-bold">Favorilerim</p>
       </div>
+      <Alert show={infoModal} variant={variant}>
+        <Alert.Heading className="d-flex justify-content-center text-center">
+          {info}
+        </Alert.Heading>
+        <div className="d-flex justify-content-center">
+          <Button
+            className="btn-outline-dark rounded-3"
+            onClick={() => {
+              setInfoModal(false);
+            }}
+            variant={variant}
+          >
+            Kapat
+          </Button>
+        </div>
+      </Alert>
       <div className="container mb-5">
         <div className="row">
-          <div className="col-9 cart-products">
+          <div className="col-12 col-lg-9 order-2 order-lg-1 cart-products">
             {favoriteItems &&
               favoriteItems.map((item, index) => {
                 return (
@@ -59,10 +91,20 @@ export default function Favorites() {
                         </div>
                       </div>
                     </div>
-                    <p className="mb-3 my-2">
-                      Tahmini <span className="fw-semibold">20 Haziran'da</span>{" "}
-                      kapında!
-                    </p>
+                    <div className="d-flex justify-content-between mb-2">
+                      <p>
+                        Tahmini{" "}
+                        <span className="fw-semibold">20 Haziran'da</span>{" "}
+                        kapında!
+                      </p>
+                      <button
+                        value={item.productsInStockId}
+                        className="btn btn-outline-danger rounded-3 fw-semibold"
+                        onClick={(e) => favoriteProductDelete(e.target.value)}
+                      >
+                        Favorilerimden kaldır
+                      </button>
+                    </div>
                     <div className="d-flex align-items-center">
                       <div className="cart-product-image d-flex">
                         <img
@@ -73,12 +115,12 @@ export default function Favorites() {
                       </div>
                       <div className="w-100 ms-4 align-items-between">
                         <div className="cart-product-content h-100">
-                          <a
-                            href={`/${item.category}/${item.supplierProductId}`}
+                          <Link
+                            to={`/${item.category}/${item.productsInStockId}`}
                             className="mb-2 fw-semibold text-black text-decoration-none"
                           >
                             {item.title ? item.title : "Ürün Başlığı"}
-                          </a>
+                          </Link>
                           <p className="mb-2">{item.defination}</p>
                           <div className="d-flex align-items-end">
                             <p className="text-uppercase">{item.brand}</p>
@@ -95,7 +137,7 @@ export default function Favorites() {
                 );
               })}
           </div>
-          <div className="col-3">
+          <div className="col-12 col-lg-3 order-1 order-lg-2 mb-4 mb-lg-0">
             <div className="cart-end d-flex flex-column align-items-center py-3">
               <p className="text-uppercase text-primary fw-semibold mb-3">
                 Favori ürünler ({favoriteItems && favoriteItems.length})
@@ -104,14 +146,14 @@ export default function Favorites() {
                 {totalPrice} <span className="fs-4">TL</span>
               </p>
               <button className="btn btn-primary text-white py-3 rounded-3 w-75 mb-3">
-                Alışverişi tamamla
+                Favorileri Sepete Ekle
               </button>
               <div className="cart-end-sub d-flex justify-content-between w-75 mb-1">
                 <p className="text-muted fw-semibold">Kargo :</p>
                 <span className="text-success">Bedava</span>
               </div>
               <div className="cart-end-sub d-flex justify-content-between w-75">
-                <p className="text-muted fw-semibold">Ürünler :</p>
+                <p className="text-muted fw-semibold">Toplam :</p>
                 <span>{totalPrice} TL</span>
               </div>
             </div>

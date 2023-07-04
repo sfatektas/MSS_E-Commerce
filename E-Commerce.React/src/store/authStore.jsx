@@ -4,7 +4,6 @@ import axios from "axios";
 export const authStore = create((set) => ({
   authText: null,
   loginStatus: null,
-  logoutStatus: null,
 
   loginFetch: async (uname, password) => {
     try {
@@ -32,20 +31,28 @@ export const authStore = create((set) => ({
   logout: async () => {
     try {
       const token = localStorage.getItem("user_token");
-      const response = await axios.get(
-        `http://api.mssdev.online/api/Auth/Logout/${token}`,
+      const tokenData = {
+        tokenString: token,
+      };
+      const response = await axios.post(
+        `http://api.mssdev.online/api/Auth/LogOut`,
+        tokenData,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
       localStorage.removeItem("user_token");
-      set({ logoutStatus: response.status });
+      set({
+        authText: null,
+        loginStatus: null,
+      });
+      // set({ logoutStatus: response.status });
     } catch (error) {
       //Token localstorage'de kullanıcı eliyle bozulduğu zaman API'den hata dönüyor.
       //Hata olsun ya da olmasın veriler localstorage'den siliniyor.
       localStorage.removeItem("user_token");
       console.log(error);
-      set({ logoutStatus: error.code });
+      // set({ logoutStatus: error.code });
     }
   },
 }));

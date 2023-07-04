@@ -16,6 +16,7 @@ export default function Category(props) {
   const [filtersShow, setFiltersShow] = useState("d-none");
   const [products, setProducts] = useState([]);
   const [categoryTypeId, setCategoryTypeId] = useState();
+  const [categoryDefination, setCategoryDefination] = useState();
   const [filterListableBrands, setFilterListableBrands] = useState([]);
   const [filterListableColors, setFilterListableColors] = useState([]);
   const [listBrands, setListBrands] = useState();
@@ -112,8 +113,15 @@ export default function Category(props) {
   }, [productsLink, filterColor]);
 
   useEffect(() => {
+    cleanAllFilters();
+  }, [defination]);
+
+  useEffect(() => {
+    if (categoryDefination != defination) {
+      setFilterListableBrands([]);
+    }
     products.forEach((item) => {
-      // console.log(item.brand.defination)
+      setCategoryDefination(item.category.defination);
       // setFilterListableBrands(...filterListableBrands+item.brand.defination)
       setFilterListableBrands((filterListableBrands) => [
         ...filterListableBrands,
@@ -121,7 +129,6 @@ export default function Category(props) {
       ]);
     });
   }, [products]);
-  console.log(filterListableBrands);
 
   // useEffect(() => {
   //   products.forEach((item) => {
@@ -134,7 +141,6 @@ export default function Category(props) {
   //   });
   // }, [products]);
   // console.log(filterListableColors);
-
 
   useEffect(() => {
     axios
@@ -246,7 +252,7 @@ export default function Category(props) {
               >
                 <div className="d-flex flex-column border rounded-3">
                   <div className="border-bottom p-3 mb-3">
-                    <p className="mb-2">
+                    <p className="my-2 text-center">
                       <span className="fw-semibold">
                         {products.length} Ürün
                       </span>{" "}
@@ -405,7 +411,7 @@ export default function Category(props) {
               <div className="products col-12 col-lg-10">
                 <div className="row">
                   <Alert show={infoModal} variant={variant}>
-                    <Alert.Heading className="d-flex justify-content-center">
+                    <Alert.Heading className="d-flex justify-content-center text-center">
                       {info}
                     </Alert.Heading>
                     <div className="d-flex justify-content-center">

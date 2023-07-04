@@ -10,26 +10,18 @@ import SupplierSettings from "./SupplierSettings";
 
 export default function SupplierAccount() {
   const [accountPanel, setAccountPanel] = useState("supplierHome");
-  const { logout, logoutStatus } = authStore();
+  const { logout } = authStore();
   const { options } = generalStore();
   let navigate = useNavigate();
 
-  useEffect(() => {
-    if (logoutStatus === 204) {
-      setTimeout(() => {
-        // alert("Başarıyla çıkış yapıldı, yönlendiriliyorsunuz.");
-        navigate("/");
-      }, 1000);
-    } else if (logoutStatus === "ERR_NETWORK") {
-      // alert("Hatalı çıkış yapıldı, lütfen destek birimimize ulaşın.");
-      setTimeout(() => {
-        navigate("/");
-      }, 1000);
-    }
-  }, [logoutStatus]);
-
   function handleLogout() {
     logout();
+    setTimeout(() => {
+      navigate("/");
+      setTimeout(() => {
+        location.reload();
+      }, 500);
+    }, 500);
   }
   return (
     <>
@@ -37,6 +29,10 @@ export default function SupplierAccount() {
         <div className="supplier-panel row flex-column flex-lg-row m-0">
           <div className="supplier-header col-12 col-lg-2 d-flex flex-row flex-lg-column p-0">
             <div className="d-flex flex-column p-4 w-100">
+              <p className="d-block d-lg-none text-center fw-semibold mb-2 text-danger">
+                Satıcı panelinde daha iyi bir deneyim için lütfen masaüstü
+                cihazdan giriş yapın
+              </p>
               <p className="display-4 fw-bold text-center mb-3 user-select-none">
                 {options && options.logo}
               </p>

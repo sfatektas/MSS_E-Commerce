@@ -55,7 +55,7 @@ export default function AdminOptions() {
       email: email,
       adress: adress,
     };
-    console.log(setOptions);
+    // console.log(setOptions);
     axios
       .put("http://api.mssdev.online/api/siteoption", setOptions, {
         headers: {

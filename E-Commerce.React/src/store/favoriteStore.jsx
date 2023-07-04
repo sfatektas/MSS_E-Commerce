@@ -18,4 +18,7 @@ export const favoriteStore = create((set) => ({
       }
     }
   },
+  clearFavoriteData: () => {
+    set({ favoriteItems: null });
+  },
 }));

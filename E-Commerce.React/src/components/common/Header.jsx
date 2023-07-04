@@ -4,6 +4,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Offcanvas from "react-bootstrap/Offcanvas";
+import Modal from "react-bootstrap/Modal";
 import { authStore } from "../../store/authStore";
 import {
   generalStore,
@@ -13,22 +14,31 @@ import {
 } from "../../store/generalStore";
 import { basketStore, cartSidebarStore } from "../../store/basketStore";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import CartSidebar from "../common/CartSidebar";
 import { favoriteStore } from "../../store/favoriteStore";
 
 function Header() {
   let navigate = useNavigate();
-  const { logout, logoutStatus } = authStore();
-  const { loader, setLoader } = loaderStore();
+  const { pathname } = useLocation();
+  const [isNavbarOpen, setIsNavbarOpen] = useState(false);
+  const { logout } = authStore();
   const { setSidebarActive } = cartSidebarStore();
   const { options, getOptions, categories, getCategories } = generalStore();
   const { basketItems, getBasketItems } = basketStore();
-  const { getSliders} = sliderStore();
+  const { getSliders } = sliderStore();
   const { favoriteItems, getFavoriteItems } = favoriteStore();
   const { getTokenData, tokenExp, tokenId, tokenRole, tokenUsername } =
     tokenStore();
   const [searchDork, setSearchDork] = useState("");
+  const [logoutModal, setLogoutModal] = useState();
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, [pathname]);
+
   useEffect(() => {
     getOptions();
     getCategories();
@@ -36,7 +46,7 @@ function Header() {
     getTokenData();
     getFavoriteItems(tokenId, tokenRole);
     getSliders();
-  }, [tokenId]);
+  }, [tokenId, localStorage.getItem("user_token")]);
   useEffect(() => {
     try {
       let tokenString = tokenExp.toString();
@@ -50,22 +60,18 @@ function Header() {
     } catch {}
   }, [tokenExp]);
 
-  useEffect(() => {
-    if (logoutStatus === 204) {
-      setTimeout(() => {
-        // alert("Başarıyla çıkış yapıldı, yönlendiriliyorsunuz.");
-        navigate("/");
-      }, 1000);
-    } else if (logoutStatus === "ERR_NETWORK") {
-      // alert("Hatalı çıkış yapıldı, lütfen destek birimimize ulaşın.");
-      setTimeout(() => {
-        navigate("/");
-      }, 1000);
-    }
-  }, [logoutStatus]);
-
   function handleLogout() {
     logout();
+    setTimeout(() => {
+      navigate("/");
+      setLogoutModal(true);
+      setTimeout(() => {
+        setLogoutModal(false);
+        setTimeout(() => {
+          location.reload();
+        }, 250);
+      }, 500);
+    }, 500);
   }
   const handleKeyDown = (event) => {
     if (event.target.value != null) {
@@ -74,15 +80,54 @@ function Header() {
       }
     }
   };
+  const handleSearch = () => {
+    navigate(`/search/${searchDork}`);
+  };
+  function AddedCartModal(props) {
+    return (
+      <Modal
+        {...props}
+        size="md"
+        aria-labelledby="contained-modal-title-vcenter"
+      >
+        <Modal.Body className="overflow-hidden position-relative rounded-3">
+          <div className="basket-left-color bg-success"></div>
+          <div className=" text-center d-flex align-items-center justify-content-center">
+            <div className="basket-modal-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="#000000"
+                width="30"
+                height="30"
+                viewBox="0 0 14 14"
+                role="img"
+                focusable="false"
+                aria-hidden="true"
+              >
+                <path
+                  fill="green"
+                  d="M13 4.1974q0 .3097-.21677.5265L7.17806 10.329l-1.0529 1.0529q-.21677.2168-.52645.2168-.30968 0-.52645-.2168L4.01935 10.329 1.21677 7.5264Q1 7.3097 1 7t.21677-.5265l1.05291-1.0529q.21677-.2167.52645-.2167.30968 0 .52645.2167l2.27613 2.2839 5.07871-5.0864q.21677-.2168.52645-.2168.30968 0 .52645.2168l1.05291 1.0529Q13 3.8877 13 4.1974z"
+                />
+              </svg>
+            </div>
+            <div className="basket-modal-text ps-2">
+              <p>Başarıyla çıkış yapıldı</p>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
+    );
+  }
   return (
     <>
       <CartSidebar />
+      <AddedCartModal show={logoutModal} onHide={() => setLogoutModal(false)} />
       <div className="bg-black">
         <div className="container">
           <div className="header-top row d-flex align-items-center py-2">
             <div className="slogan col-12 col-lg-8 text-center text-lg-start mb-2 mb-lg-0">
               <p className="text-white fs-5 fw-semibold">
-                <span className="text-primary">Kampanya! </span>
+                {/* <span className="text-primary">Kampanya! </span> */}
                 {options && options.slogan}
               </p>
             </div>
@@ -90,6 +135,7 @@ function Header() {
               <a
                 href={options && options.facebookLink}
                 className="facebook mx-3"
+                target="_blank"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -106,7 +152,11 @@ function Header() {
                   />
                 </svg>
               </a>
-              <a href={options && options.twitterLink} className="twitter mx-3">
+              <a
+                href={options && options.twitterLink}
+                className="twitter mx-3"
+                target="_blank"
+              >
                 <svg width="24" height="24" viewBox="0 -2 20 20" version="1.1">
                   <g
                     id="Page-1"
@@ -136,6 +186,7 @@ function Header() {
               <a
                 href={options && options.linkedInLink}
                 className="linkedin mx-3"
+                target="_blank"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -152,6 +203,7 @@ function Header() {
               <a
                 href={options && options.instagramLink}
                 className="instagram mx-3"
+                target="_blank"
               >
                 <svg width="24" height="24" viewBox="0 0 20 20" version="1.1">
                   <g
@@ -188,15 +240,16 @@ function Header() {
         key="lg"
         bg="light"
         expand="lg"
+        expanded={isNavbarOpen}
       >
         <Container className="d-flex flex-column flex-lg-row">
           <div className="logo col-lg-3 d-flex align-items-center justify-content-center justify-content-lg-start ">
-            <a
-              href="/"
+            <Link
+              to="/"
               className="logo-text text-decoration-none text-black display-5 fw-bold"
             >
               {options && options.logo}
-            </a>
+            </Link>
           </div>
 
           <Navbar.Offcanvas
@@ -212,19 +265,19 @@ function Header() {
             </Offcanvas.Header>
             <Offcanvas.Body className="d-flex flex-column">
               <Form className="d-flex mt-2">
-                <div className="p-1 bg-light rounded-pill shadow-sm mb-2 w-100">
+                <div className="p-1 bg-light rounded-3 shadow-sm mb-2 w-100">
                   <div className="input-group">
                     <input
                       type="search"
                       placeholder="Nasıl bir ürün arıyorsunuz?"
                       aria-describedby="button-addon1"
-                      className="form-control border-0 bg-light rounded-pill"
+                      className="form-control border-0 bg-light rounded-3"
                       onChange={(e) => setSearchDork(e.target.value)}
                       onKeyDown={handleKeyDown}
                     />
                     <div className="input-group-append">
                       <a
-                        href={`/search/${searchDork}`}
+                        onClick={handleSearch}
                         className="btn btn-link text-primary"
                       >
                         <svg
@@ -245,23 +298,58 @@ function Header() {
                   </div>
                 </div>
               </Form>
-              <Nav className="d-flex justify-content-between fw-semibold">
-                <Nav.Link href="/">Ana Sayfa</Nav.Link>
+              <Nav className="d-flex justify-content-between fw-semibold toggle-menu">
+                <Link
+                  className="toggle-menu-item nav-link"
+                  to="/"
+                  onClick={() => setIsNavbarOpen(false)}
+                >
+                  Ana Sayfa
+                </Link>
                 {/* <Nav.Link href="/admin">Admin</Nav.Link> */}
-                <NavDropdown title="Kategoriler" id="collasible-nav-dropdown">
+                <NavDropdown
+                  className="toggle-menu-item"
+                  title="Kategoriler"
+                  id="collasible-nav-dropdown"
+                >
                   {categories &&
                     categories.map((item, index) => (
-                      <NavDropdown.Item
+                      <Link
+                        className="toggle-menu-dropdown-item d-flex dropdown-item"
                         key={index}
-                        href={`/${item.defination}`}
+                        to={`/${item.defination}`}
+                        onClick={() => setIsNavbarOpen(false)}
                       >
                         {item.defination}
-                      </NavDropdown.Item>
+                      </Link>
                     ))}
                   {/* <NavDropdown.Divider /> */}
                 </NavDropdown>
-                <Nav.Link href="/contact">İletişim</Nav.Link>
-                <Nav.Link href="/about">Hakkımızda</Nav.Link>
+
+                <Link
+                  className="toggle-menu-item nav-link"
+                  to="/contact"
+                  onClick={() => setIsNavbarOpen(false)}
+                >
+                  İletişim
+                </Link>
+
+                <Link
+                  className="toggle-menu-item nav-link"
+                  to="/about"
+                  onClick={() => setIsNavbarOpen(false)}
+                >
+                  Hakkımızda
+                </Link>
+                <Link
+                  className="toggle-menu-item nav-link d-flex d-lg-none "
+                  to={
+                    localStorage.getItem("user_token") ? "/account" : "/login"
+                  }
+                  onClick={() => setIsNavbarOpen(false)}
+                >
+                  Hesabım
+                </Link>
               </Nav>
             </Offcanvas.Body>
           </Navbar.Offcanvas>
@@ -269,9 +357,10 @@ function Header() {
             <Navbar.Toggle
               aria-controls={`offcanvasNavbar-expand-lg`}
               className="mx- mx-lg-0"
+              onClick={() => setIsNavbarOpen(true)}
             />
             {localStorage.getItem("user_token") ? (
-              <Nav.Link onClick={handleLogout} className="mx-2 mx-lg-0">
+              <Link onClick={handleLogout} className="mx-2 mx-lg-0 nav-link">
                 <div className="logout mx-3">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -284,11 +373,11 @@ function Header() {
                     <path d="M3.651 16.989h17.326c0.553 0 1-0.448 1-1s-0.447-1-1-1h-17.264l3.617-3.617c0.391-0.39 0.391-1.024 0-1.414s-1.024-0.39-1.414 0l-5.907 6.062 5.907 6.063c0.196 0.195 0.451 0.293 0.707 0.293s0.511-0.098 0.707-0.293c0.391-0.39 0.391-1.023 0-1.414zM29.989 0h-17c-1.105 0-2 0.895-2 2v9h2.013v-7.78c0-0.668 0.542-1.21 1.21-1.21h14.523c0.669 0 1.21 0.542 1.21 1.21l0.032 25.572c0 0.668-0.541 1.21-1.21 1.21h-14.553c-0.668 0-1.21-0.542-1.21-1.21v-7.824l-2.013 0.003v9.030c0 1.105 0.895 2 2 2h16.999c1.105 0 2.001-0.895 2.001-2v-28c-0-1.105-0.896-2-2-2z" />
                   </svg>
                 </div>
-              </Nav.Link>
+              </Link>
             ) : null}
-            <Nav.Link
-              href={localStorage.getItem("user_token") ? "/account" : "/login"}
-              className="mx-2 mx-lg-0"
+            <Link
+              to={localStorage.getItem("user_token") ? "/account" : "/login"}
+              className="mx-2 mx-lg-0 nav-link"
             >
               <div className="user mx-3">
                 <svg
@@ -303,8 +392,8 @@ function Header() {
                   />
                 </svg>
               </div>
-            </Nav.Link>
-            <Nav.Link href="/favorites" className="mx-2 mx-lg-0">
+            </Link>
+            <Link to="/favorites" className="mx-2 mx-lg-0 nav-link">
               <div className="favorites mx-3">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -327,13 +416,12 @@ function Header() {
                   {favoriteItems ? favoriteItems.length : 0}
                 </div>
               </div>
-            </Nav.Link>
-            <Nav.Link
-              href=""
+            </Link>
+            <Link
               onClick={() => {
                 setSidebarActive(true);
               }}
-              className="mx-2 mx-lg-0"
+              className="mx-2 mx-lg-0 nav-link"
             >
               {" "}
               <div className="cart mx-3">
@@ -382,7 +470,7 @@ function Header() {
                   {basketItems ? basketItems.length : 0}
                 </div>
               </div>
-            </Nav.Link>
+            </Link>
           </Nav>
         </Container>
       </Navbar>
